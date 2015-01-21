@@ -1,0 +1,5 @@
+name: HeavenCrea
+version: 1.0
+main: fr.heavencraft.heavencrea.CreativePlugin
+depend: [HeavenCore]
+load: startup
