@@ -8,20 +8,15 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import fr.heavencraft.heavencore.bukkit.AbstractHeavenGuardListener;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class PlayerListener implements Listener
+public class PlayerListener extends AbstractHeavenGuardListener
 {
-	public PlayerListener()
-	{
-		DevUtil.registerListener(this);
-	}
-
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	private void onPlayerInteract(PlayerInteractEvent event)
 	{

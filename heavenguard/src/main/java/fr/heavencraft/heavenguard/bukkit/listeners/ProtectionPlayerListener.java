@@ -12,7 +12,6 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -31,22 +30,14 @@ import org.bukkit.event.vehicle.VehicleDamageEvent;
 
 import com.google.common.collect.Sets;
 
-import fr.heavencraft.heavencore.logs.HeavenLog;
+import fr.heavencraft.heavencore.bukkit.AbstractHeavenGuardListener;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class ProtectionPlayerListener implements Listener
+public class ProtectionPlayerListener extends AbstractHeavenGuardListener
 {
-	private static final HeavenLog log = HeavenLog.getLogger(ProtectionPlayerListener.class);
-
 	private static final Collection<Material> VEHICULES = Sets.newHashSet(Material.BOAT, Material.MINECART,
 			Material.STORAGE_MINECART, Material.POWERED_MINECART, Material.EXPLOSIVE_MINECART, Material.HOPPER_MINECART,
 			Material.COMMAND_MINECART);
-
-	public ProtectionPlayerListener()
-	{
-		DevUtil.registerListener(this);
-		// log.enableDebug();
-	}
 
 	/*
 	 * BlockEvent

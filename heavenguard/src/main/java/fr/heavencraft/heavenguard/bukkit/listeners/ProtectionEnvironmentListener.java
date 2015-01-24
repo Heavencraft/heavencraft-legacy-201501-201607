@@ -7,25 +7,16 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import fr.heavencraft.heavencore.logs.HeavenLog;
+import fr.heavencraft.heavencore.bukkit.AbstractHeavenGuardListener;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class ProtectionEnvironmentListener implements Listener
+public class ProtectionEnvironmentListener extends AbstractHeavenGuardListener
 {
-	private static final HeavenLog log = HeavenLog.getLogger(ProtectionEnvironmentListener.class);
-
-	public ProtectionEnvironmentListener()
-	{
-		DevUtil.registerListener(this);
-		log.enableDebug();
-	}
-
 	/*
 	 * BlockEvent
 	 */
