@@ -5,8 +5,9 @@ import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.heavencraft.heavencore.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.AbstractBukkitCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.commands.AddOwnerSubCommand;
@@ -22,13 +23,13 @@ import fr.heavencraft.heavenguard.bukkit.commands.owner.AddMemberSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.owner.InfoSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.owner.RemoveMemberSubCommand;
 
-public class RegionCommand extends HeavenCommand
+public class RegionCommand extends AbstractBukkitCommandExecutor
 {
 	private final Map<String, SubCommand> subCommands = new HashMap<String, SubCommand>();
 
-	public RegionCommand(RegionProvider regionProvider)
+	public RegionCommand(JavaPlugin plugin, RegionProvider regionProvider)
 	{
-		super("region");
+		super(plugin, "region");
 
 		subCommands.put("define", new DefineSubCommand(regionProvider));
 		subCommands.put("redefine", new RedefineSubCommand(regionProvider));

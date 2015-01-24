@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import fr.heavencraft.HeavenPlugin;
-import fr.heavencraft.api.providers.connection.ConnectionProvider;
-import fr.heavencraft.api.providers.connection.ConnectionProvider.Database;
-import fr.heavencraft.api.providers.connection.DefaultConnectionProvider;
+import fr.heavencraft.heavencore.bukkit.AbstractBukkitPlugin;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
+import fr.heavencraft.heavencore.sql.ConnectionProvider.Database;
+import fr.heavencraft.heavencore.sql.DefaultConnectionProvider;
 import fr.heavencraft.heavenguard.api.RegionManager;
 import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.listeners.PlayerListener;
@@ -28,8 +28,10 @@ import fr.heavencraft.heavenguard.datamodel.SQLRegionProvider;
  * hg_uuid (id, uuid, last_name)
  * 
  */
-public class HeavenGuard extends HeavenPlugin
+public class HeavenGuard extends AbstractBukkitPlugin
 {
+	public static final String PLUGIN_NAME = "HeavenGuard";
+
 	private static HeavenGuard instance;
 
 	public static HeavenGuard getInstance()
@@ -59,7 +61,7 @@ public class HeavenGuard extends HeavenPlugin
 		regionProvider = new SQLRegionProvider(connectionProvider);
 		regionManager = new RegionManager(regionProvider);
 
-		new RegionCommand(regionProvider);
+		new RegionCommand(this, regionProvider);
 	}
 
 	public static RegionProvider getRegionProvider()
@@ -71,7 +73,11 @@ public class HeavenGuard extends HeavenPlugin
 	{
 		return regionManager;
 	}
-	
+
+	/*
+	 * 
+	 */
+
 	/*
 	 * SendMessage Utility
 	 */
@@ -80,12 +86,14 @@ public class HeavenGuard extends HeavenPlugin
 	private static final String END = "}";
 	private static final String COLOR = ChatColor.AQUA.toString();
 	private static final String COLOR_H = ChatColor.GREEN.toString();
-	
+
 	public static void sendMessage(final CommandSender sender, final String format, final Object... args)
 	{
-		Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+		Bukkit.getScheduler().runTask(getInstance(), new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				String message = String.format(format, args);
 				message = COLOR + message.replace(BEGIN, COLOR_H).replace(END, COLOR);
 				sender.sendMessage(message);
