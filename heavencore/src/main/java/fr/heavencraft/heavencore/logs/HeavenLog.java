@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencore.logs;
 
+
 public abstract class HeavenLog
 {
 	public static HeavenLog getLogger(Class<?> clazz)
