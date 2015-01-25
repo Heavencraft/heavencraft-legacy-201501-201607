@@ -1,15 +1,14 @@
 package fr.heavencraft.heavenguard.bukkit;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.heavencraft.heavencore.bukkit.AbstractBukkitCommandExecutor;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.commands.AddOwnerSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.DefineSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.FlagSubCommand;
@@ -23,26 +22,26 @@ import fr.heavencraft.heavenguard.bukkit.commands.owner.AddMemberSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.owner.InfoSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.owner.RemoveMemberSubCommand;
 
-public class RegionCommand extends AbstractBukkitCommandExecutor
+public class RegionCommand extends AbstractCommandExecutor
 {
 	private final Map<String, SubCommand> subCommands = new HashMap<String, SubCommand>();
 
-	public RegionCommand(JavaPlugin plugin, RegionProvider regionProvider)
+	public RegionCommand(HeavenGuard plugin)
 	{
-		super(plugin, "region");
+		super(plugin, "region", Arrays.asList("rg"));
 
-		subCommands.put("define", new DefineSubCommand(regionProvider));
-		subCommands.put("redefine", new RedefineSubCommand(regionProvider));
-		subCommands.put("select", new SelectSubCommand(regionProvider));
-		subCommands.put("info", new InfoSubCommand(regionProvider));
-		subCommands.put("setparent", new SetparentSubCommand(regionProvider));
-		subCommands.put("remove", new RemoveSubCommand(regionProvider));
-		subCommands.put("flag", new FlagSubCommand(regionProvider));
+		subCommands.put("define", new DefineSubCommand(plugin));
+		subCommands.put("redefine", new RedefineSubCommand(plugin));
+		subCommands.put("select", new SelectSubCommand(plugin));
+		subCommands.put("info", new InfoSubCommand(plugin));
+		subCommands.put("setparent", new SetparentSubCommand(plugin));
+		subCommands.put("remove", new RemoveSubCommand(plugin));
+		subCommands.put("flag", new FlagSubCommand(plugin));
 
-		subCommands.put("addmember", new AddMemberSubCommand(regionProvider));
-		subCommands.put("removemember", new RemoveMemberSubCommand(regionProvider));
-		subCommands.put("addowner", new AddOwnerSubCommand(regionProvider));
-		subCommands.put("removeowner", new RemoveOwnerSubCommand(regionProvider));
+		subCommands.put("addmember", new AddMemberSubCommand(plugin));
+		subCommands.put("removemember", new RemoveMemberSubCommand(plugin));
+		subCommands.put("addowner", new AddOwnerSubCommand(plugin));
+		subCommands.put("removeowner", new RemoveOwnerSubCommand(plugin));
 	}
 
 	@Override

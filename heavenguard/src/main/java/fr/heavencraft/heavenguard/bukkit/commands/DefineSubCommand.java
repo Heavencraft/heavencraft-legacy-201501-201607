@@ -15,14 +15,13 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.WorldEditUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class DefineSubCommand extends AbstractSubCommand
 {
-	public DefineSubCommand(RegionProvider regionProvider)
+	public DefineSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.DEFINE_COMMAND);
+		super(plugin, HeavenGuardPermissions.DEFINE_COMMAND);
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class DefineSubCommand extends AbstractSubCommand
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {define} <protection>");
+		plugin.sendMessage(sender, "/rg {define} <protection>");
 	}
 
 	private void define(CommandSender sender, String name, Selection selection, Collection<OfflinePlayer> owners)
@@ -53,22 +52,21 @@ public class DefineSubCommand extends AbstractSubCommand
 		final Location max = selection.getMaximumPoint();
 
 		// Create the region
-		regionProvider.createRegion(name, selection.getWorld().getName(), //
+		plugin.getRegionProvider().createRegion(name, selection.getWorld().getName(), //
 				min.getBlockX(), min.getBlockY(), min.getBlockZ(), //
 				max.getBlockX(), max.getBlockY(), max.getBlockZ());
 
-		HeavenGuard.sendMessage(sender, "La région {%1$s} a bien été créée.", name);
+		plugin.sendMessage(sender, "La région {%1$s} a bien été créée.", name);
 
 		// Add the initial owners
 		if (!owners.isEmpty())
 		{
-			final Region region = regionProvider.getRegionByName(name);
+			final Region region = plugin.getRegionProvider().getRegionByName(name);
 
 			for (final OfflinePlayer owner : owners)
 			{
 				region.addMember(owner.getUniqueId(), true);
-				HeavenGuard.sendMessage(sender, "{%1$s} est maintenant propriétaire de la protection {%2$s}.", owner.getName(),
-						name);
+				plugin.sendMessage(sender, "{%1$s} est maintenant propriétaire de la protection {%2$s}.", owner.getName(), name);
 			}
 		}
 	}

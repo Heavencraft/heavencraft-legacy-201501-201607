@@ -12,14 +12,13 @@ import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class InfoSubCommand extends AbstractOwnerSubCommand
 {
-	public InfoSubCommand(RegionProvider regionProvider)
+	public InfoSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.INFO_COMMAND);
+		super(plugin, HeavenGuardPermissions.INFO_COMMAND);
 	}
 
 	@Override
@@ -31,15 +30,15 @@ public class InfoSubCommand extends AbstractOwnerSubCommand
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {info} <protection>");
+		plugin.sendMessage(sender, "/rg {info} <protection>");
 	}
 
 	private void info(CommandSender sender, String name) throws HeavenException, UserNotFoundException
 	{
-		final Region region = regionProvider.getRegionByName(name);
+		final Region region = plugin.getRegionProvider().getRegionByName(name);
 
-		HeavenGuard.sendMessage(sender, "Protection : %1$s", region.getName());
-		HeavenGuard.sendMessage(sender, "Coordonnées : [{%1$s %2$s %3$s}] -> [{%4$s %5$s %6$s}] ({%7$s})", //
+		plugin.sendMessage(sender, "Protection : %1$s", region.getName());
+		plugin.sendMessage(sender, "Coordonnées : [{%1$s %2$s %3$s}] -> [{%4$s %5$s %6$s}] ({%7$s})", //
 				region.getMinX(), region.getMinY(), region.getMinZ(), //
 				region.getMaxX(), region.getMaxY(), region.getMaxZ(), //
 				region.getWorld());
@@ -56,11 +55,11 @@ public class InfoSubCommand extends AbstractOwnerSubCommand
 				flags += flag.getKey().getName() + " : " + flag.getValue() + ", ";
 		}
 
-		HeavenGuard.sendMessage(sender, flags);
+		plugin.sendMessage(sender, flags);
 
 		final Region parent = region.getParent();
 		if (parent != null)
-			HeavenGuard.sendMessage(sender, "Parent : %1$s", parent.getName());
+			plugin.sendMessage(sender, "Parent : %1$s", parent.getName());
 
 		final Collection<UUID> owners = region.getMembers(true);
 		if (!owners.isEmpty())
@@ -75,7 +74,7 @@ public class InfoSubCommand extends AbstractOwnerSubCommand
 					str.append(", ");
 			}
 
-			HeavenGuard.sendMessage(sender, "Propriétaires : %1$s", str.toString());
+			plugin.sendMessage(sender, "Propriétaires : %1$s", str.toString());
 		}
 
 		final Collection<UUID> members = region.getMembers(false);
@@ -91,7 +90,7 @@ public class InfoSubCommand extends AbstractOwnerSubCommand
 					str.append(", ");
 			}
 
-			HeavenGuard.sendMessage(sender, "Membres : %1$s", str.toString());
+			plugin.sendMessage(sender, "Membres : %1$s", str.toString());
 		}
 	}
 }

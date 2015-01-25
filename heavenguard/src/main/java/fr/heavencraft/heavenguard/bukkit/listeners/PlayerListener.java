@@ -11,12 +11,20 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import fr.heavencraft.heavencore.bukkit.AbstractHeavenGuardListener;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class PlayerListener extends AbstractHeavenGuardListener
+public class PlayerListener extends AbstractListener
 {
+	private final HeavenGuard plugin;
+
+	public PlayerListener(HeavenGuard plugin)
+	{
+		super(plugin);
+		this.plugin = plugin;
+	}
+
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	private void onPlayerInteract(PlayerInteractEvent event)
 	{
@@ -36,11 +44,11 @@ public class PlayerListener extends AbstractHeavenGuardListener
 		final int y = location.getBlockY();
 		final int z = location.getBlockZ();
 
-		final Collection<Region> regions = HeavenGuard.getRegionProvider().getRegionsAtLocation(world, x, y, z);
+		final Collection<Region> regions = plugin.getRegionProvider().getRegionsAtLocation(world, x, y, z);
 
 		if (regions.isEmpty())
 		{
-			HeavenGuard.sendMessage(player, "Il n'y a aucune protection ici.");
+			plugin.sendMessage(player, "Il n'y a aucune protection ici.");
 		}
 
 		else
@@ -55,15 +63,15 @@ public class PlayerListener extends AbstractHeavenGuardListener
 					str.append(", ");
 			}
 
-			HeavenGuard.sendMessage(player, str.toString());
+			plugin.sendMessage(player, str.toString());
 		}
 
 		final StringBuilder canYouBuild = new StringBuilder("Pouvez-vous construire ? ");
-		canYouBuild.append(HeavenGuard.getRegionManager().canBuildAt(player.getUniqueId(), world, x, y, z) ? "Oui." : "Non.");
-		HeavenGuard.sendMessage(player, canYouBuild.toString());
+		canYouBuild.append(plugin.getRegionManager().canBuildAt(player.getUniqueId(), world, x, y, z) ? "Oui." : "Non.");
+		plugin.sendMessage(player, canYouBuild.toString());
 
 		final StringBuilder pvpEnabled = new StringBuilder("PVP activé ? ");
-		pvpEnabled.append(HeavenGuard.getRegionManager().isPvp(world, x, y, z) ? "Oui." : "Non.");
-		HeavenGuard.sendMessage(player, pvpEnabled.toString());
+		pvpEnabled.append(plugin.getRegionManager().isPvp(world, x, y, z) ? "Oui." : "Non.");
+		plugin.sendMessage(player, pvpEnabled.toString());
 	}
 }
