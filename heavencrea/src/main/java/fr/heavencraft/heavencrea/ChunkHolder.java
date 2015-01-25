@@ -6,6 +6,7 @@ class ChunkHolder
 {
 	private final short[][] result = new short[16][];
 
+	@SuppressWarnings("deprecation")
 	public void setBlock(int x, int y, int z, Material type)
 	{
 		if (result[y >> 4] == null)

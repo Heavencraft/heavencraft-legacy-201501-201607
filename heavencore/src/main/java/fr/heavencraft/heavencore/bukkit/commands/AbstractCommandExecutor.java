@@ -1,28 +1,35 @@
-package fr.heavencraft.heavencore.bukkit;
+package fr.heavencraft.heavencore.bukkit.commands;
+
+import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 
-public abstract class AbstractBukkitCommandExecutor implements CommandExecutor
+public abstract class AbstractCommandExecutor implements CommandExecutor
 {
-	public AbstractBukkitCommandExecutor(JavaPlugin plugin, String name)
+	protected final HeavenPlugin plugin;
+
+	public AbstractCommandExecutor(HeavenPlugin plugin, String name, List<String> aliases)
 	{
-		this(plugin, name, "");
+		this(plugin, name, "", aliases);
 	}
 
-	public AbstractBukkitCommandExecutor(JavaPlugin plugin, String name, String permission)
+	public AbstractCommandExecutor(HeavenPlugin plugin, String name, String permission, List<String> aliases)
 	{
 		final PluginCommand command = plugin.getCommand(name);
 
 		command.setExecutor(this);
 		command.setPermission(permission);
 		command.setPermissionMessage("");
+		command.setAliases(aliases);
+
+		this.plugin = plugin;
 	}
 
 	@Override
@@ -38,8 +45,7 @@ public abstract class AbstractBukkitCommandExecutor implements CommandExecutor
 
 		catch (final HeavenException ex)
 		{
-			sender.sendMessage(ex.getMessage());
-			// ChatUtil.sendMessage(sender, ex.getMessage());
+			plugin.sendMessage(sender, ex.getMessage());
 		}
 
 		return true;

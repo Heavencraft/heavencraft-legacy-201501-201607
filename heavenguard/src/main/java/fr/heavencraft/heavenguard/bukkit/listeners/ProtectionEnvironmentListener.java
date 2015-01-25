@@ -12,11 +12,19 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import fr.heavencraft.heavencore.bukkit.AbstractHeavenGuardListener;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class ProtectionEnvironmentListener extends AbstractHeavenGuardListener
+public class ProtectionEnvironmentListener extends AbstractListener
 {
+	private final HeavenGuard plugin;
+
+	public ProtectionEnvironmentListener(HeavenGuard plugin)
+	{
+		super(plugin);
+		this.plugin = plugin;
+	}
+
 	/*
 	 * BlockEvent
 	 */
@@ -51,9 +59,9 @@ public class ProtectionEnvironmentListener extends AbstractHeavenGuardListener
 		}
 	}
 
-	private static boolean areInSameRegion(Block block1, Block block2)
+	private boolean areInSameRegion(Block block1, Block block2)
 	{
-		return HeavenGuard.getRegionManager().areInSameRegion(block1.getWorld().getName(), //
+		return plugin.getRegionManager().areInSameRegion(block1.getWorld().getName(), //
 				block1.getX(), block1.getY(), block1.getZ(), //
 				block2.getX(), block2.getY(), block2.getZ());
 	}
@@ -105,9 +113,9 @@ public class ProtectionEnvironmentListener extends AbstractHeavenGuardListener
 		}
 	}
 
-	private static boolean isProtected(Block block)
+	private boolean isProtected(Block block)
 	{
-		return HeavenGuard.getRegionManager().isProtectedAgainstEnvironment(block.getWorld().getName(), block.getX(),
-				block.getY(), block.getZ());
+		return plugin.getRegionManager().isProtectedAgainstEnvironment(block.getWorld().getName(), block.getX(), block.getY(),
+				block.getZ());
 	}
 }

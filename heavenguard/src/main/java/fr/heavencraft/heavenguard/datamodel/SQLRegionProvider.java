@@ -14,7 +14,7 @@ import org.bukkit.Bukkit;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
+import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavenguard.api.GlobalRegion;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
@@ -42,9 +42,9 @@ public class SQLRegionProvider implements RegionProvider
 	private final Map<String, GlobalRegion> globalRegionsByWorld = new HashMap<String, GlobalRegion>();
 
 	// Connection to the database
-	private final ConnectionProvider connectionProvider;
+	private final ConnectionHandler connectionProvider;
 
-	public SQLRegionProvider(ConnectionProvider connectionProvider)
+	public SQLRegionProvider(ConnectionHandler connectionProvider)
 	{
 		this.connectionProvider = connectionProvider;
 
@@ -67,7 +67,7 @@ public class SQLRegionProvider implements RegionProvider
 				while (rs.next())
 				{
 					++count;
-					addToCache(new SQLRegion(connectionProvider, rs));
+					addToCache(new SQLRegion(connectionProvider, rs, this));
 				}
 
 				log.info("%1$s regions loaded from database.", count);
@@ -91,7 +91,7 @@ public class SQLRegionProvider implements RegionProvider
 				if (!rs.next())
 					throw new RegionNotFoundException(name);
 
-				final Region region = new SQLRegion(connectionProvider, rs);
+				final Region region = new SQLRegion(connectionProvider, rs, this);
 				addToCache(region);
 				return region;
 			}
