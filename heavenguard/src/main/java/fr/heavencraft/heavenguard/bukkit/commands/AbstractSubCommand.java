@@ -2,16 +2,16 @@ package fr.heavencraft.heavenguard.bukkit.commands;
 
 import org.bukkit.command.CommandSender;
 
-import fr.heavencraft.heavenguard.api.RegionProvider;
+import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public abstract class AbstractSubCommand implements SubCommand
 {
-	protected final RegionProvider regionProvider;
+	protected final HeavenGuard plugin;
 	private final String permission;
 
-	protected AbstractSubCommand(RegionProvider regionProvider, String permission)
+	protected AbstractSubCommand(HeavenGuard plugin, String permission)
 	{
-		this.regionProvider = regionProvider;
+		this.plugin = plugin;
 		this.permission = permission;
 	}
 

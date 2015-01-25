@@ -4,14 +4,13 @@ import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class RemoveSubCommand extends AbstractSubCommand
 {
-	public RemoveSubCommand(RegionProvider regionProvider)
+	public RemoveSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.REMOVE_COMMAND);
+		super(plugin, HeavenGuardPermissions.REMOVE_COMMAND);
 	}
 
 	@Override
@@ -23,13 +22,13 @@ public class RemoveSubCommand extends AbstractSubCommand
 			return;
 		}
 
-		regionProvider.deleteRegion(regionName);
-		HeavenGuard.sendMessage(sender, "La protection {%1$s} a bien été supprimée.", regionName);
+		plugin.getRegionProvider().deleteRegion(regionName);
+		plugin.sendMessage(sender, "La protection {%1$s} a bien été supprimée.", regionName);
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {remove} <protection>");
+		plugin.sendMessage(sender, "/rg {remove} <protection>");
 	}
 }

@@ -9,9 +9,9 @@ import org.bukkit.generator.ChunkGenerator;
 
 public class CreativeChunkGenerator extends ChunkGenerator
 {
-	private static final int SMALL_PLOT = 2;
-	private static final int MEDIUM_PLOT = 5;
-	private static final int LARGE_PLOT = 11;
+	public static final int SMALL_PLOT = 2;
+	public static final int MEDIUM_PLOT = 5;
+	public static final int LARGE_PLOT = 11;
 
 	private static final int SMALL_ROAD = 2;
 	private static final int LARGE_ROAD = 4;

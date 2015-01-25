@@ -30,14 +30,23 @@ import org.bukkit.event.vehicle.VehicleDamageEvent;
 
 import com.google.common.collect.Sets;
 
-import fr.heavencraft.heavencore.bukkit.AbstractHeavenGuardListener;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class ProtectionPlayerListener extends AbstractHeavenGuardListener
+public class ProtectionPlayerListener extends AbstractListener
 {
+
 	private static final Collection<Material> VEHICULES = Sets.newHashSet(Material.BOAT, Material.MINECART,
 			Material.STORAGE_MINECART, Material.POWERED_MINECART, Material.EXPLOSIVE_MINECART, Material.HOPPER_MINECART,
 			Material.COMMAND_MINECART);
+
+	private final HeavenGuard plugin;
+
+	public ProtectionPlayerListener(HeavenGuard plugin)
+	{
+		super(plugin);
+		this.plugin = plugin;
+	}
 
 	/*
 	 * BlockEvent
@@ -370,25 +379,25 @@ public class ProtectionPlayerListener extends AbstractHeavenGuardListener
 			event.setCancelled(true);
 	}
 
-	private static boolean canBuildAt(Player player, Block block)
+	private boolean canBuildAt(Player player, Block block)
 	{
-		final boolean result = HeavenGuard.getRegionManager().canBuildAt(player.getUniqueId(), //
+		final boolean result = plugin.getRegionManager().canBuildAt(player.getUniqueId(), //
 				block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
 		if (!result)
-			HeavenGuard.sendMessage(player, "Cet endroit est protégé.");
+			plugin.sendMessage(player, "Cet endroit est protégé.");
 
 		return result;
 	}
 
-	private static boolean isPvp(Player player, Block block)
+	private boolean isPvp(Player player, Block block)
 	{
 
-		final boolean result = HeavenGuard.getRegionManager().isPvp( //
+		final boolean result = plugin.getRegionManager().isPvp( //
 				block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
 		if (!result)
-			HeavenGuard.sendMessage(player, "Cet endroit n'est pas PVP.");
+			plugin.sendMessage(player, "Cet endroit n'est pas PVP.");
 
 		return result;
 	}

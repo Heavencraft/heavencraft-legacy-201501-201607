@@ -2,12 +2,10 @@ package fr.heavencraft.heavenguard.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 
-import fr.heavencraft.heavencore.bukkit.AbstractBukkitPlugin;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavencore.sql.ConnectionProvider.Database;
-import fr.heavencraft.heavencore.sql.DefaultConnectionProvider;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavenguard.api.RegionManager;
 import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.listeners.PlayerListener;
@@ -28,8 +26,14 @@ import fr.heavencraft.heavenguard.datamodel.SQLRegionProvider;
  * hg_uuid (id, uuid, last_name)
  * 
  */
-public class HeavenGuard extends AbstractBukkitPlugin
+public class HeavenGuard extends HeavenPlugin
 {
+	public HeavenGuard()
+	{
+		textColor = ChatColor.AQUA.toString();
+		highlightColor = ChatColor.GREEN.toString();
+	}
+
 	public static final String PLUGIN_NAME = "HeavenGuard";
 
 	private static HeavenGuard instance;
@@ -39,65 +43,47 @@ public class HeavenGuard extends AbstractBukkitPlugin
 		return instance;
 	}
 
-	private static RegionProvider regionProvider;
-	private static RegionManager regionManager;
+	private RegionProvider regionProvider;
+	private RegionManager regionManager;
 
-	private ConnectionProvider connectionProvider;
+	private ConnectionHandler connectionHandler;
 
 	@Override
 	public void onEnable()
 	{
-		instance = this;
+		try
+		{
+			super.onEnable();
+			saveDefaultConfig();
 
-		super.onEnable();
+			instance = this;
 
-		new PlayerListener();
+			new PlayerListener(this);
 
-		new ProtectionPlayerListener();
-		new ProtectionEnvironmentListener();
+			new ProtectionPlayerListener(this);
+			new ProtectionEnvironmentListener(this);
 
-		connectionProvider = new DefaultConnectionProvider(Database.TEST);
+			connectionHandler = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString("database"));
 
-		regionProvider = new SQLRegionProvider(connectionProvider);
-		regionManager = new RegionManager(regionProvider);
+			regionProvider = new SQLRegionProvider(connectionHandler);
+			regionManager = new RegionManager(regionProvider);
 
-		new RegionCommand(this, regionProvider);
+			new RegionCommand(this);
+		}
+		catch (final Exception ex)
+		{
+			ex.printStackTrace();
+			Bukkit.shutdown();
+		}
 	}
 
-	public static RegionProvider getRegionProvider()
+	public RegionProvider getRegionProvider()
 	{
 		return regionProvider;
 	}
 
-	public static RegionManager getRegionManager()
+	public RegionManager getRegionManager()
 	{
 		return regionManager;
-	}
-
-	/*
-	 * 
-	 */
-
-	/*
-	 * SendMessage Utility
-	 */
-
-	private static final String BEGIN = "{";
-	private static final String END = "}";
-	private static final String COLOR = ChatColor.AQUA.toString();
-	private static final String COLOR_H = ChatColor.GREEN.toString();
-
-	public static void sendMessage(final CommandSender sender, final String format, final Object... args)
-	{
-		Bukkit.getScheduler().runTask(getInstance(), new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				String message = String.format(format, args);
-				message = COLOR + message.replace(BEGIN, COLOR_H).replace(END, COLOR);
-				sender.sendMessage(message);
-			}
-		});
 	}
 }

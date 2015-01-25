@@ -7,20 +7,19 @@ import org.bukkit.command.CommandSender;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class AddMemberSubCommand extends AbstractOwnerSubCommand
 {
-	public AddMemberSubCommand(RegionProvider regionProvider)
+	public AddMemberSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.ADDMEMBER_COMMAND);
+		super(plugin, HeavenGuardPermissions.ADDMEMBER_COMMAND);
 	}
 
 	@Override
 	public void execute(CommandSender sender, String regionName, String[] args) throws HeavenException
 	{
-		final Region region = regionProvider.getRegionByName(regionName);
+		final Region region = plugin.getRegionProvider().getRegionByName(regionName);
 
 		for (final String arg : args)
 		{
@@ -28,14 +27,13 @@ public class AddMemberSubCommand extends AbstractOwnerSubCommand
 			final OfflinePlayer player = Bukkit.getOfflinePlayer(arg);
 
 			region.addMember(player.getUniqueId(), false);
-			HeavenGuard
-					.sendMessage(sender, "{%1$s} est maintenant membre de la protection {%2$s}.", player.getName(), regionName);
+			plugin.sendMessage(sender, "{%1$s} est maintenant membre de la protection {%2$s}.", player.getName(), regionName);
 		}
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {addmember} <protection> <membre(s)>");
+		plugin.sendMessage(sender, "/rg {addmember} <protection> <membre(s)>");
 	}
 }

@@ -4,14 +4,13 @@ import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class SetparentSubCommand extends AbstractSubCommand
 {
-	public SetparentSubCommand(RegionProvider regionProvider)
+	public SetparentSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.SETPARENT_COMMAND);
+		super(plugin, HeavenGuardPermissions.SETPARENT_COMMAND);
 	}
 
 	@Override
@@ -36,12 +35,12 @@ public class SetparentSubCommand extends AbstractSubCommand
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {setparent} <protection> <protection parente>");
+		plugin.sendMessage(sender, "/rg {setparent} <protection> <protection parente>");
 	}
 
 	private void setparent(CommandSender sender, String regionName, String parentName) throws HeavenException
 	{
-		regionProvider.getRegionByName(regionName).setParent(parentName);
-		HeavenGuard.sendMessage(sender, "La protection {%1$s} a désormais pour parent {%2$s}.", regionName, parentName);
+		plugin.getRegionProvider().getRegionByName(regionName).setParent(parentName);
+		plugin.sendMessage(sender, "La protection {%1$s} a désormais pour parent {%2$s}.", regionName, parentName);
 	}
 }

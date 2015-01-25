@@ -14,10 +14,10 @@ import java.util.UUID;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
+import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.api.RegionProvider;
 
 public class SQLRegion implements Region
 {
@@ -34,7 +34,8 @@ public class SQLRegion implements Region
 	private static final String FLAG_PREFIX = "flag_";
 	private static final String SET_FLAG = "UPDATE regions SET %1$s = ? WHERE name = LOWER(?) LIMIT 1;";
 
-	private final ConnectionProvider connectionProvider;
+	private final ConnectionHandler connectionProvider;
+	private final RegionProvider regionProvider;
 
 	private final String name;
 	private String parentName;
@@ -53,9 +54,10 @@ public class SQLRegion implements Region
 	// Flags
 	private final Map<Flag, Boolean> booleanFlags = new HashMap<Flag, Boolean>();
 
-	SQLRegion(ConnectionProvider connectionProvider, ResultSet rs) throws SQLException
+	SQLRegion(ConnectionHandler connectionHandler, ResultSet rs, RegionProvider regionProvider) throws SQLException
 	{
-		this.connectionProvider = connectionProvider;
+		this.connectionProvider = connectionHandler;
+		this.regionProvider = regionProvider;
 
 		name = rs.getString("name");
 		parentName = rs.getString("parent_name");
@@ -163,7 +165,7 @@ public class SQLRegion implements Region
 
 		try
 		{
-			return HeavenGuard.getRegionProvider().getRegionByName(parentName);
+			return regionProvider.getRegionByName(parentName);
 		}
 		catch (final HeavenException ex)
 		{

@@ -8,14 +8,13 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class FlagSubCommand extends AbstractSubCommand
 {
-	public FlagSubCommand(RegionProvider regionProvider)
+	public FlagSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.FLAG_COMMAND);
+		super(plugin, HeavenGuardPermissions.FLAG_COMMAND);
 	}
 
 	@Override
@@ -40,8 +39,8 @@ public class FlagSubCommand extends AbstractSubCommand
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {flag} <protection> <flag> : pour supprimer un flag");
-		HeavenGuard.sendMessage(sender, "/rg {flag} <protection> <flag> <valeur> : pour ajouter un flag");
+		plugin.sendMessage(sender, "/rg {flag} <protection> <flag> : pour supprimer un flag");
+		plugin.sendMessage(sender, "/rg {flag} <protection> <flag> <valeur> : pour ajouter un flag");
 	}
 
 	private void flag(CommandSender sender, String regionName, String flagName, String value) throws HeavenException
@@ -51,7 +50,7 @@ public class FlagSubCommand extends AbstractSubCommand
 		if (flag == null)
 			throw new HeavenException("Le flag {%1$s} n'existe pas.", flagName);
 
-		final Region region = regionProvider.getRegionByName(regionName);
+		final Region region = plugin.getRegionProvider().getRegionByName(regionName);
 
 		switch (flag.getType())
 		{
@@ -60,7 +59,6 @@ public class FlagSubCommand extends AbstractSubCommand
 				break;
 		}
 
-		HeavenGuard.sendMessage(sender, "La protection {%1$s} a désormais : {%2$s} = {%3$s}", region.getName(), flag.getName(),
-				value);
+		plugin.sendMessage(sender, "La protection {%1$s} a désormais : {%2$s} = {%3$s}", region.getName(), flag.getName(), value);
 	}
 }

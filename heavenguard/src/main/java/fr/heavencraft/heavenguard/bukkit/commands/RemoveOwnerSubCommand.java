@@ -7,20 +7,19 @@ import org.bukkit.command.CommandSender;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class RemoveOwnerSubCommand extends AbstractSubCommand
 {
-	public RemoveOwnerSubCommand(RegionProvider regionProvider)
+	public RemoveOwnerSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.REMOVEOWNER_COMMAND);
+		super(plugin, HeavenGuardPermissions.REMOVEOWNER_COMMAND);
 	}
 
 	@Override
 	public void execute(CommandSender sender, String regionName, String[] args) throws HeavenException
 	{
-		final Region region = regionProvider.getRegionByName(regionName);
+		final Region region = plugin.getRegionProvider().getRegionByName(regionName);
 
 		for (final String arg : args)
 		{
@@ -28,14 +27,13 @@ public class RemoveOwnerSubCommand extends AbstractSubCommand
 			final OfflinePlayer player = Bukkit.getOfflinePlayer(arg);
 
 			region.removeMember(player.getUniqueId(), true);
-			HeavenGuard.sendMessage(sender, "{%1$s} n'est plus propriétaire de la protection {%2$s}.", player.getName(),
-					regionName);
+			plugin.sendMessage(sender, "{%1$s} n'est plus propriétaire de la protection {%2$s}.", player.getName(), regionName);
 		}
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {removemember} <protection> <membre(s)>");
+		plugin.sendMessage(sender, "/rg {removemember} <protection> <membre(s)>");
 	}
 }

@@ -13,14 +13,13 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.WorldEditUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class SelectSubCommand extends AbstractSubCommand
 {
-	public SelectSubCommand(RegionProvider regionProvider)
+	public SelectSubCommand(HeavenGuard plugin)
 	{
-		super(regionProvider, HeavenGuardPermissions.SELECT_COMMAND);
+		super(plugin, HeavenGuardPermissions.SELECT_COMMAND);
 	}
 
 	@Override
@@ -35,7 +34,7 @@ public class SelectSubCommand extends AbstractSubCommand
 		if (!(sender instanceof Player))
 			throw new HeavenException("Il faut être un joueur pour utiliser /region select.");
 
-		final Region region = regionProvider.getRegionByName(regionName);
+		final Region region = plugin.getRegionProvider().getRegionByName(regionName);
 		final World world = Bukkit.getWorld(region.getWorld());
 
 		final Selection selection = new CuboidSelection(world, //
@@ -43,12 +42,12 @@ public class SelectSubCommand extends AbstractSubCommand
 				new Location(world, region.getMaxX(), region.getMaxY(), region.getMaxZ()));
 
 		WorldEditUtil.getWorldEdit().setSelection((Player) sender, selection);
-		HeavenGuard.sendMessage(sender, "La protection {%1$s} a (peut-être) été selectionnée.", regionName);
+		plugin.sendMessage(sender, "La protection {%1$s} a (peut-être) été selectionnée.", regionName);
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		HeavenGuard.sendMessage(sender, "/rg {select} <protection>");
+		plugin.sendMessage(sender, "/rg {select} <protection>");
 	}
 }

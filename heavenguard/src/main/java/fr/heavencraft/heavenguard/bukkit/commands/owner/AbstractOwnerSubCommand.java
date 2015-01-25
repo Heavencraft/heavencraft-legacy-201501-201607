@@ -4,14 +4,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavenguard.api.RegionProvider;
+import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 import fr.heavencraft.heavenguard.bukkit.commands.AbstractSubCommand;
 
 abstract class AbstractOwnerSubCommand extends AbstractSubCommand
 {
-	protected AbstractOwnerSubCommand(RegionProvider regionProvider, String permission)
+	protected AbstractOwnerSubCommand(HeavenGuard plugin, String permission)
 	{
-		super(regionProvider, permission);
+		super(plugin, permission);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ abstract class AbstractOwnerSubCommand extends AbstractSubCommand
 		{
 			try
 			{
-				return regionProvider.getRegionByName(regionName).isMember(((Player) sender).getUniqueId(), true);
+				return plugin.getRegionProvider().getRegionByName(regionName).isMember(((Player) sender).getUniqueId(), true);
 			}
 			catch (final HeavenException ex)
 			{
