@@ -89,12 +89,10 @@ public class User
 	public void updateBalance(int delta) throws HeavenException
 	{
 		if (balance < 0)
-			throw new HeavenException("Vous avez moins de 0 pièces d'or sur vous. O_o");
+			throw new HeavenException("Vous avez moins de 0 jetons sur vous. Merci de contacter un administrateur.");
 
 		if (balance + delta < 0)
-			// throw new
-			// LorganException("Vous n'avez pas assez de pièces d'or sur vous.");
-			throw new HeavenException("Vous fouillez dans votre bourse... Vous n'avez pas assez.");
+			throw new HeavenException("Vous n'avez pas assez de jetons.");
 
 		balance += delta;
 
