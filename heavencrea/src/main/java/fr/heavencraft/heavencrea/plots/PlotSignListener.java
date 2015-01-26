@@ -1,5 +1,7 @@
 package fr.heavencraft.heavencrea.plots;
 
+import java.util.Collection;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -7,11 +9,13 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 
-import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencrea.CreativeChunkGenerator;
+import fr.heavencraft.heavencrea.HeavenCrea;
+import fr.heavencraft.heavencrea.users.User;
 import fr.heavencraft.heavenguard.api.Region;
+import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class PlotSignListener extends AbstractSignListener
@@ -20,31 +24,46 @@ public class PlotSignListener extends AbstractSignListener
 	private static final int MEDIUM_PRICE = 2500;
 	private static final int LARGE_PRICE = 10000;
 
-	public PlotSignListener(HeavenPlugin plugin)
+	private final HeavenCrea plugin;
+
+	public PlotSignListener(HeavenCrea plugin)
 	{
 		super(plugin, "Parcelle", "");
+		this.plugin = plugin;
 	}
 
 	@Override
 	protected boolean onSignPlace(Player player, SignChangeEvent event) throws HeavenException
 	{
-		// TODO Auto-generated method stub
+		String world = event.getBlock().getLocation().getWorld().getName();
+		int x = event.getBlock().getLocation().getBlockX();
+		int y = event.getBlock().getLocation().getBlockY();
+		int z = event.getBlock().getLocation().getBlockZ();
+
+		Collection<Region> regions = HeavenGuard.getInstance().getRegionProvider().getRegionsAtLocation(world, x, y, z);
+
+		if (regions.size() != 0)
+			throw new HeavenException("Une protection existe déjà ici.");
+
+		Plot plot = getPlotAt(event.getBlock().getLocation());
+
+		event.setLine(1, plot.price + " jetons");
+
 		return true;
 	}
 
 	@Override
 	protected void onSignClick(Player player, Sign sign) throws HeavenException
 	{
+		// Get the plot
 		final Plot plot = getPlotAt(sign.getLocation());
 
-		final Region region = HeavenGuard.getInstance().getRegionProvider()
-				.createRegion("parcelle_" + player.getName(), sign.getLocation().getWorld().getName(),//
-						plot.minX, 0, plot.minZ, //
-						plot.maxX, 0xFF, plot.maxZ);
+		// Take the money
+		User user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
+		user.updateBalance(-plot.price);
 
-		region.addMember(player.getUniqueId(), true);
-
-		sign.getBlock().breakNaturally();
+		// Create the region
+		final Region region = createRegion(player, sign.getWorld().getName(), plot);
 
 		// Set redstone border
 		for (int x = plot.minX; x <= plot.maxX; x++)
@@ -58,7 +77,29 @@ public class PlotSignListener extends AbstractSignListener
 			Bukkit.getWorld("world_creative").getBlockAt(plot.maxX, 51, z).setType(Material.REDSTONE_BLOCK);
 		}
 
-		plugin.sendMessage(player, "Vous venez d'acheter la parcelle {%1$s} pour {%2$s} jetons.", region.getName(), plot.price);
+		sign.getBlock().breakNaturally();
+		plugin.sendMessage(player, "Vous venez d'acheter la parcelle {%1$s} pour {%2$s} jetons.", region.getName(),
+				plot.price);
+	}
+
+	private Region createRegion(Player player, String world, final Plot plot) throws HeavenException
+	{
+		RegionProvider regionProvider = HeavenGuard.getInstance().getRegionProvider();
+		String regionName;
+		int i = 1;
+
+		do
+		{
+			regionName = "parcelle_" + player.getName() + "_" + i;
+		}
+		while (regionProvider.regionExists(regionName));
+
+		final Region region = regionProvider.createRegion(regionName, world,//
+				plot.minX, 0, plot.minZ, //
+				plot.maxX, 0xFF, plot.maxZ);
+
+		region.addMember(player.getUniqueId(), true);
+		return region;
 	}
 
 	@Override
@@ -104,7 +145,7 @@ public class PlotSignListener extends AbstractSignListener
 		final Plot plot = new Plot();
 		plot.price = price;
 
-		if (plot.minX < plot.maxX)
+		if (minX < maxX)
 		{
 			plot.minX = minX;
 			plot.maxX = maxX;
@@ -115,7 +156,7 @@ public class PlotSignListener extends AbstractSignListener
 			plot.minX = maxX;
 		}
 
-		if (plot.minZ < plot.maxZ)
+		if (minZ < maxZ)
 		{
 			plot.minZ = minZ;
 			plot.maxZ = maxZ;
@@ -135,7 +176,6 @@ public class PlotSignListener extends AbstractSignListener
 		int minZ;
 		int maxX;
 		int maxZ;
-
 		int price;
 	}
 }
