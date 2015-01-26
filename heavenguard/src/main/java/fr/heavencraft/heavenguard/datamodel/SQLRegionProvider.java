@@ -264,7 +264,12 @@ public class SQLRegionProvider implements RegionProvider
 		if (region != null)
 			return region;
 
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean regionExists(String name)
+	{
+		return regionsByName.containsKey(name);
 	}
 }

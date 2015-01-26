@@ -17,4 +17,6 @@ public interface RegionProvider extends Provider
 	Collection<Region> getRegionsAtLocation(String world, int x, int y, int z);
 
 	GlobalRegion getGlobalRegion(String world);
+
+	boolean regionExists(String name);
 }
