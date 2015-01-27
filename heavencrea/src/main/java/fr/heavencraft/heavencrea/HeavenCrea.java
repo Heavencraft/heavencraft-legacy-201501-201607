@@ -1,8 +1,11 @@
 package fr.heavencraft.heavencrea;
 
+import org.bukkit.Bukkit;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.plugin.Plugin;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
@@ -10,10 +13,11 @@ import fr.heavencraft.heavencrea.bukkit.commands.JetonsCommand;
 import fr.heavencraft.heavencrea.plots.PlotSignListener;
 import fr.heavencraft.heavencrea.users.UserListener;
 import fr.heavencraft.heavencrea.users.UserProvider;
+import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class HeavenCrea extends HeavenPlugin
 {
-	private static HeavenCrea instance;
+	private HeavenGuard regionPlugin;
 
 	private ConnectionHandler connectionHandler;
 	private UserProvider userProvider;
@@ -21,24 +25,40 @@ public class HeavenCrea extends HeavenPlugin
 	@Override
 	public void onEnable()
 	{
-		super.onEnable();
+		try
+		{
+			super.onEnable();
 
-		instance = this;
-		connectionHandler = ConnectionHandlerFactory.getConnectionHandler(Database.TEST);
-		userProvider = new UserProvider(connectionHandler);
+			regionPlugin = loadHeavenGuard();
 
-		/*
-		 * Commands and listeners (Bukkit)
-		 */
+			connectionHandler = ConnectionHandlerFactory.getConnectionHandler(Database.TEST);
+			userProvider = new UserProvider(connectionHandler);
 
-		new JetonsCommand(this);
-		new UserListener(this);
-		new PlotSignListener(this);
+			/*
+			 * Commands and listeners (Bukkit)
+			 */
+
+			new JetonsCommand(this);
+			new UserListener(this);
+			new PlotSignListener(this, regionPlugin);
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			Bukkit.shutdown();
+		}
 	}
 
-	public static HeavenCrea getInstance()
+	private static HeavenGuard loadHeavenGuard() throws HeavenException
 	{
-		return instance;
+		Plugin plugin = Bukkit.getPluginManager().getPlugin("HeavenGuard");
+
+		if (plugin != null && plugin instanceof HeavenGuard)
+		{
+			return (HeavenGuard) plugin;
+		}
+
+		throw new HeavenException("Impossible to load HeavenGuard");
 	}
 
 	public UserProvider getUserProvider()
