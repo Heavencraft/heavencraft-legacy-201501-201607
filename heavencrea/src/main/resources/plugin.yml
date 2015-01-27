@@ -1,8 +1,9 @@
 name: HeavenCrea
 version: 1.0
 main: fr.heavencraft.heavencrea.HeavenCrea
-depend: [HeavenCore]
+depend: [HeavenCore, HeavenGuard]
 load: startup
 commands:
   jetons:
     aliases: [jeton]
+  plot:
