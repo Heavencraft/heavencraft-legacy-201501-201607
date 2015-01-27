@@ -10,6 +10,7 @@ import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavencrea.bukkit.commands.JetonsCommand;
+import fr.heavencraft.heavencrea.plots.PlotCommand;
 import fr.heavencraft.heavencrea.plots.PlotSignListener;
 import fr.heavencraft.heavencrea.users.UserListener;
 import fr.heavencraft.heavencrea.users.UserProvider;
@@ -41,8 +42,9 @@ public class HeavenCrea extends HeavenPlugin
 			new JetonsCommand(this);
 			new UserListener(this);
 			new PlotSignListener(this, regionPlugin);
+			new PlotCommand(this, regionPlugin);
 		}
-		catch (Exception ex)
+		catch (final Exception ex)
 		{
 			ex.printStackTrace();
 			Bukkit.shutdown();
@@ -51,7 +53,7 @@ public class HeavenCrea extends HeavenPlugin
 
 	private static HeavenGuard loadHeavenGuard() throws HeavenException
 	{
-		Plugin plugin = Bukkit.getPluginManager().getPlugin("HeavenGuard");
+		final Plugin plugin = Bukkit.getPluginManager().getPlugin("HeavenGuard");
 
 		if (plugin != null && plugin instanceof HeavenGuard)
 		{
