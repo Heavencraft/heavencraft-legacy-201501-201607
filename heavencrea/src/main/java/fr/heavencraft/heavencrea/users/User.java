@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -35,8 +33,6 @@ public class User
 	private int balance;
 	private final int homeNumber;
 	private Timestamp lastLogin;
-
-	private final Map<Integer, Location> homes = new HashMap<Integer, Location>();
 
 	public User(ConnectionHandler connectionHandler, ResultSet rs) throws SQLException
 	{
