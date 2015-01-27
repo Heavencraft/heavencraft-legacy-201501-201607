@@ -34,15 +34,6 @@ public class HeavenGuard extends HeavenPlugin
 		highlightColor = ChatColor.GREEN.toString();
 	}
 
-	public static final String PLUGIN_NAME = "HeavenGuard";
-
-	private static HeavenGuard instance;
-
-	public static HeavenGuard getInstance()
-	{
-		return instance;
-	}
-
 	private RegionProvider regionProvider;
 	private RegionManager regionManager;
 
@@ -55,8 +46,6 @@ public class HeavenGuard extends HeavenPlugin
 		{
 			super.onEnable();
 			saveDefaultConfig();
-
-			instance = this;
 
 			new PlayerListener(this);
 
