@@ -31,8 +31,6 @@ public class SQLRegionProvider implements RegionProvider
 	private static final String CREATE_REGION = "INSERT INTO regions (name, world, min_x, min_y, min_z, max_x, max_y, max_z) VALUES (LOWER(?), LOWER(?), ?, ?, ?, ?, ?, ?);";
 	private static final String DELETE_REGION = "DELETE FROM regions WHERE name = LOWER(?) LIMIT 1;";
 
-	private static final String CREATE_GLOBAL_REGION = "INSERT INTO global_regions (name) VALUES (LOWER(?));";
-
 	// Logger
 	private final HeavenLog log = HeavenLog.getLogger(getClass());
 
