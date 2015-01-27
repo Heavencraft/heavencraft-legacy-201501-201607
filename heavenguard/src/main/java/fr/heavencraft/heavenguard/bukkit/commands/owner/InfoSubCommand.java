@@ -68,7 +68,7 @@ public class InfoSubCommand extends AbstractOwnerSubCommand
 
 			for (final Iterator<UUID> it = owners.iterator(); it.hasNext();)
 			{
-				str.append(HeavenGuard.getInstance().getUniqueIdProvider().getNameFromUniqueId(it.next()));
+				str.append(plugin.getUniqueIdProvider().getNameFromUniqueId(it.next()));
 
 				if (it.hasNext())
 					str.append(", ");
@@ -84,7 +84,7 @@ public class InfoSubCommand extends AbstractOwnerSubCommand
 
 			for (final Iterator<UUID> it = members.iterator(); it.hasNext();)
 			{
-				str.append(HeavenGuard.getInstance().getUniqueIdProvider().getNameFromUniqueId(it.next()));
+				str.append(plugin.getUniqueIdProvider().getNameFromUniqueId(it.next()));
 
 				if (it.hasNext())
 					str.append(", ");

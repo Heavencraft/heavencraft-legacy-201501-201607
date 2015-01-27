@@ -33,7 +33,12 @@ public class DefineSubCommand extends AbstractSubCommand
 		if (args.length != 0)
 		{
 			for (final String ownerName : args)
-				owners.add(Bukkit.getOfflinePlayer(ownerName));
+			{
+				@SuppressWarnings("deprecation")
+				OfflinePlayer owner = Bukkit.getOfflinePlayer(ownerName);
+
+				owners.add(owner);
+			}
 		}
 
 		define(sender, regionName, selection, owners);
