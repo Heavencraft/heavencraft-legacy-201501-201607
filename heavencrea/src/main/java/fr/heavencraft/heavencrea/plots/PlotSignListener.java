@@ -25,27 +25,28 @@ public class PlotSignListener extends AbstractSignListener
 	private static final int LARGE_PRICE = 10000;
 
 	private final HeavenCrea plugin;
+	private final HeavenGuard regionPlugin;
 
-	public PlotSignListener(HeavenCrea plugin)
+	public PlotSignListener(HeavenCrea plugin, HeavenGuard regionPlugin)
 	{
 		super(plugin, "Parcelle", "");
+
 		this.plugin = plugin;
+		this.regionPlugin = regionPlugin;
 	}
 
 	@Override
 	protected boolean onSignPlace(Player player, SignChangeEvent event) throws HeavenException
 	{
-		String world = event.getBlock().getLocation().getWorld().getName();
-		int x = event.getBlock().getLocation().getBlockX();
-		int y = event.getBlock().getLocation().getBlockY();
-		int z = event.getBlock().getLocation().getBlockZ();
+		Location location = event.getBlock().getLocation();
 
-		Collection<Region> regions = HeavenGuard.getInstance().getRegionProvider().getRegionsAtLocation(world, x, y, z);
+		Collection<Region> regions = regionPlugin.getRegionProvider().getRegionsAtLocation(location.getWorld().getName(), //
+				location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
 		if (regions.size() != 0)
 			throw new HeavenException("Une protection existe déjà ici.");
 
-		Plot plot = getPlotAt(event.getBlock().getLocation());
+		Plot plot = getPlotAt(location);
 
 		event.setLine(1, plot.price + " jetons");
 
@@ -78,13 +79,12 @@ public class PlotSignListener extends AbstractSignListener
 		}
 
 		sign.getBlock().breakNaturally();
-		plugin.sendMessage(player, "Vous venez d'acheter la parcelle {%1$s} pour {%2$s} jetons.", region.getName(),
-				plot.price);
+		plugin.sendMessage(player, "Vous venez d'acheter la parcelle {%1$s} pour {%2$s} jetons.", region.getName(), plot.price);
 	}
 
 	private Region createRegion(Player player, String world, final Plot plot) throws HeavenException
 	{
-		RegionProvider regionProvider = HeavenGuard.getInstance().getRegionProvider();
+		RegionProvider regionProvider = regionPlugin.getRegionProvider();
 		String regionName;
 		int i = 1;
 
