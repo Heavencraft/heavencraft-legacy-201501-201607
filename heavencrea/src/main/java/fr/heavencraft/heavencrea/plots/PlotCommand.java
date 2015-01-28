@@ -1,6 +1,7 @@
 package fr.heavencraft.heavencrea.plots;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -32,24 +33,36 @@ public class PlotCommand extends AbstractCommandExecutor
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		if (args.length == 0)
+		if (args.length != 2)
 		{
 			sendUsage(sender);
 			return;
 		}
 
+		final Region region = hGuard.getRegionProvider().getRegionByName(args[1].toLowerCase());
+
 		switch (args[0])
 		{
+			case "tp":
+				if (sender instanceof Player)
+				{
+					final World world = Bukkit.getWorld(region.getWorld());
+					final int x = region.getMinX();
+					final int z = region.getMinZ();
+
+					((Player) sender).teleport(new Location(world, x, 51, z));
+				}
+				break;
+
 			case "clear":
-				final Region region = hGuard.getRegionProvider().getRegionByName(args[1].toLowerCase());
+				clearPlot(region, Material.REDSTONE_BLOCK);
+				plugin.sendMessage(sender, "La parcelle {%1$s} a bien été nettoyée.", region.getName());
+				break;
 
-				final World world = Bukkit.getWorld(region.getWorld());
-				final int minX = region.getMinX();
-				final int maxX = region.getMaxX();
-				final int minZ = region.getMinZ();
-				final int maxZ = region.getMaxZ();
-
-				clearPlot(world, minX, maxX, minZ, maxZ, Material.REDSTONE_BLOCK);
+			case "remove":
+				clearPlot(region, Material.EMERALD_BLOCK);
+				hGuard.getRegionProvider().deleteRegion(region.getName());
+				plugin.sendMessage(sender, "La parcelle {%1$s} a bien été supprimée.", region.getName());
 				break;
 
 			default:
@@ -64,9 +77,14 @@ public class PlotCommand extends AbstractCommandExecutor
 		plugin.sendMessage(sender, "/{plot} clear <protection>");
 	}
 
-	private void clearPlot(final World world, final int minX, final int maxX, final int minZ, final int maxZ,
-			final Material border) throws HeavenException
+	private void clearPlot(Region region, final Material border) throws HeavenException
 	{
+		final World world = Bukkit.getWorld(region.getWorld());
+		final int minX = region.getMinX();
+		final int maxX = region.getMaxX();
+		final int minZ = region.getMinZ();
+		final int maxZ = region.getMaxZ();
+
 		for (int x = minX; x <= maxX; x++)
 		{
 			for (int z = minZ; z <= maxZ; z++)
