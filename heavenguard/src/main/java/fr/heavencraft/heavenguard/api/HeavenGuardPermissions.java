@@ -2,6 +2,8 @@ package fr.heavencraft.heavenguard.api;
 
 public class HeavenGuardPermissions
 {
+	public static final String BYPASS = "heavenguard.bypass";
+	
 	public static final String DEFINE_COMMAND = "heavenguard.commands.define";
 	public static final String FLAG_COMMAND = "heavenguard.commands.flag";
 	public static final String REDEFINE_COMMAND = "heavenguard.redefine";
