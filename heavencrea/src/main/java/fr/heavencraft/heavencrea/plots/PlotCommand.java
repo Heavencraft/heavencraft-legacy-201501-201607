@@ -51,6 +51,7 @@ public class PlotCommand extends AbstractCommandExecutor
 					final int z = region.getMinZ();
 
 					((Player) sender).teleport(new Location(world, x, 51, z));
+					plugin.sendMessage(sender, "Vous avez été téléporté à la parcelle {%1$s}.", region.getName());
 				}
 				break;
 
@@ -74,7 +75,9 @@ public class PlotCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
+		plugin.sendMessage(sender, "/{plot} tp <protection>");
 		plugin.sendMessage(sender, "/{plot} clear <protection>");
+		plugin.sendMessage(sender, "/{plot} remvoe <protection>");
 	}
 
 	private void clearPlot(Region region, final Material border) throws HeavenException
