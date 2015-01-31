@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
@@ -19,7 +20,7 @@ public class PlotCommand extends AbstractCommandExecutor
 
 	public PlotCommand(HeavenPlugin plugin, HeavenGuard hGuard)
 	{
-		super(plugin, "plot", "heavencrea.plot", null);
+		super(plugin, "plot", CreaPermissions.PLOT_COMMAND);
 
 		this.hGuard = hGuard;
 	}
@@ -74,7 +75,9 @@ public class PlotCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
+		plugin.sendMessage(sender, "/{plot} tp <protection>");
 		plugin.sendMessage(sender, "/{plot} clear <protection>");
+		plugin.sendMessage(sender, "/{plot} remove <protection>");
 	}
 
 	private void clearPlot(Region region, final Material border) throws HeavenException

@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencore.bukkit.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -14,6 +15,16 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 public abstract class AbstractCommandExecutor implements CommandExecutor
 {
 	protected final HeavenPlugin plugin;
+
+	public AbstractCommandExecutor(HeavenPlugin plugin, String name)
+	{
+		this(plugin, name, "", new ArrayList<String>());
+	}
+
+	public AbstractCommandExecutor(HeavenPlugin plugin, String name, String permission)
+	{
+		this(plugin, name, permission, new ArrayList<String>());
+	}
 
 	public AbstractCommandExecutor(HeavenPlugin plugin, String name, List<String> aliases)
 	{

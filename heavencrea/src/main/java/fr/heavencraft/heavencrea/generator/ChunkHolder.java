@@ -1,4 +1,4 @@
-package fr.heavencraft.heavencrea;
+package fr.heavencraft.heavencrea.generator;
 
 import org.bukkit.Material;
 

@@ -11,8 +11,9 @@ import org.bukkit.event.block.SignChangeEvent;
 
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencrea.CreativeChunkGenerator;
+import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
+import fr.heavencraft.heavencrea.generator.CreativeChunkGenerator;
 import fr.heavencraft.heavencrea.users.User;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
@@ -29,7 +30,7 @@ public class PlotSignListener extends AbstractSignListener
 
 	public PlotSignListener(HeavenCrea plugin, HeavenGuard regionPlugin)
 	{
-		super(plugin, "Parcelle", "");
+		super(plugin, "Parcelle", CreaPermissions.PARCELLE_SIGN);
 
 		this.plugin = plugin;
 		this.regionPlugin = regionPlugin;
@@ -38,15 +39,15 @@ public class PlotSignListener extends AbstractSignListener
 	@Override
 	protected boolean onSignPlace(Player player, SignChangeEvent event) throws HeavenException
 	{
-		Location location = event.getBlock().getLocation();
+		final Location location = event.getBlock().getLocation();
 
-		Collection<Region> regions = regionPlugin.getRegionProvider().getRegionsAtLocation(location.getWorld().getName(), //
+		final Collection<Region> regions = regionPlugin.getRegionProvider().getRegionsAtLocation(location.getWorld().getName(), //
 				location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
 		if (regions.size() != 0)
 			throw new HeavenException("Une protection existe déjà ici.");
 
-		Plot plot = getPlotAt(location);
+		final Plot plot = getPlotAt(location);
 
 		event.setLine(1, plot.price + " jetons");
 
@@ -60,7 +61,7 @@ public class PlotSignListener extends AbstractSignListener
 		final Plot plot = getPlotAt(sign.getLocation());
 
 		// Take the money
-		User user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
+		final User user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
 		user.updateBalance(-plot.price);
 
 		// Create the region
@@ -84,9 +85,9 @@ public class PlotSignListener extends AbstractSignListener
 
 	private Region createRegion(Player player, String world, final Plot plot) throws HeavenException
 	{
-		RegionProvider regionProvider = regionPlugin.getRegionProvider();
+		final RegionProvider regionProvider = regionPlugin.getRegionProvider();
 		String regionName;
-		int i = 1;
+		final int i = 1;
 
 		do
 		{
