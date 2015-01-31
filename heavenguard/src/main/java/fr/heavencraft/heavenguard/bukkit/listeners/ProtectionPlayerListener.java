@@ -31,6 +31,7 @@ import org.bukkit.event.vehicle.VehicleDamageEvent;
 import com.google.common.collect.Sets;
 
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
+import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class ProtectionPlayerListener extends AbstractListener
@@ -381,6 +382,9 @@ public class ProtectionPlayerListener extends AbstractListener
 
 	private boolean canBuildAt(Player player, Block block)
 	{
+		if (player.hasPermission(HeavenGuardPermissions.BYPASS))
+			return true;
+		
 		final boolean result = plugin.getRegionManager().canBuildAt(player.getUniqueId(), //
 				block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
