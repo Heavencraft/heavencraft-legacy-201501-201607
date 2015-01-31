@@ -5,23 +5,38 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.commands.AccepterCommand;
+import fr.heavencraft.heavencore.bukkit.commands.RejoindreCommand;
+import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TpCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TphereCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TpposCommand;
+import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
-import fr.heavencraft.heavencrea.bukkit.commands.JetonsCommand;
+import fr.heavencraft.heavencrea.generator.CreativeChunkGenerator;
+import fr.heavencraft.heavencrea.hps.HpsCommand;
+import fr.heavencraft.heavencrea.hps.HpsManager;
+import fr.heavencraft.heavencrea.plots.ParcelleCommand;
 import fr.heavencraft.heavencrea.plots.PlotCommand;
 import fr.heavencraft.heavencrea.plots.PlotSignListener;
+import fr.heavencraft.heavencrea.users.JetonsCommand;
+import fr.heavencraft.heavencrea.users.JetonsTask;
 import fr.heavencraft.heavencrea.users.UserListener;
 import fr.heavencraft.heavencrea.users.UserProvider;
+import fr.heavencraft.heavencrea.users.homes.BuyhomeCommand;
+import fr.heavencraft.heavencrea.users.homes.HomeCommand;
+import fr.heavencraft.heavencrea.users.homes.SethomeCommand;
+import fr.heavencraft.heavencrea.users.homes.TphomeCommand;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class HeavenCrea extends HeavenPlugin
 {
-	private HeavenGuard regionPlugin;
 
-	private ConnectionHandler connectionHandler;
 	private UserProvider userProvider;
+	private HpsManager hpsManager;
 
 	@Override
 	public void onEnable()
@@ -30,19 +45,48 @@ public class HeavenCrea extends HeavenPlugin
 		{
 			super.onEnable();
 
-			regionPlugin = loadHeavenGuard();
+			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(Database.TEST);
+			final ConnectionHandler webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
-			connectionHandler = ConnectionHandlerFactory.getConnectionHandler(Database.TEST);
-			userProvider = new UserProvider(connectionHandler);
+			userProvider = new UserProvider(creaConnection);
+			hpsManager = new HpsManager(webConnection);
 
 			/*
-			 * Commands and listeners (Bukkit)
+			 * Commands and listeners from HeavenCrea (Bukkit code)
 			 */
 
+			// HPs
+			new HpsCommand(this);
+
+			// Plots
+			final HeavenGuard hGuard = loadHeavenGuard();
+			new ParcelleCommand(this, hGuard);
+			new PlotSignListener(this, hGuard);
+			new PlotCommand(this, hGuard);
+
+			// Users
 			new JetonsCommand(this);
+			new JetonsTask(this);
 			new UserListener(this);
-			new PlotSignListener(this, regionPlugin);
-			new PlotCommand(this, regionPlugin);
+
+			// Homes
+			new BuyhomeCommand(this);
+			new HomeCommand(this);
+			new SethomeCommand(this);
+			new TphomeCommand(this);
+
+			/*
+			 * Commands and listener from HeavenCore (Bukkit code)
+			 */
+
+			new AccepterCommand(this);
+			new RejoindreCommand(this);
+			new SpawnCommand(this, "world_creative", 9, 51, 9);
+
+			new TpCommand(this);
+			new TphereCommand(this);
+			new TpposCommand(this);
+			new NoChatListener(this);
 		}
 		catch (final Exception ex)
 		{
@@ -66,6 +110,11 @@ public class HeavenCrea extends HeavenPlugin
 	public UserProvider getUserProvider()
 	{
 		return userProvider;
+	}
+
+	public HpsManager getHpsManager()
+	{
+		return hpsManager;
 	}
 
 	@Override

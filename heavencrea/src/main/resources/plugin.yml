@@ -4,6 +4,26 @@ main: fr.heavencraft.heavencrea.HeavenCrea
 depend: [HeavenCore, HeavenGuard]
 load: startup
 commands:
-  jetons:
-    aliases: [jeton]
+  # from core
+  accepter:
+  rejoindre:
+  spawn:
+  tp:
+  tphere:
+  tppos:
+  
+  # hps
+  hps:
+  
+  # plots
+  parcelle:
   plot:
+  
+  # users
+  jetons:
+  
+  # users.homes
+  buyhome:
+  home:
+  sethome:
+  tphome:

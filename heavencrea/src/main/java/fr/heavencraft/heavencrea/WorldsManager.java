@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 
+import fr.heavencraft.heavencrea.generator.CreativeChunkGenerator;
+
 public class WorldsManager
 {
 	public WorldsManager()
