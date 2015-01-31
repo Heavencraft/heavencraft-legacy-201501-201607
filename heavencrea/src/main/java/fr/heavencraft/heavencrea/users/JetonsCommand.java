@@ -1,4 +1,4 @@
-package fr.heavencraft.heavencrea.bukkit.commands;
+package fr.heavencraft.heavencrea.users;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -13,8 +13,6 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
-import fr.heavencraft.heavencrea.users.User;
-import fr.heavencraft.heavencrea.users.UserProvider;
 
 public class JetonsCommand extends AbstractCommandExecutor
 {

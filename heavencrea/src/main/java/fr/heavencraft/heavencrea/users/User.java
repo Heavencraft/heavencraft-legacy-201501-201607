@@ -24,6 +24,7 @@ public class User
 	private static final String GET_HOME = "SELECT world, x, y, z, yaw, pitch FROM homes WHERE user_id = ? AND home_nb = ? LIMIT 1";
 	private static final String SET_HOME = "REPLACE INTO homes SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ?, user_id = ?, home_nb = ?";
 	private static final String UPDATE_NAME = "UPDATE users SET name = ? WHERE uuid = ? LIMIT 1";
+	private static final String INCREMENT_HOME_NUMBER = "UPDATE users SET homeNumber = homeNumber + 1 WHERE id = ? LIMIT 1";
 
 	private final ConnectionHandler connectionHandler;
 
@@ -31,7 +32,7 @@ public class User
 	private final String uuid;
 	private final String name;
 	private int balance;
-	private final int homeNumber;
+	private int homeNumber;
 	private Timestamp lastLogin;
 
 	public User(ConnectionHandler connectionHandler, ResultSet rs) throws SQLException
@@ -108,6 +109,28 @@ public class User
 	/*
 	 * Homes
 	 */
+
+	public int getHomeNumber()
+	{
+		return homeNumber;
+	}
+
+	public void incrementHomeNumber() throws HeavenException
+	{
+		try
+		{
+			final PreparedStatement ps = connectionHandler.getConnection().prepareStatement(INCREMENT_HOME_NUMBER);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+
+			homeNumber++;
+		}
+		catch (final SQLException ex)
+		{
+			ex.printStackTrace();
+			throw new SQLErrorException();
+		}
+	}
 
 	public Location getHome(int nb) throws HeavenException
 	{
@@ -189,4 +212,5 @@ public class User
 			throw new SQLErrorException();
 		}
 	}
+
 }
