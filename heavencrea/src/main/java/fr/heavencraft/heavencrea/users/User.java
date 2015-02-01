@@ -24,7 +24,7 @@ public class User
 	private static final String GET_HOME = "SELECT world, x, y, z, yaw, pitch FROM homes WHERE user_id = ? AND home_nb = ? LIMIT 1";
 	private static final String SET_HOME = "REPLACE INTO homes SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ?, user_id = ?, home_nb = ?";
 	private static final String UPDATE_NAME = "UPDATE users SET name = ? WHERE uuid = ? LIMIT 1";
-	private static final String INCREMENT_HOME_NUMBER = "UPDATE users SET homeNumber = homeNumber + 1 WHERE id = ? LIMIT 1";
+	private static final String INCREMENT_HOME_NUMBER = "UPDATE users SET home_number = home_number + 1 WHERE id = ? LIMIT 1";
 
 	private final ConnectionHandler connectionHandler;
 

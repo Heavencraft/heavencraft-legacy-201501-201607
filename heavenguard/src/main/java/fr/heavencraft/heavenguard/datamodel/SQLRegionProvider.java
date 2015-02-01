@@ -207,7 +207,7 @@ public class SQLRegionProvider implements RegionProvider
 			ps.setString(1, name);
 
 			if (ps.executeUpdate() != 1)
-				throw new HeavenException("La protection {%1$s} n'a pas pu être supprimée.");
+				throw new HeavenException("La protection {%1$s} n'a pas pu être supprimée.", name);
 
 			removeFromCache(getRegionByName(name));
 		}

@@ -2,7 +2,7 @@ name: HeavenCrea
 version: 1.0
 main: fr.heavencraft.heavencrea.HeavenCrea
 depend: [HeavenCore, HeavenGuard]
-load: startup
+load: STARTUP
 commands:
   # from core
   accepter:
