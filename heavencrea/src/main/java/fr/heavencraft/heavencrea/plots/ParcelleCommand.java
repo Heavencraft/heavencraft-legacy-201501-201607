@@ -44,7 +44,7 @@ public final class ParcelleCommand extends AbstractCommandExecutor
 				final int x = region.getMinX();
 				final int z = region.getMinZ();
 
-				plugin.teleportPlayer(player, new Location(world, x, 51, z));
+				plugin.teleportPlayer(player, new Location(world, x, 52, z));
 				plugin.sendMessage(player, "Vous avez été téléporté à la parcelle {%1$s}.", region.getName());
 				break;
 

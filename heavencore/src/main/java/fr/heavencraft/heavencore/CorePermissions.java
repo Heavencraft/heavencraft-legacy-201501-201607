@@ -2,6 +2,9 @@ package fr.heavencraft.heavencore;
 
 public class CorePermissions
 {
+
+	public static final String FORBIDDEN_BLOCKS = "heavencore.forbiddenblocks.bypass";
+
 	public static final String REJOINDRE_COMMAND = "heavencore.commands.rejoindre";
 
 	// Teleport

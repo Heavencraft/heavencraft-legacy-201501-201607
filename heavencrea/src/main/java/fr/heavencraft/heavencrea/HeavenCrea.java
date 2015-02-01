@@ -1,6 +1,7 @@
 package fr.heavencraft.heavencrea;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 
@@ -11,7 +12,11 @@ import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TpCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TphereCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TpposCommand;
+import fr.heavencraft.heavencore.bukkit.listeners.ClearWeatherListener;
+import fr.heavencraft.heavencore.bukkit.listeners.ForbiddenBlocksListener;
+import fr.heavencraft.heavencore.bukkit.listeners.JumpListener;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
+import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
@@ -30,6 +35,8 @@ import fr.heavencraft.heavencrea.users.homes.BuyhomeCommand;
 import fr.heavencraft.heavencrea.users.homes.HomeCommand;
 import fr.heavencraft.heavencrea.users.homes.SethomeCommand;
 import fr.heavencraft.heavencrea.users.homes.TphomeCommand;
+import fr.heavencraft.heavencrea.worlds.PortalListener;
+import fr.heavencraft.heavencrea.worlds.WorldsManager;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
 public class HeavenCrea extends HeavenPlugin
@@ -45,7 +52,7 @@ public class HeavenCrea extends HeavenPlugin
 		{
 			super.onEnable();
 
-			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(Database.TEST);
+			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(Database.CREATIVE);
 			final ConnectionHandler webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
 			userProvider = new UserProvider(creaConnection);
@@ -75,18 +82,35 @@ public class HeavenCrea extends HeavenPlugin
 			new SethomeCommand(this);
 			new TphomeCommand(this);
 
+			// Worlds
+			new PortalListener(this);
+
+			Bukkit.getScheduler().runTaskLater(this, new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					WorldsManager.init();
+				}
+			}, 100);
+
 			/*
 			 * Commands and listener from HeavenCore (Bukkit code)
 			 */
 
 			new AccepterCommand(this);
 			new RejoindreCommand(this);
-			new SpawnCommand(this, "world_creative", 9, 51, 9);
+			new SpawnCommand(this, "world_creative", 8, 44, 8, 0, 0);
 
 			new TpCommand(this);
 			new TphereCommand(this);
 			new TpposCommand(this);
+
+			new ClearWeatherListener(this);
+			new ForbiddenBlocksListener(this, Material.BARRIER);
+			new JumpListener(this);
 			new NoChatListener(this);
+			new RedstoneLampListener(this);
 		}
 		catch (final Exception ex)
 		{
@@ -120,12 +144,9 @@ public class HeavenCrea extends HeavenPlugin
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id)
 	{
-		log.info("getDefaultWorldGenerator %1$s", worldName);
-
-		if ("world_creative".equals(worldName))
+		if (WorldsManager.WORLD_CREATIVE.equals(worldName))
 			return new CreativeChunkGenerator();
 
-		else
-			return super.getDefaultWorldGenerator(worldName, id);
+		return super.getDefaultWorldGenerator(worldName, id);
 	}
 }
