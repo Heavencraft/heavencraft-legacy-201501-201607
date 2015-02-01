@@ -12,6 +12,7 @@ public class Database
 	public static final Database WEB = new Database("mc-db");
 	public static final Database PROXY = new Database("proxy");
 	public static final Database SEMIRP = new Database("minecraft-semirp");
+	public static final Database CREATIVE = new Database("minecraft-creative");
 	public static final Database TEST = new Database("test");
 
 	public static Database getUniqueInstanceByName(String name) throws HeavenException

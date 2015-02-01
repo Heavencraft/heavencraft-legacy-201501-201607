@@ -3,12 +3,12 @@ package fr.heavencraft.heavenguard.api;
 public class HeavenGuardPermissions
 {
 	public static final String BYPASS = "heavenguard.bypass";
-	
+
 	public static final String DEFINE_COMMAND = "heavenguard.commands.define";
 	public static final String FLAG_COMMAND = "heavenguard.commands.flag";
-	public static final String REDEFINE_COMMAND = "heavenguard.redefine";
-	public static final String SETPARENT_COMMAND = "heavenguard.setparent";
-	public static final String REMOVE_COMMAND = "heavenguard.remove";
+	public static final String REDEFINE_COMMAND = "heavenguard.commands.redefine";
+	public static final String SETPARENT_COMMAND = "heavenguard.commands.setparent";
+	public static final String REMOVE_COMMAND = "heavenguard.commands.remove";
 
 	public static final String ADDMEMBER_COMMAND = "heavenguard.commands.addmember";
 	public static final String ADDOWNER_COMMAND = "heavenguard.commands.addowner";

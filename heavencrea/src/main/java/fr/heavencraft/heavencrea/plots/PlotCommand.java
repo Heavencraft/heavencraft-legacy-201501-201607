@@ -51,7 +51,7 @@ public class PlotCommand extends AbstractCommandExecutor
 					final int x = region.getMinX();
 					final int z = region.getMinZ();
 
-					((Player) sender).teleport(new Location(world, x, 51, z));
+					((Player) sender).teleport(new Location(world, x, 52, z));
 					plugin.sendMessage(sender, "Vous avez été téléporté à la parcelle {%1$s}.", region.getName());
 				}
 				break;
