@@ -87,11 +87,11 @@ public class PlotSignListener extends AbstractSignListener
 	{
 		final RegionProvider regionProvider = regionPlugin.getRegionProvider();
 		String regionName;
-		final int i = 1;
+		int i = 1;
 
 		do
 		{
-			regionName = "parcelle_" + player.getName() + "_" + i;
+			regionName = "parcelle_" + player.getName() + "_" + i++;
 		}
 		while (regionProvider.regionExists(regionName));
 
