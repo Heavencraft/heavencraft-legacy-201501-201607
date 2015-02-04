@@ -31,7 +31,7 @@ public class JetonsTask extends BukkitRunnable
 		{
 			try
 			{
-				plugin.getUserProvider().getUserByName(player.getName()).updateBalance(nbJetons);
+				plugin.getUserProvider().getUserByUniqueId(player.getUniqueId()).updateBalance(nbJetons);
 				plugin.sendMessage(player, "Vous venez de recevoir {%1$s} jetons.", nbJetons);
 			}
 			catch (final HeavenException ex)
