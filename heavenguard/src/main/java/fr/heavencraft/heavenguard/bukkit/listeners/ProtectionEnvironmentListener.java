@@ -8,6 +8,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -33,6 +34,18 @@ public class ProtectionEnvironmentListener extends AbstractListener
 	private void onBlockBurn(BlockBurnEvent event)
 	{
 		log.debug(event.getClass().getSimpleName());
+
+		if (isProtected(event.getBlock()))
+			event.setCancelled(true);
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	private void onBlockIgnite(BlockIgniteEvent event)
+	{
+		log.debug(event.getClass().getSimpleName());
+
+		if (event.getPlayer() != null) // Done by ProtectionPlayerListener
+			return;
 
 		if (isProtected(event.getBlock()))
 			event.setCancelled(true);
@@ -115,7 +128,7 @@ public class ProtectionEnvironmentListener extends AbstractListener
 
 	private boolean isProtected(Block block)
 	{
-		return plugin.getRegionManager().isProtectedAgainstEnvironment(block.getWorld().getName(), block.getX(), block.getY(),
-				block.getZ());
+		return plugin.getRegionManager().isProtectedAgainstEnvironment(block.getWorld().getName(),
+				block.getX(), block.getY(), block.getZ());
 	}
 }
