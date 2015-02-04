@@ -268,6 +268,6 @@ public class SQLRegionProvider implements RegionProvider
 	@Override
 	public boolean regionExists(String name)
 	{
-		return regionsByName.containsKey(name);
+		return regionsByName.containsKey(name.toLowerCase());
 	}
 }
