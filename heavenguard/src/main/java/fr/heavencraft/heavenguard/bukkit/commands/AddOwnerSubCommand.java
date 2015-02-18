@@ -26,7 +26,7 @@ public class AddOwnerSubCommand extends AbstractSubCommand
 			@SuppressWarnings("deprecation")
 			final OfflinePlayer player = Bukkit.getOfflinePlayer(arg);
 
-			region.addMember(player.getUniqueId(), false);
+			region.addMember(player.getUniqueId(), true);
 			plugin.sendMessage(sender, "{%1$s} est maintenant propriétaire de la protection {%2$s}.", player.getName(),
 					regionName);
 		}
