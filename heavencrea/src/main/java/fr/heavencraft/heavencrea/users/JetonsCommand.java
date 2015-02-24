@@ -51,6 +51,12 @@ public class JetonsCommand extends AbstractCommandExecutor
 
 					plugin.sendMessage(player, "Vous avez donné {%1$s} jetons à {%2$s}.", delta, dest);
 				}
+				else
+					sendUsage(player);
+				break;
+
+			default:
+				sendUsage(player);
 				break;
 		}
 	}
@@ -68,6 +74,7 @@ public class JetonsCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{jetons} give <player> <Jeton> : {Pas disponnible");
+		plugin.sendMessage(sender, "/{jetons}");
+		plugin.sendMessage(sender, "/{jetons} donner <player> <nombre de jetons>");
 	}
 }
