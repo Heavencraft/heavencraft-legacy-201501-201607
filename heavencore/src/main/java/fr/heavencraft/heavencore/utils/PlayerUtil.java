@@ -1,6 +1,7 @@
 package fr.heavencraft.heavencore.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.PlayerNotConnectedException;
@@ -30,4 +31,16 @@ public class PlayerUtil
 		}
 	}
 
+	@SuppressWarnings("deprecation")
+	public static OfflinePlayer getOfflinePlayer(String playerName)
+	{
+		try
+		{
+			return getPlayer(playerName);
+		}
+		catch (final PlayerNotConnectedException ex)
+		{
+			return Bukkit.getOfflinePlayer(playerName);
+		}
+	}
 }
