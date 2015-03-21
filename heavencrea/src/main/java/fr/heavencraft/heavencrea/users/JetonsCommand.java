@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -41,15 +42,15 @@ public class JetonsCommand extends AbstractCommandExecutor
 			case "donner":
 				if (args.length == 3)
 				{
-					final String dest = PlayerUtil.getExactName(args[1]);
+					final OfflinePlayer dest = PlayerUtil.getOfflinePlayer(args[1]);
 					final int delta = DevUtil.toUint(args[2]);
 
-					final User receiver = userProvider.getUserByName(dest);
+					final User receiver = userProvider.getUserByUniqueId(dest.getUniqueId());
 
 					user.updateBalance(-delta);
 					receiver.updateBalance(delta);
 
-					plugin.sendMessage(player, "Vous avez donné {%1$s} jetons à {%2$s}.", delta, dest);
+					plugin.sendMessage(player, "Vous avez donné {%1$s} jetons à {%2$s}.", delta, dest.getName());
 				}
 				else
 					sendUsage(player);
