@@ -1,6 +1,7 @@
 package fr.heavencraft.heavencrea.worlds;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
@@ -12,6 +13,8 @@ public class WorldsManager
 {
 	public static final String WORLD_CREATIVE = "world_creative";
 	public static final String WORLD_BIOME = "world_biome";
+
+	private static Location biomeSpawnLocation;
 
 	public static void init()
 	{
@@ -30,6 +33,8 @@ public class WorldsManager
 			creator.generator(new CreativeChunkGenerator());
 			creator.createWorld();
 		}
+
+		biomeSpawnLocation = new Location(getWorldBiome(), 120, 144, 652, 0, 0);
 	}
 
 	private static boolean isLoaded(String name)
@@ -45,5 +50,10 @@ public class WorldsManager
 	public static World getWorldBiome()
 	{
 		return Bukkit.getWorld(WORLD_BIOME);
+	}
+
+	public static Location getBiomeSpawnLocation()
+	{
+		return biomeSpawnLocation;
 	}
 }
