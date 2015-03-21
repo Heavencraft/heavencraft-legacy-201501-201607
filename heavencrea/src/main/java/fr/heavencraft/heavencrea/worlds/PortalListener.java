@@ -31,6 +31,6 @@ public class PortalListener extends AbstractListener
 		if (block.getWorld() != WorldsManager.getWorldCreative())
 			return;
 
-		plugin.teleportPlayer((Player) event.getEntity(), WorldsManager.getWorldBiome().getSpawnLocation());
+		plugin.teleportPlayer((Player) event.getEntity(), WorldsManager.getBiomeSpawnLocation());
 	}
 }
