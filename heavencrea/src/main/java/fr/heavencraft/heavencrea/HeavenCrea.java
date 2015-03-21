@@ -13,6 +13,7 @@ import fr.heavencraft.heavencore.bukkit.commands.TpCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TphereCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TpposCommand;
 import fr.heavencraft.heavencore.bukkit.listeners.ClearWeatherListener;
+import fr.heavencraft.heavencore.bukkit.listeners.ColoredSignsListener;
 import fr.heavencraft.heavencore.bukkit.listeners.ForbiddenBlocksListener;
 import fr.heavencraft.heavencore.bukkit.listeners.JumpListener;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
@@ -107,6 +108,7 @@ public class HeavenCrea extends HeavenPlugin
 			new TpposCommand(this);
 
 			new ClearWeatherListener(this);
+			new ColoredSignsListener(this);
 			new ForbiddenBlocksListener(this, Material.BARRIER);
 			new JumpListener(this);
 			new NoChatListener(this);
