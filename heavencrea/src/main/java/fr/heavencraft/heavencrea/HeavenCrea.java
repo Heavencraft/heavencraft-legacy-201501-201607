@@ -1,6 +1,7 @@
 package fr.heavencraft.heavencrea;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
@@ -18,6 +19,7 @@ import fr.heavencraft.heavencore.bukkit.listeners.ForbiddenBlocksListener;
 import fr.heavencraft.heavencore.bukkit.listeners.JumpListener;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
+import fr.heavencraft.heavencore.bukkit.listeners.WorldAccessListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
@@ -52,8 +54,10 @@ public class HeavenCrea extends HeavenPlugin
 		try
 		{
 			super.onEnable();
+			saveDefaultConfig();
 
-			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(Database.CREATIVE);
+			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString(
+					"database"));
 			final ConnectionHandler webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
 			userProvider = new UserProvider(creaConnection);
@@ -92,8 +96,10 @@ public class HeavenCrea extends HeavenPlugin
 				public void run()
 				{
 					WorldsManager.init();
+					new WorldAccessListener(HeavenCrea.this, new Location(Bukkit.getWorld("world_creative"), 8, 44, 8, 0, 0),
+							WorldsManager.WORLD_TALENT);
 				}
-			}, 100);
+			}, 0);
 
 			/*
 			 * Commands and listener from HeavenCore (Bukkit code)
