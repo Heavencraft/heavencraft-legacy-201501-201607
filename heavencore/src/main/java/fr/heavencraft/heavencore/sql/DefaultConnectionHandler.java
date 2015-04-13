@@ -2,6 +2,7 @@ package fr.heavencraft.heavencore.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.bukkit.Bukkit;
@@ -10,12 +11,13 @@ import fr.heavencraft.heavencore.logs.HeavenLog;
 
 public class DefaultConnectionHandler implements ConnectionHandler
 {
+	private static final long TEST_QUERY_INTERVAL = 600000; // 10 minutes
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/%1$s?user=mc-sql&password=9e781e41f865901850d5c3060063c8ca&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
+	private static final HeavenLog log = HeavenLog.getLogger(DefaultConnectionHandler.class);
 
-	private final HeavenLog log = HeavenLog.getLogger(DefaultConnectionHandler.class);
-
-	private Connection connection;
 	private final Database database;
+	private Connection connection;
+	private long lastQuery;
 
 	DefaultConnectionHandler(Database database)
 	{
@@ -25,6 +27,8 @@ public class DefaultConnectionHandler implements ConnectionHandler
 	@Override
 	public Connection getConnection()
 	{
+		sendTestQueryIfNeeded();
+
 		try
 		{
 			if (connection == null || connection.isClosed())
@@ -40,6 +44,25 @@ public class DefaultConnectionHandler implements ConnectionHandler
 		}
 
 		log.info("Using connection to database %1$s", database);
+		lastQuery = System.currentTimeMillis();
 		return connection;
+	}
+
+	// Send a dumb SQL query, so if the connection is closed, it will be
+	// detected by JDBC.
+	private void sendTestQueryIfNeeded()
+	{
+		if (connection != null && System.currentTimeMillis() - lastQuery > TEST_QUERY_INTERVAL)
+		{
+			try (PreparedStatement ps = connection.prepareStatement("SELECT 1"))
+			{
+				log.info("Sending test query to %1$s.", database);
+				ps.execute();
+			}
+			catch (final SQLException ex)
+			{
+				log.info("Connection to database %1$s failed.", database);
+			}
+		}
 	}
 }
