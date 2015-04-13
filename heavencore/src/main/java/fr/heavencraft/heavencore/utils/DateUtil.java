@@ -1,10 +1,31 @@
 package fr.heavencraft.heavencore.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import fr.heavencraft.heavencore.exceptions.HeavenException;
+
 public class DateUtil
 {
+	private static final String DATETIME_FORMAT = "yyyyMMdd-HH:mm:ss";
+
+	private static final DateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
+
+	public static Date parseDateTime(String value) throws HeavenException
+	{
+		try
+		{
+			return dateFormat.parse(value);
+		}
+		catch (final ParseException ex)
+		{
+			throw new HeavenException("Le format de la date est incorrect. Utilisez {YYYYMMDD-HH:MM:SS}.");
+		}
+	}
+
 	public static boolean isToday(Date date)
 	{
 		if (date == null)
