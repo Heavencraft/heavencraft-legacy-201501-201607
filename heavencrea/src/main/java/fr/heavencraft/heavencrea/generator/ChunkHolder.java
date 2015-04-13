@@ -7,7 +7,7 @@ class ChunkHolder
 	private final short[][] result = new short[16][];
 
 	@SuppressWarnings("deprecation")
-	public void setBlock(int x, int y, int z, Material type)
+	void setBlock(int x, int y, int z, Material type)
 	{
 		if (result[y >> 4] == null)
 		{
@@ -17,7 +17,7 @@ class ChunkHolder
 		result[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = (short) type.getId();
 	}
 
-	public short[][] getResult()
+	short[][] getResult()
 	{
 		return result;
 	}

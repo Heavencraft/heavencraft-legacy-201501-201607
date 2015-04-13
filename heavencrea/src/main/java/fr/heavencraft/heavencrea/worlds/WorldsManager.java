@@ -8,13 +8,16 @@ import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
 import fr.heavencraft.heavencrea.generator.CreativeChunkGenerator;
+import fr.heavencraft.heavencrea.generator.FlatChunkGenerator;
 
 public class WorldsManager
 {
 	public static final String WORLD_CREATIVE = "world_creative";
 	public static final String WORLD_BIOME = "world_biome";
+	public static final String WORLD_TALENT = "world_talent";
 
 	private static Location biomeSpawnLocation;
+	private static Location talentSpawnLocation;
 
 	public static void init()
 	{
@@ -28,13 +31,22 @@ public class WorldsManager
 
 		if (!isLoaded(WORLD_CREATIVE))
 		{
-			final WorldCreator creator = new WorldCreator("world_creative");
+			final WorldCreator creator = new WorldCreator(WORLD_CREATIVE);
 			creator.environment(Environment.NORMAL);
 			creator.generator(new CreativeChunkGenerator());
 			creator.createWorld();
 		}
 
+		if (!isLoaded(WORLD_TALENT))
+		{
+			final WorldCreator creator = new WorldCreator(WORLD_TALENT);
+			creator.environment(Environment.NORMAL);
+			creator.generator(new FlatChunkGenerator());
+			creator.createWorld();
+		}
+
 		biomeSpawnLocation = new Location(getWorldBiome(), 120, 144, 652, 0, 0);
+		talentSpawnLocation = new Location(getWorldTalent(), 0, 50, 0, 0, 0);
 	}
 
 	private static boolean isLoaded(String name)
@@ -52,8 +64,18 @@ public class WorldsManager
 		return Bukkit.getWorld(WORLD_BIOME);
 	}
 
+	public static World getWorldTalent()
+	{
+		return Bukkit.getWorld(WORLD_TALENT);
+	}
+
 	public static Location getBiomeSpawnLocation()
 	{
 		return biomeSpawnLocation;
+	}
+
+	public static Location getTalentSpawnLocation()
+	{
+		return talentSpawnLocation;
 	}
 }

@@ -37,8 +37,8 @@ public final class ParcelleCommand extends AbstractCommandExecutor
 			case "tp":
 				final Region region = hGuard.getRegionProvider().getRegionByName(args[1].toLowerCase());
 
-				if (!region.isMember(player.getUniqueId(), true))
-					throw new HeavenException("Vous n'êtes pas propriétaire de la parcelle {%1$s}.", region.getName());
+				if (!region.isMember(player.getUniqueId(), false))
+					throw new HeavenException("Vous n'êtes pas membre de la parcelle {%1$s}.", region.getName());
 
 				final World world = Bukkit.getWorld(region.getWorld());
 				final int x = region.getMinX();
