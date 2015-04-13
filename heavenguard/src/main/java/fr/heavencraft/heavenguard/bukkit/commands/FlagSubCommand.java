@@ -1,10 +1,12 @@
 package fr.heavencraft.heavenguard.bukkit.commands;
 
-import java.sql.Types;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DateUtil;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
@@ -43,7 +45,8 @@ public class FlagSubCommand extends AbstractSubCommand
 		plugin.sendMessage(sender, "/rg {flag} <protection> <flag> <valeur> : pour ajouter un flag");
 	}
 
-	private void flag(CommandSender sender, String regionName, String flagName, String value) throws HeavenException
+	private void flag(CommandSender sender, String regionName, String flagName, String value)
+			throws HeavenException
 	{
 		final Flag flag = Flag.getUniqueInstanceByName(flagName);
 
@@ -54,11 +57,26 @@ public class FlagSubCommand extends AbstractSubCommand
 
 		switch (flag.getType())
 		{
-			case Types.BIT:
-				region.setBooleanFlag(flag, value != null ? Boolean.parseBoolean(value) : null);
+			case BOOLEAN:
+				region.getFlagHandler().setBooleanFlag(flag, value != null ? Boolean.parseBoolean(value) : null);
 				break;
+
+			case TIMESTAMP:
+				if (value == null)
+					region.getFlagHandler().setTimestampFlag(flag, null);
+
+				else
+				{
+					final Date date = DateUtil.parseDateTime(value);
+					region.getFlagHandler().setTimestampFlag(flag, new Timestamp(date.getTime()));
+				}
+				break;
+
+			case BYTE_ARRAY:
+				throw new HeavenException("Ce type de flag ne peut être changé via /rg flag.");
 		}
 
-		plugin.sendMessage(sender, "La protection {%1$s} a désormais : {%2$s} = {%3$s}", region.getName(), flag.getName(), value);
+		plugin.sendMessage(sender, "La protection {%1$s} a désormais : {%2$s} = {%3$s}", region.getName(),
+				flag.getName(), value);
 	}
 }

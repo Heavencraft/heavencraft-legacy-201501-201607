@@ -2,14 +2,12 @@ package fr.heavencraft.heavenguard.bukkit.commands.owner;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
-import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
@@ -47,15 +45,9 @@ public class InfoSubCommand extends AbstractOwnerSubCommand
 		 * Flags
 		 */
 
-		String flags = "Flags : ";
-
-		for (final Entry<Flag, Boolean> flag : region.getBooleanFlags().entrySet())
-		{
-			if (flag.getValue() != null)
-				flags += flag.getKey().getName() + " : " + flag.getValue() + ", ";
-		}
-
-		plugin.sendMessage(sender, flags);
+		final String flags = region.getFlagHandler().toString();
+		if (!flags.isEmpty())
+			plugin.sendMessage(sender, flags);
 
 		final Region parent = region.getParent();
 		if (parent != null)

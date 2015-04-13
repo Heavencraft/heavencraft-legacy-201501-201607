@@ -12,9 +12,11 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenguard.bukkit.commands.AddOwnerSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.DefineSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.FlagSubCommand;
+import fr.heavencraft.heavenguard.bukkit.commands.LoadStateSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.RedefineSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.RemoveOwnerSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.RemoveSubCommand;
+import fr.heavencraft.heavenguard.bukkit.commands.SaveStateSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.SelectSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.SetparentSubCommand;
 import fr.heavencraft.heavenguard.bukkit.commands.SubCommand;
@@ -42,6 +44,9 @@ public class RegionCommand extends AbstractCommandExecutor
 		subCommands.put("removemember", new RemoveMemberSubCommand(plugin));
 		subCommands.put("addowner", new AddOwnerSubCommand(plugin));
 		subCommands.put("removeowner", new RemoveOwnerSubCommand(plugin));
+
+		subCommands.put("loadstate", new LoadStateSubCommand(plugin));
+		subCommands.put("savestate", new SaveStateSubCommand(plugin));
 	}
 
 	@Override
