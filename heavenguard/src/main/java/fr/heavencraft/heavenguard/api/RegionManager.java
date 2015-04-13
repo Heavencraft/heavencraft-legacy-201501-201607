@@ -66,7 +66,7 @@ public class RegionManager
 		}
 
 		// No regions here : the player can build if the world is public
-		return regionProvider.getGlobalRegion(world).getBooleanFlag(Flag.PUBLIC);
+		return regionProvider.getGlobalRegion(world).getFlagHandler().getBooleanFlag(Flag.PUBLIC);
 	}
 
 	public boolean isProtectedAgainstEnvironment(String world, int x, int y, int z)
@@ -78,7 +78,7 @@ public class RegionManager
 			return true;
 
 		// No regions here : the block is protected if the world is not public
-		return !regionProvider.getGlobalRegion(world).getBooleanFlag(Flag.PUBLIC);
+		return !regionProvider.getGlobalRegion(world).getFlagHandler().getBooleanFlag(Flag.PUBLIC);
 	}
 
 	public boolean areInSameRegion(String world, int x1, int y1, int z1, int x2, int y2, int z2)
@@ -101,7 +101,7 @@ public class RegionManager
 
 			for (final Region region : regions)
 			{
-				final Boolean pvp = region.getBooleanFlag(Flag.PVP);
+				final Boolean pvp = region.getFlagHandler().getBooleanFlag(Flag.PVP);
 
 				if (pvp == null)
 					continue;
@@ -116,7 +116,7 @@ public class RegionManager
 		}
 
 		// No regions here : this block is pvp if the world is pvp
-		return regionProvider.getGlobalRegion(world).getBooleanFlag(Flag.PVP);
+		return regionProvider.getGlobalRegion(world).getFlagHandler().getBooleanFlag(Flag.PVP);
 	}
 
 }

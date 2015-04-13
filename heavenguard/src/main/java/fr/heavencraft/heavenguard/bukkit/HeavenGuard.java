@@ -58,6 +58,7 @@ public class HeavenGuard extends HeavenPlugin
 			regionManager = new RegionManager(regionProvider);
 
 			new RegionCommand(this);
+			new RemoveRegionTask(this);
 		}
 		catch (final Exception ex)
 		{

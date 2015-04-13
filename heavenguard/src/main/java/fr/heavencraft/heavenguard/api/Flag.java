@@ -1,6 +1,5 @@
 package fr.heavencraft.heavenguard.api;
 
-import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +7,10 @@ public class Flag
 {
 	private static Map<String, Flag> flagsByName = new HashMap<String, Flag>();
 
-	public static final Flag PVP = new Flag("pvp", Types.BIT);
-	public static final Flag PUBLIC = new Flag("public", Types.BIT);
+	public static final Flag PVP = new Flag("pvp", FlagType.BOOLEAN);
+	public static final Flag PUBLIC = new Flag("public", FlagType.BOOLEAN);
+	public static final Flag REMOVE_TIMESTAMP = new Flag("remove_timestamp", FlagType.TIMESTAMP);
+	public static final Flag STATE = new Flag("state", FlagType.BYTE_ARRAY);
 
 	public static Flag getUniqueInstanceByName(String name)
 	{
@@ -17,9 +18,9 @@ public class Flag
 	}
 
 	private final String name;
-	private final int type;
+	private final FlagType type;
 
-	Flag(String name, int type)
+	Flag(String name, FlagType type)
 	{
 		this.name = name;
 		this.type = type;
@@ -32,7 +33,7 @@ public class Flag
 		return name;
 	}
 
-	public int getType()
+	public FlagType getType()
 	{
 		return type;
 	}
