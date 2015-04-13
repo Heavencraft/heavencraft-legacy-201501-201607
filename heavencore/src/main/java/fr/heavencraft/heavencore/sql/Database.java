@@ -13,6 +13,8 @@ public class Database
 	public static final Database PROXY = new Database("proxy");
 	public static final Database SEMIRP = new Database("minecraft-semirp");
 	public static final Database CREATIVE = new Database("minecraft-creative");
+
+	public static final Database UAT_CREATIVE = new Database("minecraft-creative-test");
 	public static final Database TEST = new Database("test");
 
 	public static Database getUniqueInstanceByName(String name) throws HeavenException
