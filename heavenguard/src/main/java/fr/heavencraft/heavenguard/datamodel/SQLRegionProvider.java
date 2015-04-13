@@ -111,7 +111,7 @@ public class SQLRegionProvider implements RegionProvider
 
 				while (rs.next())
 				{
-					final SQLGlobalRegion region = new SQLGlobalRegion(rs);
+					final SQLGlobalRegion region = new SQLGlobalRegion(connectionProvider, rs);
 					globalRegionsByWorld.put(region.getName(), region);
 				}
 
@@ -168,8 +168,8 @@ public class SQLRegionProvider implements RegionProvider
 	}
 
 	@Override
-	public Region createRegion(String name, String world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
-			throws HeavenException
+	public Region createRegion(String name, String world, int minX, int minY, int minZ, int maxX, int maxY,
+			int maxZ) throws HeavenException
 	{
 		if (regionsByName.get(name) != null)
 			throw new HeavenException("La protection {%1$s} existe déjà.", name);
@@ -252,6 +252,13 @@ public class SQLRegionProvider implements RegionProvider
 		}
 
 		return regionsAtLocation;
+	}
+
+	@Override
+	public Collection<Region> getRegionsInWorld(String world)
+	{
+		final Collection<Region> regionsInWorld = regionsByWorld.get(world.toLowerCase());
+		return regionsInWorld != null ? new ArrayList<Region>(regionsInWorld) : new ArrayList<Region>();
 	}
 
 	@Override

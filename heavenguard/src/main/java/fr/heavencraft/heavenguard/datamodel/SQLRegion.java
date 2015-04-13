@@ -2,37 +2,27 @@ package fr.heavencraft.heavenguard.datamodel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.UUID;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
-import fr.heavencraft.heavencore.logs.HeavenLog;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavenguard.api.Flag;
+import fr.heavencraft.heavenguard.api.FlagHandler;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
 
 public class SQLRegion implements Region
 {
-	// Log
-	private static final HeavenLog log = HeavenLog.getLogger(SQLRegion.class);
-
 	// SQL queries
 	private static final String SETPARENT = "UPDATE regions SET parent_name = LOWER(?) WHERE name = LOWER(?) LIMIT 1";
 	private static final String REDEFINE = "UPDATE regions SET world = LOWER(?), min_x = ?, min_y = ?, min_z = ?, max_x = ?, max_y = ?, max_z = ? WHERE name = LOWER(?) LIMIT 1";
 	private static final String LOAD_MEMBERS = "SELECT uuid, owner FROM regions_members WHERE region_name = LOWER(?);";
 	private static final String ADD_MEMBER = "INSERT INTO regions_members (region_name, uuid, owner) VALUES (LOWER(?), ?, ?);";
 	private static final String REMOVE_MEMBER = "DELETE FROM regions_members WHERE region_name = LOWER(?) AND uuid = ? AND owner = ? LIMIT 1;";
-
-	private static final String FLAG_PREFIX = "flag_";
-	private static final String SET_FLAG = "UPDATE regions SET %1$s = ? WHERE name = LOWER(?) LIMIT 1;";
 
 	private final ConnectionHandler connectionProvider;
 	private final RegionProvider regionProvider;
@@ -50,12 +40,9 @@ public class SQLRegion implements Region
 
 	private final Collection<UUID> members = new HashSet<UUID>();
 	private final Collection<UUID> owners = new HashSet<UUID>();
+	private final FlagHandler flagHandler;
 
-	// Flags
-	private final Map<Flag, Boolean> booleanFlags = new HashMap<Flag, Boolean>();
-
-	SQLRegion(ConnectionHandler connectionHandler, ResultSet rs, RegionProvider regionProvider)
-			throws SQLException
+	SQLRegion(ConnectionHandler connectionHandler, ResultSet rs, RegionProvider regionProvider) throws SQLException
 	{
 		this.connectionProvider = connectionHandler;
 		this.regionProvider = regionProvider;
@@ -71,41 +58,9 @@ public class SQLRegion implements Region
 		maxY = rs.getInt("max_y");
 		maxZ = rs.getInt("max_z");
 
-		// Load flags
-		final ResultSetMetaData metadata = rs.getMetaData();
-		final int columnCount = metadata.getColumnCount();
-
-		for (int column = 1; column <= columnCount; column++)
-		{
-			final String columnName = metadata.getColumnName(column);
-
-			if (columnName.startsWith(FLAG_PREFIX))
-			{
-				final Flag flag = Flag.getUniqueInstanceByName(columnName.substring(FLAG_PREFIX.length()));
-
-				if (flag == null)
-				{
-					log.warn("Unknown flag %1$s", columnName);
-					continue;
-				}
-
-				switch (metadata.getColumnType(column))
-				{
-					case Types.BIT:
-						final Boolean booleanValue = rs.getBoolean(columnName);
-
-						if (!rs.wasNull())
-							booleanFlags.put(flag, booleanValue);
-						break;
-
-					default:
-						break;
-				}
-			}
-
-		}
-
 		loadMembers();
+
+		flagHandler = new SQLFlagHandler(connectionHandler, rs, this);
 	}
 
 	private void loadMembers() throws SQLException
@@ -139,7 +94,7 @@ public class SQLRegion implements Region
 	public boolean canBuilt(UUID player)
 	{
 		// If this region is public
-		if (getBooleanFlag(Flag.PUBLIC) == Boolean.TRUE)
+		if (getFlagHandler().getBooleanFlag(Flag.PUBLIC) == Boolean.TRUE)
 			return true;
 
 		// Members/Owners of this region can build there
@@ -216,8 +171,7 @@ public class SQLRegion implements Region
 	}
 
 	@Override
-	public void redefine(String world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
-			throws HeavenException
+	public void redefine(String world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) throws HeavenException
 	{
 		// Update database
 		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(REDEFINE))
@@ -300,8 +254,7 @@ public class SQLRegion implements Region
 	public void addMember(UUID player, boolean owner) throws HeavenException
 	{
 		if (isMember(player, false))
-			throw new HeavenException("Le joueur {%1$s} est déjà membre de la protection {%2$s}.",
-					player.toString(), name);
+			throw new HeavenException("Le joueur {%1$s} est déjà membre de la protection {%2$s}.", player.toString(), name);
 
 		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(ADD_MEMBER))
 		{
@@ -367,54 +320,8 @@ public class SQLRegion implements Region
 	 */
 
 	@Override
-	public Map<Flag, Boolean> getBooleanFlags()
+	public FlagHandler getFlagHandler()
 	{
-		// Never return the original collection, because plugin could modify it.
-		return new HashMap<Flag, Boolean>(booleanFlags);
-	}
-
-	@Override
-	public Boolean getBooleanFlag(Flag flag)
-	{
-		final Boolean value = booleanFlags.get(flag);
-
-		if (value != null)
-			return value;
-
-		final Region parent = getParent();
-
-		if (parent != null)
-			return parent.getBooleanFlag(flag);
-
-		return null;
-	}
-
-	@Override
-	public void setBooleanFlag(Flag flag, Boolean value) throws HeavenException
-	{
-		final String query = String.format(SET_FLAG, FLAG_PREFIX + flag.getName());
-
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(query))
-		{
-			if (value != null)
-				ps.setBoolean(1, value);
-			else
-				ps.setNull(1, Types.BIT);
-
-			ps.setString(2, name);
-
-			if (ps.executeUpdate() != 1)
-				throw new HeavenException("Impossible de mettre à jour la région.");
-
-			if (value != null)
-				booleanFlags.put(flag, value);
-			else
-				booleanFlags.remove(flag);
-		}
-		catch (final SQLException ex)
-		{
-			ex.printStackTrace();
-			new SQLErrorException();
-		}
+		return flagHandler;
 	}
 }

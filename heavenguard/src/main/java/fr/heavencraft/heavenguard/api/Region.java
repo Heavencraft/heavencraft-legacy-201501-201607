@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 
-public interface Region extends HasBooleanFlags
+public interface Region
 {
 	String getName();
 
@@ -55,4 +55,10 @@ public interface Region extends HasBooleanFlags
 	void removeMember(UUID player, boolean owner) throws HeavenException;
 
 	Collection<UUID> getMembers(boolean owner);
+
+	/*
+	 * FlagHandler
+	 */
+
+	FlagHandler getFlagHandler();
 }
