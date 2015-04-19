@@ -16,4 +16,7 @@ public class HeavenGuardPermissions
 	public static final String REMOVEMEMBER_COMMAND = "heavenguard.commands.removemember";
 	public static final String REMOVEOWNER_COMMAND = "heavenguard.commands.removeowner";
 	public static final String SELECT_COMMAND = "heavenguard.commands.select";
+
+	public static final String LOADSTATE_COMMAND = "heavenguard.commands.loadstate";
+	public static final String SAVESTATE_COMMAND = "heavenguard.commands.savestate";
 }
