@@ -30,6 +30,7 @@ import fr.heavencraft.heavencrea.hps.HpsManager;
 import fr.heavencraft.heavencrea.plots.ParcelleCommand;
 import fr.heavencraft.heavencrea.plots.PlotCommand;
 import fr.heavencraft.heavencrea.plots.PlotSignListener;
+import fr.heavencraft.heavencrea.plots.TalentSignListener;
 import fr.heavencraft.heavencrea.users.JetonsCommand;
 import fr.heavencraft.heavencrea.users.JetonsTask;
 import fr.heavencraft.heavencrea.users.UserListener;
@@ -56,8 +57,8 @@ public class HeavenCrea extends HeavenPlugin
 			super.onEnable();
 			saveDefaultConfig();
 
-			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString(
-					"database"));
+			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig()
+					.getString("database"));
 			final ConnectionHandler webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
 			userProvider = new UserProvider(creaConnection);
@@ -73,8 +74,9 @@ public class HeavenCrea extends HeavenPlugin
 			// Plots
 			final HeavenGuard hGuard = loadHeavenGuard();
 			new ParcelleCommand(this, hGuard);
-			new PlotSignListener(this, hGuard);
 			new PlotCommand(this, hGuard);
+			new PlotSignListener(this, hGuard);
+			new TalentSignListener(this, hGuard);
 
 			// Users
 			new JetonsCommand(this);
@@ -96,8 +98,8 @@ public class HeavenCrea extends HeavenPlugin
 				public void run()
 				{
 					WorldsManager.init();
-					new WorldAccessListener(HeavenCrea.this, new Location(Bukkit.getWorld("world_creative"), 8, 44, 8, 0, 0),
-							WorldsManager.WORLD_TALENT);
+					new WorldAccessListener(HeavenCrea.this, new Location(Bukkit.getWorld("world_creative"), 8,
+							44, 8, 0, 0), WorldsManager.WORLD_TALENT);
 				}
 			}, 0);
 
