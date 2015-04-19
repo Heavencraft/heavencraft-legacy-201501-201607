@@ -13,6 +13,10 @@ public class DateUtil
 	private static final String DATETIME_FORMAT = "yyyyMMdd-HH:mm:ss";
 
 	private static final DateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
+	static
+	{
+		dateFormat.setLenient(false);
+	}
 
 	public static Date parseDateTime(String value) throws HeavenException
 	{
