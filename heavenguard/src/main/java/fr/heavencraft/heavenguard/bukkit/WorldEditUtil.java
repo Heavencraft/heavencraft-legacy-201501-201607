@@ -22,29 +22,40 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
+import fr.heavencraft.heavencore.exceptions.HeavenException;
+
 public class WorldEditUtil
 {
-	public static byte[] save(World world, Location pos1, Location pos2) throws WorldEditException, IOException
+	public static byte[] save(World world, Location pos1, Location pos2) throws HeavenException
 	{
 		final com.sk89q.worldedit.world.World weWorld = toWorldEdit(world);
 
 		final Region region = new CuboidRegion(weWorld, toWorldEdit(pos1), toWorldEdit(pos2));
 		final BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
 
-		Operations.complete(new ForwardExtentCopy(weWorld, region, clipboard, clipboard.getOrigin()));
-
-		try (ByteArrayOutputStream baos = new ByteArrayOutputStream())
+		try
 		{
-			final ClipboardWriter writer = ClipboardFormat.SCHEMATIC.getWriter(baos);
-			writer.write(clipboard, weWorld.getWorldData());
-			writer.close();
+			Operations.complete(new ForwardExtentCopy(weWorld, region, clipboard, clipboard.getOrigin()));
 
-			return baos.toByteArray();
+			try (ByteArrayOutputStream baos = new ByteArrayOutputStream())
+			{
+				final ClipboardWriter writer = ClipboardFormat.SCHEMATIC.getWriter(baos);
+				writer.write(clipboard, weWorld.getWorldData());
+				writer.close();
+
+				return baos.toByteArray();
+			}
 		}
+		catch (WorldEditException | IOException ex)
+		{
+			ex.printStackTrace();
+			throw new HeavenException(ex.getMessage());
+		}
+
 	}
 
-	public static void load(byte[] schematic, World world, Location pos1, Location pos2) throws FileNotFoundException,
-			IOException
+	public static void load(byte[] schematic, World world, Location pos1, Location pos2)
+			throws FileNotFoundException, IOException
 	{
 		final com.sk89q.worldedit.world.World weWorld = toWorldEdit(world);
 		final Region region = new CuboidRegion(weWorld, toWorldEdit(pos1), toWorldEdit(pos2));
