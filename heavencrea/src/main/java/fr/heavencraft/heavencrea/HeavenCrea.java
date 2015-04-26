@@ -99,7 +99,7 @@ public class HeavenCrea extends HeavenPlugin
 				{
 					WorldsManager.init();
 					new WorldAccessListener(HeavenCrea.this, new Location(Bukkit.getWorld("world_creative"), 8,
-							44, 8, 0, 0), WorldsManager.WORLD_TALENT);
+							44, 8, 0, 0), WorldsManager.WORLD_TALENT, WorldsManager.WORLD_ARCHITECT);
 				}
 			}, 0);
 
@@ -154,9 +154,13 @@ public class HeavenCrea extends HeavenPlugin
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id)
 	{
-		if (WorldsManager.WORLD_CREATIVE.equals(worldName))
-			return new CreativeChunkGenerator();
+		switch (worldName)
+		{
+			case WorldsManager.WORLD_CREATIVE:
+				return new CreativeChunkGenerator();
 
-		return super.getDefaultWorldGenerator(worldName, id);
+			default:
+				return super.getDefaultWorldGenerator(worldName, id);
+		}
 	}
 }

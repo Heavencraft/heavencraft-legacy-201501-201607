@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -14,6 +13,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
+import fr.heavencraft.heavencrea.worlds.WorldsManager;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
@@ -47,7 +47,11 @@ public class TalentSignListener extends AbstractPlotSignListener
 
 		event.setLine(1, "Parcelle pour");
 		event.setLine(2, "l'admission");
-		event.setLine(3, "en map talent.");
+
+		if (WorldsManager.getWorldTalent().equals(location.getWorld()))
+			event.setLine(3, "en map archi.");
+		else
+			event.setLine(3, "en map talent.");
 
 		return true;
 	}
@@ -59,18 +63,18 @@ public class TalentSignListener extends AbstractPlotSignListener
 		final Plot plot = getTalentPlotAt(sign.getLocation());
 
 		// Create the region
-		final Region region = createRegion(player, sign.getWorld().getName(), plot);
+		final Region region = createRegion(player, plot);
 
 		// Set redstone border
 		for (int x = plot.minX; x <= plot.maxX; x++)
 		{
-			Bukkit.getWorld("world_creative").getBlockAt(x, 51, plot.minZ).setType(Material.LAPIS_BLOCK);
-			Bukkit.getWorld("world_creative").getBlockAt(x, 51, plot.maxZ).setType(Material.LAPIS_BLOCK);
+			plot.world.getBlockAt(x, 51, plot.minZ).setType(Material.LAPIS_BLOCK);
+			plot.world.getBlockAt(x, 51, plot.maxZ).setType(Material.LAPIS_BLOCK);
 		}
 		for (int z = plot.minZ; z <= plot.maxZ; z++)
 		{
-			Bukkit.getWorld("world_creative").getBlockAt(plot.minX, 51, z).setType(Material.LAPIS_BLOCK);
-			Bukkit.getWorld("world_creative").getBlockAt(plot.maxX, 51, z).setType(Material.LAPIS_BLOCK);
+			plot.world.getBlockAt(plot.minX, 51, z).setType(Material.LAPIS_BLOCK);
+			plot.world.getBlockAt(plot.maxX, 51, z).setType(Material.LAPIS_BLOCK);
 		}
 
 		sign.getBlock().breakNaturally();
@@ -79,7 +83,7 @@ public class TalentSignListener extends AbstractPlotSignListener
 				region.getName(), plot.price);
 	}
 
-	private Region createRegion(Player player, String world, final Plot plot) throws HeavenException
+	private Region createRegion(Player player, final Plot plot) throws HeavenException
 	{
 		final RegionProvider regionProvider = regionPlugin.getRegionProvider();
 		final String regionName = "talent_" + player.getName();
@@ -87,7 +91,7 @@ public class TalentSignListener extends AbstractPlotSignListener
 		if (regionProvider.regionExists(regionName))
 			throw new HeavenException("Vous avez déjà une parcelle Talent.");
 
-		final Region region = regionProvider.createRegion(regionName, world,//
+		final Region region = regionProvider.createRegion(regionName, plot.world.getName(),//
 				plot.minX, 0, plot.minZ, //
 				plot.maxX, 0xFF, plot.maxZ);
 
