@@ -13,10 +13,10 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
-import fr.heavencraft.heavencore.providers.Provider;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.users.UserProvider;
 
-public class UserProvider implements Provider
+public class CreativeUserProvider implements UserProvider<CreativeUser>
 {
 	// SQL Queries
 	private static final String PRELOAD_USERS = "SELECT * FROM users;";
@@ -24,13 +24,13 @@ public class UserProvider implements Provider
 	private static final String CREATE_USERS = "INSERT INTO users (uuid, name) VALUES (?, ?);";
 
 	// Logger
-	private static final HeavenLog log = HeavenLog.getLogger(UserProvider.class);
+	private static final HeavenLog log = HeavenLog.getLogger(CreativeUserProvider.class);
 
 	private final ConnectionHandler connectionHandler;
-	private final Map<UUID, User> usersByUniqueId = new HashMap<UUID, User>();
-	private final Map<String, User> usersByName = new HashMap<String, User>();
+	private final Map<UUID, CreativeUser> usersByUniqueId = new HashMap<UUID, CreativeUser>();
+	private final Map<String, CreativeUser> usersByName = new HashMap<String, CreativeUser>();
 
-	public UserProvider(ConnectionHandler connectionHandler)
+	public CreativeUserProvider(ConnectionHandler connectionHandler)
 	{
 		this.connectionHandler = connectionHandler;
 
@@ -52,7 +52,7 @@ public class UserProvider implements Provider
 				while (rs.next())
 				{
 					++count;
-					addToCache(new User(connectionHandler, rs));
+					addToCache(new CreativeUser(connectionHandler, rs));
 				}
 
 				log.info("%1$s users loaded from database.", count);
@@ -65,7 +65,7 @@ public class UserProvider implements Provider
 		}
 	}
 
-	private User loadUser(UUID uuid) throws UserNotFoundException, SQLErrorException
+	private CreativeUser loadUser(UUID uuid) throws UserNotFoundException, SQLErrorException
 	{
 		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(LOAD_USER))
 		{
@@ -76,7 +76,7 @@ public class UserProvider implements Provider
 				if (!rs.next())
 					throw new UserNotFoundException(uuid);
 
-				final User user = new User(connectionHandler, rs);
+				final CreativeUser user = new CreativeUser(connectionHandler, rs);
 				addToCache(user);
 				return user;
 			}
@@ -92,7 +92,7 @@ public class UserProvider implements Provider
 	 * Cache management
 	 */
 
-	private void addToCache(User user)
+	private void addToCache(CreativeUser user)
 	{
 		// Add to "UUID -> User" cache
 		usersByUniqueId.put(user.getUniqueId(), user);
@@ -111,7 +111,15 @@ public class UserProvider implements Provider
 		loadUsers();
 	}
 
-	public User createUser(UUID uuid, String name) throws HeavenException
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.heavencraft.heavencrea.users.UserProvider#createUser(java.util.UUID,
+	 * java.lang.String)
+	 */
+	@Override
+	public CreativeUser createUser(UUID uuid, String name) throws HeavenException
 	{
 		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(CREATE_USERS))
 		{
@@ -132,9 +140,17 @@ public class UserProvider implements Provider
 		}
 	}
 
-	public User getUserByUniqueId(UUID uuid) throws UserNotFoundException
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.heavencraft.heavencrea.users.UserProvider#getUserByUniqueId(java.util
+	 * .UUID)
+	 */
+	@Override
+	public CreativeUser getUserByUniqueId(UUID uuid) throws UserNotFoundException
 	{
-		final User user = usersByUniqueId.get(uuid);
+		final CreativeUser user = usersByUniqueId.get(uuid);
 
 		if (user == null)
 			throw new UserNotFoundException(uuid);
@@ -142,9 +158,17 @@ public class UserProvider implements Provider
 		return user;
 	}
 
-	public User getUserByName(String name) throws UserNotFoundException
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.heavencraft.heavencrea.users.UserProvider#getUserByName(java.lang.
+	 * String)
+	 */
+	@Override
+	public CreativeUser getUserByName(String name) throws UserNotFoundException
 	{
-		final User user = usersByName.get(name);
+		final CreativeUser user = usersByName.get(name);
 
 		if (user == null)
 			throw new UserNotFoundException(name);

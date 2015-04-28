@@ -12,7 +12,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
-import fr.heavencraft.heavencrea.users.User;
+import fr.heavencraft.heavencrea.users.CreativeUser;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
@@ -56,7 +56,7 @@ public class PlotSignListener extends AbstractPlotSignListener
 		final Plot plot = getNormalPlotAt(sign.getLocation());
 
 		// Take the money
-		final User user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
+		final CreativeUser user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
 		user.updateBalance(-plot.price);
 
 		// Create the region

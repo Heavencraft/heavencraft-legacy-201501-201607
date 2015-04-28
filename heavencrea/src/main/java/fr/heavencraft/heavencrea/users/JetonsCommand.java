@@ -11,13 +11,14 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.users.UserProvider;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 
 public class JetonsCommand extends AbstractCommandExecutor
 {
-	private final UserProvider userProvider;
+	private final UserProvider<CreativeUser> userProvider;
 
 	public JetonsCommand(HeavenCrea plugin)
 	{
@@ -29,7 +30,7 @@ public class JetonsCommand extends AbstractCommandExecutor
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
 		final UUID uuid = player.getUniqueId();
-		final User user = userProvider.getUserByUniqueId(uuid);
+		final CreativeUser user = userProvider.getUserByUniqueId(uuid);
 
 		if (args.length == 0)
 		{
@@ -45,7 +46,7 @@ public class JetonsCommand extends AbstractCommandExecutor
 					final OfflinePlayer dest = PlayerUtil.getOfflinePlayer(args[1]);
 					final int delta = DevUtil.toUint(args[2]);
 
-					final User receiver = userProvider.getUserByUniqueId(dest.getUniqueId());
+					final CreativeUser receiver = userProvider.getUserByUniqueId(dest.getUniqueId());
 
 					user.updateBalance(-delta);
 					receiver.updateBalance(delta);
