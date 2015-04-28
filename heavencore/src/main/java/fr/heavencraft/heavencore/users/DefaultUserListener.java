@@ -1,4 +1,4 @@
-package fr.heavencraft.heavencrea.users;
+package fr.heavencraft.heavencore.users;
 
 import java.util.Date;
 import java.util.UUID;
@@ -8,17 +8,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.utils.DateUtil;
-import fr.heavencraft.heavencrea.HeavenCrea;
 
-public class UserListener extends AbstractListener
+public class DefaultUserListener<P extends HeavenPlugin & HasUserProvider<U>, U extends User> extends
+		AbstractListener
 {
-	private final UserProvider userProvider;
+	private final UserProvider<U> userProvider;
 
-	public UserListener(HeavenCrea plugin)
+	public DefaultUserListener(P plugin)
 	{
 		super(plugin);
 		userProvider = plugin.getUserProvider();
@@ -41,16 +42,21 @@ public class UserListener extends AbstractListener
 	}
 
 	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) throws HeavenException
+	private void onPlayerJoin(PlayerJoinEvent event) throws HeavenException
 	{
-		final User user = userProvider.getUserByUniqueId(event.getPlayer().getUniqueId());
+		final U user = userProvider.getUserByUniqueId(event.getPlayer().getUniqueId());
 
 		if (!DateUtil.isToday(user.getLastLogin()))
 		{
-			user.updateBalance(100);
-			plugin.sendMessage(event.getPlayer(), "Vous venez d'obtenir {100} jetons en vous connectant !");
+			onFirstConnection(event.getPlayer(), user);
 		}
 
 		user.updateLastLogin(new Date());
+	}
+
+	// Première connection de la journée, peut être overridé
+	protected void onFirstConnection(Player player, U user) throws HeavenException
+	{
+		// Do nothing
 	}
 }

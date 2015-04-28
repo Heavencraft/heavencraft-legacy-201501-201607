@@ -8,7 +8,7 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
-import fr.heavencraft.heavencrea.users.User;
+import fr.heavencraft.heavencrea.users.CreativeUser;
 
 public final class TphomeCommand extends AbstractCommandExecutor
 {
@@ -24,7 +24,7 @@ public final class TphomeCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		User user;
+		CreativeUser user;
 		int nb = 1;
 
 		switch (args.length)

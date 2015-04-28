@@ -14,8 +14,9 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.users.User;
 
-public class User
+public class CreativeUser implements User
 {
 	// SQL Queries
 	private static final String UPDATE_LASTLOGIN = "UPDATE users SET last_login = ? WHERE uuid = ? LIMIT 1;";
@@ -35,7 +36,7 @@ public class User
 	private int homeNumber;
 	private Timestamp lastLogin;
 
-	public User(ConnectionHandler connectionHandler, ResultSet rs) throws SQLException
+	public CreativeUser(ConnectionHandler connectionHandler, ResultSet rs) throws SQLException
 	{
 		this.connectionHandler = connectionHandler;
 
@@ -47,16 +48,28 @@ public class User
 		lastLogin = rs.getTimestamp("last_login");
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.heavencraft.heavencrea.users.User#getUniqueId()
+	 */
+	@Override
 	public UUID getUniqueId()
 	{
 		return UUID.fromString(uuid);
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.heavencraft.heavencrea.users.User#getName()
+	 */
+	@Override
 	public String getName()
 	{
 		return name;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.heavencraft.heavencrea.users.User#updateName(java.lang.String)
+	 */
+	@Override
 	public void updateName(String name) throws HeavenException
 	{
 		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(UPDATE_NAME))
@@ -189,11 +202,19 @@ public class User
 	 * Last login
 	 */
 
+	/* (non-Javadoc)
+	 * @see fr.heavencraft.heavencrea.users.User#getLastLogin()
+	 */
+	@Override
 	public Date getLastLogin()
 	{
 		return lastLogin;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.heavencraft.heavencrea.users.User#updateLastLogin(java.util.Date)
+	 */
+	@Override
 	public void updateLastLogin(Date date) throws SQLErrorException
 	{
 		final Timestamp lastLogin = new Timestamp(date.getTime());
