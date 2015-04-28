@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencrea.HeavenCrea;
-import fr.heavencraft.heavencrea.users.User;
+import fr.heavencraft.heavencrea.users.CreativeUser;
 
 public class BuyhomeCommand extends AbstractCommandExecutor
 {
@@ -22,7 +22,7 @@ public class BuyhomeCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		final User user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
+		final CreativeUser user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
 
 		final int homeNumber = user.getHomeNumber() + 1;
 		final int price = getPrice(homeNumber);

@@ -24,6 +24,8 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
+import fr.heavencraft.heavencore.users.HasUserProvider;
+import fr.heavencraft.heavencore.users.UserProvider;
 import fr.heavencraft.heavencrea.generator.CreativeChunkGenerator;
 import fr.heavencraft.heavencrea.hps.HpsCommand;
 import fr.heavencraft.heavencrea.hps.HpsManager;
@@ -31,10 +33,11 @@ import fr.heavencraft.heavencrea.plots.ParcelleCommand;
 import fr.heavencraft.heavencrea.plots.PlotCommand;
 import fr.heavencraft.heavencrea.plots.PlotSignListener;
 import fr.heavencraft.heavencrea.plots.TalentSignListener;
+import fr.heavencraft.heavencrea.users.CreativeUser;
+import fr.heavencraft.heavencrea.users.CreativeUserListener;
+import fr.heavencraft.heavencrea.users.CreativeUserProvider;
 import fr.heavencraft.heavencrea.users.JetonsCommand;
 import fr.heavencraft.heavencrea.users.JetonsTask;
-import fr.heavencraft.heavencrea.users.UserListener;
-import fr.heavencraft.heavencrea.users.UserProvider;
 import fr.heavencraft.heavencrea.users.homes.BuyhomeCommand;
 import fr.heavencraft.heavencrea.users.homes.HomeCommand;
 import fr.heavencraft.heavencrea.users.homes.SethomeCommand;
@@ -43,10 +46,10 @@ import fr.heavencraft.heavencrea.worlds.PortalListener;
 import fr.heavencraft.heavencrea.worlds.WorldsManager;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class HeavenCrea extends HeavenPlugin
+public class HeavenCrea extends HeavenPlugin implements HasUserProvider<CreativeUser>
 {
 
-	private UserProvider userProvider;
+	private UserProvider<CreativeUser> userProvider;
 	private HpsManager hpsManager;
 
 	@Override
@@ -61,7 +64,7 @@ public class HeavenCrea extends HeavenPlugin
 					.getString("database"));
 			final ConnectionHandler webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
-			userProvider = new UserProvider(creaConnection);
+			userProvider = new CreativeUserProvider(creaConnection);
 			hpsManager = new HpsManager(webConnection);
 
 			/*
@@ -81,7 +84,7 @@ public class HeavenCrea extends HeavenPlugin
 			// Users
 			new JetonsCommand(this);
 			new JetonsTask(this);
-			new UserListener(this);
+			new CreativeUserListener(this);
 
 			// Homes
 			new BuyhomeCommand(this);
@@ -141,7 +144,8 @@ public class HeavenCrea extends HeavenPlugin
 		throw new HeavenException("Impossible to load HeavenGuard");
 	}
 
-	public UserProvider getUserProvider()
+	@Override
+	public UserProvider<CreativeUser> getUserProvider()
 	{
 		return userProvider;
 	}
