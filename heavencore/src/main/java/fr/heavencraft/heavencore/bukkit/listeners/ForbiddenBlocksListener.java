@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 
-public final class ForbiddenBlocksListener extends AbstractListener
+public final class ForbiddenBlocksListener extends AbstractListener<HeavenPlugin>
 {
 	private final Collection<Material> types;
 

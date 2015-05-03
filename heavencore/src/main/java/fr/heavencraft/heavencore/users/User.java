@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
+import fr.heavencraft.heavencore.users.color.TabColor;
 
 public interface User
 {
@@ -13,6 +14,8 @@ public interface User
 	String getName();
 
 	Date getLastLogin();
+
+	TabColor getTabColor();
 
 	void updateName(String name) throws HeavenException;
 

@@ -16,7 +16,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class ProtectionEnvironmentListener extends AbstractListener
+public class ProtectionEnvironmentListener extends AbstractListener<HeavenGuard>
 {
 	private final HeavenGuard plugin;
 
@@ -128,7 +128,7 @@ public class ProtectionEnvironmentListener extends AbstractListener
 
 	private boolean isProtected(Block block)
 	{
-		return plugin.getRegionManager().isProtectedAgainstEnvironment(block.getWorld().getName(),
-				block.getX(), block.getY(), block.getZ());
+		return plugin.getRegionManager().isProtectedAgainstEnvironment(block.getWorld().getName(), block.getX(),
+				block.getY(), block.getZ());
 	}
 }

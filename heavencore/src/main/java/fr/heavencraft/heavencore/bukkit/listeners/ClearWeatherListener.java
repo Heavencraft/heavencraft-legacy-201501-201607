@@ -11,7 +11,7 @@ import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
  * 
  * @author lorgan17
  */
-public final class ClearWeatherListener extends AbstractListener
+public final class ClearWeatherListener extends AbstractListener<HeavenPlugin>
 {
 	public ClearWeatherListener(HeavenPlugin plugin)
 	{

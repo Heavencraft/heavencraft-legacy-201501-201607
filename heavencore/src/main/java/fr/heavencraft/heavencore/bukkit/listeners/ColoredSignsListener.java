@@ -14,7 +14,7 @@ import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
  * 
  * @author lorgan17
  */
-public class ColoredSignsListener extends AbstractListener
+public class ColoredSignsListener extends AbstractListener<HeavenPlugin>
 {
 	public ColoredSignsListener(HeavenPlugin plugin)
 	{

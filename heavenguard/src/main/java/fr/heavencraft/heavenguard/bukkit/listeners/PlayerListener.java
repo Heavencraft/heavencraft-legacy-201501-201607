@@ -15,7 +15,7 @@ import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class PlayerListener extends AbstractListener
+public class PlayerListener extends AbstractListener<HeavenGuard>
 {
 	private final HeavenGuard plugin;
 
@@ -67,7 +67,8 @@ public class PlayerListener extends AbstractListener
 		}
 
 		final StringBuilder canYouBuild = new StringBuilder("Pouvez-vous construire ? ");
-		canYouBuild.append(plugin.getRegionManager().canBuildAt(player.getUniqueId(), world, x, y, z) ? "Oui." : "Non.");
+		canYouBuild.append(plugin.getRegionManager().canBuildAt(player.getUniqueId(), world, x, y, z) ? "Oui."
+				: "Non.");
 		plugin.sendMessage(player, canYouBuild.toString());
 
 		final StringBuilder pvpEnabled = new StringBuilder("PVP activé ? ");

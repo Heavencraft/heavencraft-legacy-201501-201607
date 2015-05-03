@@ -13,7 +13,7 @@ import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 
-public class PortalListener extends AbstractListener
+public class PortalListener extends AbstractListener<HeavenPlugin>
 {
 	private static final String TALENT_PERMISSION = CorePermissions.WORLD_ACCESS + WorldsManager.WORLD_TALENT;
 	private static final String ARCHITECT_PERMISSION = CorePermissions.WORLD_ACCESS

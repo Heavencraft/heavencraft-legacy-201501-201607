@@ -15,7 +15,7 @@ import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.utils.DateUtil;
 
 public class DefaultUserListener<P extends HeavenPlugin & HasUserProvider<U>, U extends User> extends
-		AbstractListener
+		AbstractListener<P>
 {
 	private final UserProvider<U> userProvider;
 

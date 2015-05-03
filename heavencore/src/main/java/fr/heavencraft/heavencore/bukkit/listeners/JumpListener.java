@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 
-public final class JumpListener extends AbstractListener
+public final class JumpListener extends AbstractListener<HeavenPlugin>
 {
 	public JumpListener(HeavenPlugin plugin)
 	{

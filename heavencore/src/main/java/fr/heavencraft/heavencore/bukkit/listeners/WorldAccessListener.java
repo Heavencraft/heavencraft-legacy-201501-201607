@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 
-public class WorldAccessListener extends AbstractListener
+public class WorldAccessListener extends AbstractListener<HeavenPlugin>
 {
 	private final Location fallbackLocation;
 	private final Collection<String> worlds;

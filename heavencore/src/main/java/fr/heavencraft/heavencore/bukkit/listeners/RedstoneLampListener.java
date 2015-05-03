@@ -17,7 +17,7 @@ import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
  * 
  * @author lorgan17
  */
-public final class RedstoneLampListener extends AbstractListener
+public final class RedstoneLampListener extends AbstractListener<HeavenPlugin>
 {
 	private static final BlockFace[] FACES =
 	{ BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
@@ -58,7 +58,8 @@ public final class RedstoneLampListener extends AbstractListener
 
 		if (block.getType() != Material.REDSTONE_LAMP_ON)
 		{
-			log.error("RedstoneLampListener is not working properly. Failed to replace block at %1$s %2$s %3$s %4$s", //
+			log.error(
+					"RedstoneLampListener is not working properly. Failed to replace block at %1$s %2$s %3$s %4$s", //
 					block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 		}
 

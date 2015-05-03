@@ -15,7 +15,7 @@ import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
  * 
  * @author lorgan17
  */
-public final class NoChatListener extends AbstractListener
+public final class NoChatListener extends AbstractListener<HeavenPlugin>
 {
 	public NoChatListener(HeavenPlugin plugin)
 	{
