@@ -3,6 +3,7 @@ package fr.heavencraft.heavencrea.users;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -111,13 +112,6 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 		loadUsers();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.heavencraft.heavencrea.users.UserProvider#createUser(java.util.UUID,
-	 * java.lang.String)
-	 */
 	@Override
 	public CreativeUser createUser(UUID uuid, String name) throws HeavenException
 	{
@@ -140,13 +134,6 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.heavencraft.heavencrea.users.UserProvider#getUserByUniqueId(java.util
-	 * .UUID)
-	 */
 	@Override
 	public CreativeUser getUserByUniqueId(UUID uuid) throws UserNotFoundException
 	{
@@ -158,13 +145,6 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 		return user;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.heavencraft.heavencrea.users.UserProvider#getUserByName(java.lang.
-	 * String)
-	 */
 	@Override
 	public CreativeUser getUserByName(String name) throws UserNotFoundException
 	{
@@ -174,5 +154,11 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 			throw new UserNotFoundException(name);
 
 		return user;
+	}
+
+	@Override
+	public Collection<CreativeUser> getAllUsers()
+	{
+		return usersByUniqueId.values();
 	}
 }

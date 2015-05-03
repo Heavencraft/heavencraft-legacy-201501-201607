@@ -34,12 +34,12 @@ import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class ProtectionPlayerListener extends AbstractListener
+public class ProtectionPlayerListener extends AbstractListener<HeavenGuard>
 {
 
 	private static final Collection<Material> VEHICULES = Sets.newHashSet(Material.BOAT, Material.MINECART,
-			Material.STORAGE_MINECART, Material.POWERED_MINECART, Material.EXPLOSIVE_MINECART, Material.HOPPER_MINECART,
-			Material.COMMAND_MINECART);
+			Material.STORAGE_MINECART, Material.POWERED_MINECART, Material.EXPLOSIVE_MINECART,
+			Material.HOPPER_MINECART, Material.COMMAND_MINECART, Material.ARMOR_STAND);
 
 	private final HeavenGuard plugin;
 
@@ -384,7 +384,7 @@ public class ProtectionPlayerListener extends AbstractListener
 	{
 		if (player.hasPermission(HeavenGuardPermissions.BYPASS))
 			return true;
-		
+
 		final boolean result = plugin.getRegionManager().canBuildAt(player.getUniqueId(), //
 				block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 

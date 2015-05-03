@@ -38,6 +38,7 @@ import fr.heavencraft.heavencrea.users.CreativeUserListener;
 import fr.heavencraft.heavencrea.users.CreativeUserProvider;
 import fr.heavencraft.heavencrea.users.JetonsCommand;
 import fr.heavencraft.heavencrea.users.JetonsTask;
+import fr.heavencraft.heavencrea.users.color.TabColorListener;
 import fr.heavencraft.heavencrea.users.homes.BuyhomeCommand;
 import fr.heavencraft.heavencrea.users.homes.HomeCommand;
 import fr.heavencraft.heavencrea.users.homes.SethomeCommand;
@@ -95,17 +96,6 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 			// Worlds
 			new PortalListener(this);
 
-			Bukkit.getScheduler().runTaskLater(this, new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					WorldsManager.init();
-					new WorldAccessListener(HeavenCrea.this, new Location(Bukkit.getWorld("world_creative"), 8,
-							44, 8, 0, 0), WorldsManager.WORLD_TALENT, WorldsManager.WORLD_ARCHITECT);
-				}
-			}, 0);
-
 			/*
 			 * Commands and listener from HeavenCore (Bukkit code)
 			 */
@@ -124,12 +114,24 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 			new JumpListener(this);
 			new NoChatListener(this);
 			new RedstoneLampListener(this);
+
 		}
 		catch (final Exception ex)
 		{
 			ex.printStackTrace();
 			Bukkit.shutdown();
 		}
+	}
+
+	@Override
+	protected void afterEnable()
+	{
+		WorldsManager.init();
+		new WorldAccessListener(HeavenCrea.this, new Location(Bukkit.getWorld("world_creative"), 8, 44, 8, 0, 0),
+				WorldsManager.WORLD_TALENT, WorldsManager.WORLD_ARCHITECT);
+
+		// TabColor
+		new TabColorListener(this);
 	}
 
 	private static HeavenGuard loadHeavenGuard() throws HeavenException

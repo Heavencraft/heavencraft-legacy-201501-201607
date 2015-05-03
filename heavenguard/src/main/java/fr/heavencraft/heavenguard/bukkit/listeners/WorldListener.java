@@ -7,7 +7,7 @@ import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenguard.api.GlobalRegion;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
-public class WorldListener extends AbstractListener
+public class WorldListener extends AbstractListener<HeavenGuard>
 {
 	private final HeavenGuard plugin;
 
