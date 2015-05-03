@@ -15,12 +15,14 @@ import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.users.User;
+import fr.heavencraft.heavencore.users.color.TabColor;
 
 public class CreativeUser implements User
 {
 	// SQL Queries
 	private static final String UPDATE_LASTLOGIN = "UPDATE users SET last_login = ? WHERE uuid = ? LIMIT 1;";
 	private static final String UPDATE_BALANCE = "UPDATE users SET balance = ? WHERE uuid = ? LIMIT 1;";
+	private static final String UPDATE_TAB_COLOR = "UPDATE users SET tab_color = ? WHERE uuid = ? LIMIT 1;";
 
 	private static final String GET_HOME = "SELECT world, x, y, z, yaw, pitch FROM homes WHERE user_id = ? AND home_nb = ? LIMIT 1";
 	private static final String SET_HOME = "REPLACE INTO homes SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ?, user_id = ?, home_nb = ?";
@@ -32,6 +34,7 @@ public class CreativeUser implements User
 	private final int id;
 	private final String uuid;
 	private final String name;
+	private TabColor tabColor;
 	private int balance;
 	private int homeNumber;
 	private Timestamp lastLogin;
@@ -43,32 +46,25 @@ public class CreativeUser implements User
 		id = rs.getInt("id");
 		uuid = rs.getString("uuid");
 		name = rs.getString("name");
+		tabColor = TabColor.getUniqueInstanceByCode(rs.getString("tab_color"));
+
 		balance = rs.getInt("balance");
 		homeNumber = rs.getInt("home_number");
 		lastLogin = rs.getTimestamp("last_login");
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.heavencraft.heavencrea.users.User#getUniqueId()
-	 */
 	@Override
 	public UUID getUniqueId()
 	{
 		return UUID.fromString(uuid);
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.heavencraft.heavencrea.users.User#getName()
-	 */
 	@Override
 	public String getName()
 	{
 		return name;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.heavencraft.heavencrea.users.User#updateName(java.lang.String)
-	 */
 	@Override
 	public void updateName(String name) throws HeavenException
 	{
@@ -99,7 +95,8 @@ public class CreativeUser implements User
 	public void updateBalance(int delta) throws HeavenException
 	{
 		if (balance < 0)
-			throw new HeavenException("Vous avez moins de 0 jetons sur vous. Merci de contacter un administrateur.");
+			throw new HeavenException(
+					"Vous avez moins de 0 jetons sur vous. Merci de contacter un administrateur.");
 
 		if (balance + delta < 0)
 			throw new HeavenException("Vous n'avez pas assez de jetons.");
@@ -132,7 +129,8 @@ public class CreativeUser implements User
 	{
 		try
 		{
-			final PreparedStatement ps = connectionHandler.getConnection().prepareStatement(INCREMENT_HOME_NUMBER);
+			final PreparedStatement ps = connectionHandler.getConnection()
+					.prepareStatement(INCREMENT_HOME_NUMBER);
 			ps.setInt(1, id);
 			ps.executeUpdate();
 
@@ -161,8 +159,8 @@ public class CreativeUser implements User
 			if (!rs.next())
 				throw new HeavenException("Vous n'avez pas configuré votre {home %1$d}.", nb);
 
-			return new Location(Bukkit.getWorld(rs.getString("world")), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"),
-					rs.getFloat("yaw"), rs.getFloat("pitch"));
+			return new Location(Bukkit.getWorld(rs.getString("world")), rs.getDouble("x"), rs.getDouble("y"),
+					rs.getDouble("z"), rs.getFloat("yaw"), rs.getFloat("pitch"));
 		}
 		catch (final SQLException ex)
 		{
@@ -202,18 +200,12 @@ public class CreativeUser implements User
 	 * Last login
 	 */
 
-	/* (non-Javadoc)
-	 * @see fr.heavencraft.heavencrea.users.User#getLastLogin()
-	 */
 	@Override
 	public Date getLastLogin()
 	{
 		return lastLogin;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.heavencraft.heavencrea.users.User#updateLastLogin(java.util.Date)
-	 */
 	@Override
 	public void updateLastLogin(Date date) throws SQLErrorException
 	{
@@ -234,4 +226,26 @@ public class CreativeUser implements User
 		}
 	}
 
+	@Override
+	public TabColor getTabColor()
+	{
+		return tabColor;
+	}
+
+	public void setTabColor(TabColor tabColor) throws HeavenException
+	{
+		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(UPDATE_TAB_COLOR))
+		{
+			ps.setString(1, tabColor.getCode());
+			ps.setString(2, uuid);
+			ps.executeUpdate();
+
+			this.tabColor = tabColor;
+		}
+		catch (final SQLException ex)
+		{
+			ex.printStackTrace();
+			throw new SQLErrorException();
+		}
+	}
 }

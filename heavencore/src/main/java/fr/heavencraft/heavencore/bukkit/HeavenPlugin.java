@@ -26,6 +26,32 @@ public abstract class HeavenPlugin extends JavaPlugin
 		return uniqueIdProvider;
 	}
 
+	@Override
+	public void onEnable()
+	{
+		super.onEnable();
+
+		Bukkit.getScheduler().runTaskLater(this, new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				log.info("Running afterEnable...");
+				afterEnable();
+				log.info("Done afterEnable.");
+			}
+		}, 0);
+	}
+
+	// Sometimes, things must be initialized after Bukkit
+	protected void afterEnable()
+	{
+	}
+
+	/*
+	 * Messages
+	 */
+
 	private static final String BEGIN = "{";
 	private static final String END = "}";
 
@@ -40,7 +66,8 @@ public abstract class HeavenPlugin extends JavaPlugin
 			public void run()
 			{
 				sender.sendMessage(new StringBuilder(textColor).append(
-						String.format(format.replace(BEGIN, highlightColor).replace(END, textColor), args)).toString());
+						String.format(format.replace(BEGIN, highlightColor).replace(END, textColor), args))
+						.toString());
 			}
 		});
 	}

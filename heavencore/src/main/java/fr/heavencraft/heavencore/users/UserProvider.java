@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencore.users;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
@@ -13,4 +14,6 @@ public interface UserProvider<U extends User> extends Provider
 	U getUserByUniqueId(UUID uuid) throws UserNotFoundException;
 
 	U getUserByName(String name) throws UserNotFoundException;
+
+	Collection<U> getAllUsers();
 }
