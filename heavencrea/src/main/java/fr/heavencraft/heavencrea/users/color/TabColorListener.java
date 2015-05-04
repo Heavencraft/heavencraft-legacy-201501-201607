@@ -32,7 +32,16 @@ public class TabColorListener extends AbstractListener<HeavenCrea>
 		final Player player = event.getPlayer();
 		final CreativeUser user = plugin.getUserProvider().getUserByUniqueId(player.getUniqueId());
 
-		if (player.hasPermission(CreaPermissions.ARCHITECT))
+		if (player.hasPermission(CreaPermissions.HIDE_TABCOLOR))
+		{
+			if (user.getTabColor() != TabColor.WHITE)
+			{
+				user.setTabColor(TabColor.WHITE);
+				scoreboard.setPlayerColor(player, TabColor.WHITE);
+			}
+		}
+
+		else if (player.hasPermission(CreaPermissions.ARCHITECT))
 		{
 			if (user.getTabColor() != ARCHITECT_COLOR)
 			{
