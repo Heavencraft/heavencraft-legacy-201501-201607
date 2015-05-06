@@ -26,7 +26,7 @@ public class DefaultUserListener<P extends HeavenPlugin & HasUserProvider<U>, U 
 	}
 
 	@EventHandler
-	private void onPlayerLogin(PlayerLoginEvent event) throws HeavenException
+	protected void onPlayerLogin(PlayerLoginEvent event) throws HeavenException
 	{
 		final Player player = event.getPlayer();
 		final UUID uuid = player.getUniqueId();
@@ -42,7 +42,7 @@ public class DefaultUserListener<P extends HeavenPlugin & HasUserProvider<U>, U 
 	}
 
 	@EventHandler
-	private void onPlayerJoin(PlayerJoinEvent event) throws HeavenException
+	protected void onPlayerJoin(PlayerJoinEvent event) throws HeavenException
 	{
 		final U user = userProvider.getUserByUniqueId(event.getPlayer().getUniqueId());
 
