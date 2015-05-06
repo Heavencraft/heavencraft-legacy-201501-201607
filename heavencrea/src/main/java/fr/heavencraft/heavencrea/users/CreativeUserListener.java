@@ -1,6 +1,9 @@
 package fr.heavencraft.heavencrea.users;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.users.DefaultUserListener;
@@ -11,6 +14,20 @@ public class CreativeUserListener extends DefaultUserListener<HeavenCrea, Creati
 	public CreativeUserListener(HeavenCrea plugin)
 	{
 		super(plugin);
+	}
+
+	@Override
+	@EventHandler
+	protected void onPlayerLogin(PlayerLoginEvent event) throws HeavenException
+	{
+		super.onPlayerLogin(event);
+	}
+
+	@Override
+	@EventHandler
+	protected void onPlayerJoin(PlayerJoinEvent event) throws HeavenException
+	{
+		super.onPlayerJoin(event);
 	}
 
 	@Override
