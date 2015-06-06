@@ -1,0 +1,6 @@
+name: HeavenSkyblock
+version: 1.0
+main: fr.heavencraft.heavenskyblock.HeavenSkyblock
+depend: [ASkyBlock, HeavenCore]
+commands:
+  spawn:
