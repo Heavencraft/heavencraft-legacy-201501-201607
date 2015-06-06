@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.logs.HeavenLog;
 
 public abstract class AbstractCommandExecutor implements CommandExecutor
 {
+	protected final HeavenLog log = HeavenLog.getLogger(getClass());
 	protected final HeavenPlugin plugin;
 
 	public AbstractCommandExecutor(HeavenPlugin plugin, String name)
@@ -33,14 +35,15 @@ public abstract class AbstractCommandExecutor implements CommandExecutor
 
 	public AbstractCommandExecutor(HeavenPlugin plugin, String name, String permission, List<String> aliases)
 	{
-		final PluginCommand command = plugin.getCommand(name);
+		this.plugin = plugin;
 
+		final PluginCommand command = plugin.getCommand(name);
 		command.setExecutor(this);
 		command.setPermission(permission);
 		command.setPermissionMessage("");
 		command.setAliases(aliases);
 
-		this.plugin = plugin;
+		log.info("Command %1$s registered", name);
 	}
 
 	@Override

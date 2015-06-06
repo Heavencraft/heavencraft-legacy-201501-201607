@@ -1,6 +1,5 @@
 package fr.heavencraft.heavencore.bukkit.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,29 +9,18 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 
 public final class SpawnCommand extends AbstractCommandExecutor
 {
-	private final String world;
-	private final double x, y, z;
-	private final float yaw, pitch;
+	private final Location spawnLocation;
 
-	public SpawnCommand(HeavenPlugin plugin, String world, double x, double y, double z, float yaw, float pitch)
+	public SpawnCommand(HeavenPlugin plugin, Location spawnLocation)
 	{
 		super(plugin, "spawn");
-
-		// Do not create a Location object, because at the time this command is
-		// initialized, the world could be not loaded.
-		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.yaw = yaw;
-		this.pitch = pitch;
-
+		this.spawnLocation = spawnLocation;
 	}
 
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		plugin.teleportPlayer(player, new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch));
+		plugin.teleportPlayer(player, spawnLocation);
 		plugin.sendMessage(player, "Vous avez été téléporté au spawn.");
 	}
 

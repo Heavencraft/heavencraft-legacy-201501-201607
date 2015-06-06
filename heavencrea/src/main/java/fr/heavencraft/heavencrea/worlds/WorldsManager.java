@@ -18,6 +18,7 @@ public class WorldsManager
 	public static final String WORLD_TALENT = "world_talent";
 	public static final String WORLD_ARCHITECT = "world_architect";
 
+	private static Location creativeSpawnLocation;
 	private static Location biomeSpawnLocation;
 	private static Location talentSpawnLocation;
 	private static Location architectSpawnLocation;
@@ -56,6 +57,7 @@ public class WorldsManager
 			creator.createWorld();
 		}
 
+		creativeSpawnLocation = new Location(getWorldCreative(), 8, 44, 8, 0, 0);
 		biomeSpawnLocation = new Location(getWorldBiome(), 120, 144, 652, 0, 0);
 		talentSpawnLocation = new Location(getWorldTalent(), 0, 50, 0, 0, 0);
 		architectSpawnLocation = new Location(getWorldArchitect(), 0, 50, 0, 0, 0);
@@ -84,6 +86,11 @@ public class WorldsManager
 	public static World getWorldArchitect()
 	{
 		return Bukkit.getWorld(WORLD_ARCHITECT);
+	}
+
+	public static Location getCreativeSpawnLocation()
+	{
+		return creativeSpawnLocation;
 	}
 
 	public static Location getBiomeSpawnLocation()

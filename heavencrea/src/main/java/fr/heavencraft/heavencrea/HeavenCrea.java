@@ -1,7 +1,6 @@
 package fr.heavencraft.heavencrea;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
@@ -102,7 +101,6 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 
 			new AccepterCommand(this);
 			new RejoindreCommand(this);
-			new SpawnCommand(this, "world_creative", 8, 44, 8, 0, 0);
 
 			new TpCommand(this);
 			new TphereCommand(this);
@@ -127,8 +125,10 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 	protected void afterEnable()
 	{
 		WorldsManager.init();
-		new WorldAccessListener(HeavenCrea.this, new Location(Bukkit.getWorld("world_creative"), 8, 44, 8, 0, 0),
-				WorldsManager.WORLD_TALENT, WorldsManager.WORLD_ARCHITECT);
+
+		new SpawnCommand(this, WorldsManager.getCreativeSpawnLocation());
+		new WorldAccessListener(this, WorldsManager.getCreativeSpawnLocation(), WorldsManager.WORLD_TALENT,
+				WorldsManager.WORLD_ARCHITECT);
 
 		// TabColor
 		new TabColorListener(this);
