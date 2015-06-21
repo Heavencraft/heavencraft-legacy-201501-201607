@@ -15,6 +15,7 @@ public class HeavenSkyblock extends HeavenPlugin
 		super.onEnable();
 
 		new NoChatListener(this);
+		new VillagerListener(this);
 	}
 
 	@Override
