@@ -84,7 +84,7 @@ challenges:
       requiredItems: 'BREAD:21'
       takeItems: true
       itemReward: 'DIRT:5'
-      rewardText: '5 blocs de bouse - Jardinier dans l'âme !'
+      rewardText: '5 blocs de bouse - Jardinier dans l''âme !'
       moneyReward: 10
       expReward: 30
       permissionReward: ''
@@ -104,13 +104,13 @@ challenges:
       requiredItems: 'INK_SACK:2:32'
       takeItems: true
       itemReward: 'SAPLING:0:2 SAPLING:1:2 SAPLING:2:2 SAPLING:3:2'
-      rewardText: '2 pousses de chêne, de bouleau, d'acajou et d'épicéa - Silence ça pousse!'
+      rewardText: '2 pousses de chêne, de bouleau, d''acajou et d''épicéa - Silence ça pousse!'
       moneyReward: 10
       expReward: 30
       permissionReward: ''
       repeatable: true
       repeatItemReward: 'SAPLING:0:1 SAPLING:1:1 SAPLING:2:1 SAPLING:3:1 SAPLING:4:1 SAPLING:5:1'
-      repeatRewardText: '1 pousse de chaque sorte d'arbre'
+      repeatRewardText: '1 pousse de chaque sorte d''arbre'
       repeatMoneyReward: 5
       repeatExpReward: 10
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
@@ -124,13 +124,13 @@ challenges:
       requiredItems: 'PAPER:21'
       takeItems: true
       itemReward: 'DIRT:5 CLAY:15'
-      rewardText: '5 blocs de bouse et 15 blocs d'argile - A s'en salir les mains !'
+      rewardText: '5 blocs de bouse et 15 blocs d''argile - A s''en salir les mains !'
       moneyReward: 15
       expReward: 30
       permissionReward: ''
       repeatable: true
       repeatItemReward: 'CLAY:2'
-      repeatRewardText: '2 blocs d'argile'
+      repeatRewardText: '2 blocs d''argile'
       repeatMoneyReward: 5
       repeatExpReward: 10
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
@@ -204,7 +204,7 @@ challenges:
       requiredItems: 10
       takeItems: false
       itemReward: 'IRON_PICKAXE:1 DIRT:5 SPONGE:1'
-      rewardText: '1 pioche en fer, 5 blocs de bouse et 1 éponge - Tu es encore tout p'tit!'
+      rewardText: '1 pioche en fer, 5 blocs de bouse et 1 éponge - Tu es encore tout p''tit!'
       moneyReward: 50
       expReward: 50
       permissionReward: ''
@@ -215,7 +215,7 @@ challenges:
       repeatExpReward: 0
     grinder:
       friendlyname: 'Massacreur'
-      description: 'Tue des monstres et collecte 64 viandes de zombar, 32 os de squelette, 32 fils, 32 flèches, 16 poudres à canon, 5 oeils d'araignées'
+      description: 'Tue des monstres et collecte 64 viandes de zombar, 32 os de squelette, 32 fils, 32 flèches, 16 poudres à canon, 5 oeils d''araignées'
       icon: BONE
       level: 'Competent'
       type: inventory
@@ -255,27 +255,27 @@ challenges:
       maxtimes: 100
     angler:
       friendlyname: 'Pêcheur'
-      description: 'Pêche et cuisine 10 poissons (pas de saumon) - J'aime pas le thon!'
+      description: 'Pêche et cuisine 10 poissons (pas de saumon) - J''aime pas le thon!'
       icon: COOKED_FISH
       level: 'Competent'
       type: inventory
       requiredItems: 'COOKED_FISH:10'
       takeItems: true
       itemReward: 'REDSTONE:16 IRON_ORE:5 INK_SACK:5'
-      rewardText: '16 poudres de redstone, 5 sacs d'encre, 5 minerais de fer'
+      rewardText: '16 poudres de redstone, 5 sacs d''encre, 5 minerais de fer'
       moneyReward: 75
       expReward: 75
       permissionReward: ''
       repeatable: true
       repeatItemReward: 'REDSTONE:2 IRON_ORE:1 INK_SACK:1'
-      repeatRewardText: '2 poudres de redstone, 1 sac d'encre, 1 minerai de fer)'
+      repeatRewardText: '2 poudres de redstone, 1 sac d''encre, 1 minerai de fer)'
       repeatMoneyReward: 15
       repeatExpReward: 15
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
       maxtimes: 100
     treecutter:
       friendlyname: 'Bûcheron'
-      description: 'Coupe 16 bûches de chêne, de bouleau, d'acajou et d'épicéa'
+      description: 'Coupe 16 bûches de chêne, de bouleau, d''acajou et d''épicéa'
       icon: LOG
       level: 'Competent'
       type: inventory
@@ -295,7 +295,7 @@ challenges:
       maxtimes: 100
     cookiemaker:
       friendlyname: 'Fabricant de cookie'
-      description: 'Fais 128 cookies et un seau de lait - C'est pour le Père Noël?'
+      description: 'Fais 128 cookies et un seau de lait - C''est pour le Père Noël?'
       icon: COOKIE
       level: 'Competent'
       type: inventory
@@ -322,7 +322,7 @@ challenges:
       requiredItems: 75
       takeItems: false
       itemReward: 'OBSIDIAN:10'
-      rewardText: '10 blocs d'obsidienne'
+      rewardText: '10 blocs d''obsidienne'
       moneyReward: 50
       expReward: 50
       permissionReward: ''
@@ -376,13 +376,13 @@ challenges:
       requiredItems: 'ENDER_PEARL:15'
       takeItems: true
       itemReward: 'GOLD_INGOT:5 BLAZE_ROD:1'
-      rewardText: '5 lingots d'or and 1 bâton de blaze'
+      rewardText: '5 lingots d''or and 1 bâton de blaze'
       moneyReward: 50
       expReward: 100
       permissionReward: ''
       repeatable: true
       repeatItemReward: 'GOLD_INGOT:1 BLAZE_ROD:1'
-      repeatRewardText: '1 lingot d'or and 1 bâton de blaze'
+      repeatRewardText: '1 lingot d''or and 1 bâton de blaze'
       repeatMoneyReward: 15
       repeatExpReward: 15
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
@@ -396,7 +396,7 @@ challenges:
       requiredItems: 'SLIME_BALL:40'
       takeItems: true
       itemReward: 'GOLD_INGOT:5 IRON_ORE:5'
-      rewardText: '5 lingots d'or and 5 minerais de fer'
+      rewardText: '5 lingots d''or and 5 minerais de fer'
       moneyReward: 50
       expReward: 100
       permissionReward: ''
@@ -416,7 +416,7 @@ challenges:
       requiredItems: 'CAKE:5 PUMPKIN_PIE:5'
       takeItems: true
       itemReward: 'GOLD_INGOT:5 DIAMOND:1'
-      rewardText: '5 lingots d'or and 1 diamant'
+      rewardText: '5 lingots d''or and 1 diamant'
       moneyReward: 50
       expReward: 100
       permissionReward: ''
@@ -428,7 +428,7 @@ challenges:
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
       maxtimes: 100
     pioneer:
-      friendlyname: 'Pionnier
+      friendlyname: 'Pionnier'
       description: 'Créer une carte et utilise-la, une boussole, une montre et collecte 64 netherracks, 16 sables des âmes et 1 larme de ghast'
       icon: MAP
       level: 'Expert'
@@ -436,7 +436,7 @@ challenges:
       requiredItems: 'NETHERRACK:64 SOUL_SAND:16 GHAST_TEAR:1 MAP:1 COMPASS:1 WATCH:1'
       takeItems: true
       itemReward: 'POWERED_RAIL:32 RAILS:256 DIAMOND:1 MONSTER_EGG:98:1'
-      rewardText: '256 rails, 32 rails de propulsion, 1 oeuf d'ocelot, 1 diamant'
+      rewardText: '256 rails, 32 rails de propulsion, 1 oeuf d''ocelot, 1 diamant'
       moneyReward: 100
       expReward: 100
       permissionReward: ''
@@ -456,7 +456,7 @@ challenges:
       requiredItems: 150
       takeItems: false
       itemReward: 'DIAMOND:1 DIRT:20 GOLD_BLOCK:2'
-      rewardText: '1 diamant, 20 blocs de bouse, and 2 blocs d'or'
+      rewardText: '1 diamant, 20 blocs de bouse, and 2 blocs d''or'
       moneyReward: 150
       expReward: 150
       permissionReward: ''
@@ -494,7 +494,7 @@ challenges:
       requiredItems: 'POTION:FIRE_RESISTANCE::::1 POTION:SLOWNESS::::1 POTION:SPEED::::1 POTION:INSTANT_HEAL::::1 POTION:INSTANT_DAMAGE::::1 POTION:INVISIBILITY::::1 POTION:STRENGTH::::1 POTION:REGEN::::1'
       takeItems: true
       itemReward: 'ENCHANTMENT_TABLE:1'
-      rewardText: 'Table d'enchantement'
+      rewardText: 'Table d''enchantement'
       moneyReward: 200
       expReward: 200
       permissionReward: ''
@@ -512,13 +512,13 @@ challenges:
       requiredItems: 'GOLD_RECORD:1 GREEN_RECORD:1 RECORD_3:1 RECORD_4:1 RECORD_5:1 RECORD_6:1 RECORD_7:1 RECORD_8:1 RECORD_9:1 RECORD_10:1 RECORD_11:1 RECORD_12:1 JUKEBOX:1' 
       takeItems: true
       itemReward: 'DIAMOND:3 EMERALD:10 GOLD_INGOT:5'
-      rewardText: '3 diamants, 10 émeraudes and 5 lingots d'or'
+      rewardText: '3 diamants, 10 émeraudes and 5 lingots d''or'
       moneyReward: 200
       expReward: 200
       permissionReward: ''
       repeatable: true
       repeatItemReward: 'DIAMOND:1 EMERALD:5 GOLD_INGOT:2'
-      repeatRewardText: '1 diamant, 5 émeraudes et 2 lingots d'or'
+      repeatRewardText: '1 diamant, 5 émeraudes et 2 lingots d''or'
       repeatMoneyReward: 20
       repeatExpReward: 20
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
@@ -538,14 +538,14 @@ challenges:
       permissionReward: ''
       repeatable: true
       repeatItemReward: 'GOLD_INGOT:2'
-      repeatRewardText: '2 lingots d'or'
+      repeatRewardText: '2 lingots d''or'
       repeatMoneyReward: 20
       repeatExpReward: 20
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
       maxtimes: 100
     culinaryartist:
       friendlyname: 'Artiste culinaire'
-      description: 'Collecte 1 de tous les types d'aliments comestibles cuits ou cuisiné (aucun aliment cru, chair zombie ou pommes d'or)'
+      description: 'Collecte 1 de tous les types d''aliments comestibles cuits ou cuisiné (aucun aliment cru, chair zombie ou pommes d''or)'
       icon: GOLDEN_APPLE
       level: 'Advanced'
       type: inventory
@@ -554,13 +554,13 @@ challenges:
       requiredItems: 'BAKED_POTATO:1 BREAD:1 CAKE:1 COOKED_CHICKEN:1 COOKED_FISH:1 GRILLED_PORK:1 COOKIE:1 GOLDEN_APPLE:0:1 GOLDEN_CARROT:1 MUSHROOM_SOUP:1 PUMPKIN_PIE:1 COOKED_BEEF:1 COOKED_RABBIT:1 RABBIT_STEW:1 COOKED_MUTTON:1'
       takeItems: true
       itemReward: 'GOLD_BLOCK:2 GREEN_RECORD:1 RECORD_3:1 RECORD_5:1 MONSTER_EGG:96:1 EMERALD:5'
-      rewardText: '2 blocs d'or, 3 CDs, 1 oeuf de champimeuh, and 5 émeraudes'
+      rewardText: '2 blocs d''or, 3 CDs, 1 oeuf de champimeuh, and 5 émeraudes'
       moneyReward: 200
       expReward: 200
       permissionReward: ''
       repeatable: true
       repeatItemReward: 'GOLD_INGOT:10 MONSTER_EGG:96:1 EMERALD:1'
-      repeatRewardText: '10 lingots d'or, 1 oeuf de champimeuh, 1 émeraude'
+      repeatRewardText: '10 lingots d''or, 1 oeuf de champimeuh, 1 émeraude'
       repeatMoneyReward: 20
       repeatExpReward: 20
       # Max times limits how many times a challenge can be done. Comment out to make unlimited
@@ -657,7 +657,7 @@ challenges:
       repeatExpReward: 0
     itsamonsterparty:
       friendlyname: "C'est Halloween !"
-      description: 'Fais une fête, tous les monstres sont invités! Approche toi d'un squelette, d'un zombie, d'une araignée, d'un creeper et d'un enderman en même temps'
+      description: 'Fais une fête, tous les monstres sont invités! Approche toi d''un squelette, d''un zombie, d''une araignée, d''un creeper et d''un enderman en même temps'
       icon: SKULL_ITEM
       level: 'Advanced'
       type: island
@@ -682,7 +682,7 @@ challenges:
       requiredItems: 1000
       takeItems: false
       itemReward: 'DIAMOND:1'
-      rewardText: '1 diamant - P'tit joueur !'
+      rewardText: '1 diamant - P''tit joueur !'
       moneyReward: 250
       expReward: 250
       permissionReward: ''
