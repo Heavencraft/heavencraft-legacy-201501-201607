@@ -3,12 +3,14 @@ package fr.heavencraft.hellcraft;
 import org.bukkit.Bukkit;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.hellcraft.hps.HpsCommand;
 import fr.heavencraft.hellcraft.hps.HpsManager;
+import fr.heavencraft.hellcraft.worlds.WorldsManager;
 
 public class HellCraft extends HeavenPlugin
 {
@@ -34,6 +36,13 @@ public class HellCraft extends HeavenPlugin
 			ex.printStackTrace();
 			Bukkit.shutdown();
 		}
+	}
+
+	@Override
+	protected void afterEnable()
+	{
+		WorldsManager.init();
+		new SpawnCommand(this, WorldsManager.getSpawnLocation());
 	}
 
 	public HpsManager getHpsManager()
