@@ -35,6 +35,6 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 				new ItemStack(Material.IRON_CHESTPLATE, 1), new ItemStack(Material.LEATHER_LEGGINGS, 1),
 				new ItemStack(Material.IRON_BOOTS, 1) };
 
-		event.getPlayer().getPlayer().getInventory().addItem(items);
+		event.getPlayer().getInventory().addItem(items);
 	}
 }
