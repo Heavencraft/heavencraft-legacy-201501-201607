@@ -8,6 +8,8 @@ import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
+import fr.heavencraft.hellcraft.back.BackCommand;
+import fr.heavencraft.hellcraft.back.BackListener;
 import fr.heavencraft.hellcraft.hps.HpsCommand;
 import fr.heavencraft.hellcraft.hps.HpsManager;
 import fr.heavencraft.hellcraft.worlds.WorldsManager;
@@ -29,6 +31,8 @@ public class HellCraft extends HeavenPlugin
 			new NoChatListener(this); // Chat is handled by the proxy
 
 			new PlayerListener(this);
+			new BackListener(this);
+			new BackCommand(this);
 			new HpsCommand(this);
 		}
 		catch (final Exception ex)
