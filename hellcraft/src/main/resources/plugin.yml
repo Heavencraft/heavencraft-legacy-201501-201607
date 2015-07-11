@@ -1,6 +1,7 @@
-name: HellGame
+name: HellCraft
+version: 2.0
 main: fr.heavencraft.hellcraft.HellCraft
-version: 1.0
+depend: [HeavenCore]
 commands:
   hps:
     aliases: hp
