@@ -2,13 +2,16 @@ package fr.heavencraft.hellcraft;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
+import fr.heavencraft.hellcraft.worlds.WorldsManager;
 
 public class PlayerListener extends AbstractListener<HeavenPlugin>
 {
@@ -36,5 +39,29 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 				new ItemStack(Material.IRON_BOOTS, 1) };
 
 		event.getPlayer().getInventory().addItem(items);
+	}
+	
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent event)
+	{
+		
+		final Player player = event.getPlayer();
+		if(!WorldsManager.getWorldSpawn().equals(player.getWorld())) 
+		{
+			return;
+		}
+		
+		final double x = player.getLocation().getX();
+		final double y = player.getLocation().getY();
+		final double z = player.getLocation().getZ();
+		
+		if (y <= 55 //
+				&& -14 <= x && x <= 17 //
+				&& 64 <= z && z <= 96)
+				{
+					
+					player.teleport(WorldsManager.getCitySpawn());
+					plugin.sendMessage(player, "Vous apparaissez dans un mon apocalyptique ! Vous entendez des bruits ...");
+				}
 	}
 }
