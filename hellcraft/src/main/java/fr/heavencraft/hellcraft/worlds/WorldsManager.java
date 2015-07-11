@@ -16,6 +16,7 @@ public class WorldsManager
 {
 	public static final String WORLD_SPAWN = "spawn";
 	public static final String WORLD_CITY = "city";
+	public static final String GENERATOR_CITY = "CityWorld";
 
 	private static Location spawnLocation;
 
@@ -32,6 +33,7 @@ public class WorldsManager
 		if (!isLoaded(WORLD_CITY))
 		{
 			final WorldCreator creator = new WorldCreator(WORLD_CITY);
+			creator.generator(GENERATOR_CITY);
 			creator.environment(Environment.NORMAL);
 			creator.type(WorldType.NORMAL);
 			creator.createWorld();
