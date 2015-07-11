@@ -15,7 +15,7 @@ import fr.heavencraft.hellcraft.Utils;
 public class WorldsManager
 {
 	public static final String WORLD_SPAWN = "spawn";
-	public static final String WORLD_CITY = "CityWorld";
+	public static final String WORLD_CITY = "city";
 
 	private static Location spawnLocation;
 
