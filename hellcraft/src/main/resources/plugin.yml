@@ -1,0 +1,6 @@
+name: HellGame
+main: fr.heavencraft.hellcraft.HellCraft
+version: 1.0
+commands:
+  hps:
+    aliases: hp
