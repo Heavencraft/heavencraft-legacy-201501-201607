@@ -1,11 +1,16 @@
 package fr.heavencraft.hellcraft.worlds;
 
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
+
+import fr.heavencraft.hellcraft.Utils;
 
 public class WorldsManager
 {
@@ -53,5 +58,27 @@ public class WorldsManager
 	public static Location getSpawnLocation()
 	{
 		return spawnLocation;
+	}
+
+	static Random rnd = new Random();
+	
+	public static Location getCitySpawn()
+	{
+		int x;
+		int z;
+		do
+		{
+			x = rnd.nextInt(400) - 200;
+			z = rnd.nextInt(400) - 200;
+		}
+		while ((getCity().getBiome(x, z) == Biome.OCEAN)
+				|| (getCity().getBiome(x, z) == Biome.DEEP_OCEAN));
+
+		return Utils.getSafeDestination(new Location(getCity(), x, 100.0D, z));
+	}
+	
+	public static World getCity()
+	{
+		return Bukkit.getWorld(WORLD_CITY);
 	}
 }
