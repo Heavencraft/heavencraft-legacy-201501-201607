@@ -1,0 +1,43 @@
+package fr.heavencraft.hellcraft;
+
+import org.bukkit.Bukkit;
+
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
+import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
+import fr.heavencraft.heavencore.sql.Database;
+import fr.heavencraft.hellcraft.hps.HpsCommand;
+import fr.heavencraft.hellcraft.hps.HpsManager;
+
+public class HellCraft extends HeavenPlugin
+{
+	private HpsManager hpsManager;
+
+	@Override
+	public void onEnable()
+	{
+		try
+		{
+			super.onEnable();
+
+			final ConnectionHandler webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
+			hpsManager = new HpsManager(webConnection);
+
+			new NoChatListener(this); // Chat is handled by the proxy
+
+			new PlayerListener(this);
+			new HpsCommand(this);
+		}
+		catch (final Exception ex)
+		{
+			ex.printStackTrace();
+			Bukkit.shutdown();
+		}
+	}
+
+	public HpsManager getHpsManager()
+	{
+		return hpsManager;
+	}
+}
