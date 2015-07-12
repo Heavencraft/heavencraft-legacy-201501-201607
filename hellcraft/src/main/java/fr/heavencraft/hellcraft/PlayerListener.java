@@ -9,6 +9,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
@@ -62,6 +64,7 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 				&& -14 <= x && x <= 17 //
 				&& 64 <= z && z <= 96)
 		{
+			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 10, 255));
 			plugin.teleportPlayer(player, WorldsManager.getCitySpawn());
 			plugin.sendMessage(player, ENTER_CITY_MESSAGE);
 		}
