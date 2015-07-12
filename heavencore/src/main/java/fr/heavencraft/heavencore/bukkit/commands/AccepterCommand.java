@@ -12,7 +12,7 @@ public class AccepterCommand extends AbstractCommandExecutor
 {
 	public AccepterCommand(HeavenPlugin plugin)
 	{
-		super(plugin, "accepter", CorePermissions.REJOINDRE_COMMAND, null);
+		super(plugin, "accepter", CorePermissions.ACCEPTER_COMMAND, null);
 	}
 
 	@Override
@@ -25,11 +25,12 @@ public class AccepterCommand extends AbstractCommandExecutor
 		}
 		final Player toTeleport = PlayerUtil.getPlayer(args[0]);
 
-		if (!player.hasPermission(CorePermissions.REJOINDRE_COMMAND))
-			throw new HeavenException("Vous n'êtes pas actuellement dans le monde ressources.");
+		if (!player.hasPermission(CorePermissions.ACCEPTER_COMMAND))
+			throw new HeavenException("Vous n'avez actuellement pas la permission de faire /accepter.");
 
 		if (!toTeleport.hasPermission(CorePermissions.REJOINDRE_COMMAND))
-			throw new HeavenException("{%1$s} n'est pas actuellement dans le monde ressources.", toTeleport.getName());
+			throw new HeavenException("{%1$s} n'a actuellement pas la permission de faire /rejoindre.",
+					toTeleport.getName());
 
 		if (!RejoindreCommand.acceptRequest(toTeleport.getName(), player.getName()))
 			throw new HeavenException("{%1$s} n'a pas demandé à vous rejoindre.", toTeleport.getName());
