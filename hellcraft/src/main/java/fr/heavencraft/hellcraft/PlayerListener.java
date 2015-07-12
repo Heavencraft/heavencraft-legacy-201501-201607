@@ -15,7 +15,8 @@ import fr.heavencraft.hellcraft.worlds.WorldsManager;
 
 public class PlayerListener extends AbstractListener<HeavenPlugin>
 {
-	private static final String WELCOME_FORMAT = ChatColor.GREEN + "Bienvenue sur le serveur HellCraft !";
+	private static final String WELCOME_MESSAGE = ChatColor.GREEN + "Bienvenue sur le serveur HellCraft !";
+	private static final String ENTER_CITY_MESSAGE = "Vous apparaissez dans un mon apocalyptique ! Vous entendez des bruits ...";
 
 	public PlayerListener(HeavenPlugin plugin)
 	{
@@ -25,7 +26,7 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
-		plugin.sendMessage(event.getPlayer(), WELCOME_FORMAT);
+		plugin.sendMessage(event.getPlayer(), WELCOME_MESSAGE);
 	}
 
 	@EventHandler
@@ -40,28 +41,25 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 
 		event.getPlayer().getInventory().addItem(items);
 	}
-	
+
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event)
 	{
-		
 		final Player player = event.getPlayer();
-		if(!WorldsManager.getWorldSpawn().equals(player.getWorld())) 
-		{
+
+		if (!WorldsManager.getWorldSpawn().equals(player.getWorld()))
 			return;
-		}
-		
+
 		final double x = player.getLocation().getX();
 		final double y = player.getLocation().getY();
 		final double z = player.getLocation().getZ();
-		
+
 		if (y <= 55 //
 				&& -14 <= x && x <= 17 //
 				&& 64 <= z && z <= 96)
-				{
-					
-					player.teleport(WorldsManager.getCitySpawn());
-					plugin.sendMessage(player, "Vous apparaissez dans un mon apocalyptique ! Vous entendez des bruits ...");
-				}
+		{
+			plugin.teleportPlayer(player, WorldsManager.getCitySpawn());
+			plugin.sendMessage(player, ENTER_CITY_MESSAGE);
+		}
 	}
 }
