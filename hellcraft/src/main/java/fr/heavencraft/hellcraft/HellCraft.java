@@ -45,7 +45,6 @@ public class HellCraft extends HeavenPlugin
 
 			// Non-vip
 			new AccepterCommand(this);
-			getCommand("accepter").setPermission("");
 
 			WorldsManager.init();
 		}
