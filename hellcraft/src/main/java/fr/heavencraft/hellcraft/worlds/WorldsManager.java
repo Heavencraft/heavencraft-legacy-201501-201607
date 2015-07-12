@@ -16,6 +16,7 @@ public class WorldsManager
 {
 	public static final String WORLD_SPAWN = "spawn";
 	public static final String WORLD_CITY = "city";
+	private static final String GENERATOR_CITY = "CityWorld";
 
 	private static Location spawnLocation;
 
@@ -32,6 +33,7 @@ public class WorldsManager
 		if (!isLoaded(WORLD_CITY))
 		{
 			final WorldCreator creator = new WorldCreator(WORLD_CITY);
+			creator.generator(GENERATOR_CITY);
 			creator.environment(Environment.NORMAL);
 			creator.type(WorldType.NORMAL);
 			creator.createWorld();
@@ -61,7 +63,7 @@ public class WorldsManager
 	}
 
 	static Random rnd = new Random();
-	
+
 	public static Location getCitySpawn()
 	{
 		int x;
@@ -71,12 +73,11 @@ public class WorldsManager
 			x = rnd.nextInt(400) - 200;
 			z = rnd.nextInt(400) - 200;
 		}
-		while ((getCity().getBiome(x, z) == Biome.OCEAN)
-				|| (getCity().getBiome(x, z) == Biome.DEEP_OCEAN));
+		while ((getCity().getBiome(x, z) == Biome.OCEAN) || (getCity().getBiome(x, z) == Biome.DEEP_OCEAN));
 
 		return Utils.getSafeDestination(new Location(getCity(), x, 100.0D, z));
 	}
-	
+
 	public static World getCity()
 	{
 		return Bukkit.getWorld(WORLD_CITY);
