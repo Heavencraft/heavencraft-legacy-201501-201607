@@ -1,18 +1,24 @@
 package fr.heavencraft.hellcraft.hps;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.hellcraft.HellCraft;
+import fr.heavencraft.hellcraft.HellCraftPermissions;
+import fr.heavencraft.hellcraft.back.BackListener;
+import fr.heavencraft.hellcraft.worlds.WorldsManager;
 
 public class HpsCommand extends AbstractCommandExecutor
 {
+
 	private static final String FORMAT_WP = "§4[§6%1$s§4] §6%2$s";
 
 	private final HellCraft plugin;
@@ -24,176 +30,57 @@ public class HpsCommand extends AbstractCommandExecutor
 		this.plugin = plugin;
 	}
 
+	private static void addPermission(Player player, String perm)
+	{
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add " + perm);
+	}
+
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		if (args.length == 0)
+		if (args.length != 0)
 		{
-			plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Votre solde: §2"
-					+ plugin.getHpsManager().getBalance(player.getName()));
-			plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Faites /hps liste pour une liste des produits.");
-			return;
+			switch (args[0].toLowerCase())
+			{
+				case "l":
+				case "liste":
+					liste(player);
+					return;
+
+				case "info":
+					if (args.length >= 2)
+						info(player, args[1]);
+					return;
+
+				case "back":
+					back(player);
+					return;
+
+				case "heal":
+					heal(player);
+					return;
+
+				case "diam":
+					diam(player);
+					return;
+
+				case "vip":
+					vip(player);
+					return;
+
+				case "reduc":
+					reduc(player);
+					return;
+
+				default:
+					break;
+			}
 		}
 
-		if ((args[0].equalsIgnoreCase("liste")) || (args[0].equalsIgnoreCase("l")))
-		{
-			plugin.sendMessage(player, FORMAT_WP, "HPS", "┌───────── Boutique HPS ─────────┐");
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " ─────── Avantages Ponctuels ─────── ");
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " - Restaure la vie, §55 HPS§6: §c/hps heal");
-			plugin.sendMessage(player, FORMAT_WP, "HPS",
-					" - Retour a la dernière position, §55 HPS§6: §c/hps back");
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " - Equipement Diamant, §515 HPS§6: §c/hps diam");
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " ─────── Avantages permissions ─────── ");
-			plugin.sendMessage(player, FORMAT_WP, "HPS",
-					" - Carte de réduction 33% boutique, §525 HPS§6: §c/hps reduc");
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " - VIP, §550HPS§6: §c/hps vip");
-
-			plugin.sendMessage(player, FORMAT_WP, "HPS",
-					"Note: pour avoir plus d'information sur un kit: §c/hps <kit> info");
-			player.sendMessage("");
-		}
-		else if (args[0].equalsIgnoreCase("back"))
-		{
-			if (args.length >= 2)
-			{
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Le /hps back vous permet de retourner au dernier point avant votre décès.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "La commande est risquée, soyez prudant.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Prix: 5HPS.");
-			}
-			else
-			{
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " add essentials.back");
-				Bukkit.dispatchCommand(player, "back");
-
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " remove essentials.back");
-				final Player tmpPlayer = player;
-
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-				{
-					public void run()
-					{
-						if (tmpPlayer.getLocation().getWorld().getName().equalsIgnoreCase("city"))
-							try
-							{
-								plugin.getHpsManager().removeBalance(tmpPlayer.getName(), 5);
-								tmpPlayer.sendMessage(String.format(FORMAT_WP, new Object[]
-								{ "HPS §2Confirmation", " Vous avez acheté le /back, 5HPS débités." }));
-							}
-							catch (final HeavenException e)
-							{
-								plugin.sendMessage(tmpPlayer, FORMAT_WP, "HPS §2Notification",
-										" Vous n'avez pas été débités, car le /back ne vous a pas téléporté sur le bon monde.");
-							}
-					}
-				}, 60L);
-			}
-
-		}
-		else if (args[0].equalsIgnoreCase("heal"))
-		{
-			if (args.length >= 2)
-			{
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Le /hps heal restaure votre vie et votre faim.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Prix: 5HPS.");
-			}
-			else
-			{
-				plugin.getHpsManager().removeBalance(player.getName(), 5);
-				player.setFoodLevel(20);
-				player.setHealth(player.getMaxHealth());
-				player.setFireTicks(0);
-				plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation", "Vous avez été soigné, 5HPS débités.");
-			}
-		}
-		else if (args[0].equalsIgnoreCase("diam"))
-		{
-			if (args.length >= 2)
-			{
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Le /hps diam vous offre un équipement de combat a base de diamant.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Prix: 33HPS.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Assurez vous d'avoir de la place dans votre inventaire.");
-			}
-			else
-			{
-				plugin.getHpsManager().removeBalance(player.getName(), 33);
-				giveDiamondStuff(player);
-				plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
-						"Vous avez recu votre equipement, 33HPS débités.");
-			}
-		}
-		else if (args[0].equalsIgnoreCase("vip"))
-		{
-			if (args.length >= 2)
-			{
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Le VIP est un ensemble de commandes et d'avantages stratégiques pour simplifier votre vie.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Le TPA (/tpa <joueur>) permet de se téléporter a un joueur.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Le PTIME (/ptime <day|night>) permet de mettre le jour ou la nuit.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Le compass (/compass) permet de connaitre la direction dans laquelle nous marchons.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Le getpos (/getpos) permet de savoir ces positions.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Une réduction 33% sur toute la boutique!");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Un équipement en diamant.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Prix: 50HPS.");
-			}
-			else if (!player.hasPermission("essentials.compass"))
-			{
-				plugin.getHpsManager().removeBalance(player.getName(), 50);
-				giveDiamondStuff(player);
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " add essentials.tpa");
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " add essentials.ptime");
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " add essentials.compass");
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " add essentials.getpos");
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " add BossShop.PriceMultiplier.Money1");
-				plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
-						" Vous avez acheté le kit VIP, 50 HPS débités.");
-			}
-			else
-			{
-				plugin.sendMessage(player, FORMAT_WP, "HPS", " Vous ètes déjà VIP.");
-			}
-
-		}
-		else if (args[0].equalsIgnoreCase("reduc"))
-		{
-			if (args.length >= 2)
-			{
-				plugin.sendMessage(player, FORMAT_WP, "HPS",
-						"Il s'agit d'une réduction 33% sur toute la boutique et sur tout les achats!");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Prix: 25HPS.");
-				plugin.sendMessage(player, FORMAT_WP, "HPS", "Ne s'accumule pas avec la réduction VIP.");
-			}
-			else if (!player.hasPermission("BossShop.PriceMultiplier.Money1"))
-			{
-				plugin.getHpsManager().removeBalance(player.getName(), 25);
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName()
-						+ " add BossShop.PriceMultiplier.Money1");
-				plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
-						" Vous avez acheté la carte de réduction, 25 HPS débités.");
-			}
-			else
-			{
-				plugin.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
-			}
-
-		}
-		else
-		{
-			plugin.sendMessage(player, FORMAT_WP, "HPS", "Argument inconnu, faites /hps liste.");
-		}
+		plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Votre solde: §2"
+				+ plugin.getHpsManager().getBalance(player.getName()));
+		plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Faites /hps liste pour une liste des produits.");
+		return;
 	}
 
 	private void giveDiamondStuff(Player p)
@@ -226,5 +113,132 @@ public class HpsCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
+	}
+
+	private void liste(CommandSender sender)
+	{
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", "┌───────── Boutique HPS ─────────┐");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages Ponctuels ─────── ");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Restaure la vie, {5 HPS}: {/hps heal}");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Retour à la dernière position, {5 HPS}: {/hps back}");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Equipement Diamant, {15 HPS}: {/hps diam}");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages permissions ─────── ");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Carte de réduction 33% boutique, {25 HPS}: {/hps reduc}");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - VIP, {50HPS}: {/hps vip}");
+
+		plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				"Note: pour avoir plus d'information sur un kit: {/hps into <kit>}");
+		plugin.sendMessage(sender, "");
+	}
+
+	private void info(CommandSender sender, String kit)
+	{
+		switch (kit.toLowerCase())
+		{
+			case "back":
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Le /hps back vous permet de retourner au dernier point avant votre décès.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "La commande est risquée, soyez prudant.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 5HPS.");
+				break;
+
+			case "heal":
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Le /hps heal restaure votre vie et votre faim.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 5HPS.");
+				break;
+
+			case "diam":
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Le /hps diam vous offre un équipement de combat a base de diamant.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 33HPS.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Assurez vous d'avoir de la place dans votre inventaire.");
+				break;
+
+			case "vip":
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Le VIP est un ensemble de commandes et d'avantages stratégiques pour simplifier votre vie.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Le TPA (/rejoindre <joueur>) permet de se téléporter a un joueur.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Le PTIME (/ptime <day|night>) permet de mettre le jour ou la nuit.");
+				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				// "Le compass (/compass) permet de connaitre la direction dans laquelle nous marchons.");
+				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				// "Le getpos (/getpos) permet de savoir ces positions.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Une réduction 33% sur toute la boutique!");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Un équipement en diamant.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 50HPS.");
+				break;
+
+			case "reduc":
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Il s'agit d'une réduction 33% sur toute la boutique et sur tout les achats!");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 25HPS.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Ne s'accumule pas avec la réduction VIP.");
+				break;
+		}
+	}
+
+	private void back(Player player) throws HeavenException
+	{
+		if (!WorldsManager.getWorldSpawn().equals(player.getWorld()))
+			throw new HeavenException("Vous devez être au spawn pour utiliser cette commande.");
+
+		final Location deathLocation = BackListener.getDeathLocation(player.getName());
+
+		if (deathLocation == null)
+			throw new HeavenException("Vous devez être mort au moins une fois pour utiliser cette commande.");
+
+		plugin.getHpsManager().removeBalance(player.getName(), 5);
+		plugin.sendMessage(player, FORMAT_WP, "HPS Confirmation", " Vous avez acheté le /back, 5HPS débités.");
+
+		plugin.teleportPlayer(player, deathLocation);
+		plugin.sendMessage(player, "Vous avez été téléporté à l'endroit où vous étiez mort.");
+	}
+
+	private void heal(Player player) throws HeavenException
+	{
+		plugin.getHpsManager().removeBalance(player.getName(), 5);
+
+		player.setFoodLevel(20);
+		player.setHealth(player.getMaxHealth());
+		player.setFireTicks(0);
+		plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation", "Vous avez été soigné, 5HPS débités.");
+	}
+
+	private void diam(Player player) throws HeavenException
+	{
+
+		plugin.getHpsManager().removeBalance(player.getName(), 33);
+		giveDiamondStuff(player);
+		plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
+				"Vous avez recu votre equipement, 33HPS débités.");
+	}
+
+	private void vip(Player player) throws HeavenException
+	{
+		plugin.getHpsManager().removeBalance(player.getName(), 50);
+		giveDiamondStuff(player);
+		addPermission(player, CorePermissions.REJOINDRE_COMMAND);
+		addPermission(player, HellCraftPermissions.PTIME_COMMAND);
+		addPermission(player, "BossShop.PriceMultiplier.Money1");
+		plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
+				" Vous avez acheté le kit VIP, 50 HPS débités.");
+	}
+
+	private void reduc(Player player) throws HeavenException
+	{
+		if (!player.hasPermission("BossShop.PriceMultiplier.Money1"))
+		{
+			plugin.getHpsManager().removeBalance(player.getName(), 25);
+			addPermission(player, "BossShop.PriceMultiplier.Money1");
+			plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
+					" Vous avez acheté la carte de réduction, 25 HPS débités.");
+		}
+		else
+		{
+			plugin.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
+		}
 	}
 }

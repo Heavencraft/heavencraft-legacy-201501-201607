@@ -76,6 +76,6 @@ public class WorldsManager
 		while ((getWorldCity().getBiome(x, z) == Biome.OCEAN)
 				|| (getWorldCity().getBiome(x, z) == Biome.DEEP_OCEAN));
 
-		return Utils.getSafeDestination(new Location(getWorldCity(), x, 100.0D, z));
+		return Utils.getSafeDestination(new Location(getWorldCity(), x, 215.0D, z));
 	}
 }
