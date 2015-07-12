@@ -7,3 +7,6 @@ commands:
     aliases: hp
   spawn:
   back:
+  accepter:
+  rejoindre:
+  ptime:
