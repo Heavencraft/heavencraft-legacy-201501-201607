@@ -77,8 +77,8 @@ public class HpsCommand extends AbstractCommandExecutor
 			}
 		}
 
-		plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Votre solde: §2"
-				+ plugin.getHpsManager().getBalance(player.getName()));
+		plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO",
+				"Votre solde: §2" + plugin.getHpsManager().getBalance(player.getName()));
 		plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Faites /hps liste pour une liste des produits.");
 		return;
 	}
@@ -123,7 +123,8 @@ public class HpsCommand extends AbstractCommandExecutor
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Retour à la dernière position, {5 HPS}: {/hps back}");
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Equipement Diamant, {15 HPS}: {/hps diam}");
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages permanent ─────── ");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Carte de réduction 33% boutique, {25 HPS}: {/hps reduc}");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				" - Carte de réduction 33% boutique, {25 HPS}: {/hps reduc}");
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - VIP (Téléportation, -33%, etc) {50HPS}: {/hps vip}");
 
 		plugin.sendMessage(sender, FORMAT_WP, "HPS",
@@ -165,7 +166,8 @@ public class HpsCommand extends AbstractCommandExecutor
 				plugin.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le /spawn permet de retourner au spawn à tout moment.");
 				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
-				// "Le compass (/compass) permet de connaitre la direction dans laquelle nous marchons.");
+				// "Le compass (/compass) permet de connaitre la direction dans
+				// laquelle nous marchons.");
 				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
 				// "Le getpos (/getpos) permet de savoir ces positions.");
 				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Une réduction 33% sur toute la boutique!");
@@ -220,17 +222,25 @@ public class HpsCommand extends AbstractCommandExecutor
 
 	private void vip(Player player) throws HeavenException
 	{
-		plugin.getHpsManager().removeBalance(player.getName(), 50);
-		giveDiamondStuff(player);
-		addPermission(player, CorePermissions.REJOINDRE_COMMAND);
-		addPermission(player, HellCraftPermissions.PTIME_COMMAND);
-		addPermission(player, HellCraftPermissions.SPAWN_COMMAND);
-		addPermission(player, "BossShop.PriceMultiplier.Money1");
-		player.setFoodLevel(20);
-		player.setHealth(player.getMaxHealth());
-		player.setFireTicks(0);
-		plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
-				" Vous avez acheté le kit VIP, 50 HPS débités.");
+		if (!player.hasPermission(HellCraftPermissions.VIP_GRADE))
+		{
+			plugin.getHpsManager().removeBalance(player.getName(), 50);
+			giveDiamondStuff(player);
+			addPermission(player, CorePermissions.REJOINDRE_COMMAND);
+			addPermission(player, HellCraftPermissions.PTIME_COMMAND);
+			addPermission(player, HellCraftPermissions.SPAWN_COMMAND);
+			addPermission(player, "BossShop.PriceMultiplier.Money1");
+			addPermission(player, HellCraftPermissions.VIP_GRADE);
+			player.setFoodLevel(20);
+			player.setHealth(player.getMaxHealth());
+			player.setFireTicks(0);
+			plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
+					" Vous avez acheté le kit VIP, 50 HPS débités.");
+		}
+		else
+		{
+			plugin.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
+		}
 	}
 
 	private void reduc(Player player) throws HeavenException
