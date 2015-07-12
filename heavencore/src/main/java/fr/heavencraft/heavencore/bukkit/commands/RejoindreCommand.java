@@ -32,16 +32,19 @@ public class RejoindreCommand extends AbstractCommandExecutor
 		final Player destination = PlayerUtil.getPlayer(args[0]);
 
 		if (!player.hasPermission(CorePermissions.REJOINDRE_COMMAND))
-			throw new HeavenException("Vous n'êtes pas actuellement dans le monde ressources.");
+			throw new HeavenException("Vous n'avez pas actuellement la permission d'utiliser /rejoindre.");
 
-		if (!destination.hasPermission(CorePermissions.REJOINDRE_COMMAND))
-			throw new HeavenException("{%1$s} n'est pas actuellement dans le monde ressources.", destination.getName());
+		if (!destination.hasPermission(CorePermissions.ACCEPTER_COMMAND))
+			throw new HeavenException("{%1$s} n'a pas actuellement la permission de faire /accepter.",
+					destination.getName());
 
 		addRequest(player.getName(), destination.getName());
 
-		plugin.sendMessage(destination, "{%1$s} souhaite vous rejoindre. Tapez /accepter {%1$s} pour accepter.", player.getName());
+		plugin.sendMessage(destination, "{%1$s} souhaite vous rejoindre. Tapez /accepter {%1$s} pour accepter.",
+				player.getName());
 
-		plugin.sendMessage(player, "Votre demande de téléportation a été transmise à {%1$s}", destination.getName());
+		plugin.sendMessage(player, "Votre demande de téléportation a été transmise à {%1$s}",
+				destination.getName());
 	}
 
 	@Override
