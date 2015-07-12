@@ -162,6 +162,8 @@ public class HpsCommand extends AbstractCommandExecutor
 						"Le TPA (/rejoindre <joueur>) permet de se téléporter a un joueur.");
 				plugin.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le PTIME (/ptime <day|night>) permet de mettre le jour ou la nuit.");
+				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+						"Le /spawn permet de retourner au spawn à tout moment.");
 				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
 				// "Le compass (/compass) permet de connaitre la direction dans laquelle nous marchons.");
 				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
@@ -222,6 +224,7 @@ public class HpsCommand extends AbstractCommandExecutor
 		giveDiamondStuff(player);
 		addPermission(player, CorePermissions.REJOINDRE_COMMAND);
 		addPermission(player, HellCraftPermissions.PTIME_COMMAND);
+		addPermission(player, HellCraftPermissions.SPAWN_COMMAND);
 		addPermission(player, "BossShop.PriceMultiplier.Money1");
 		player.setFoodLevel(20);
 		player.setHealth(player.getMaxHealth());
