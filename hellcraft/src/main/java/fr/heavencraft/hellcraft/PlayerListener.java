@@ -1,6 +1,7 @@
 package fr.heavencraft.hellcraft;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +38,7 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 	{
 		final ItemStack[] items =
 		{ new ItemStack(Material.IRON_SWORD, 1), new ItemStack(Material.BOW, 1),
-				new ItemStack(Material.BREAD, 32), new ItemStack(Material.TORCH, 16),
+				new ItemStack(Material.BREAD, 8), new ItemStack(Material.TORCH, 16),
 				new ItemStack(Material.ARROW, 32) };
 
 		final PlayerInventory inventory = event.getPlayer().getInventory();
@@ -66,6 +67,7 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 		{
 			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 255));
 			plugin.teleportPlayer(player, WorldsManager.getCitySpawn());
+			player.setGameMode(GameMode.SURVIVAL);
 			plugin.sendMessage(player, ENTER_CITY_MESSAGE);
 		}
 	}
