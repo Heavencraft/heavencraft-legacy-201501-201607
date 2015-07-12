@@ -7,13 +7,14 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.hellcraft.HellCraftPermissions;
 import fr.heavencraft.hellcraft.worlds.WorldsManager;
 
 public class BackCommand extends AbstractCommandExecutor
 {
 	public BackCommand(HeavenPlugin plugin)
 	{
-		super(plugin, "back");
+		super(plugin, "back", HellCraftPermissions.BACK_COMMAND);
 	}
 
 	@Override

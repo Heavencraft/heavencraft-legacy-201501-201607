@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
@@ -35,11 +36,14 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 		final ItemStack[] items =
 		{ new ItemStack(Material.IRON_SWORD, 1), new ItemStack(Material.BOW, 1),
 				new ItemStack(Material.BREAD, 32), new ItemStack(Material.TORCH, 16),
-				new ItemStack(Material.ARROW, 32), new ItemStack(Material.IRON_HELMET, 1),
-				new ItemStack(Material.IRON_CHESTPLATE, 1), new ItemStack(Material.LEATHER_LEGGINGS, 1),
-				new ItemStack(Material.IRON_BOOTS, 1) };
+				new ItemStack(Material.ARROW, 32) };
 
-		event.getPlayer().getInventory().addItem(items);
+		final PlayerInventory inventory = event.getPlayer().getInventory();
+		inventory.addItem(items);
+		inventory.setHelmet(new ItemStack(Material.IRON_HELMET));
+		inventory.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
+		inventory.setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+		inventory.setBoots(new ItemStack(Material.IRON_BOOTS));
 	}
 
 	@EventHandler
