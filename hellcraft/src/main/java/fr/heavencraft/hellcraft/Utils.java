@@ -5,8 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class Utils {
-
+public class Utils
+{
 	private static boolean isBlockAboveAir(World world, int x, int y, int z)
 	{
 		return world.getBlockAt(x, y - 1, z).getType() == Material.AIR;
@@ -25,7 +25,8 @@ public class Utils {
 			return true;
 		}
 
-		if ((world.getBlockAt(x, y, z).getType() != Material.AIR) || (world.getBlockAt(x, y + 1, z).getType() != Material.AIR))
+		if ((world.getBlockAt(x, y, z).getType() != Material.AIR)
+				|| (world.getBlockAt(x, y + 1, z).getType() != Material.AIR))
 		{
 			return true;
 		}
@@ -66,5 +67,4 @@ public class Utils {
 		}
 		return new Location(world, x + 0.5D, y, z + 0.5D, loc.getYaw(), loc.getPitch());
 	}
-	
 }
