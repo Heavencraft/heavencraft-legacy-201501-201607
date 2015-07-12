@@ -20,7 +20,7 @@ import fr.heavencraft.hellcraft.worlds.WorldsManager;
 public class PlayerListener extends AbstractListener<HeavenPlugin>
 {
 	private static final String WELCOME_MESSAGE = ChatColor.GREEN + "Bienvenue sur le serveur HellCraft !";
-	private static final String ENTER_CITY_MESSAGE = "Vous apparaissez dans un mon apocalyptique ! Vous entendez des bruits ...";
+	private static final String ENTER_CITY_MESSAGE = "Vous apparaissez dans un monde apocalyptique ! Vous entendez des bruits ...";
 
 	public PlayerListener(HeavenPlugin plugin)
 	{
