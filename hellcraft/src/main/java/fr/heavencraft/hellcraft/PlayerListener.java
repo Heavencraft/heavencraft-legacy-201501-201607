@@ -64,7 +64,7 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 				&& -14 <= x && x <= 17 //
 				&& 64 <= z && z <= 96)
 		{
-			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 255));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 255));
 			plugin.teleportPlayer(player, WorldsManager.getCitySpawn());
 			plugin.sendMessage(player, ENTER_CITY_MESSAGE);
 		}
