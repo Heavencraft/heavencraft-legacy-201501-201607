@@ -73,13 +73,9 @@ public class WorldsManager
 			x = rnd.nextInt(400) - 200;
 			z = rnd.nextInt(400) - 200;
 		}
-		while ((getCity().getBiome(x, z) == Biome.OCEAN) || (getCity().getBiome(x, z) == Biome.DEEP_OCEAN));
+		while ((getWorldCity().getBiome(x, z) == Biome.OCEAN)
+				|| (getWorldCity().getBiome(x, z) == Biome.DEEP_OCEAN));
 
-		return Utils.getSafeDestination(new Location(getCity(), x, 100.0D, z));
-	}
-
-	public static World getCity()
-	{
-		return Bukkit.getWorld(WORLD_CITY);
+		return Utils.getSafeDestination(new Location(getWorldCity(), x, 100.0D, z));
 	}
 }
