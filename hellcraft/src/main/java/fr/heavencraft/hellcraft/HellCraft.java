@@ -60,6 +60,7 @@ public class HellCraft extends HeavenPlugin
 	protected void afterEnable()
 	{
 		new SpawnCommand(this, WorldsManager.getSpawnLocation());
+		getCommand("spawn").setPermission(HellCraftPermissions.SPAWN_COMMAND);
 	}
 
 	public HpsManager getHpsManager()
