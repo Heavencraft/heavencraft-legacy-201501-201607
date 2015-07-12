@@ -223,7 +223,9 @@ public class HpsCommand extends AbstractCommandExecutor
 		addPermission(player, CorePermissions.REJOINDRE_COMMAND);
 		addPermission(player, HellCraftPermissions.PTIME_COMMAND);
 		addPermission(player, "BossShop.PriceMultiplier.Money1");
-		heal(player);
+		player.setFoodLevel(20);
+		player.setHealth(player.getMaxHealth());
+		player.setFireTicks(0);
 		plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
 				" Vous avez acheté le kit VIP, 50 HPS débités.");
 	}
