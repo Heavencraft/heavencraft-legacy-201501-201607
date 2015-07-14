@@ -31,10 +31,11 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
-		plugin.sendMessage(event.getPlayer(), WELCOME_MESSAGE);
-		if (Utils.isInventoryEmpty(event.getPlayer()))
+		final Player player = event.getPlayer();
+		plugin.sendMessage(player, WELCOME_MESSAGE);
+		if (event.getPlayer().hasPlayedBefore())
 		{
-			handlePlayerEquipment(event.getPlayer());
+			handlePlayerEquipment(player);
 		}
 	}
 
