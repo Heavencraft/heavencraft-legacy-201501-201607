@@ -33,7 +33,7 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 	{
 		final Player player = event.getPlayer();
 		plugin.sendMessage(player, WELCOME_MESSAGE);
-		if (event.getPlayer().hasPlayedBefore())
+		if (!event.getPlayer().hasPlayedBefore())
 		{
 			handlePlayerEquipment(player);
 		}
