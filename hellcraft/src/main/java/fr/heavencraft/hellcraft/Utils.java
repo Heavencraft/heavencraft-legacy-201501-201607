@@ -69,13 +69,4 @@ public class Utils
 		}
 		return new Location(world, x + 0.5D, y, z + 0.5D, loc.getYaw(), loc.getPitch());
 	}
-	
-	public static boolean isInventoryEmpty(Player player)
-	{
-		ItemStack[] contents = player.getInventory().getContents();
-		for (ItemStack content : contents)
-			if (content != null)
-				return false;
-		return true;
-	}
 }
