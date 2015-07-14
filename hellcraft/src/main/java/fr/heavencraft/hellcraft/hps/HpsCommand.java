@@ -121,10 +121,10 @@ public class HpsCommand extends AbstractCommandExecutor
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages Ponctuels ─────── ");
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Restaure la vie, {5 HPS}: {/hps heal}");
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Retour à la dernière position, {5 HPS}: {/hps back}");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Equipement Diamant, {15 HPS}: {/hps diam}");
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages permanent ─────── ");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Equipement Diamant, {15 HPS}: {/hps diam}");
 		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Carte de réduction 33% boutique, {25 HPS}: {/hps reduc}");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - VIP (Téléportation, -33%, etc) {50HPS}: {/hps vip}");
+		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - VIP (Téléportation, -33%, etc.) {50HPS}: {/hps vip}");
 
 		plugin.sendMessage(sender, FORMAT_WP, "HPS",
 				"Note: pour avoir plus d'information sur un kit: {/hps into <kit>}");
