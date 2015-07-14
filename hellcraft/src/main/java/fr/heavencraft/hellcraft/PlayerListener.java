@@ -32,15 +32,24 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		plugin.sendMessage(event.getPlayer(), WELCOME_MESSAGE);
+		if (Utils.isInventoryEmpty(event.getPlayer()))
+		{
+			handlePlayerEquipment(event.getPlayer());
+		}
 	}
 
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event)
 	{
-		final Player player = event.getPlayer();
+		handlePlayerEquipment(event.getPlayer());
+	}
+
+	private void handlePlayerEquipment(Player player)
+	{
 		final ItemStack sword, helmet, chestplate, leggings, boots;
 
-		if (player.hasPermission(HellCraftPermissions.DIAMOND_GRADE))
+		if (player.hasPermission(HellCraftPermissions.DIAMOND_GRADE)
+				|| player.hasPermission(HellCraftPermissions.VIP_GRADE))
 		{
 			sword = new ItemStack(Material.DIAMOND_SWORD);
 			sword.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
