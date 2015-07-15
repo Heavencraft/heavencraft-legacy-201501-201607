@@ -35,6 +35,7 @@ public class HellCraft extends HeavenPlugin
 			new NoChatListener(this); // Chat is handled by the proxy
 
 			new RedstoneLampListener(this);
+			new HellCraftWorldListener(this);
 			new PlayerListener(this);
 			new BackListener(this);
 			new HpsCommand(this);
