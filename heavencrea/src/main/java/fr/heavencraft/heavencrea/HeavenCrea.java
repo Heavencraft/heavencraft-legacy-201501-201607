@@ -71,6 +71,9 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 			 * Commands and listeners from HeavenCrea (Bukkit code)
 			 */
 
+			// No Lags here
+			new AntiLagListener(this);
+
 			// HPs
 			new HpsCommand(this);
 
