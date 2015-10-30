@@ -1,0 +1,60 @@
+name: HeavenRP
+version: 1.0
+main: fr.heavencraft.heavenrp.HeavenRP
+depend: [WorldEdit, WorldGuard]
+commands:
+#
+# HeavenCore
+#
+  accepter:
+  spectator:
+  creacheat:
+  endercheat:
+  fill:
+  gc:
+  head:
+  inventory:
+  poof:
+  rejoindre:
+  roucoups:
+  spawnmob:
+  tp:
+  tphere:
+    aliases: s
+  tppos:
+  tpworld:
+#
+# HeavenRP
+#
+  bourse:
+  entreprise:
+  livretpro:
+  payer:
+  buyhome:
+  home:
+  sethome:
+  tphome:
+  cheval:
+  hps:
+  key:
+  spawn:
+  tuto:
+  warp:
+  event:
+  modpack:
+  pvp4:
+  pvp:
+  encheres:
+    aliases: enchere
+  licence:
+  maire:
+  maires:
+  parcelle:
+  web:
+  reloadPoste:
+  listPoste:
+  colis:
+  addPoste:
+  removePoste:
+  noentities:
+  hurt:
