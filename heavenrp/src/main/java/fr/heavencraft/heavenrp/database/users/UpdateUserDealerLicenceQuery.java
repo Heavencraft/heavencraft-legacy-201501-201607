@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import fr.heavencraft.async.queries.AbstractQuery;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 
 public class UpdateUserDealerLicenceQuery extends AbstractQuery

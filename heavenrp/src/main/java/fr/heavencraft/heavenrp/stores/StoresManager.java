@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.Utils;
 import fr.heavencraft.async.queries.QueriesHandler;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.MoneyTransfertQuery;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccount;
