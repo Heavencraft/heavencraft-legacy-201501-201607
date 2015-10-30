@@ -3,21 +3,21 @@ package fr.lorgan17.heavenrp.commands.user;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
-import fr.heavencraft.utils.PlayerUtil;
 import fr.lorgan17.heavenrp.managers.TownsManager;
 
-public class ParcelleCommand extends HeavenCommand
+public class ParcelleCommand extends AbstractCommandExecutor
 {
 
-	public ParcelleCommand()
+	public ParcelleCommand(HeavenRP plugin)
 	{
-		super("parcelle");
+		super(plugin, "parcelle");
 	}
 
 	@Override
@@ -40,7 +40,8 @@ public class ParcelleCommand extends HeavenCommand
 			case 3:
 				if (args[1].equals("+")) // /parcelle <ville> + <joueur>
 				{
-					TownsManager.createSubRegion(args[0], UserProvider.getUserByName(PlayerUtil.getExactName(args[2])),
+					TownsManager.createSubRegion(args[0],
+							UserProvider.getUserByName(PlayerUtil.getExactName(args[2])),
 							DevUtil.getWESelection(player), 20, 10);
 
 					ChatUtil.sendMessage(player, "La parcelle a été créée avec succès.");
@@ -53,12 +54,14 @@ public class ParcelleCommand extends HeavenCommand
 				}
 				break;
 			case 5:
-				if (args[1].equals("+")) // /parcelle <ville> + <joueur> <up> <down>
+				if (args[1].equals("+")) // /parcelle <ville> + <joueur> <up>
+											// <down>
 				{
 					int up = DevUtil.toUint(args[3]);
 					int down = DevUtil.toUint(args[4]);
 
-					TownsManager.createSubRegion(args[0], UserProvider.getUserByName(PlayerUtil.getExactName(args[2])),
+					TownsManager.createSubRegion(args[0],
+							UserProvider.getUserByName(PlayerUtil.getExactName(args[2])),
 							DevUtil.getWESelection(player), up, down);
 
 					ChatUtil.sendMessage(player, "La parcelle a été créée avec succès.");

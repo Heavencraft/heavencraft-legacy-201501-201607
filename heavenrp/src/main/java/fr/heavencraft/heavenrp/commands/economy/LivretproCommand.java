@@ -3,18 +3,18 @@ package fr.heavencraft.heavenrp.commands.economy;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
-import fr.heavencraft.utils.ChatUtil;
 
-public class LivretproCommand extends HeavenCommand
+public class LivretproCommand extends AbstractCommandExecutor
 {
-	public LivretproCommand()
+	public LivretproCommand(HeavenRP plugin)
 	{
-		super("livretpro", RPPermissions.LIVRETPRO);
+		super(plugin, "livretpro", RPPermissions.LIVRETPRO);
 	}
 
 	@Override

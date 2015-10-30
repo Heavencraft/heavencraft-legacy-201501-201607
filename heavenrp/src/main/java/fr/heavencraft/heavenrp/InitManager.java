@@ -1,24 +1,14 @@
 package fr.heavencraft.heavenrp;
 
-import fr.heavencraft.async.actions.ActionsHandler;
-import fr.heavencraft.async.queries.QueriesHandler;
-import fr.heavencraft.commands.AccepterCommand;
-import fr.heavencraft.commands.CreacheatCommand;
-import fr.heavencraft.commands.EndercheatCommand;
-import fr.heavencraft.commands.FillCommand;
-import fr.heavencraft.commands.GcCommand;
-import fr.heavencraft.commands.HeadCommand;
-import fr.heavencraft.commands.InventoryCommand;
-import fr.heavencraft.commands.NoentitiesCommand;
-import fr.heavencraft.commands.PoofCommand;
-import fr.heavencraft.commands.RejoindreCommand;
-import fr.heavencraft.commands.RoucoupsCommand;
-import fr.heavencraft.commands.SpawnmobCommand;
-import fr.heavencraft.commands.SpectatorCommand;
-import fr.heavencraft.commands.TpCommand;
-import fr.heavencraft.commands.TphereCommand;
-import fr.heavencraft.commands.TpposCommand;
-import fr.heavencraft.commands.TpworldCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AccepterCommand;
+import fr.heavencraft.heavencore.bukkit.commands.RejoindreCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TpCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TphereCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TpposCommand;
+import fr.heavencraft.heavencore.bukkit.listeners.ColoredSignsListener;
+import fr.heavencraft.heavencore.bukkit.listeners.JumpListener;
+import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
+import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import fr.heavencraft.heavenrp.commands.economy.BourseCommand;
 import fr.heavencraft.heavenrp.commands.economy.EntrepriseCommand;
 import fr.heavencraft.heavenrp.commands.economy.LivretproCommand;
@@ -53,14 +43,6 @@ import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
 import fr.heavencraft.heavenrp.warps.WarpSignListener;
 import fr.heavencraft.heavenrp.worlds.WorldsListener;
 import fr.heavencraft.heavenrp.worlds.WorldsManager;
-import fr.heavencraft.listeners.AntiCheatListener;
-import fr.heavencraft.listeners.AntiLagListener;
-import fr.heavencraft.listeners.ColoredSignsListener;
-import fr.heavencraft.listeners.JumpListener;
-import fr.heavencraft.listeners.NoChatListener;
-import fr.heavencraft.listeners.RedstoneLampListener;
-import fr.heavencraft.listeners.sign.CookieSignListener;
-import fr.heavencraft.listeners.sign.LinkSignListener;
 import fr.lorgan17.heavenrp.commands.mod.EventCommand;
 import fr.lorgan17.heavenrp.commands.mod.ModpackCommand;
 import fr.lorgan17.heavenrp.commands.mod.Pvp4Command;
@@ -77,62 +59,62 @@ import fr.lorgan17.heavenrp.listeners.SnowballListener;
 
 public class InitManager
 {
-	public static void init()
+	public static void init(HeavenRP plugin)
 	{
-		initCommands();
-		initListeners();
+		initCommands(plugin);
+		initListeners(plugin);
 
 		new ActionsHandler();
 		new QueriesHandler();
 	}
 
-	private static void initCommands()
+	private static void initCommands(HeavenRP plugin)
 	{
 		/*
 		 * from HeavenCore
 		 */
 
-		new AccepterCommand();
-		new CreacheatCommand();
-		new EndercheatCommand();
-		new FillCommand();
-		new GcCommand();
-		new HeadCommand();
-		new InventoryCommand();
-		new NoentitiesCommand();
-		new PoofCommand();
-		new RejoindreCommand();
-		new RoucoupsCommand();
-		new SpawnmobCommand();
-		new SpectatorCommand();
-		new TpCommand();
-		new TphereCommand();
-		new TpposCommand();
-		new TpworldCommand();
+		new AccepterCommand(plugin);
+		new CreacheatCommand(plugin);
+		new EndercheatCommand(plugin);
+		new FillCommand(plugin);
+		new GcCommand(plugin);
+		new HeadCommand(plugin);
+		new InventoryCommand(plugin);
+		new NoentitiesCommand(plugin);
+		new PoofCommand(plugin);
+		new RejoindreCommand(plugin);
+		new RoucoupsCommand(plugin);
+		new SpawnmobCommand(plugin);
+		new SpectatorCommand(plugin);
+		new TpCommand(plugin);
+		new TphereCommand(plugin);
+		new TpposCommand(plugin);
+		new TpworldCommand(plugin);
 
 		/*
 		 * from HeavenRP
 		 */
 
 		// Economy
-		new BourseCommand();
-		new EntrepriseCommand();
-		new HurtCommand();
-		new LivretproCommand();
-		new PayerCommand();
+		new BourseCommand(plugin);
+		new EntrepriseCommand(plugin);
+		new HurtCommand(plugin);
+		new LivretproCommand(plugin);
+		new PayerCommand(plugin);
 		new MoneyTask();
 
 		// Homes
-		new BuyhomeCommand();
-		new HomeCommand();
-		new SethomeCommand();
-		new TphomeCommand();
+		new BuyhomeCommand(plugin);
+		new HomeCommand(plugin);
+		new SethomeCommand(plugin);
+		new TphomeCommand(plugin);
 
 		// Horses
-		new ChevalCommand();
+		new ChevalCommand(plugin);
 
 		// HPs
-		new HpsCommand();
+		new HpsCommand(plugin);
 
 		// Key
 		new KeyCommand();
@@ -162,7 +144,7 @@ public class InitManager
 		new ParcelleCommand();
 	}
 
-	private static void initListeners()
+	private static void initListeners(HeavenRP plugin)
 	{
 		/*
 		 * from HeavenCore
@@ -218,7 +200,7 @@ public class InitManager
 		 */
 
 		// Listeners
-		new JumpListener();
+		new JumpListener(plugin);
 		new LampadaireListener();
 		new LinkSignListener();
 		new PVP4Manager();

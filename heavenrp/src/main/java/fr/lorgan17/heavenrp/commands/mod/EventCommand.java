@@ -6,19 +6,19 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
 
-public class EventCommand extends HeavenCommand
+public class EventCommand extends AbstractCommandExecutor
 {
 	private Location _spawn = null;
 	private boolean _started = false;
 
-	public EventCommand()
+	public EventCommand(HeavenRP plugin)
 	{
-		super("event");
+		super(plugin, "event");
 	}
 
 	@Override

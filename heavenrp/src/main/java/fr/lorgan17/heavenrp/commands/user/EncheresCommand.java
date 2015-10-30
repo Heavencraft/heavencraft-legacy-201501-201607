@@ -3,17 +3,16 @@ package fr.lorgan17.heavenrp.commands.user;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
 
-public class EncheresCommand extends HeavenCommand
+public class EncheresCommand extends AbstractCommandExecutor
 {
-	public EncheresCommand()
+	public EncheresCommand(HeavenRP plugin)
 	{
-		super("encheres");
+		super(plugin, "encheres");
 	}
 
 	@Override

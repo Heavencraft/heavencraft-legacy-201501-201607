@@ -3,21 +3,21 @@ package fr.heavencraft.heavenrp.commands.economy;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.economy.enterprise.EnterprisesManager;
 import fr.heavencraft.heavenrp.economy.enterprise.EnterprisesManager.Enterprise;
 import fr.heavencraft.heavenrp.exceptions.NotEnterpriseOwnerException;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.PlayerUtil;
 
-public class EntrepriseCommand extends HeavenCommand
+public class EntrepriseCommand extends AbstractCommandExecutor
 {
-	public EntrepriseCommand()
+	public EntrepriseCommand(HeavenRP plugin)
 	{
-		super("entreprise");
+		super(plugin, "entreprise");
 	}
 
 	@Override

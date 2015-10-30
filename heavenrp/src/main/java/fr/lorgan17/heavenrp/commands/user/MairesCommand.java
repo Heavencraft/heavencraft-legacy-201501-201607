@@ -8,17 +8,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
-import fr.heavencraft.utils.ChatUtil;
 
-public class MairesCommand extends HeavenCommand
+public class MairesCommand extends AbstractCommandExecutor
 {
 
-	public MairesCommand()
+	public MairesCommand(HeavenRP plugin)
 	{
-		super("maires");
+		super(plugin, "maires");
 	}
 
 	@Override
