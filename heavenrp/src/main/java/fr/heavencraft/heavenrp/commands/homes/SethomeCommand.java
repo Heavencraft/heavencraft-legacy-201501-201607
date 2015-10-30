@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.commands.HeavenCommand;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.database.homes.SetHomeQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;

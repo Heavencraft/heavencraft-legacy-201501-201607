@@ -1,6 +1,6 @@
 package fr.heavencraft.heavenrp.database.bankaccounts;
 
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 
 public enum BankAccountType
 {

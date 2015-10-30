@@ -11,7 +11,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import fr.heavencraft.async.queries.BatchQuery;
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.async.queries.Query;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.provinces.RemoveProvinceQuery;
 import fr.heavencraft.heavenrp.database.provinces.UpdateProvinceQuery;
