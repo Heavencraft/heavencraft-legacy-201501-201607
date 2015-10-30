@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.exceptions.UnknownErrorException;
 import fr.heavencraft.heavenrp.exceptions.WarpNotFoundException;

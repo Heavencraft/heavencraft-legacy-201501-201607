@@ -6,7 +6,7 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.commands.HeavenCommand;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.horses.HorsesManager;
 import fr.heavencraft.utils.ChatUtil;
 import fr.heavencraft.utils.PlayerUtil;

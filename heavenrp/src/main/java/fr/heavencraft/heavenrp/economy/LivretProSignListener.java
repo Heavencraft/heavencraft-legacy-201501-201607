@@ -13,7 +13,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.heavencraft.async.queries.QueriesHandler;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.MoneyTransfertQuery;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccount;
