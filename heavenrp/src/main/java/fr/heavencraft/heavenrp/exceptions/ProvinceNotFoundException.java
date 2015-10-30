@@ -1,6 +1,6 @@
 package fr.heavencraft.heavenrp.exceptions;
 
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 
 public class ProvinceNotFoundException extends HeavenException {
 

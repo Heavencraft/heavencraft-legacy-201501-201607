@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.exceptions.SQLErrorException;
 import fr.heavencraft.heavenrp.HeavenRP;
 

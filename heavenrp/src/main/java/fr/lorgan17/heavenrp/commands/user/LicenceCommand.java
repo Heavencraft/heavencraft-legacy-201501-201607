@@ -11,7 +11,7 @@ import fr.heavencraft.async.queries.BatchQuery;
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.async.queries.Query;
 import fr.heavencraft.commands.HeavenCommand;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.database.users.UpdateUserDealerLicenceQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;

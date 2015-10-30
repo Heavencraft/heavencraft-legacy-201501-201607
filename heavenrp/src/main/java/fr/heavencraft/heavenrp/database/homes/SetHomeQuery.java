@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.bukkit.Location;
 
 import fr.heavencraft.async.queries.AbstractQuery;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.User;
 

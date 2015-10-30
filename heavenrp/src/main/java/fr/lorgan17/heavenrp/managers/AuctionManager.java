@@ -9,7 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;

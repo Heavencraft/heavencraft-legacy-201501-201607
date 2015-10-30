@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.async.actions.ActionsHandler;
 import fr.heavencraft.async.actions.TeleportPlayerAction;
 import fr.heavencraft.commands.HeavenCommand;
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.homes.HomeProvider;
 import fr.heavencraft.heavenrp.database.users.User;
