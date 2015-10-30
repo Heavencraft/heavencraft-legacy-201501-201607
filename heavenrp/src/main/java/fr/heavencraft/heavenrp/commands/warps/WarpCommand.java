@@ -5,17 +5,17 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.warps.WarpsManager;
-import fr.heavencraft.utils.ChatUtil;
 
-public class WarpCommand extends HeavenCommand
+public class WarpCommand extends AbstractCommandExecutor
 {
-	public WarpCommand()
+	public WarpCommand(HeavenRP plugin)
 	{
-		super("warp", RPPermissions.WARP);
+		super(plugin, "warp", RPPermissions.WARP);
 	}
 
 	@Override

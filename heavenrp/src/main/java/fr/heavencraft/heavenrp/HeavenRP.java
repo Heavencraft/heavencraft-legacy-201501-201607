@@ -8,10 +8,10 @@ import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-import fr.heavencraft.HeavenPlugin;
-import fr.heavencraft.api.providers.connection.ConnectionHandler;
-import fr.heavencraft.api.providers.connection.ConnectionHandlerFactory;
-import fr.heavencraft.api.providers.connection.Database;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
+import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavenrp.stores.StoresListener;
 import fr.heavencraft.heavenrp.stores.StoresManager;
 import fr.lorgan17.heavenrp.managers.AuctionManager;
@@ -40,7 +40,7 @@ public class HeavenRP extends HeavenPlugin
 			srpConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString("database"));
 			mainConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
-			InitManager.init();
+			InitManager.init(this);
 
 			_auctionManager = new AuctionManager();
 
