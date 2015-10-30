@@ -3,18 +3,19 @@ package fr.heavencraft.heavenrp.commands.key;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.key.KeyManager;
-import fr.heavencraft.utils.PlayerUtil;
 
-public class KeyCommand extends HeavenCommand
+public class KeyCommand extends AbstractCommandExecutor
 {
 
-	public KeyCommand()
+	public KeyCommand(HeavenRP plugin)
 	{
-		super("key", RPPermissions.KEY);
+		super(plugin, "key", RPPermissions.KEY);
 	}
 
 	@Override

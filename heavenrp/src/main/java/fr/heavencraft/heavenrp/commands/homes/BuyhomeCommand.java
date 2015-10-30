@@ -6,23 +6,20 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.async.queries.BatchQuery;
-import fr.heavencraft.async.queries.QueriesHandler;
-import fr.heavencraft.async.queries.Query;
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.IncrementHomeNumberQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
 
-public class BuyhomeCommand extends HeavenCommand
+public class BuyhomeCommand extends AbstractCommandExecutor
 {
 
-	public BuyhomeCommand()
+	public BuyhomeCommand(HeavenRP plugin)
 	{
-		super("buyhome");
+		super(plugin, "buyhome");
 	}
 
 	@Override

@@ -3,29 +3,28 @@ package fr.heavencraft.heavenrp.commands.economy;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.async.queries.QueriesHandler;
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.MoneyTransfertQuery;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccount;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
-import fr.heavencraft.utils.PlayerUtil;
 
-public class PayerCommand extends HeavenCommand
+public class PayerCommand extends AbstractCommandExecutor
 {
 	private final static String MONEY_NOW = "Vous avez maintenant {%1$d} pièces d'or.";
 	private final static String MONEY_BANK_NOW = "Vous avez maintenant {%1$d} pièces d'or sur le livret {%2$s}.";
 	private final static String MONEY_GIVE = "Vous avez envoyé {%1$d} pièces d'or à {%2$s}.";
 	private final static String MONEY_RECEIVE = "Vous avez reçu {%1$d} pièces d'or de {%2$s}.";
 
-	public PayerCommand()
+	public PayerCommand(HeavenRP plugin)
 	{
-		super("payer");
+		super(plugin, "payer");
 	}
 
 	@Override

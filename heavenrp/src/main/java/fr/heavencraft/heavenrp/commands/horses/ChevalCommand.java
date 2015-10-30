@@ -5,17 +5,17 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.horses.HorsesManager;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.PlayerUtil;
 
-public class ChevalCommand extends HeavenCommand
+public class ChevalCommand extends AbstractCommandExecutor
 {
-	public ChevalCommand()
+	public ChevalCommand(HeavenRP plugin)
 	{
-		super("cheval");
+		super(plugin, "cheval");
 	}
 
 	@Override

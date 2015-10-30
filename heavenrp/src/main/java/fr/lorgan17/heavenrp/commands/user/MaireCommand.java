@@ -5,21 +5,21 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.PlayerUtil;
 import fr.lorgan17.heavenrp.managers.TownsManager;
 
-public class MaireCommand extends HeavenCommand
+public class MaireCommand extends AbstractCommandExecutor
 {
 
-	public MaireCommand()
+	public MaireCommand(HeavenRP plugin)
 	{
-		super("maire");
+		super(plugin, "maire");
 	}
 
 	@Override
@@ -74,8 +74,9 @@ public class MaireCommand extends HeavenCommand
 				else if (args[1].equalsIgnoreCase("-"))
 				{
 					TownsManager.removeMayor(args[0], mayor);
-					ChatUtil.sendMessage(sender, "Le joueur {%1$s} n'est désormais plus maire de la ville {%2$s}.",
-							mayor.getName(), args[0]);
+					ChatUtil.sendMessage(sender,
+							"Le joueur {%1$s} n'est désormais plus maire de la ville {%2$s}.", mayor.getName(),
+							args[0]);
 				}
 
 				break;

@@ -3,18 +3,16 @@ package fr.heavencraft.heavenrp.commands.teleport;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.async.actions.ActionsHandler;
-import fr.heavencraft.async.actions.TeleportPlayerAction;
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.worlds.WorldsManager;
-import fr.heavencraft.utils.ChatUtil;
 
-public class SpawnCommand extends HeavenCommand
+public class SpawnCommand extends AbstractCommandExecutor
 {
-	public SpawnCommand()
+	public SpawnCommand(HeavenRP plugin)
 	{
-		super("spawn");
+		super(plugin, "spawn");
 	}
 
 	@Override

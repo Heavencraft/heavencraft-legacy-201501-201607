@@ -9,19 +9,19 @@ import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.bukkit.selections.Selection;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
-import fr.heavencraft.utils.PlayerUtil;
 import fr.lorgan17.heavenrp.listeners.PVP4Manager;
 
-public class Pvp4Command extends HeavenCommand
+public class Pvp4Command extends AbstractCommandExecutor
 {
-	public Pvp4Command()
+	public Pvp4Command(HeavenRP plugin)
 	{
-		super("pvp4", RPPermissions.PVP4);
+		super(plugin, "pvp4", RPPermissions.PVP4);
 	}
 
 	@Override
@@ -79,7 +79,8 @@ public class Pvp4Command extends HeavenCommand
 	protected void sendUsage(CommandSender sender)
 	{
 		ChatUtil.sendMessage(sender, "{/pvp4} start <joueur1> <joueur2> etc. : démarre le combat");
-		ChatUtil.sendMessage(sender, "{/pvp4} startwe : démarre le combat avec les joueurs présent dans la sélection");
+		ChatUtil.sendMessage(sender,
+				"{/pvp4} startwe : démarre le combat avec les joueurs présent dans la sélection");
 		ChatUtil.sendMessage(sender, "{/pvp4} addspawn : ajoute un point de spawn");
 		ChatUtil.sendMessage(sender, "{/pvp4} resetspawn : retire tous les points de spawn");
 		ChatUtil.sendMessage(sender, "{/pvp4} stop");
