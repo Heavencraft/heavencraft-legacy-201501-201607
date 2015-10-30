@@ -1,0 +1,10 @@
+# Default Regions.yml, Last Edited in v1.0
+# # RegionName 
+#  port:
+# # Si une action est effectuee a lentree
+#    Enable: true
+# # Le son qui est joue lorsque le joueur entre dans la region
+#    Sound: 'fx.laposte'
+# +========================================================================+
+
+Regions: []
