@@ -5,17 +5,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
 
-public class ModpackCommand extends HeavenCommand
+public class ModpackCommand extends AbstractCommandExecutor
 {
 
-	public ModpackCommand()
+	public ModpackCommand(HeavenRP plugin)
 	{
-		super("modpack", RPPermissions.MODPACK);
+		super(plugin, "modpack", RPPermissions.MODPACK);
 	}
 
 	@Override

@@ -6,19 +6,19 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
-import fr.heavencraft.utils.PlayerUtil;
 import fr.lorgan17.heavenrp.listeners.PVPManager;
 
-public class PvpCommand extends HeavenCommand
+public class PvpCommand extends AbstractCommandExecutor
 {
-	public PvpCommand()
+	public PvpCommand(HeavenRP plugin)
 	{
-		super("pvp", RPPermissions.PVP);
+		super(plugin, "pvp", RPPermissions.PVP);
 	}
 
 	@Override
@@ -67,7 +67,8 @@ public class PvpCommand extends HeavenCommand
 	protected void sendUsage(CommandSender sender)
 	{
 		ChatUtil.sendMessage(sender, "duel : {/pvp} joueur1 joueur2 nombreDePointsPourGagner");
-		ChatUtil.sendMessage(sender, "équipe : {/pvp} joueur1,joueur2,... joueur3,joueur4,... nombreDePointsPourGagner");
+		ChatUtil.sendMessage(sender,
+				"équipe : {/pvp} joueur1,joueur2,... joueur3,joueur4,... nombreDePointsPourGagner");
 		ChatUtil.sendMessage(sender, "spawn : {/pvp} setspawn numéroEquipe");
 		ChatUtil.sendMessage(sender, "{/pvp} stop");
 	}

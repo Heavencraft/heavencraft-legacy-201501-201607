@@ -7,24 +7,21 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.async.queries.BatchQuery;
-import fr.heavencraft.async.queries.QueriesHandler;
-import fr.heavencraft.async.queries.Query;
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavenrp.database.users.UpdateUserDealerLicenceQuery;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
+import fr.heavencraft.heavenrp.database.users.UpdateUserDealerLicenceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
 
-public class LicenceCommand extends HeavenCommand
+public class LicenceCommand extends AbstractCommandExecutor
 {
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-	public LicenceCommand()
+	public LicenceCommand(HeavenRP plugin)
 	{
-		super("licence");
+		super(plugin, "licence");
 	}
 
 	@Override

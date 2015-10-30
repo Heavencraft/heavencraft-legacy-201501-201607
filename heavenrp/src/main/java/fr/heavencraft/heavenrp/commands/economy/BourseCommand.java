@@ -4,22 +4,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
 
-public class BourseCommand extends HeavenCommand
+public class BourseCommand extends AbstractCommandExecutor
 {
 	private final static String PURSE_MESSAGE = "Vous comptez le nombre de pièces d'or dans votre bourse...";
 	private final static String PURSE_EMPTY = "Malheureusement, elle est vide... :-(";
 	private final static String PURSE_SUCCESS = "Fantastique ! Vous avez {%1$s} pièces d'or !";
 	private final static String PURSE_FAIL = "Vous avez perdu le compte... Faites /bourse pour recompter.";
 
-	public BourseCommand()
+	public BourseCommand(HeavenRP plugin)
 	{
-		super("bourse");
+		super(plugin, "bourse");
 	}
 
 	@Override

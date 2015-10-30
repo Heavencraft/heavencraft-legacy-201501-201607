@@ -6,18 +6,18 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 
-import fr.heavencraft.commands.HeavenCommand;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
-import fr.heavencraft.utils.PlayerUtil;
 
-public class HurtCommand extends HeavenCommand
+public class HurtCommand extends AbstractCommandExecutor
 {
-	public HurtCommand()
+	public HurtCommand(HeavenRP plugin)
 	{
-		super("hurt", RPPermissions.HURT);
+		super(plugin, "hurt", RPPermissions.HURT);
 	}
 
 	@Override
