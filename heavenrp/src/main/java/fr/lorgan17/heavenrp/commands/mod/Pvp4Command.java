@@ -11,7 +11,6 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
 import fr.heavencraft.heavencore.utils.WorldEditUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
