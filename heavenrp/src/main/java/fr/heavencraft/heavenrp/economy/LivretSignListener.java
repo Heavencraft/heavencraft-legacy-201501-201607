@@ -7,12 +7,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.MoneyTransfertQuery;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccount;
@@ -20,11 +22,9 @@ import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.listeners.sign.SignListener;
 import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
 
-public class LivretSignListener extends SignListener implements Listener
+public class LivretSignListener extends AbstractSignListener
 {
 	private static final String CONSULTER = "Consulter";
 	private static final String DEPOSER = "Déposer";
@@ -33,11 +33,9 @@ public class LivretSignListener extends SignListener implements Listener
 	private final List<String> deposants = new ArrayList<String>();
 	private final List<String> retirants = new ArrayList<String>();
 
-	public LivretSignListener()
+	public LivretSignListener(HeavenPlugin plugin)
 	{
-		super("Livret", RPPermissions.LIVRET_SIGN);
-
-		DevUtil.registerListener(this);
+		super(plugin, "Livret", RPPermissions.LIVRET_SIGN);
 	}
 
 	@Override
@@ -143,5 +141,10 @@ public class LivretSignListener extends SignListener implements Listener
 		{
 			ChatUtil.sendMessage(player, ex.getMessage());
 		}
+	}
+
+	@Override
+	protected void onSignBreak(Player player, Sign sign) throws HeavenException
+	{
 	}
 }

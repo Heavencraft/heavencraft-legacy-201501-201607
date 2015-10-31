@@ -1,7 +1,5 @@
 package fr.heavencraft.heavenrp.economy;
 
-import static fr.heavencraft.utils.DevUtil.getPlugin;
-
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -10,19 +8,23 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.logs.HeavenLog;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.DevUtil;
 
 public class MoneyTask extends BukkitRunnable
 {
 	private static final long PERIOD = 12000; // 10 minutes : 20 * 60 * 10 ticks
 
-	public MoneyTask()
+	private HeavenLog log;
+
+	public MoneyTask(HeavenPlugin plugin)
 	{
-		runTaskTimer(getPlugin(), PERIOD, PERIOD);
+		runTaskTimer(plugin, PERIOD, PERIOD);
+		log = HeavenLog.getLogger(getClass());
 	}
 
 	@Override
@@ -33,7 +35,7 @@ public class MoneyTask extends BukkitRunnable
 			Collection<? extends Player> players = Bukkit.getOnlinePlayers();
 			int amount = getAmount();
 
-			DevUtil.logInfo("[MoneyTask] giving %1$s po to %2$s players", amount, players.size());
+			log.info("[MoneyTask] giving %1$s po to %2$s players", amount, players.size());
 
 			for (Player player : players)
 			{

@@ -9,6 +9,7 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
+import fr.heavencraft.utils.ChatUtil;
 
 public class ModpackCommand extends AbstractCommandExecutor
 {

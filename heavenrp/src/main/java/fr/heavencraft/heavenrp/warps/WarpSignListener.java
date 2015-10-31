@@ -6,31 +6,24 @@ import org.bukkit.event.block.SignChangeEvent;
 
 import fr.heavencraft.async.actions.ActionsHandler;
 import fr.heavencraft.async.actions.TeleportPlayerAction;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.listeners.sign.SignListener;
 import fr.heavencraft.utils.ChatUtil;
 
-public class WarpSignListener extends SignListener
+public class WarpSignListener extends AbstractSignListener
 {
-	public WarpSignListener()
+	public WarpSignListener(HeavenPlugin plugin)
 	{
-		super("Warp", RPPermissions.WARP_SIGN);
+		super(plugin, "Warp", RPPermissions.WARP_SIGN);
 	}
 
 	@Override
-	protected boolean onSignPlace(Player player, SignChangeEvent event)
+	protected boolean onSignPlace(Player player, SignChangeEvent event) throws HeavenException
 	{
-		try
-		{
-			WarpsManager.getWarp(event.getLine(1));
-			return true;
-		}
-		catch (HeavenException ex)
-		{
-			ChatUtil.sendMessage(player, ex.getMessage());
-			return false;
-		}
+		WarpsManager.getWarp(event.getLine(1));
+		return true;
 	}
 
 	@Override
@@ -46,5 +39,10 @@ public class WarpSignListener extends SignListener
 				ChatUtil.sendMessage(player, "Vous avez été téléporté à {%1$s}.", name);
 			}
 		});
+	}
+
+	@Override
+	protected void onSignBreak(Player player, Sign sign) throws HeavenException
+	{
 	}
 }

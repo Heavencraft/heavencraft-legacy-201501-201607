@@ -12,6 +12,7 @@ import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
+import fr.heavencraft.utils.ChatUtil;
 
 public class HurtCommand extends AbstractCommandExecutor
 {
@@ -38,8 +39,8 @@ public class HurtCommand extends AbstractCommandExecutor
 		final Player player = PlayerUtil.getPlayer(args[0]);
 		final int amount = DevUtil.toUint(args[1]);
 
-		if (WorldGuardPlugin.inst().getRegionManager(player.getWorld())
-				.getApplicableRegions(player.getLocation()).allows(DefaultFlag.PVP))
+		if (WorldGuardPlugin.inst().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation())
+				.allows(DefaultFlag.PVP))
 		{
 			player.damage(amount);
 		}

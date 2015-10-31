@@ -6,18 +6,18 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.DevUtil;
 
-public class WatchListener implements Listener
+public class WatchListener extends AbstractListener<HeavenPlugin>
 {
-	public WatchListener()
+	public WatchListener(HeavenPlugin plugin)
 	{
-		DevUtil.registerListener(this);
+		super(plugin);
 	}
 
 	@EventHandler(ignoreCancelled = true)

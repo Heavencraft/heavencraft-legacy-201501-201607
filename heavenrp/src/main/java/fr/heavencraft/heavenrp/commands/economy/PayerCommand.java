@@ -3,6 +3,7 @@ package fr.heavencraft.heavenrp.commands.economy;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
@@ -14,6 +15,7 @@ import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.utils.ChatUtil;
 
 public class PayerCommand extends AbstractCommandExecutor
 {
@@ -72,8 +74,7 @@ public class PayerCommand extends AbstractCommandExecutor
 				ChatUtil.sendMessage(dest.getOwners(), MONEY_RECEIVE, delta, sender.getName());
 				ChatUtil.sendMessage(dest.getOwners(), MONEY_BANK_NOW, dest.getBalance() + delta, dest.getName());
 
-				DevUtil.logInfo("%1$s sent %2$s po to bank account %3$s.", player.getName(), delta,
-						dest.getName());
+				log.info("%1$s sent %2$s po to bank account %3$s.", player.getName(), delta, dest.getName());
 			}
 
 			@Override

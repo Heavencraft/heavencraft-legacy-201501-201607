@@ -6,6 +6,9 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.async.queries.BatchQuery;
+import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.async.queries.Query;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
@@ -13,6 +16,7 @@ import fr.heavencraft.heavenrp.database.users.IncrementHomeNumberQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.utils.ChatUtil;
 
 public class BuyhomeCommand extends AbstractCommandExecutor
 {
@@ -53,7 +57,8 @@ public class BuyhomeCommand extends AbstractCommandExecutor
 					public void onSuccess()
 					{
 						ChatUtil.sendMessage(player,
-								"Votre {home %1$d} a bien été acheté pour {%2$d} pièces d'or.", homeNumber, price);
+								"Votre {home %1$d} a bien été acheté pour {%2$d} pièces d'or.", homeNumber,
+								price);
 					}
 
 					@Override

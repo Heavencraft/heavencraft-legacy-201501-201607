@@ -12,6 +12,7 @@ import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.utils.ChatUtil;
 import fr.lorgan17.heavenrp.managers.TownsManager;
 
 public class MaireCommand extends AbstractCommandExecutor

@@ -2,6 +2,9 @@ package fr.heavencraft.heavencore;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.heavencraft.async.actions.ActionsHandler;
+import fr.heavencraft.async.queries.QueriesHandler;
+
 public class CorePlugin extends JavaPlugin
 {
 	private static CorePlugin instance;
@@ -11,6 +14,9 @@ public class CorePlugin extends JavaPlugin
 	{
 		super.onEnable();
 		instance = this;
+
+		new ActionsHandler();
+		new QueriesHandler();
 	}
 
 	public static CorePlugin getInstance()

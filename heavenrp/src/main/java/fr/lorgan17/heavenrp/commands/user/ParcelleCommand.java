@@ -7,9 +7,11 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavencore.utils.WorldEditUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.utils.ChatUtil;
 import fr.lorgan17.heavenrp.managers.TownsManager;
 
 public class ParcelleCommand extends AbstractCommandExecutor
@@ -42,7 +44,7 @@ public class ParcelleCommand extends AbstractCommandExecutor
 				{
 					TownsManager.createSubRegion(args[0],
 							UserProvider.getUserByName(PlayerUtil.getExactName(args[2])),
-							DevUtil.getWESelection(player), 20, 10);
+							WorldEditUtil.getWESelection(player), 20, 10);
 
 					ChatUtil.sendMessage(player, "La parcelle a été créée avec succès.");
 				}
@@ -62,7 +64,7 @@ public class ParcelleCommand extends AbstractCommandExecutor
 
 					TownsManager.createSubRegion(args[0],
 							UserProvider.getUserByName(PlayerUtil.getExactName(args[2])),
-							DevUtil.getWESelection(player), up, down);
+							WorldEditUtil.getWESelection(player), up, down);
 
 					ChatUtil.sendMessage(player, "La parcelle a été créée avec succès.");
 				}

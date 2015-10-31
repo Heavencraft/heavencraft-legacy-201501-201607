@@ -1,7 +1,5 @@
 package fr.heavencraft.heavenrp.economy;
 
-import static fr.heavencraft.utils.DevUtil.registerListener;
-
 import java.util.Arrays;
 
 import org.bukkit.ChatColor;
@@ -9,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -17,21 +14,23 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
 
-public class GoldDropListener implements Listener
+public class GoldDropListener extends AbstractListener<HeavenPlugin>
 {
 	private static final Material GOLD_MATERIAL = Material.GOLD_NUGGET;
 	private static final String GOLD_NAME = ChatColor.GOLD + "Pièce d'or";
 
-	public GoldDropListener()
+	public GoldDropListener(HeavenPlugin plugin)
 	{
-		registerListener(this);
+		super(plugin);
 	}
 
 	@EventHandler(ignoreCancelled = true)

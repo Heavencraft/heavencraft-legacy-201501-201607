@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.exceptions.SQLErrorException;
-import fr.heavencraft.exceptions.UserNotFoundException;
+import fr.heavencraft.heavencore.exceptions.SQLErrorException;
+import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
@@ -74,8 +74,8 @@ public class UserProvider
 
 	public static void createUser(String uuid, String name)
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"INSERT INTO users (uuid, name) VALUES (?, ?);"))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement("INSERT INTO users (uuid, name) VALUES (?, ?);"))
 		{
 			ps.setString(1, uuid);
 			ps.setString(2, name);
