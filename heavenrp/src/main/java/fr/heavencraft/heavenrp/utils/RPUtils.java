@@ -1,4 +1,4 @@
-package fr.heavencraft;
+package fr.heavencraft.heavenrp.utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,10 +10,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class Utils
+import com.sk89q.worldguard.bukkit.WGBukkit;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
+public class RPUtils
 {
 
 	/*
@@ -23,6 +27,11 @@ public class Utils
 	/*
 	 * Player
 	 */
+
+	public static String getUUID(Player player)
+	{
+		return player.getUniqueId().toString().replaceAll("-", "");
+	}
 
 	public static boolean isToday(Date date)
 	{
@@ -131,7 +140,8 @@ public class Utils
 	}
 
 	/**
-	 * Permet de mettre en forme des strings longs, pour les mettre dans des livres
+	 * Permet de mettre en forme des strings longs, pour les mettre dans des
+	 * livres
 	 * 
 	 * @param text
 	 * @param lineLength
@@ -190,5 +200,10 @@ public class Utils
 				slotsLibres++;
 		}
 		return slotsLibres;
+	}
+
+	public static WorldGuardPlugin getWorldGuard()
+	{
+		return WGBukkit.getPlugin();
 	}
 }

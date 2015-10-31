@@ -1,7 +1,5 @@
 package fr.heavencraft.heavenrp.key;
 
-import static fr.heavencraft.utils.PlayerUtil.getUUID;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.exceptions.SQLErrorException;
+import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 
 public class KeyManager
 {
@@ -34,12 +33,13 @@ public class KeyManager
 	public static void giveKey(Player player, String key) throws HeavenException
 	{
 		final String playerName = player.getName();
-		final String uuid = getUUID(player);
+		final String uuid = RPUtils.getUUID(player);
 
 		final int nbKeys = getNbKeysToday(uuid);
 
 		if (nbKeys >= MAX_KEYS_PER_DAY)
-			throw new HeavenException("Le joueur {%1$s} a déjà reçu {%2$s} clés aujourd'hui.", playerName, nbKeys);
+			throw new HeavenException("Le joueur {%1$s} a déjà reçu {%2$s} clés aujourd'hui.", playerName,
+					nbKeys);
 
 		giveBook(player, key);
 		incrementKeys(uuid);
@@ -60,7 +60,8 @@ public class KeyManager
 
 	private static int getNbKeysToday(String uuid) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("SELECT date, nb FROM dungeon_keys WHERE uuid = ?"))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement("SELECT date, nb FROM dungeon_keys WHERE uuid = ?"))
 		{
 			ps.setString(1, uuid);
 			final ResultSet rs = ps.executeQuery();
@@ -87,7 +88,8 @@ public class KeyManager
 
 	private static void createKeys(String uuid) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("INSERT INTO dungeon_keys (uuid) VALUES (?);"))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement("INSERT INTO dungeon_keys (uuid) VALUES (?);"))
 		{
 			ps.setString(1, uuid);
 			ps.executeUpdate();
@@ -101,8 +103,8 @@ public class KeyManager
 
 	private static void incrementKeys(String uuid) throws SQLErrorException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"UPDATE dungeon_keys SET nb = nb + 1 WHERE uuid = ?"))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement("UPDATE dungeon_keys SET nb = nb + 1 WHERE uuid = ?"))
 		{
 			ps.setString(1, uuid);
 			ps.executeUpdate();

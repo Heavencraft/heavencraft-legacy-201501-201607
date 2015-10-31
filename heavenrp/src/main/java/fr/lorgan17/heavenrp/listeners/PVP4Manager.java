@@ -1,7 +1,5 @@
 package fr.lorgan17.heavenrp.listeners;
 
-import static fr.heavencraft.utils.DevUtil.registerListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,20 +9,21 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 
-public class PVP4Manager implements Listener
+public class PVP4Manager extends AbstractListener<HeavenPlugin>
 {
 	private static boolean isFighting = false;
 	private static List<Player> fighters = new ArrayList<Player>();
 	private static List<Location> spawns = new ArrayList<Location>();
 
-	public PVP4Manager()
+	public PVP4Manager(HeavenPlugin plugin)
 	{
-		registerListener(this);
+		super(plugin);
 	}
 
 	public static void startBattle(List<Player> players) throws HeavenException
@@ -120,7 +119,8 @@ public class PVP4Manager implements Listener
 
 				if (fighters.size() == 1)
 				{
-					broadcastMessage("Le combat vient de se terminer, le gagnant est %1$s.", fighters.get(0).getName());
+					broadcastMessage("Le combat vient de se terminer, le gagnant est %1$s.",
+							fighters.get(0).getName());
 
 					fighters.clear();
 					isFighting = false;

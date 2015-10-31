@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import fr.heavencraft.async.queries.BatchQuery;
+import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.async.queries.Query;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
@@ -18,6 +21,7 @@ import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.hps.HpsManager;
+import fr.heavencraft.utils.ChatUtil;
 
 public class HpsCommand extends AbstractCommandExecutor
 {

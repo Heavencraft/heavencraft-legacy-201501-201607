@@ -10,6 +10,7 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.horses.HorsesManager;
+import fr.heavencraft.utils.ChatUtil;
 
 public class ChevalCommand extends AbstractCommandExecutor
 {

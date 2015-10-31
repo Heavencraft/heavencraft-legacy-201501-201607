@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fr.heavencraft.Utils;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 
 public class Stock
 {
@@ -22,7 +22,7 @@ public class Stock
 	{
 		_ownerName = ownerName;
 		_storeName = storeName;
-		_chestPosition = Utils.blockToString(chest.getBlock());
+		_chestPosition = RPUtils.blockToString(chest.getBlock());
 		_linkedSign = linkedSign;
 		
 		_isValid = true;
@@ -40,14 +40,14 @@ public class Stock
 		_ownerName = lineData[0];
 		_storeName = lineData[1];
 		
-		Block chestBlock = Utils.stringToBlock(lineData[2]);
+		Block chestBlock = RPUtils.stringToBlock(lineData[2]);
 		
 		if (chestBlock == null || !(chestBlock.getState() instanceof Chest))
 			return;
 		
 		_chestPosition = lineData[2];
 		
-		Block signCraftBlock = Utils.stringToBlock(lineData[3]);
+		Block signCraftBlock = RPUtils.stringToBlock(lineData[3]);
 		
 		if (signCraftBlock == null || !(signCraftBlock.getState() instanceof Sign))
 			return;
@@ -59,7 +59,7 @@ public class Stock
 	public String getSaveString()
 	{
 		return _ownerName + ";" + _storeName + ";" + _chestPosition + ";" +
-			Utils.blockToString(_linkedSign.getBlock());
+			RPUtils.blockToString(_linkedSign.getBlock());
 	}
 	
 	public boolean isValid()
@@ -79,7 +79,7 @@ public class Stock
 
 	public Chest getChest()
 	{
-		return (Chest) Utils.stringToBlock(_chestPosition).getState();
+		return (Chest) RPUtils.stringToBlock(_chestPosition).getState();
 	}
 	
 	public Sign getLinkedSign()

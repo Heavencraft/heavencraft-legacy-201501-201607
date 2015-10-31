@@ -13,8 +13,10 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavencore.utils.WorldEditUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
+import fr.heavencraft.utils.ChatUtil;
 import fr.lorgan17.heavenrp.listeners.PVP4Manager;
 
 public class Pvp4Command extends AbstractCommandExecutor
@@ -44,7 +46,7 @@ public class Pvp4Command extends AbstractCommandExecutor
 		}
 		else if (args[0].equalsIgnoreCase("startwe"))
 		{
-			Selection selection = DevUtil.getWESelection(player);
+			Selection selection = WorldEditUtil.getWESelection(player);
 			List<Player> players = new ArrayList<Player>();
 
 			for (Player player2 : Bukkit.getOnlinePlayers())

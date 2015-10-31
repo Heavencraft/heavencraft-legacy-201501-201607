@@ -1,7 +1,5 @@
 package fr.lorgan17.heavenrp.listeners;
 
-import static fr.heavencraft.utils.DevUtil.registerListener;
-
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -9,12 +7,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 
-public class PVPManager implements Listener
+public class PVPManager extends AbstractListener<HeavenPlugin>
 {
 	static Location spawn1;
 	static Location spawn2;
@@ -24,9 +23,9 @@ public class PVPManager implements Listener
 	private static boolean isTeamBattle = false;
 	static int maxpoints = 0;
 
-	public PVPManager()
+	public PVPManager(HeavenPlugin plugin)
 	{
-		registerListener(this);
+		super(plugin);
 	}
 
 	public static void StartBattle(List<Player> team1, List<Player> team2, int maxPoints) throws HeavenException
@@ -55,7 +54,8 @@ public class PVPManager implements Listener
 			broadcastMessage("%1$s : %2$s", _team2.getName(), _team2.getPlayers());
 		}
 		else
-			broadcastMessage("* Le combat entre %1$s et %2$s vient de commencer !", _team1.getName(), _team2.getName());
+			broadcastMessage("* Le combat entre %1$s et %2$s vient de commencer !", _team1.getName(),
+					_team2.getName());
 	}
 
 	public static void StopBattle()
@@ -250,8 +250,8 @@ public class PVPManager implements Listener
 				p.getInventory().setHelmet(null);
 
 				/*
-				 * for (PotionEffectType Po : PotionEffectType.values()) { if (p.hasPotionEffect(Po))
-				 * p.removePotionEffect(Po); }
+				 * for (PotionEffectType Po : PotionEffectType.values()) { if
+				 * (p.hasPotionEffect(Po)) p.removePotionEffect(Po); }
 				 */
 				p.setHealth(20);
 				p.setFoodLevel(30);

@@ -21,7 +21,6 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fr.heavencraft.Utils;
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
@@ -31,6 +30,7 @@ import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 import fr.heavencraft.utils.ChatUtil;
 
 public class StoresManager
@@ -167,7 +167,7 @@ public class StoresManager
 	{
 		for (final Store store : _stores)
 		{
-			if (Utils.blocksEquals(block, store.getSign().getBlock()))
+			if (RPUtils.blocksEquals(block, store.getSign().getBlock()))
 				return store;
 		}
 		return null;
@@ -223,13 +223,13 @@ public class StoresManager
 				event.setLine(3, ChatColor.DARK_RED + "utilisé");
 				return;
 			}
-			if (Utils.blocksEquals(chest.getBlock(), stock.getChest().getBlock()))
+			if (RPUtils.blocksEquals(chest.getBlock(), stock.getChest().getBlock()))
 			{
 				event.setLine(2, ChatColor.DARK_RED + "Coffre déjà");
 				event.setLine(3, ChatColor.DARK_RED + "utilisé");
 				return;
 			}
-			if (Utils.blocksEquals(sign.getBlock(), stock.getLinkedSign().getBlock()))
+			if (RPUtils.blocksEquals(sign.getBlock(), stock.getLinkedSign().getBlock()))
 			{
 				event.setLine(2, ChatColor.DARK_RED + "Pancarte déjà");
 				event.setLine(3, ChatColor.DARK_RED + "utilisée");
@@ -296,7 +296,7 @@ public class StoresManager
 			return;
 		}
 
-		if (!Utils.isInteger(priceData[0]) || !Utils.isInteger(priceData[1]))
+		if (!RPUtils.isInteger(priceData[0]) || !RPUtils.isInteger(priceData[1]))
 		{
 			event.setLine(2, ChatColor.DARK_RED + "Prix invalide");
 			return;
@@ -403,7 +403,7 @@ public class StoresManager
 		{
 			for (final Stock stock : _stocks)
 			{
-				if (Utils.blocksEquals(block, stock.getChest().getBlock()))
+				if (RPUtils.blocksEquals(block, stock.getChest().getBlock()))
 				{
 					final Player player = _plugin.getServer().getPlayer(stock.getOwnerName());
 					if (player != null)
@@ -425,7 +425,7 @@ public class StoresManager
 		{
 			for (final Stock stock : _stocks)
 			{
-				if (Utils.blocksEquals(block, stock.getLinkedSign().getBlock()))
+				if (RPUtils.blocksEquals(block, stock.getLinkedSign().getBlock()))
 				{
 					final Player player = _plugin.getServer().getPlayer(stock.getOwnerName());
 					if (player != null)
@@ -442,7 +442,7 @@ public class StoresManager
 
 			for (final Store store : _stores)
 			{
-				if (Utils.blocksEquals(block, store.getSign().getBlock()))
+				if (RPUtils.blocksEquals(block, store.getSign().getBlock()))
 				{
 					final Player player = _plugin.getServer().getPlayer(store.getOwnerName());
 					if (player != null)
@@ -507,7 +507,7 @@ public class StoresManager
 
 		final Block confirmBlock = getShopBlock(user);
 
-		if (confirmBlock == null || !Utils.blocksEquals(block, confirmBlock))
+		if (confirmBlock == null || !RPUtils.blocksEquals(block, confirmBlock))
 		{
 			setShopBlock(user, block);
 			sendMessage(player, "Cliquez une seconde fois pour confirmer l'achat.");
@@ -590,7 +590,7 @@ public class StoresManager
 
 		final Block confirmBlock = getShopBlock(user);
 
-		if (confirmBlock == null || !Utils.blocksEquals(block, confirmBlock))
+		if (confirmBlock == null || !RPUtils.blocksEquals(block, confirmBlock))
 		{
 			setShopBlock(user, block);
 			sendMessage(player, "Cliquez une seconde fois pour confirmer la vente.");

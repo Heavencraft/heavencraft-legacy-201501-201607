@@ -3,6 +3,7 @@ package fr.heavencraft.heavenrp.commands.homes;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
@@ -10,6 +11,7 @@ import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.homes.SetHomeQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.utils.ChatUtil;
 
 public class SethomeCommand extends AbstractCommandExecutor
 {

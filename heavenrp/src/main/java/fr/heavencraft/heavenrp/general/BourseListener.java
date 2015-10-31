@@ -2,27 +2,27 @@ package fr.heavencraft.heavenrp.general;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
-import fr.heavencraft.utils.DevUtil;
-import fr.heavencraft.utils.WorldGuardUtil;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 
 /*
  * Autorise le placement et la destruction de panneaux mais pas de blocs dans certaines régions
  */
-public class BourseListener implements Listener
+public class BourseListener extends AbstractListener<HeavenPlugin>
 {
 	private static final String[] regions = { "bourse", "bourse3" };
 	private final WorldGuardPlugin wg;
 
-	public BourseListener()
+	public BourseListener(HeavenPlugin plugin)
 	{
-		DevUtil.registerListener(this);
-		wg = WorldGuardUtil.getWorldGuard();
+		super(plugin);
+		wg = RPUtils.getWorldGuard();
 	}
 
 	@EventHandler(ignoreCancelled = true)
