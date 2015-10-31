@@ -8,8 +8,8 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.block.Biome;
 
-import fr.heavencraft.Utils;
 import fr.heavencraft.generators.EmptyChunkGenerator;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 
 public class WorldsManager
 {
@@ -99,7 +99,7 @@ public class WorldsManager
 		while ((getResources().getBiome(x, z) == Biome.OCEAN)
 				|| (getResources().getBiome(x, z) == Biome.DEEP_OCEAN));
 
-		return Utils.getSafeDestination(getResources(), x, z);
+		return RPUtils.getSafeDestination(getResources(), x, z);
 	}
 
 	public static World getWorld()

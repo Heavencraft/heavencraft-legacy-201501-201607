@@ -11,7 +11,9 @@ import org.bukkit.event.block.SignChangeEvent;
 import fr.heavencraft.async.queries.BatchQuery;
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.async.queries.Query;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.provinces.RemoveProvinceQuery;
 import fr.heavencraft.heavenrp.database.provinces.UpdateProvinceQuery;
@@ -20,17 +22,16 @@ import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.provinces.ProvincesManager.Province;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
-import fr.heavencraft.listeners.sign.SignListener;
 import fr.heavencraft.utils.ChatUtil;
 
-public class ProvinceSignListener extends SignListener
+public class ProvinceSignListener extends AbstractSignListener
 {
 	private static final String JOIN = "Rejoindre";
 	private static final String LEAVE = "Quitter";
 
-	public ProvinceSignListener()
+	public ProvinceSignListener(HeavenRP plugin)
 	{
-		super("Province", RPPermissions.PROVINCE_SIGN);
+		super(plugin, "Province", RPPermissions.PROVINCE_SIGN);
 	}
 
 	@Override
@@ -82,7 +83,8 @@ public class ProvinceSignListener extends SignListener
 				// Apply province colors
 				ProvinceScoreboard.applyTeamColor(player, province);
 
-				ChatUtil.sendMessage(player, "Vous venez de rejoindre la province de {%1$s}.", province.getName());
+				ChatUtil.sendMessage(player, "Vous venez de rejoindre la province de {%1$s}.",
+						province.getName());
 			}
 
 			@Override
@@ -121,5 +123,10 @@ public class ProvinceSignListener extends SignListener
 				ChatUtil.sendMessage(player, ex.getMessage());
 			}
 		});
+	}
+
+	@Override
+	protected void onSignBreak(Player player, Sign sign) throws HeavenException
+	{
 	}
 }

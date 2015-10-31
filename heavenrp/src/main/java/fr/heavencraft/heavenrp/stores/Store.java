@@ -4,8 +4,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
-import fr.heavencraft.Utils;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 
 public class Store
 {
@@ -54,14 +54,14 @@ public class Store
 		if (_linkedStock == null)
 			return;
 		
-		Block block = Utils.stringToBlock(lineData[2]);
+		Block block = RPUtils.stringToBlock(lineData[2]);
 		
 		if (block == null || !(block.getState() instanceof Sign))
 			return;
 
 		_sign = (Sign) block.getState();
 		
-		if (!Utils.isNumeric(lineData[3], lineData[4]))
+		if (!RPUtils.isNumeric(lineData[3], lineData[4]))
 			return;
 
 		_price = Integer.parseInt(lineData[3]);
@@ -160,7 +160,7 @@ public class Store
 	public String getSaveString()
 	{
 		return _ownerName + ";" + _storeName + ";" +
-			Utils.blockToString(_sign.getBlock()) + ";" +
+			RPUtils.blockToString(_sign.getBlock()) + ";" +
 			_price + ";" + _quantity + ";" + getMaterialString() + ";" + (_isBuyer ? "1" : "0");
 	}
 }

@@ -10,6 +10,7 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
+import fr.heavencraft.utils.ChatUtil;
 
 public class EventCommand extends AbstractCommandExecutor
 {
@@ -65,8 +66,8 @@ public class EventCommand extends AbstractCommandExecutor
 				if (_started)
 				{
 					_started = false;
-					Bukkit.broadcastMessage(ChatColor.AQUA + "[EVENT]" + ChatColor.RESET
-							+ "L'event vient de se terminer !");
+					Bukkit.broadcastMessage(
+							ChatColor.AQUA + "[EVENT]" + ChatColor.RESET + "L'event vient de se terminer !");
 				}
 			}
 		}

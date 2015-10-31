@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.utils.ChatUtil;
 
 public class MairesCommand extends AbstractCommandExecutor
 {
@@ -29,10 +30,8 @@ public class MairesCommand extends AbstractCommandExecutor
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP
-				.getConnection()
-				.prepareStatement(
-						"SELECT u.name, GROUP_CONCAT(DISTINCT m.region_name ORDER BY m.region_name DESC SEPARATOR ', ') AS villes FROM mayors m, users u WHERE u.id = m.user_id GROUP BY m.user_id"))
+		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
+				"SELECT u.name, GROUP_CONCAT(DISTINCT m.region_name ORDER BY m.region_name DESC SEPARATOR ', ') AS villes FROM mayors m, users u WHERE u.id = m.user_id GROUP BY m.user_id"))
 		{
 			final ResultSet rs = ps.executeQuery();
 

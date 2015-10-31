@@ -12,6 +12,7 @@ import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
+import fr.heavencraft.utils.ChatUtil;
 import fr.lorgan17.heavenrp.listeners.PVPManager;
 
 public class PvpCommand extends AbstractCommandExecutor

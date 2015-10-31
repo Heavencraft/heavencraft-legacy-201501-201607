@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import fr.heavencraft.Utils;
 import fr.heavencraft.async.queries.BatchQuery;
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.async.queries.Query;
@@ -24,6 +23,7 @@ import fr.heavencraft.heavenrp.database.users.UpdateUserLastLoginQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 import fr.heavencraft.utils.ChatUtil;
 
 public class EconomyListener implements Listener
@@ -41,7 +41,7 @@ public class EconomyListener implements Listener
 
 		User user = UserProvider.getUserByName(playerName);
 
-		if (!Utils.isToday(user.getLastLogin()))
+		if (!RPUtils.isToday(user.getLastLogin()))
 		{
 			BankAccount account = BankAccountsManager.getBankAccount(playerName, BankAccountType.USER);
 			final int benefit;

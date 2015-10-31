@@ -2,22 +2,22 @@ package fr.heavencraft.heavenrp.provinces;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.provinces.ProvincesManager.Province;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
 import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
 
-public class ProvinceListener implements Listener
+public class ProvinceListener extends AbstractListener<HeavenPlugin>
 {
-	public ProvinceListener()
+	public ProvinceListener(HeavenPlugin plugin)
 	{
-		DevUtil.registerListener(this);
+		super(plugin);
 	}
 
 	@EventHandler(ignoreCancelled = true)

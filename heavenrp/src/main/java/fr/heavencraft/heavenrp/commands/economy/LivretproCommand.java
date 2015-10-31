@@ -9,6 +9,7 @@ import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
+import fr.heavencraft.utils.ChatUtil;
 
 public class LivretproCommand extends AbstractCommandExecutor
 {

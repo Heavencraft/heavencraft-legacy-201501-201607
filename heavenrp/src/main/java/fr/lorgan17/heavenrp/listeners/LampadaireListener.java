@@ -1,22 +1,21 @@
 package fr.lorgan17.heavenrp.listeners;
 
-import static fr.heavencraft.utils.DevUtil.registerListener;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.TrapDoor;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.utils.ChatUtil;
 
-public class LampadaireListener implements Listener
+public class LampadaireListener extends AbstractListener<HeavenPlugin>
 {
-	public LampadaireListener()
+	public LampadaireListener(HeavenPlugin plugin)
 	{
-		registerListener(this);
+		super(plugin);
 	}
 
 	@EventHandler(ignoreCancelled = true)

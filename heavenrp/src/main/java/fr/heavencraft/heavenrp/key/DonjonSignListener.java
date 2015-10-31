@@ -1,7 +1,5 @@
 package fr.heavencraft.heavenrp.key;
 
-import static fr.heavencraft.utils.DevUtil.getPlugin;
-
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -14,15 +12,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.listeners.sign.SignListener;
 
-public class DonjonSignListener extends SignListener
+public class DonjonSignListener extends AbstractSignListener
 {
-	public DonjonSignListener()
+	public DonjonSignListener(HeavenRP plugin)
 	{
-		super("Donjon", RPPermissions.DONJON_SIGN);
+		super(plugin, "Donjon", RPPermissions.DONJON_SIGN);
 	}
 
 	@Override
@@ -36,7 +35,8 @@ public class DonjonSignListener extends SignListener
 	{
 		ItemStack item = null;
 
-		for (Entry<Integer, ? extends ItemStack> entry : player.getInventory().all(Material.WRITTEN_BOOK).entrySet())
+		for (Entry<Integer, ? extends ItemStack> entry : player.getInventory().all(Material.WRITTEN_BOOK)
+				.entrySet())
 		{
 			BookMeta meta = (BookMeta) entry.getValue().getItemMeta();
 
@@ -62,12 +62,10 @@ public class DonjonSignListener extends SignListener
 		org.bukkit.material.Sign signData = (org.bukkit.material.Sign) sign.getData();
 		Block redstoneBlock = signBlock.getRelative(signData.getAttachedFace());
 
-		Bukkit.getServer()
-				.getScheduler()
-				.runTaskLater(
-						getPlugin(),
-						new RestoreBlockTask(redstoneBlock.getWorld().getName(), redstoneBlock.getX(), redstoneBlock
-								.getY(), redstoneBlock.getZ(), redstoneBlock.getType()), 40);
+		Bukkit.getServer().getScheduler().runTaskLater(plugin,
+				new RestoreBlockTask(redstoneBlock.getWorld().getName(), redstoneBlock.getX(),
+						redstoneBlock.getY(), redstoneBlock.getZ(), redstoneBlock.getType()),
+				40);
 
 		redstoneBlock.setType(Material.REDSTONE_BLOCK);
 	}
@@ -94,5 +92,10 @@ public class DonjonSignListener extends SignListener
 		{
 			Bukkit.getServer().getWorld(_world).getBlockAt(_x, _y, _z).setType(_type);
 		}
+	}
+
+	@Override
+	protected void onSignBreak(Player player, Sign sign) throws HeavenException
+	{
 	}
 }

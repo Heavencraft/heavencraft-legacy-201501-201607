@@ -3,18 +3,18 @@ package fr.heavencraft.heavenrp.general;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
-import fr.heavencraft.utils.DevUtil;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 
-public class PumpkinLampListener implements Listener
+public class PumpkinLampListener extends AbstractListener<HeavenPlugin>
 {
-	public PumpkinLampListener()
+	public PumpkinLampListener(HeavenPlugin plugin)
 	{
-		DevUtil.registerListener(this);
+		super(plugin);
 	}
 
 	@EventHandler(ignoreCancelled = true)

@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.exceptions.SQLErrorException;
+import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 
 public class User
 {

@@ -21,14 +21,14 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion.CircularInheritan
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.User;
+import fr.heavencraft.heavenrp.utils.RPUtils;
 import fr.heavencraft.heavenrp.worlds.WorldsManager;
-import fr.heavencraft.utils.WorldGuardUtil;
 
 public class TownsManager
 {
 	public static boolean regionExists(String name)
 	{
-		return WorldGuardUtil.getWorldGuard().getRegionManager(WorldsManager.getWorld()).getRegion(name) != null;
+		return RPUtils.getWorldGuard().getRegionManager(WorldsManager.getWorld()).getRegion(name) != null;
 	}
 
 	public static List<String> getMayors(String name)
@@ -58,8 +58,8 @@ public class TownsManager
 	public static void addMayor(String town, User mayor) throws HeavenException
 	{
 		town = town.toLowerCase();
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"INSERT INTO mayors (user_id, region_name) VALUES (?, ?);"))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement("INSERT INTO mayors (user_id, region_name) VALUES (?, ?);"))
 		{
 			ps.setInt(1, mayor.getId());
 			ps.setString(2, town);
@@ -76,8 +76,8 @@ public class TownsManager
 	public static void removeMayor(String town, User mayor) throws HeavenException
 	{
 		town = town.toLowerCase();
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"DELETE FROM mayors WHERE user_id = ? AND region_name = ?;"))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement("DELETE FROM mayors WHERE user_id = ? AND region_name = ?;"))
 		{
 			ps.setInt(1, mayor.getId());
 			ps.setString(2, town);
@@ -91,7 +91,8 @@ public class TownsManager
 		}
 	}
 
-	public static void createSubRegion(String townName, User owner, Selection selection, int up, int down) throws HeavenException
+	public static void createSubRegion(String townName, User owner, Selection selection, int up, int down)
+			throws HeavenException
 	{
 		final Vector[] expand = new Vector[2];
 		expand[0] = new Vector(0, -down, 0);
@@ -109,7 +110,7 @@ public class TownsManager
 		final BlockVector pt1 = BukkitUtil.toVector(selection.getMinimumPoint()).toBlockVector();
 		final BlockVector pt2 = BukkitUtil.toVector(selection.getMaximumPoint()).toBlockVector();
 
-		final RegionManager rm = WorldGuardUtil.getWorldGuard().getRegionManager(world);
+		final RegionManager rm = RPUtils.getWorldGuard().getRegionManager(world);
 
 		final ProtectedRegion town = rm.getRegionExact(townName);
 
@@ -150,7 +151,7 @@ public class TownsManager
 
 	public static void removeSubRegion(String townName, String regionName) throws HeavenException
 	{
-		final RegionManager rm = WorldGuardUtil.getWorldGuard().getRegionManager(WorldsManager.getWorld());
+		final RegionManager rm = RPUtils.getWorldGuard().getRegionManager(WorldsManager.getWorld());
 
 		final ProtectedRegion region = rm.getRegionExact(regionName);
 
@@ -181,8 +182,8 @@ public class TownsManager
 
 	public static boolean isMayor(User mayor, String townName)
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT m.user_id FROM mayors m WHERE m.user_id = ? AND m.region_name = ?"))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement("SELECT m.user_id FROM mayors m WHERE m.user_id = ? AND m.region_name = ?"))
 		{
 			ps.setInt(1, mayor.getId());
 			ps.setString(2, townName);
