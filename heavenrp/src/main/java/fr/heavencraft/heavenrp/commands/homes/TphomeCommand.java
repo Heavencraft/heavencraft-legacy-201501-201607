@@ -4,6 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.async.actions.ActionsHandler;
+import fr.heavencraft.async.actions.TeleportPlayerAction;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
@@ -12,6 +14,7 @@ import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.homes.HomeProvider;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.utils.ChatUtil;
 
 public class TphomeCommand extends AbstractCommandExecutor
 {

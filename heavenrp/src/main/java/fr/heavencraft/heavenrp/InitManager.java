@@ -1,12 +1,26 @@
 package fr.heavencraft.heavenrp;
 
 import fr.heavencraft.heavencore.bukkit.commands.AccepterCommand;
+import fr.heavencraft.heavencore.bukkit.commands.CreacheatCommand;
+import fr.heavencraft.heavencore.bukkit.commands.EndercheatCommand;
+import fr.heavencraft.heavencore.bukkit.commands.FillCommand;
+import fr.heavencraft.heavencore.bukkit.commands.HeadCommand;
+import fr.heavencraft.heavencore.bukkit.commands.InventoryCommand;
+import fr.heavencraft.heavencore.bukkit.commands.NoentitiesCommand;
+import fr.heavencraft.heavencore.bukkit.commands.PoofCommand;
 import fr.heavencraft.heavencore.bukkit.commands.RejoindreCommand;
+import fr.heavencraft.heavencore.bukkit.commands.RoucoupsCommand;
+import fr.heavencraft.heavencore.bukkit.commands.SpawnmobCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TpCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TphereCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TpposCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TpworldCommand;
+import fr.heavencraft.heavencore.bukkit.listeners.AntiCheatListener;
+import fr.heavencraft.heavencore.bukkit.listeners.AntiLagListener;
 import fr.heavencraft.heavencore.bukkit.listeners.ColoredSignsListener;
+import fr.heavencraft.heavencore.bukkit.listeners.CookieSignListener;
 import fr.heavencraft.heavencore.bukkit.listeners.JumpListener;
+import fr.heavencraft.heavencore.bukkit.listeners.LinkSignListener;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import fr.heavencraft.heavenrp.commands.economy.BourseCommand;
@@ -63,9 +77,6 @@ public class InitManager
 	{
 		initCommands(plugin);
 		initListeners(plugin);
-
-		new ActionsHandler();
-		new QueriesHandler();
 	}
 
 	private static void initCommands(HeavenRP plugin)
@@ -78,7 +89,6 @@ public class InitManager
 		new CreacheatCommand(plugin);
 		new EndercheatCommand(plugin);
 		new FillCommand(plugin);
-		new GcCommand(plugin);
 		new HeadCommand(plugin);
 		new InventoryCommand(plugin);
 		new NoentitiesCommand(plugin);
@@ -86,7 +96,6 @@ public class InitManager
 		new RejoindreCommand(plugin);
 		new RoucoupsCommand(plugin);
 		new SpawnmobCommand(plugin);
-		new SpectatorCommand(plugin);
 		new TpCommand(plugin);
 		new TphereCommand(plugin);
 		new TpposCommand(plugin);
@@ -102,7 +111,7 @@ public class InitManager
 		new HurtCommand(plugin);
 		new LivretproCommand(plugin);
 		new PayerCommand(plugin);
-		new MoneyTask();
+		new MoneyTask(plugin);
 
 		// Homes
 		new BuyhomeCommand(plugin);
@@ -117,31 +126,31 @@ public class InitManager
 		new HpsCommand(plugin);
 
 		// Key
-		new KeyCommand();
+		new KeyCommand(plugin);
 
 		// Teleport
-		new SpawnCommand();
-		new TutoCommand();
+		new SpawnCommand(plugin);
+		new TutoCommand(plugin);
 
 		// Warp
-		new WarpCommand();
+		new WarpCommand(plugin);
 
 		/*
 		 * A trier
 		 */
 
 		// Commandes modérateurs
-		new EventCommand();
-		new ModpackCommand();
-		new Pvp4Command();
-		new PvpCommand();
+		new EventCommand(plugin);
+		new ModpackCommand(plugin);
+		new Pvp4Command(plugin);
+		new PvpCommand(plugin);
 
 		// Commandes joueurs
-		new EncheresCommand();
-		new LicenceCommand();
-		new MaireCommand();
-		new MairesCommand();
-		new ParcelleCommand();
+		new EncheresCommand(plugin);
+		new LicenceCommand(plugin);
+		new MaireCommand(plugin);
+		new MairesCommand(plugin);
+		new ParcelleCommand(plugin);
 	}
 
 	private static void initListeners(HeavenRP plugin)
@@ -150,12 +159,12 @@ public class InitManager
 		 * from HeavenCore
 		 */
 
-		new AntiCheatListener();
-		new AntiLagListener();
-		new ColoredSignsListener();
-		new CookieSignListener();
-		new NoChatListener();
-		new RedstoneLampListener();
+		new AntiCheatListener(plugin);
+		new AntiLagListener(plugin);
+		new ColoredSignsListener(plugin);
+		new CookieSignListener(plugin);
+		new NoChatListener(plugin);
+		new RedstoneLampListener(plugin);
 
 		/*
 		 * HeavenRP
@@ -163,37 +172,37 @@ public class InitManager
 
 		// Economy
 		new EconomyListener();
-		new GoldDropListener();
-		new LivretProSignListener();
-		new LivretSignListener();
+		new GoldDropListener(plugin);
+		new LivretProSignListener(plugin);
+		new LivretSignListener(plugin);
 
 		// General
-		new BourseListener();
-		new PumpkinLampListener();
+		new BourseListener(plugin);
+		new PumpkinLampListener(plugin);
 		new RecipeManager();
 		new ServerListener();
-		new WatchListener();
+		new WatchListener(plugin);
 
 		// Users
-		new UserListener();
+		new UserListener(plugin);
 
 		// Horses
-		new HorsesListener();
+		new HorsesListener(plugin);
 
 		// Key
-		new DonjonSignListener();
+		new DonjonSignListener(plugin);
 
 		// Provinces
 		ProvinceScoreboard.initialize();
-		new ProvinceListener();
-		new ProvinceSignListener();
+		new ProvinceListener(plugin);
+		new ProvinceSignListener(plugin);
 
 		// Warps
-		new WarpSignListener();
+		new WarpSignListener(plugin);
 
 		// Worlds
 		WorldsManager.init();
-		new WorldsListener();
+		new WorldsListener(plugin);
 
 		/*
 		 * A trier
@@ -201,11 +210,11 @@ public class InitManager
 
 		// Listeners
 		new JumpListener(plugin);
-		new LampadaireListener();
-		new LinkSignListener();
-		new PVP4Manager();
-		new PVPManager();
-		new SnowballListener();
+		new LampadaireListener(plugin);
+		new LinkSignListener(plugin);
+		new PVP4Manager(plugin);
+		new PVPManager(plugin);
+		new SnowballListener(plugin);
 
 		// Teams
 	}

@@ -7,6 +7,9 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.async.queries.BatchQuery;
+import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.async.queries.Query;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
@@ -14,6 +17,7 @@ import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserDealerLicenceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.utils.ChatUtil;
 
 public class LicenceCommand extends AbstractCommandExecutor
 {
@@ -95,6 +99,7 @@ public class LicenceCommand extends AbstractCommandExecutor
 	{
 		ChatUtil.sendMessage(sender, "/{licence} marchand : pour acheter la licence de marchand");
 		// ChatUtil.sendMessage(sender,
-		// "/{licence} ressources : pour acheter la licence d'accès au monde ressources");
+		// "/{licence} ressources : pour acheter la licence d'accès au monde
+		// ressources");
 	}
 }

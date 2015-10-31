@@ -5,20 +5,20 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import fr.heavencraft.Permissions;
 import fr.heavencraft.async.actions.ActionsHandler;
 import fr.heavencraft.async.actions.TeleportPlayerAction;
+import fr.heavencraft.heavencore.CorePermissions;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
 
-public class WorldsListener implements Listener
+public class WorldsListener extends AbstractListener<HeavenPlugin>
 {
-	public WorldsListener()
+	public WorldsListener(HeavenPlugin plugin)
 	{
-		DevUtil.registerListener(this);
+		super(plugin);
 	}
 
 	// Limites des mondes
@@ -54,7 +54,7 @@ public class WorldsListener implements Listener
 		else if (l.getWorld().getName().equals("world_old") || l.getWorld().getName().equals("world_origine")
 				|| l.getWorld().getName().equals("world_dungeon") || l.getWorld().getName().equals("world_event"))
 		{
-			if (!event.getPlayer().hasPermission(Permissions.TPWORLD))
+			if (!event.getPlayer().hasPermission(CorePermissions.TPWORLD_COMMAND))
 				event.getPlayer().teleport(WorldsManager.getSpawn());
 		}
 	}

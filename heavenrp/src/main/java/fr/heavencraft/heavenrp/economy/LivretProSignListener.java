@@ -8,23 +8,23 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.MoneyTransfertQuery;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccount;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.listeners.sign.SignListener;
 import fr.heavencraft.utils.ChatUtil;
-import fr.heavencraft.utils.DevUtil;
 
-public class LivretProSignListener extends SignListener implements Listener
+public class LivretProSignListener extends AbstractSignListener
 {
 	private static final String CONSULTER = "Consulter";
 	private static final String DEPOSER = "Déposer";
@@ -33,11 +33,9 @@ public class LivretProSignListener extends SignListener implements Listener
 	private final Map<String, Integer> deposants = new HashMap<String, Integer>();
 	private final Map<String, Integer> retirants = new HashMap<String, Integer>();
 
-	public LivretProSignListener()
+	public LivretProSignListener(HeavenPlugin plugin)
 	{
-		super("LivretPro", RPPermissions.LIVRETPRO_SIGN);
-
-		DevUtil.registerListener(this);
+		super(plugin, "LivretPro", RPPermissions.LIVRETPRO_SIGN);
 	}
 
 	@Override
@@ -108,8 +106,8 @@ public class LivretProSignListener extends SignListener implements Listener
 		ChatUtil.sendMessage(player, "{Trésorier} : Voici la liste de vos livrets :");
 
 		for (BankAccount account : accounts)
-			ChatUtil.sendMessage(player, "{%1$s} (%2$s) : {%3$s} pièces d'or", account.getId(),
-					account.getName(), account.getBalance());
+			ChatUtil.sendMessage(player, "{%1$s} (%2$s) : {%3$s} pièces d'or", account.getId(), account.getName(),
+					account.getBalance());
 	}
 
 	@EventHandler(ignoreCancelled = true)
@@ -190,5 +188,10 @@ public class LivretProSignListener extends SignListener implements Listener
 			ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous déposer ?");
 		else
 			ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous retirer ?");
+	}
+
+	@Override
+	protected void onSignBreak(Player player, Sign sign) throws HeavenException
+	{
 	}
 }

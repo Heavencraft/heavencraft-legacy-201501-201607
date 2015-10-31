@@ -6,19 +6,19 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.inventory.HorseInventory;
 
-import fr.heavencraft.utils.DevUtil;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 
-public class HorsesListener implements Listener
+public class HorsesListener extends AbstractListener<HeavenPlugin>
 {
-	public HorsesListener()
+	public HorsesListener(HeavenPlugin plugin)
 	{
-		DevUtil.registerListener(this);
+		super(plugin);
 	}
 
 	@EventHandler(ignoreCancelled = true)
@@ -73,7 +73,7 @@ public class HorsesListener implements Listener
 		if (!HorsesManager.canUse(horse, player))
 		{
 			if (horse.getOwner() != null)
-				DevUtil.logInfo("%1$s tried to damage %2$s's horse", player.getName(), horse.getOwner().getName());
+				log.info("%1$s tried to damage %2$s's horse", player.getName(), horse.getOwner().getName());
 
 			event.setCancelled(true);
 		}
