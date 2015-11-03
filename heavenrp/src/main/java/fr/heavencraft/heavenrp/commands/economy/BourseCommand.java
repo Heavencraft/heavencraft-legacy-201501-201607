@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
 
 public class BourseCommand extends AbstractCommandExecutor
 {

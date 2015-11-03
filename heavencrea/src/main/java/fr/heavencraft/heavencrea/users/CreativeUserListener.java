@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.users.DefaultUserListener;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 
 public class CreativeUserListener extends DefaultUserListener<HeavenCrea, CreativeUser>
@@ -34,6 +35,6 @@ public class CreativeUserListener extends DefaultUserListener<HeavenCrea, Creati
 	protected void onFirstConnection(Player player, CreativeUser user) throws HeavenException
 	{
 		user.updateBalance(100);
-		plugin.sendMessage(player, "Vous venez d'obtenir {100} jetons en vous connectant !");
+		ChatUtil.sendMessage(player, "Vous venez d'obtenir {100} jetons en vous connectant !");
 	}
 }

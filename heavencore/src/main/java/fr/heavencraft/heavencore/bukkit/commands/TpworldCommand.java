@@ -1,6 +1,6 @@
 package fr.heavencraft.heavencore.bukkit.commands;
 
-import static fr.heavencraft.utils.ChatUtil.sendMessage;
+import static fr.heavencraft.heavencore.utils.chat.ChatUtil.sendMessage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -8,11 +8,10 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.async.actions.ActionsHandler;
-import fr.heavencraft.async.actions.TeleportPlayerAction;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public class TpworldCommand extends AbstractCommandExecutor
 {
@@ -38,14 +37,8 @@ public class TpworldCommand extends AbstractCommandExecutor
 		Location location = player.getLocation();
 		location.setWorld(world);
 
-		ActionsHandler.addAction(new TeleportPlayerAction(player, location)
-		{
-			@Override
-			public void onSuccess()
-			{
-				sendMessage(player, "Vous avez été téléporté dans le monde {%1$s}.", world.getName());
-			}
-		});
+		PlayerUtil.teleportPlayer(player, location, "Vous avez été téléporté dans le monde {%1$s}.",
+				world.getName());
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 import fr.heavencraft.heavencrea.users.CreativeUser;
 
@@ -30,9 +31,9 @@ public class BuyhomeCommand extends AbstractCommandExecutor
 		switch (args.length)
 		{
 			case 0:
-				plugin.sendMessage(player,
-						"Le {home %1$d} vous coûtera {%2$d} pièces d'or. Tapez /buyhome valider pour l'acheter.", homeNumber,
-						price);
+				ChatUtil.sendMessage(player,
+						"Le {home %1$d} vous coûtera {%2$d} pièces d'or. Tapez /buyhome valider pour l'acheter.",
+						homeNumber, price);
 				break;
 			case 1:
 				if (!args[0].equalsIgnoreCase("valider"))
@@ -44,7 +45,8 @@ public class BuyhomeCommand extends AbstractCommandExecutor
 				user.updateBalance(-price);
 				user.incrementHomeNumber();
 
-				plugin.sendMessage(player, "Votre {home %1$d} a bien été acheté pour {%2$d} pièces d'or.", homeNumber, price);
+				ChatUtil.sendMessage(player, "Votre {home %1$d} a bien été acheté pour {%2$d} pièces d'or.",
+						homeNumber, price);
 				break;
 			default:
 				sendUsage(player);
@@ -55,16 +57,16 @@ public class BuyhomeCommand extends AbstractCommandExecutor
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		plugin.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
+		ChatUtil.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
 	}
 
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "Commandes des points d'habitation :");
-		plugin.sendMessage(sender, "/{home} <numéro> : pour se téléporter à un home.");
-		plugin.sendMessage(sender, "/{sethome} <numéro> : pour définir un home.");
-		plugin.sendMessage(sender, "/{buyhome} : pour acheter un home.");
+		ChatUtil.sendMessage(sender, "Commandes des points d'habitation :");
+		ChatUtil.sendMessage(sender, "/{home} <numéro> : pour se téléporter à un home.");
+		ChatUtil.sendMessage(sender, "/{sethome} <numéro> : pour définir un home.");
+		ChatUtil.sendMessage(sender, "/{buyhome} : pour acheter un home.");
 	}
 
 	private static int getPrice(int homeNumber) throws HeavenException

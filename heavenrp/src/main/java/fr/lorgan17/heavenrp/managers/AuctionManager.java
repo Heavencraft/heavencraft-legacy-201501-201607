@@ -10,11 +10,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
 
 public class AuctionManager
 {

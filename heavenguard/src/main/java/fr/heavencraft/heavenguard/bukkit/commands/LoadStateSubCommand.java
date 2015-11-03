@@ -3,6 +3,7 @@ package fr.heavencraft.heavenguard.bukkit.commands;
 import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
@@ -20,14 +21,14 @@ public class LoadStateSubCommand extends AbstractSubCommand
 	{
 		final Region region = plugin.getRegionProvider().getRegionByName(regionName);
 
-		plugin.sendMessage(sender, "Restauration de la protection {%1$s}...", region.getName());
+		ChatUtil.sendMessage(sender, "Restauration de la protection {%1$s}...", region.getName());
 		RegionUtil.saveState(region);
-		plugin.sendMessage(sender, "La protection {%1$s} a bien été restaurée.", region.getName());
+		ChatUtil.sendMessage(sender, "La protection {%1$s} a bien été restaurée.", region.getName());
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/rg {loadstate} <protection>");
+		ChatUtil.sendMessage(sender, "/rg {loadstate} <protection>");
 	}
 }

@@ -9,10 +9,10 @@ import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
-import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
 
 public class HurtCommand extends AbstractCommandExecutor
 {

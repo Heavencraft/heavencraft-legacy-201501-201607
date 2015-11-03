@@ -4,15 +4,14 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.async.actions.ActionsHandler;
-import fr.heavencraft.async.actions.TeleportPlayerAction;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.homes.HomeProvider;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.utils.ChatUtil;
 
 public class HomeCommand extends AbstractCommandExecutor
 {
@@ -38,7 +37,7 @@ public class HomeCommand extends AbstractCommandExecutor
 
 		Location home = HomeProvider.getHome(UserProvider.getUserByName(player.getName()), nb);
 
-		ActionsHandler.addAction(new TeleportPlayerAction(player, home));
+		PlayerUtil.teleportPlayer(player, home);
 	}
 
 	@Override
