@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 public class WorldAccessListener extends AbstractListener<HeavenPlugin>
 {
@@ -40,6 +41,6 @@ public class WorldAccessListener extends AbstractListener<HeavenPlugin>
 			return;
 
 		event.setTo(fallbackLocation);
-		plugin.sendMessage(player, "Vous n'avez pas la permission d'accéder au monde {%1$s}.", worldName);
+		ChatUtil.sendMessage(player, "Vous n'avez pas la permission d'accéder au monde {%1$s}.", worldName);
 	}
 }

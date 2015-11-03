@@ -13,6 +13,7 @@ import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.async.queries.Query;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.provinces.RemoveProvinceQuery;
@@ -22,7 +23,6 @@ import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.provinces.ProvincesManager.Province;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
-import fr.heavencraft.utils.ChatUtil;
 
 public class ProvinceSignListener extends AbstractSignListener
 {

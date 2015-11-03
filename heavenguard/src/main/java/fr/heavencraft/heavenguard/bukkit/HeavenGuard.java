@@ -1,7 +1,6 @@
 package fr.heavencraft.heavenguard.bukkit;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
@@ -28,12 +27,6 @@ import fr.heavencraft.heavenguard.datamodel.SQLRegionProvider;
  */
 public class HeavenGuard extends HeavenPlugin
 {
-	public HeavenGuard()
-	{
-		textColor = ChatColor.AQUA.toString();
-		highlightColor = ChatColor.GREEN.toString();
-	}
-
 	private RegionProvider regionProvider;
 	private RegionManager regionManager;
 

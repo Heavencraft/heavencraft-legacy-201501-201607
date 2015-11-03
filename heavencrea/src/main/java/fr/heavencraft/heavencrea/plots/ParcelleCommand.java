@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
@@ -44,8 +46,8 @@ public final class ParcelleCommand extends AbstractCommandExecutor
 				final int x = region.getMinX();
 				final int z = region.getMinZ();
 
-				plugin.teleportPlayer(player, new Location(world, x, 52, z));
-				plugin.sendMessage(player, "Vous avez été téléporté à la parcelle {%1$s}.", region.getName());
+				PlayerUtil.teleportPlayer(player, new Location(world, x, 52, z),
+						"Vous avez été téléporté à la parcelle {%1$s}.", region.getName());
 				break;
 
 			default:
@@ -62,6 +64,6 @@ public final class ParcelleCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{parcelle} tp <protection> : se téléporter votre parcelle");
+		ChatUtil.sendMessage(sender, "/{parcelle} tp <protection> : se téléporter votre parcelle");
 	}
 }

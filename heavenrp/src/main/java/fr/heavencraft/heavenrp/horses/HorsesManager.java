@@ -3,8 +3,8 @@ package fr.heavencraft.heavenrp.horses;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
 
 public class HorsesManager
 {

@@ -34,8 +34,6 @@ import fr.heavencraft.heavenrp.commands.homes.TphomeCommand;
 import fr.heavencraft.heavenrp.commands.horses.ChevalCommand;
 import fr.heavencraft.heavenrp.commands.hps.HpsCommand;
 import fr.heavencraft.heavenrp.commands.key.KeyCommand;
-import fr.heavencraft.heavenrp.commands.teleport.SpawnCommand;
-import fr.heavencraft.heavenrp.commands.teleport.TutoCommand;
 import fr.heavencraft.heavenrp.commands.warps.WarpCommand;
 import fr.heavencraft.heavenrp.economy.EconomyListener;
 import fr.heavencraft.heavenrp.economy.GoldDropListener;
@@ -127,10 +125,6 @@ public class InitManager
 
 		// Key
 		new KeyCommand(plugin);
-
-		// Teleport
-		new SpawnCommand(plugin);
-		new TutoCommand(plugin);
 
 		// Warp
 		new WarpCommand(plugin);

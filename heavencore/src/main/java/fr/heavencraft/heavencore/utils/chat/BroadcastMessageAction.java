@@ -1,9 +1,11 @@
-package fr.heavencraft.async.actions;
+package fr.heavencraft.heavencore.utils.chat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-public class BroadcastMessageAction extends AbstractAction
+import fr.heavencraft.async.actions.AbstractAction;
+
+class BroadcastMessageAction extends AbstractAction
 {
 	private static final String BEGIN = "{";
 	private static final String END = "}";
@@ -22,7 +24,7 @@ public class BroadcastMessageAction extends AbstractAction
 	@Override
 	public void executeAction()
 	{
-		Bukkit.broadcastMessage(String.format(BROADCAST_COLOR
-				+ message.replace(BEGIN, BROADCAST_COLOR_H).replace(END, BROADCAST_COLOR), args));
+		Bukkit.broadcastMessage(String.format(
+				BROADCAST_COLOR + message.replace(BEGIN, BROADCAST_COLOR_H).replace(END, BROADCAST_COLOR), args));
 	}
 }

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.hellcraft.HellCraftPermissions;
 
 public class PtimeCommand extends AbstractCommandExecutor
@@ -55,7 +56,7 @@ public class PtimeCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{ptime} <day|night> : permet de mettre le jour ou la nuit.");
-		plugin.sendMessage(sender, "/{ptime} reset : permet de remettre l'heure du serveur.");
+		ChatUtil.sendMessage(sender, "/{ptime} <day|night> : permet de mettre le jour ou la nuit.");
+		ChatUtil.sendMessage(sender, "/{ptime} reset : permet de remettre l'heure du serveur.");
 	}
 }

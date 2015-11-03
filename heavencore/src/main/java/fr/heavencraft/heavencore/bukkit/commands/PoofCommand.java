@@ -1,6 +1,6 @@
 package fr.heavencraft.heavencore.bukkit.commands;
 
-import static fr.heavencraft.utils.ChatUtil.sendMessage;
+import static fr.heavencraft.heavencore.utils.chat.ChatUtil.sendMessage;
 
 import java.util.ArrayList;
 import java.util.List;

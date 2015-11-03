@@ -31,6 +31,7 @@ import org.bukkit.event.vehicle.VehicleDamageEvent;
 import com.google.common.collect.Sets;
 
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
@@ -389,7 +390,7 @@ public class ProtectionPlayerListener extends AbstractListener<HeavenGuard>
 				block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
 		if (!result)
-			plugin.sendMessage(player, "Cet endroit est protégé.");
+			ChatUtil.sendMessage(player, "Cet endroit est protégé.");
 
 		return result;
 	}
@@ -401,7 +402,7 @@ public class ProtectionPlayerListener extends AbstractListener<HeavenGuard>
 				block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 
 		if (!result)
-			plugin.sendMessage(player, "Cet endroit n'est pas PVP.");
+			ChatUtil.sendMessage(player, "Cet endroit n'est pas PVP.");
 
 		return result;
 	}
