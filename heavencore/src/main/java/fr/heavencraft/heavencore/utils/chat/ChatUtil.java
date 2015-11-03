@@ -1,17 +1,29 @@
-package fr.heavencraft.utils;
+package fr.heavencraft.heavencore.utils.chat;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.async.actions.ActionsHandler;
-import fr.heavencraft.async.actions.BroadcastMessageAction;
-import fr.heavencraft.async.actions.SendMessageAction;
 import fr.heavencraft.heavencore.exceptions.PlayerNotConnectedException;
-import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public class ChatUtil
 {
+	static String errorColor = ChatColor.RED.toString();
+	static String normalColor = ChatColor.GOLD.toString();
+
+	public void setNormalColor(ChatColor color)
+	{
+		normalColor = color.toString();
+	}
+
+	public void setErrorColor(ChatColor color)
+	{
+		errorColor = color.toString();
+	}
+
 	/*
 	 * Send message to a player
 	 */

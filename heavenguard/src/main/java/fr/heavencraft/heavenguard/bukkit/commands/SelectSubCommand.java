@@ -11,6 +11,7 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.WorldEditUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
@@ -42,12 +43,12 @@ public class SelectSubCommand extends AbstractSubCommand
 				new Location(world, region.getMaxX(), region.getMaxY(), region.getMaxZ()));
 
 		WorldEditUtil.getWorldEdit().setSelection((Player) sender, selection);
-		plugin.sendMessage(sender, "La protection {%1$s} a (peut-être) été selectionnée.", regionName);
+		ChatUtil.sendMessage(sender, "La protection {%1$s} a (peut-être) été selectionnée.", regionName);
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/rg {select} <protection>");
+		ChatUtil.sendMessage(sender, "/rg {select} <protection>");
 	}
 }

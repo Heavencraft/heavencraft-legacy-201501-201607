@@ -7,11 +7,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.provinces.ProvincesManager.Province;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
-import fr.heavencraft.utils.ChatUtil;
 
 public class ProvinceListener extends AbstractListener<HeavenPlugin>
 {

@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.PlayerUtil;
-import fr.heavencraft.utils.ChatUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public class CreacheatCommand extends AbstractCommandExecutor
 {

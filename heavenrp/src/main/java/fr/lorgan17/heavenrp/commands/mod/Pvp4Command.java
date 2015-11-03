@@ -11,11 +11,11 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.PlayerUtil;
 import fr.heavencraft.heavencore.utils.WorldEditUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.utils.ChatUtil;
 import fr.lorgan17.heavenrp.listeners.PVP4Manager;
 
 public class Pvp4Command extends AbstractCommandExecutor

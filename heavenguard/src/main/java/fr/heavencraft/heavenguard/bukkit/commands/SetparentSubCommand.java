@@ -3,6 +3,7 @@ package fr.heavencraft.heavenguard.bukkit.commands;
 import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
@@ -35,12 +36,13 @@ public class SetparentSubCommand extends AbstractSubCommand
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/rg {setparent} <protection> <protection parente>");
+		ChatUtil.sendMessage(sender, "/rg {setparent} <protection> <protection parente>");
 	}
 
 	private void setparent(CommandSender sender, String regionName, String parentName) throws HeavenException
 	{
 		plugin.getRegionProvider().getRegionByName(regionName).setParent(parentName);
-		plugin.sendMessage(sender, "La protection {%1$s} a désormais pour parent {%2$s}.", regionName, parentName);
+		ChatUtil.sendMessage(sender, "La protection {%1$s} a désormais pour parent {%2$s}.", regionName,
+				parentName);
 	}
 }

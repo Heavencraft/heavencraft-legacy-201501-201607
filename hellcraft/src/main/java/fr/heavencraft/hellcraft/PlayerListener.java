@@ -16,6 +16,8 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.hellcraft.worlds.WorldsManager;
 
 public class PlayerListener extends AbstractListener<HeavenPlugin>
@@ -32,7 +34,7 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		final Player player = event.getPlayer();
-		plugin.sendMessage(player, WELCOME_MESSAGE);
+		ChatUtil.sendMessage(player, WELCOME_MESSAGE);
 		if (!event.getPlayer().hasPlayedBefore())
 		{
 			handlePlayerEquipment(player);
@@ -72,9 +74,9 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 			boots = new ItemStack(Material.IRON_BOOTS);
 		}
 
-		final ItemStack[] items = new ItemStack[]
-		{ sword, new ItemStack(Material.BOW, 1), new ItemStack(Material.BREAD, 8),
-				new ItemStack(Material.TORCH, 16), new ItemStack(Material.ARROW, 32) };
+		final ItemStack[] items = new ItemStack[] { sword, new ItemStack(Material.BOW, 1),
+				new ItemStack(Material.BREAD, 8), new ItemStack(Material.TORCH, 16),
+				new ItemStack(Material.ARROW, 32) };
 
 		final PlayerInventory inventory = player.getInventory();
 		inventory.addItem(items);
@@ -101,9 +103,8 @@ public class PlayerListener extends AbstractListener<HeavenPlugin>
 				&& 64 <= z && z <= 96)
 		{
 			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 255));
-			plugin.teleportPlayer(player, WorldsManager.getCitySpawn());
 			player.setGameMode(GameMode.SURVIVAL);
-			plugin.sendMessage(player, ENTER_CITY_MESSAGE);
+			PlayerUtil.teleportPlayer(player, WorldsManager.getCitySpawn(), ENTER_CITY_MESSAGE);
 		}
 	}
 }

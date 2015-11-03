@@ -6,9 +6,13 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public final class SpawnCommand extends AbstractCommandExecutor
 {
+	private static final String SUCCESS_MESSAGE = "Vous avez été téléporté au spawn.";
+
 	private final Location spawnLocation;
 
 	public SpawnCommand(HeavenPlugin plugin, Location spawnLocation)
@@ -20,14 +24,13 @@ public final class SpawnCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		plugin.teleportPlayer(player, spawnLocation);
-		plugin.sendMessage(player, "Vous avez été téléporté au spawn.");
+		PlayerUtil.teleportPlayer(player, spawnLocation, SUCCESS_MESSAGE);
 	}
 
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		plugin.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
+		ChatUtil.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
 	}
 
 	@Override

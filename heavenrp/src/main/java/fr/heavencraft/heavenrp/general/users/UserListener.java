@@ -11,6 +11,7 @@ import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccount;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
@@ -19,7 +20,6 @@ import fr.heavencraft.heavenrp.database.users.UpdateUserNameQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.utils.RPUtils;
-import fr.heavencraft.utils.ChatUtil;
 
 public class UserListener extends AbstractListener<HeavenPlugin>
 {
