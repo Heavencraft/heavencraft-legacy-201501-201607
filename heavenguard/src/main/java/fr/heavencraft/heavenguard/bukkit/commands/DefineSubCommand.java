@@ -13,6 +13,7 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.WorldEditUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
@@ -47,7 +48,7 @@ public class DefineSubCommand extends AbstractSubCommand
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/rg {define} <protection>");
+		ChatUtil.sendMessage(sender, "/rg {define} <protection>");
 	}
 
 	private void define(CommandSender sender, String name, Selection selection, Collection<OfflinePlayer> owners)
@@ -61,7 +62,7 @@ public class DefineSubCommand extends AbstractSubCommand
 				min.getBlockX(), min.getBlockY(), min.getBlockZ(), //
 				max.getBlockX(), max.getBlockY(), max.getBlockZ());
 
-		plugin.sendMessage(sender, "La région {%1$s} a bien été créée.", name);
+		ChatUtil.sendMessage(sender, "La région {%1$s} a bien été créée.", name);
 
 		// Add the initial owners
 		if (!owners.isEmpty())
@@ -71,7 +72,8 @@ public class DefineSubCommand extends AbstractSubCommand
 			for (final OfflinePlayer owner : owners)
 			{
 				region.addMember(owner.getUniqueId(), true);
-				plugin.sendMessage(sender, "{%1$s} est maintenant propriétaire de la protection {%2$s}.", owner.getName(), name);
+				ChatUtil.sendMessage(sender, "{%1$s} est maintenant propriétaire de la protection {%2$s}.",
+						owner.getName(), name);
 			}
 		}
 	}

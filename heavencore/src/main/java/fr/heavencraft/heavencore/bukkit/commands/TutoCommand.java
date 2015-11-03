@@ -1,41 +1,36 @@
 package fr.heavencraft.heavencore.bukkit.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public final class TutoCommand extends AbstractCommandExecutor
 {
-	private final String world;
-	private final double x, y, z;
+	private static final String SUCCESS_MESSAGE = "Vous avez été téléporté au tutoriel.";
 
-	public TutoCommand(HeavenPlugin plugin, String world, double x, double y, double z)
+	private final Location tutoLocation;
+
+	public TutoCommand(HeavenPlugin plugin, Location tutoLocation)
 	{
 		super(plugin, "tuto");
-
-		// Do not create a Location object, because at the time this command is
-		// initialized, the world could be not loaded.
-		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.tutoLocation = tutoLocation;
 	}
 
 	@Override
-	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
+	protected void onPlayerCommand(final Player player, String[] args) throws HeavenException
 	{
-		plugin.teleportPlayer(player, new Location(Bukkit.getWorld(world), x, y, z));
-		plugin.sendMessage(player, "Vous avez été téléporté au tutoriel.");
+		PlayerUtil.teleportPlayer(player, tutoLocation, SUCCESS_MESSAGE);
 	}
 
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		plugin.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
+		ChatUtil.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
 	}
 
 	@Override

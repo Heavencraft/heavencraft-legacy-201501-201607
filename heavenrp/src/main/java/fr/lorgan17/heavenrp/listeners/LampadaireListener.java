@@ -9,7 +9,7 @@ import org.bukkit.material.TrapDoor;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
-import fr.heavencraft.utils.ChatUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 public class LampadaireListener extends AbstractListener<HeavenPlugin>
 {

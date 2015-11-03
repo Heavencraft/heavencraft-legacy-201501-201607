@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
 import fr.heavencraft.heavencrea.users.CreativeUser;
@@ -39,19 +41,19 @@ public final class TphomeCommand extends AbstractCommandExecutor
 				return;
 		}
 
-		plugin.teleportPlayer(player, user.getHome(nb));
+		PlayerUtil.teleportPlayer(player, user.getHome(nb));
 	}
 
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		plugin.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
+		ChatUtil.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
 	}
 
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{tphome} <joueur>");
-		plugin.sendMessage(sender, "/{tphome} <joueur> <numéro>");
+		ChatUtil.sendMessage(sender, "/{tphome} <joueur>");
+		ChatUtil.sendMessage(sender, "/{tphome} <joueur> <numéro>");
 	}
 }

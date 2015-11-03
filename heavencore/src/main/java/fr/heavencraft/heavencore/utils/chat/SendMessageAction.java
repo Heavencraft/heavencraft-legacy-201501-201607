@@ -1,14 +1,13 @@
-package fr.heavencraft.async.actions;
+package fr.heavencraft.heavencore.utils.chat;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-public class SendMessageAction extends AbstractAction
+import fr.heavencraft.async.actions.AbstractAction;
+
+class SendMessageAction extends AbstractAction
 {
 	private static final String BEGIN = "{";
 	private static final String END = "}";
-	private static final String ERROR_COLOR = ChatColor.RED.toString();
-	private static final String NORMAL_COLOR = ChatColor.GOLD.toString();
 
 	private final CommandSender sender;
 	private final String message;
@@ -24,7 +23,8 @@ public class SendMessageAction extends AbstractAction
 	@Override
 	public void executeAction()
 	{
-		sender.sendMessage(String.format(
-				NORMAL_COLOR + message.replace(BEGIN, ERROR_COLOR).replace(END, NORMAL_COLOR), args));
+		String format = ChatUtil.normalColor
+				+ message.replace(BEGIN, ChatUtil.errorColor).replace(END, ChatUtil.normalColor);
+		sender.sendMessage(String.format(format, args));
 	}
 }

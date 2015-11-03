@@ -10,7 +10,7 @@ import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
-import fr.heavencraft.utils.ChatUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 public class FillCommand extends AbstractCommandExecutor
 {

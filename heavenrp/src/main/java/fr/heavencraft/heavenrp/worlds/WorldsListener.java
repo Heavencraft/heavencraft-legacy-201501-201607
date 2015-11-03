@@ -7,12 +7,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import fr.heavencraft.async.actions.ActionsHandler;
-import fr.heavencraft.async.actions.TeleportPlayerAction;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
-import fr.heavencraft.utils.ChatUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public class WorldsListener extends AbstractListener<HeavenPlugin>
 {
@@ -88,7 +87,7 @@ public class WorldsListener extends AbstractListener<HeavenPlugin>
 				default:
 					return;
 			}
-			ActionsHandler.addAction(new TeleportPlayerAction(event.getPlayer(), destination));
+			PlayerUtil.teleportPlayer(event.getPlayer(), destination);
 		}
 	}
 }

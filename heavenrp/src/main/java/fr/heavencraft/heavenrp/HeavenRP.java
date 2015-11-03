@@ -9,11 +9,14 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
+import fr.heavencraft.heavencore.bukkit.commands.TutoCommand;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavenrp.stores.StoresListener;
 import fr.heavencraft.heavenrp.stores.StoresManager;
+import fr.heavencraft.heavenrp.worlds.WorldsManager;
 import fr.lorgan17.heavenrp.managers.AuctionManager;
 
 public class HeavenRP extends HeavenPlugin
@@ -55,6 +58,15 @@ public class HeavenRP extends HeavenPlugin
 			Bukkit.shutdown();
 		}
 
+	}
+
+	@Override
+	protected void afterEnable()
+	{
+		super.afterEnable();
+
+		new SpawnCommand(this, WorldsManager.getSpawn());
+		new TutoCommand(this, WorldsManager.getTutoLocation());
 	}
 
 	public static Connection getConnection()

@@ -1,4 +1,4 @@
-package fr.heavencraft.async.actions;
+package fr.heavencraft.heavencore.utils.player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -6,10 +6,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.async.actions.AbstractAction;
 import fr.heavencraft.heavencore.CorePlugin;
-import fr.heavencraft.utils.ChatUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
-public class TeleportPlayerAction extends AbstractAction
+class TeleportPlayerAction extends AbstractAction
 {
 	private final Player player;
 	private final Location location;
@@ -19,6 +20,8 @@ public class TeleportPlayerAction extends AbstractAction
 		this.player = player;
 		this.location = location;
 
+		// Bugfix : Load chunk before teleport to avoid player spawning in
+		// blocks.
 		if (!location.getChunk().isLoaded())
 			location.getChunk().load();
 	}
