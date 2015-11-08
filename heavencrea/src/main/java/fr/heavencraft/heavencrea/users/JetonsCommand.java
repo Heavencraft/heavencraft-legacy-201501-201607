@@ -23,7 +23,7 @@ public class JetonsCommand extends AbstractCommandExecutor
 
 	public JetonsCommand(HeavenCrea plugin)
 	{
-		super(plugin, "jetons", Arrays.asList("jeton"));
+		super(plugin, "jetons", Arrays.asList("jeton", "money"));
 		userProvider = plugin.getUserProvider();
 	}
 
