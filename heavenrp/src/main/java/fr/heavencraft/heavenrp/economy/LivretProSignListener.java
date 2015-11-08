@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -24,7 +26,7 @@ import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 
-public class LivretProSignListener extends AbstractSignListener
+public class LivretProSignListener extends AbstractSignListener implements Listener
 {
 	private static final String CONSULTER = "Consulter";
 	private static final String DEPOSER = "Déposer";
@@ -36,6 +38,7 @@ public class LivretProSignListener extends AbstractSignListener
 	public LivretProSignListener(HeavenPlugin plugin)
 	{
 		super(plugin, "LivretPro", RPPermissions.LIVRETPRO_SIGN);
+		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
 
 	@Override
