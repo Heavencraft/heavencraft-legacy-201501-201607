@@ -16,8 +16,8 @@ public class CorePermissions
 
 	public static final String CREACHEAT_COMMAND = "heavencore.commands.creacheat";
 	public static final String ENDERCHEAT_COMMAND = "heavencore.commands.endercheat";
-	public static final String HEAD_COMMAND = "heavencore.commands.endercheat";
-	public static final String FILL_COMMAND = "heavencore.commands.endercheat";
+	public static final String HEAD_COMMAND = "heavencore.commands.head";
+	public static final String FILL_COMMAND = "heavencore.commands.fill";
 	public static final String ROUCOUPS_COMMAND = "heavencore.commands.roucoups";
 	public static final String SPAWNMOB_COMMAND = "heavencore.commands.spawnmob";
 
@@ -25,5 +25,5 @@ public class CorePermissions
 	public static final String COOKIE_SIGN = "heavencore.sign.cookie";
 	public static final String INVENTORY_COMMAND = "heavencore.commands.inventory";
 	public static final String POOF_COMMAND = "heavencore.commands.poof";
-	public static final String LINK_SIGN = "heavencore.sign.sign";;
+	public static final String LINK_SIGN = "heavencore.signs.link";
 }
