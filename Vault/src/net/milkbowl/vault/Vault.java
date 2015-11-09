@@ -16,7 +16,6 @@
 package net.milkbowl.vault;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -24,13 +23,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collection;
 import java.util.logging.Logger;
-
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.plugins.Economy_HeavenRP;
-import net.milkbowl.vault.permission.Permission;
-import net.milkbowl.vault.permission.plugins.Permission_PermissionsBukkit;
-import net.milkbowl.vault.permission.plugins.Permission_SuperPerms;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -42,7 +34,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
@@ -54,6 +45,13 @@ import org.json.simple.JSONValue;
 
 import com.nijikokun.register.payment.Methods;
 
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.plugins.Economy_HeavenRP;
+import net.milkbowl.vault.permission.Permission;
+import net.milkbowl.vault.permission.plugins.Permission_PermissionsBukkit;
+import net.milkbowl.vault.permission.plugins.Permission_SuperPerms;
+
 public class Vault extends JavaPlugin
 {
 
@@ -64,8 +62,6 @@ public class Vault extends JavaPlugin
 	private double currentVersion = 0;
 	private String currentVersionTitle = "";
 	private ServicesManager sm;
-	private Metrics metrics;
-	private Vault plugin;
 
 	@Override
 	public void onDisable()
@@ -78,7 +74,6 @@ public class Vault extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		plugin = this;
 		log = getLogger();
 		currentVersionTitle = getDescription().getVersion().split("-")[0];
 		currentVersion = Double.valueOf(currentVersionTitle.replaceFirst("\\.", ""));
@@ -91,90 +86,12 @@ public class Vault extends JavaPlugin
 		// Load Vault Addons
 		loadEconomy();
 		loadPermission();
-		loadChat();
 
 		getCommand("vault-info").setExecutor(this);
 		getCommand("vault-convert").setExecutor(this);
 		getServer().getPluginManager().registerEvents(new VaultListener(), this);
-		// Schedule to check the version every 30 minutes for an update. This is to update the most recent
-		// version so if an admin reconnects they will be warned about newer versions.
-		getServer().getScheduler().runTask(this, new Runnable()
-		{
 
-			@Override
-			public void run()
-			{
-				// Programmatically set the default permission value cause Bukkit doesn't handle plugin.yml properly for
-				// Load order STARTUP plugins
-				org.bukkit.permissions.Permission perm = getServer().getPluginManager().getPermission("vault.update");
-				if (perm == null)
-				{
-					perm = new org.bukkit.permissions.Permission("vault.update");
-					perm.setDefault(PermissionDefault.OP);
-					plugin.getServer().getPluginManager().addPermission(perm);
-				}
-				perm.setDescription("Allows a user or the console to check for vault updates");
-
-				getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable()
-				{
-
-					@Override
-					public void run()
-					{
-						if (getServer().getConsoleSender().hasPermission("vault.update")
-								&& getConfig().getBoolean("update-check", true))
-						{
-							try
-							{
-								log.info("Checking for Updates ... ");
-								newVersion = updateCheck(currentVersion);
-								if (newVersion > currentVersion)
-								{
-									log.warning("Stable Version: " + newVersionTitle + " is out!"
-											+ " You are still running version: " + currentVersionTitle);
-									log.warning("Update at: http://dev.bukkit.org/server-mods/vault");
-								}
-								else if (currentVersion > newVersion)
-								{
-									log.info("Stable Version: " + newVersionTitle + " | Current Version: "
-											+ currentVersionTitle);
-								}
-								else
-								{
-									log.info("No new version available");
-								}
-							}
-							catch (Exception e)
-							{
-								// ignore exceptions
-							}
-						}
-					}
-				}, 0, 432000);
-
-			}
-
-		});
-
-		// Load up the Plugin metrics
-		try
-		{
-			metrics = new Metrics(this);
-			metrics.findCustomData();
-			metrics.start();
-		}
-		catch (IOException e)
-		{
-			// ignore exception
-		}
 		log.info(String.format("Enabled Version %s", getDescription().getVersion()));
-	}
-
-	/**
-	 * Attempts to load Chat Addons
-	 */
-	private void loadChat()
-	{
 	}
 
 	/**
@@ -183,7 +100,8 @@ public class Vault extends JavaPlugin
 	private void loadEconomy()
 	{
 		// Try to load HeavenRP
-		hookEconomy("HeavenRP", Economy_HeavenRP.class, ServicePriority.Normal, "fr.heavencraft.heavenrp.HeavenRP");
+		hookEconomy("HeavenRP", Economy_HeavenRP.class, ServicePriority.Normal,
+				"fr.heavencraft.heavenrp.HeavenRP");
 	}
 
 	/**
@@ -232,14 +150,15 @@ public class Vault extends JavaPlugin
 			{
 				Permission perms = hookClass.getConstructor(Plugin.class).newInstance(this);
 				sm.register(Permission.class, perms, this, priority);
-				log.info(String.format("[Permission] %s found: %s", name, perms.isEnabled() ? "Loaded" : "Waiting"));
+				log.info(String.format("[Permission] %s found: %s", name,
+						perms.isEnabled() ? "Loaded" : "Waiting"));
 			}
 		}
 		catch (Exception e)
 		{
-			log.severe(String
-					.format("[Permission] There was an error hooking %s - check to make sure you're using a compatible version!",
-							name));
+			log.severe(String.format(
+					"[Permission] There was an error hooking %s - check to make sure you're using a compatible version!",
+					name));
 		}
 	}
 
@@ -274,8 +193,8 @@ public class Vault extends JavaPlugin
 
 	private void convertCommand(CommandSender sender, String[] args)
 	{
-		Collection<RegisteredServiceProvider<Economy>> econs = getServer().getServicesManager().getRegistrations(
-				Economy.class);
+		Collection<RegisteredServiceProvider<Economy>> econs = getServer().getServicesManager()
+				.getRegistrations(Economy.class);
 		if (econs == null || econs.size() < 2)
 		{
 			sender.sendMessage("You must have at least 2 economies loaded to convert.");
@@ -283,7 +202,8 @@ public class Vault extends JavaPlugin
 		}
 		else if (args.length != 2)
 		{
-			sender.sendMessage("You must specify only the economy to convert from and the economy to convert to. (names should not contain spaces)");
+			sender.sendMessage(
+					"You must specify only the economy to convert from and the economy to convert to. (names should not contain spaces)");
 			return;
 		}
 		Economy econ1 = null;
@@ -340,8 +260,8 @@ public class Vault extends JavaPlugin
 	{
 		// Get String of Registered Economy Services
 		String registeredEcons = null;
-		Collection<RegisteredServiceProvider<Economy>> econs = getServer().getServicesManager().getRegistrations(
-				Economy.class);
+		Collection<RegisteredServiceProvider<Economy>> econs = getServer().getServicesManager()
+				.getRegistrations(Economy.class);
 		for (RegisteredServiceProvider<Economy> econ : econs)
 		{
 			Economy e = econ.getProvider();
@@ -357,8 +277,8 @@ public class Vault extends JavaPlugin
 
 		// Get String of Registered Permission Services
 		String registeredPerms = null;
-		Collection<RegisteredServiceProvider<Permission>> perms = getServer().getServicesManager().getRegistrations(
-				Permission.class);
+		Collection<RegisteredServiceProvider<Permission>> perms = getServer().getServicesManager()
+				.getRegistrations(Permission.class);
 		for (RegisteredServiceProvider<Permission> perm : perms)
 		{
 			Permission p = perm.getProvider();
@@ -373,8 +293,8 @@ public class Vault extends JavaPlugin
 		}
 
 		String registeredChats = null;
-		Collection<RegisteredServiceProvider<Chat>> chats = getServer().getServicesManager().getRegistrations(
-				Chat.class);
+		Collection<RegisteredServiceProvider<Chat>> chats = getServer().getServicesManager()
+				.getRegistrations(Chat.class);
 		for (RegisteredServiceProvider<Chat> chat : chats)
 		{
 			Chat c = chat.getProvider();
@@ -396,7 +316,8 @@ public class Vault extends JavaPlugin
 			econ = rsp.getProvider();
 		}
 		Permission perm = null;
-		RegisteredServiceProvider<Permission> rspp = getServer().getServicesManager().getRegistration(Permission.class);
+		RegisteredServiceProvider<Permission> rspp = getServer().getServicesManager()
+				.getRegistration(Permission.class);
 		if (rspp != null)
 		{
 			perm = rspp.getProvider();
@@ -408,23 +329,23 @@ public class Vault extends JavaPlugin
 			chat = rspc.getProvider();
 		}
 		// Send user some info!
-		sender.sendMessage(String.format("[%s] Vault v%s Information", getDescription().getName(), getDescription()
-				.getVersion()));
-		sender.sendMessage(String.format("[%s] Economy: %s [%s]", getDescription().getName(), econ == null ? "None"
-				: econ.getName(), registeredEcons));
-		sender.sendMessage(String.format("[%s] Permission: %s [%s]", getDescription().getName(), perm == null ? "None"
-				: perm.getName(), registeredPerms));
+		sender.sendMessage(String.format("[%s] Vault v%s Information", getDescription().getName(),
+				getDescription().getVersion()));
+		sender.sendMessage(String.format("[%s] Economy: %s [%s]", getDescription().getName(),
+				econ == null ? "None" : econ.getName(), registeredEcons));
+		sender.sendMessage(String.format("[%s] Permission: %s [%s]", getDescription().getName(),
+				perm == null ? "None" : perm.getName(), registeredPerms));
 		sender.sendMessage(String.format("[%s] Chat: %s [%s]", getDescription().getName(),
 				chat == null ? "None" : chat.getName(), registeredChats));
 	}
 
 	/**
-	 * Determines if all packages in a String array are within the Classpath This is the best way to determine if a
-	 * specific plugin exists and will be loaded. If the plugin package isn't loaded, we shouldn't bother waiting for
-	 * it!
+	 * Determines if all packages in a String array are within the Classpath
+	 * This is the best way to determine if a specific plugin exists and will be
+	 * loaded. If the plugin package isn't loaded, we shouldn't bother waiting
+	 * for it!
 	 * 
-	 * @param packages
-	 *            String Array of package names to check
+	 * @param packages String Array of package names to check
 	 * @return Success or Failure
 	 */
 	private static boolean packagesExists(String... packages)
@@ -462,8 +383,8 @@ public class Vault extends JavaPlugin
 				return currentVersion;
 			}
 			// Pull the last version from the JSON
-			newVersionTitle = ((String) ((JSONObject) array.get(array.size() - 1)).get("name")).replace("Vault", "")
-					.trim();
+			newVersionTitle = ((String) ((JSONObject) array.get(array.size() - 1)).get("name"))
+					.replace("Vault", "").trim();
 			return Double.valueOf(newVersionTitle.replaceFirst("\\.", "").trim());
 		}
 		catch (Exception e)
