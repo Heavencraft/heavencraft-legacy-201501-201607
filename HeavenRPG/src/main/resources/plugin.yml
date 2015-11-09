@@ -1,0 +1,7 @@
+name: HeavenRPG
+version: 1.0
+main: fr.heavencraft.rpg.HeavenRPG
+commands:
+    zone:
+    parchemin:
+    donjon:

@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 public abstract class AbstractSignListener
 {
@@ -53,13 +54,13 @@ public abstract class AbstractSignListener
 				if (onSignPlace(player, event))
 				{
 					event.setLine(0, ChatColor.GREEN + tag);
-					plugin.sendMessage(player, "Le panneau {%1$s} a été placé correctement.", tag);
+					ChatUtil.sendMessage(player, "Le panneau {%1$s} a été placé correctement.", tag);
 					return;
 				}
 			}
 			catch (final HeavenException ex)
 			{
-				plugin.sendMessage(player, ex.getMessage());
+				ChatUtil.sendMessage(player, ex.getMessage());
 			}
 
 			event.setCancelled(true);
@@ -91,7 +92,7 @@ public abstract class AbstractSignListener
 			}
 			catch (final HeavenException ex)
 			{
-				plugin.sendMessage(player, ex.getMessage());
+				ChatUtil.sendMessage(player, ex.getMessage());
 			}
 		}
 
@@ -116,7 +117,7 @@ public abstract class AbstractSignListener
 			}
 			catch (final HeavenException ex)
 			{
-				plugin.sendMessage(player, ex.getMessage());
+				ChatUtil.sendMessage(player, ex.getMessage());
 				event.setCancelled(true);
 			}
 		}

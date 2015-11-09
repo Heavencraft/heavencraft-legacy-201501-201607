@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 
 public class SethomeCommand extends AbstractCommandExecutor
@@ -38,21 +39,21 @@ public class SethomeCommand extends AbstractCommandExecutor
 
 		plugin.getUserProvider().getUserByUniqueId(player.getUniqueId()).setHome(nb, player.getLocation());
 
-		plugin.sendMessage(player, "Votre {home %1$d} a bien été configuré.", nb);
+		ChatUtil.sendMessage(player, "Votre {home %1$d} a bien été configuré.", nb);
 	}
 
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		plugin.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
+		ChatUtil.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
 	}
 
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "Commandes des points d'habitation :");
-		plugin.sendMessage(sender, "/{home} <numéro> : pour se téléporter à un home.");
-		plugin.sendMessage(sender, "/{sethome} <numéro> : pour définir un home.");
-		plugin.sendMessage(sender, "/{buyhome} : pour acheter un home.");
+		ChatUtil.sendMessage(sender, "Commandes des points d'habitation :");
+		ChatUtil.sendMessage(sender, "/{home} <numéro> : pour se téléporter à un home.");
+		ChatUtil.sendMessage(sender, "/{sethome} <numéro> : pour définir un home.");
+		ChatUtil.sendMessage(sender, "/{buyhome} : pour acheter un home.");
 	}
 }

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 
 public class HpsCommand extends AbstractCommandExecutor
@@ -34,10 +35,11 @@ public class HpsCommand extends AbstractCommandExecutor
 			throw new HeavenException("Le nombre est incorrect.");
 
 		plugin.getHpsManager().removeBalance(player.getName(), hps);
-		plugin.getUserProvider().getUserByUniqueId(player.getUniqueId()).updateBalance(hps * HpsManager.TAUX_JETON);
+		plugin.getUserProvider().getUserByUniqueId(player.getUniqueId())
+				.updateBalance(hps * HpsManager.TAUX_JETON);
 
-		plugin.sendMessage(player, "%1$s HPs ont été retirés de votre compte", hps);
-		plugin.sendMessage(player, "Vous avez reçu {%1$s} Jetons.", hps * HpsManager.TAUX_JETON);
+		ChatUtil.sendMessage(player, "%1$s HPs ont été retirés de votre compte", hps);
+		ChatUtil.sendMessage(player, "Vous avez reçu {%1$s} Jetons.", hps * HpsManager.TAUX_JETON);
 	}
 
 	@Override
@@ -49,12 +51,12 @@ public class HpsCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{hps} <nombre de HPs a convertir>");
-		plugin.sendMessage(sender, "Le taux est de {" + HpsManager.TAUX_JETON + "} Jetons par HP.");
+		ChatUtil.sendMessage(sender, "/{hps} <nombre de HPs a convertir>");
+		ChatUtil.sendMessage(sender, "Le taux est de {" + HpsManager.TAUX_JETON + "} Jetons par HP.");
 
 		try
 		{
-			plugin.sendMessage(sender, "Vous avez {%1$s} HPs sur votre compte.",
+			ChatUtil.sendMessage(sender, "Vous avez {%1$s} HPs sur votre compte.",
 					plugin.getHpsManager().getBalance(sender.getName()));
 		}
 		catch (final HeavenException e)
