@@ -99,9 +99,4 @@ public class PlotSignListener extends AbstractPlotSignListener
 		region.addMember(player.getUniqueId(), true);
 		return region;
 	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
-	}
 }

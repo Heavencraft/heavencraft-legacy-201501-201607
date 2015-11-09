@@ -1,20 +1,16 @@
 package fr.heavencraft.heavenrp.economy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
-import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
@@ -26,14 +22,10 @@ import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 
-public class LivretSignListener extends AbstractSignListener implements Listener
+public class LivretSignListener extends AbstractBankAccountSignListener implements Listener
 {
-	private static final String CONSULTER = "Consulter";
-	private static final String DEPOSER = "Déposer";
-	private static final String RETIRER = "Retirer";
-
-	private final List<String> deposants = new ArrayList<String>();
-	private final List<String> retirants = new ArrayList<String>();
+	private final Collection<String> deposants = new HashSet<String>();
+	private final Collection<String> retirants = new HashSet<String>();
 
 	public LivretSignListener(HeavenPlugin plugin)
 	{
@@ -41,57 +33,30 @@ public class LivretSignListener extends AbstractSignListener implements Listener
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
 
-	@Override
-	protected boolean onSignPlace(Player player, SignChangeEvent event)
+	private static String buildTransactionLog(Player player, boolean isDepot)
 	{
-		if (event.getLine(1).equalsIgnoreCase(CONSULTER))
-		{
-			event.setLine(1, ChatColor.BLUE + CONSULTER);
-			return true;
-		}
-
-		else if (event.getLine(1).equalsIgnoreCase(DEPOSER))
-		{
-			event.setLine(1, ChatColor.BLUE + DEPOSER);
-			return true;
-		}
-
-		else if (event.getLine(1).equalsIgnoreCase(RETIRER))
-		{
-			event.setLine(1, ChatColor.BLUE + RETIRER);
-			return true;
-		}
-
-		else
-			return false;
+		return (isDepot ? "Dépot de " : "Retrait de ") + player.getName();
 	}
 
 	@Override
-	protected void onSignClick(Player player, Sign sign) throws HeavenException
+	protected void onConsultSignClick(Player player) throws HeavenException
 	{
-		String playerName = player.getName();
+		ChatUtil.sendMessage(player, "{Trésorier} : Vous avez {%1$d} pièces d'or sur votre livret.",
+				BankAccountsManager.getBankAccount(player.getName(), BankAccountType.USER).getBalance());
+	}
 
-		if (sign.getLine(1).equals(ChatColor.BLUE + CONSULTER))
-		{
-			ChatUtil.sendMessage(player, "{Trésorier} : Vous avez {%1$d} pièces d'or sur votre livret.",
-					BankAccountsManager.getBankAccount(playerName, BankAccountType.USER).getBalance());
-		}
+	@Override
+	protected void onDepositSignClick(Player player) throws HeavenException
+	{
+		ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous déposer ?");
+		deposants.add(player.getName());
+	}
 
-		else if (sign.getLine(1).equals(ChatColor.BLUE + DEPOSER))
-		{
-			ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous déposer ?");
-
-			if (!deposants.contains(playerName))
-				deposants.add(playerName);
-		}
-
-		else if (sign.getLine(1).equals(ChatColor.BLUE + RETIRER))
-		{
-			ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous retirer ?");
-
-			if (!retirants.contains(playerName))
-				retirants.add(playerName);
-		}
+	@Override
+	protected void onWithdrawSignClick(Player player) throws HeavenException
+	{
+		ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous retirer ?");
+		retirants.add(player.getName());
 	}
 
 	@EventHandler(ignoreCancelled = true)
@@ -125,7 +90,8 @@ public class LivretSignListener extends AbstractSignListener implements Listener
 			User user = UserProvider.getUserByName(playerName);
 			BankAccount bank = BankAccountsManager.getBankAccount(playerName, BankAccountType.USER);
 
-			QueriesHandler.addQuery(new MoneyTransfertQuery(isDepot ? user : bank, isDepot ? bank : user, delta)
+			QueriesHandler.addQuery(new MoneyTransfertQuery(isDepot ? user : bank, isDepot ? bank : user, delta,
+					buildTransactionLog(player, isDepot))
 			{
 				@Override
 				public void onSuccess()
@@ -144,10 +110,5 @@ public class LivretSignListener extends AbstractSignListener implements Listener
 		{
 			ChatUtil.sendMessage(player, ex.getMessage());
 		}
-	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
 	}
 }

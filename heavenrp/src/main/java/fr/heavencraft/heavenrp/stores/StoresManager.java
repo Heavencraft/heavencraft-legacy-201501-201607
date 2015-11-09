@@ -61,6 +61,12 @@ public class StoresManager
 		{ BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST, BlockFace.EAST, BlockFace.UP, BlockFace.DOWN };
 	}
 
+	private static String buildTransactionLog(Player player, Store store)
+	{
+		return (store.isBuyer() ? "Achat" : "Vente") + " de " + store.getQuantity() + " " + store.getMaterial()
+				+ " à " + player.getName();
+	}
+
 	public void init()
 	{
 		try
@@ -531,27 +537,28 @@ public class StoresManager
 		final int ownerUserMoney = ownerBank.getBalance() + store.getPrice();
 		final int userMoney = user.getBalance() - store.getPrice();
 
-		QueriesHandler.addQuery(new MoneyTransfertQuery(user, ownerBank, store.getPrice())
-		{
-			@Override
-			public void onSuccess()
-			{
-				player.getInventory().addItem(items);
-				player.updateInventory();
-
-				if (ownerPlayer != null)
+		QueriesHandler.addQuery(
+				new MoneyTransfertQuery(user, ownerBank, store.getPrice(), buildTransactionLog(player, store))
 				{
-					ChatUtil.sendMessage(ownerPlayer, "{%1$s} vient d'acheter dans votre magasin {%2$s}.",
-							player.getName(), store.getStoreName());
-					ChatUtil.sendMessage(ownerPlayer, "Vous avez maintenant {%1$s} pièces d'or en banque.",
-							ownerUserMoney);
-				}
+					@Override
+					public void onSuccess()
+					{
+						player.getInventory().addItem(items);
+						player.updateInventory();
 
-				ChatUtil.sendMessage(player, "Vous avez bien acheté {%1$s %2$s}.", store.getQuantity(),
-						store.getMaterial());
-				ChatUtil.sendMessage(player, "Vous avez maintenant {%1$s} pièces d'or.", userMoney);
-			}
-		});
+						if (ownerPlayer != null)
+						{
+							ChatUtil.sendMessage(ownerPlayer, "{%1$s} vient d'acheter dans votre magasin {%2$s}.",
+									player.getName(), store.getStoreName());
+							ChatUtil.sendMessage(ownerPlayer,
+									"Vous avez maintenant {%1$s} pièces d'or en banque.", ownerUserMoney);
+						}
+
+						ChatUtil.sendMessage(player, "Vous avez bien acheté {%1$s %2$s}.", store.getQuantity(),
+								store.getMaterial());
+						ChatUtil.sendMessage(player, "Vous avez maintenant {%1$s} pièces d'or.", userMoney);
+					}
+				});
 	}
 
 	@SuppressWarnings("deprecation")
@@ -616,27 +623,28 @@ public class StoresManager
 		final int ownerUserMoney = ownerBank.getBalance() - store.getPrice();
 		final int userMoney = user.getBalance() + store.getPrice();
 
-		QueriesHandler.addQuery(new MoneyTransfertQuery(ownerBank, user, store.getPrice())
-		{
-			@Override
-			public void onSuccess()
-			{
-				store.getLinkedStock().getChest().getInventory().addItem(items);
-
-				final Player ownerPlayer = _plugin.getServer().getPlayer(store.getOwnerName());
-				if (ownerPlayer != null)
+		QueriesHandler.addQuery(
+				new MoneyTransfertQuery(ownerBank, user, store.getPrice(), buildTransactionLog(player, store))
 				{
-					sendMessage(ownerPlayer, "{" + player.getName() + "} vient de vendre dans votre magasin {"
-							+ store.getStoreName() + "}.");
-					sendMessage(ownerPlayer,
-							"Vous avez maintenant {" + ownerUserMoney + "} pièces d'or en banque.");
-				}
+					@Override
+					public void onSuccess()
+					{
+						store.getLinkedStock().getChest().getInventory().addItem(items);
 
-				sendMessage(player,
-						"Vous avez bien vendu {" + store.getQuantity() + " " + store.getMaterial().name() + "}.");
-				sendMessage(player, "Vous avez maintenant {" + userMoney + "} pièces d'or.");
-			}
-		});
+						final Player ownerPlayer = _plugin.getServer().getPlayer(store.getOwnerName());
+						if (ownerPlayer != null)
+						{
+							sendMessage(ownerPlayer, "{" + player.getName()
+									+ "} vient de vendre dans votre magasin {" + store.getStoreName() + "}.");
+							sendMessage(ownerPlayer,
+									"Vous avez maintenant {" + ownerUserMoney + "} pièces d'or en banque.");
+						}
+
+						sendMessage(player, "Vous avez bien vendu {" + store.getQuantity() + " "
+								+ store.getMaterial().name() + "}.");
+						sendMessage(player, "Vous avez maintenant {" + userMoney + "} pièces d'or.");
+					}
+				});
 
 	}
 

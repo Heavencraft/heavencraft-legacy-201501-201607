@@ -93,9 +93,4 @@ public class DonjonSignListener extends AbstractSignListener
 			Bukkit.getServer().getWorld(_world).getBlockAt(_x, _y, _z).setType(_type);
 		}
 	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
-	}
 }
