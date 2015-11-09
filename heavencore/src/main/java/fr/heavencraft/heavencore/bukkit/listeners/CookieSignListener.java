@@ -41,9 +41,4 @@ public class CookieSignListener extends AbstractSignListener
 		player.getInventory().addItem(cookie);
 		player.updateInventory();
 	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
-	}
 }

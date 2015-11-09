@@ -102,9 +102,4 @@ public class TalentSignListener extends AbstractPlotSignListener
 		region.getFlagHandler().setTimestampFlag(Flag.REMOVE_TIMESTAMP, new Timestamp(cal.getTimeInMillis()));
 		return region;
 	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
-	}
 }
