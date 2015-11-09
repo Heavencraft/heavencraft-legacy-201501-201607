@@ -3,10 +3,6 @@ package net.milkbowl.vault.economy.plugins;
 import java.util.List;
 import java.util.logging.Logger;
 
-import net.milkbowl.vault.economy.AbstractEconomy;
-import net.milkbowl.vault.economy.EconomyResponse;
-import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,9 +11,12 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import fr.heavencraft.exceptions.HeavenException;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import net.milkbowl.vault.economy.AbstractEconomy;
+import net.milkbowl.vault.economy.EconomyResponse;
+import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
 
 public class Economy_HeavenRP extends AbstractEconomy
 {
@@ -275,7 +274,8 @@ public class Economy_HeavenRP extends AbstractEconomy
 				if (digicoin.getDescription().getName().equals(economy.name))
 				{
 					economy.economy = (HeavenRP) digicoin;
-					log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), economy.name));
+					log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(),
+							economy.name));
 				}
 			}
 		}
