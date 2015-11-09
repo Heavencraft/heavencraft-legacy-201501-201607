@@ -8,6 +8,7 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.WorldEditUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
@@ -36,7 +37,7 @@ public class RedefineSubCommand extends AbstractSubCommand
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/rg {redefine} <protection>");
+		ChatUtil.sendMessage(sender, "/rg {redefine} <protection>");
 	}
 
 	private void redefine(CommandSender sender, String regionName, Selection selection) throws HeavenException
@@ -48,6 +49,6 @@ public class RedefineSubCommand extends AbstractSubCommand
 				min.getBlockX(), min.getBlockY(), min.getBlockZ(), //
 				max.getBlockX(), max.getBlockY(), max.getBlockZ());
 
-		plugin.sendMessage(sender, "La protection {%1$s} a bien été redéfinie.", regionName);
+		ChatUtil.sendMessage(sender, "La protection {%1$s} a bien été redéfinie.", regionName);
 	}
 }

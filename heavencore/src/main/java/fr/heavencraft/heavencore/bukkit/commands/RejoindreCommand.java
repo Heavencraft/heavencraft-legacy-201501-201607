@@ -9,7 +9,8 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public class RejoindreCommand extends AbstractCommandExecutor
 {
@@ -40,24 +41,24 @@ public class RejoindreCommand extends AbstractCommandExecutor
 
 		addRequest(player.getName(), destination.getName());
 
-		plugin.sendMessage(destination, "{%1$s} souhaite vous rejoindre. Tapez /accepter {%1$s} pour accepter.",
+		ChatUtil.sendMessage(destination, "{%1$s} souhaite vous rejoindre. Tapez /accepter {%1$s} pour accepter.",
 				player.getName());
 
-		plugin.sendMessage(player, "Votre demande de téléportation a été transmise à {%1$s}",
+		ChatUtil.sendMessage(player, "Votre demande de téléportation a été transmise à {%1$s}",
 				destination.getName());
 	}
 
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		plugin.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
+		ChatUtil.sendMessage(sender, "Cette commande n'est pas utilisable depuis la console.");
 	}
 
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{rejoindre} <joueur>");
-		plugin.sendMessage(sender, "/{accepter} <joueur>");
+		ChatUtil.sendMessage(sender, "/{rejoindre} <joueur>");
+		ChatUtil.sendMessage(sender, "/{accepter} <joueur>");
 	}
 
 	public static void addRequest(String toTeleport, String destination)

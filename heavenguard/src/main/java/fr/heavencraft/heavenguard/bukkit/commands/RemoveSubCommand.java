@@ -3,6 +3,7 @@ package fr.heavencraft.heavenguard.bukkit.commands;
 import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
@@ -23,12 +24,12 @@ public class RemoveSubCommand extends AbstractSubCommand
 		}
 
 		plugin.getRegionProvider().deleteRegion(regionName);
-		plugin.sendMessage(sender, "La protection {%1$s} a bien été supprimée.", regionName);
+		ChatUtil.sendMessage(sender, "La protection {%1$s} a bien été supprimée.", regionName);
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/rg {remove} <protection>");
+		ChatUtil.sendMessage(sender, "/rg {remove} <protection>");
 	}
 }

@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 public abstract class AbstractCommandExecutor implements CommandExecutor
 {
@@ -59,7 +60,7 @@ public abstract class AbstractCommandExecutor implements CommandExecutor
 
 		catch (final HeavenException ex)
 		{
-			plugin.sendMessage(sender, ex.getMessage());
+			ChatUtil.sendMessage(sender, ex.getMessage());
 		}
 
 		return true;

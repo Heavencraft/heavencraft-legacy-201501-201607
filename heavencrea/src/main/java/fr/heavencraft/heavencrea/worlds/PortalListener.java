@@ -12,6 +12,8 @@ import org.bukkit.event.entity.EntityPortalEnterEvent;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 
 public class PortalListener extends AbstractListener<HeavenPlugin>
 {
@@ -54,8 +56,8 @@ public class PortalListener extends AbstractListener<HeavenPlugin>
 
 	private void onEndPortalEnter(final Player player)
 	{
-		plugin.teleportPlayer(player, WorldsManager.getBiomeSpawnLocation());
-		plugin.sendMessage(player, "Vous avez été téléporté dans le monde {CréaBiome}.");
+		PlayerUtil.teleportPlayer(player, WorldsManager.getBiomeSpawnLocation(),
+				"Vous avez été téléporté dans le monde {CréaBiome}.");
 	}
 
 	private void onNetherPortalEnter(final Player player, final Block portal)
@@ -65,23 +67,24 @@ public class PortalListener extends AbstractListener<HeavenPlugin>
 			case SAND:
 				if (!player.hasPermission(TALENT_PERMISSION))
 				{
-					plugin.sendMessage(player, "Vous n'avez pas la permission d'accéder au monde {Talent}.");
+					ChatUtil.sendMessage(player, "Vous n'avez pas la permission d'accéder au monde {Talent}.");
 					return;
 				}
 
-				plugin.teleportPlayer(player, WorldsManager.getTalentSpawnLocation());
-				plugin.sendMessage(player, "Vous avez été téléporté dans le monde {Talent}.");
+				PlayerUtil.teleportPlayer(player, WorldsManager.getTalentSpawnLocation(),
+						"Vous avez été téléporté dans le monde {Talent}.");
 				break;
 
 			case SANDSTONE:
 				if (!player.hasPermission(ARCHITECT_PERMISSION))
 				{
-					plugin.sendMessage(player, "Vous n'avez pas la permission d'accéder au monde {Architecte}.");
+					ChatUtil.sendMessage(player,
+							"Vous n'avez pas la permission d'accéder au monde {Architecte}.");
 					return;
 				}
 
-				plugin.teleportPlayer(player, WorldsManager.getArchitectSpawnLocation());
-				plugin.sendMessage(player, "Vous avez été téléporté dans le monde {Architecte}.");
+				PlayerUtil.teleportPlayer(player, WorldsManager.getArchitectSpawnLocation(),
+						"Vous avez été téléporté dans le monde {Architecte}.");
 				break;
 
 			default:

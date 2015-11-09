@@ -5,6 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
@@ -27,14 +28,14 @@ public class AddOwnerSubCommand extends AbstractSubCommand
 			final OfflinePlayer player = Bukkit.getOfflinePlayer(arg);
 
 			region.addMember(player.getUniqueId(), true);
-			plugin.sendMessage(sender, "{%1$s} est maintenant propriétaire de la protection {%2$s}.", player.getName(),
-					regionName);
+			ChatUtil.sendMessage(sender, "{%1$s} est maintenant propriétaire de la protection {%2$s}.",
+					player.getName(), regionName);
 		}
 	}
 
 	@Override
 	public void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/rg {addowner} <protection> <propriétaire(s)>");
+		ChatUtil.sendMessage(sender, "/rg {addowner} <protection> <propriétaire(s)>");
 	}
 }
