@@ -20,8 +20,9 @@ import fr.heavencraft.heavenrp.database.bankaccounts.BankAccount;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountType;
 import fr.heavencraft.heavenrp.database.bankaccounts.BankAccountsManager;
 import fr.heavencraft.heavenrp.database.bankaccounts.UpdateBankAccountBalanceQuery;
-import fr.heavencraft.heavenrp.database.users.UpdateUserLastLoginQuery;
+import fr.heavencraft.heavenrp.database.transactions.AddTransactionQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
+import fr.heavencraft.heavenrp.database.users.UpdateUserLastLoginQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.utils.RPUtils;
@@ -54,16 +55,17 @@ public class EconomyListener implements Listener
 			List<Query> queries = new ArrayList<Query>();
 			queries.add(new UpdateUserBalanceQuery(user, 5));
 			queries.add(new UpdateBankAccountBalanceQuery(account, benefit));
+			queries.add(new AddTransactionQuery(account, benefit, "Intérets journaliers"));
 			queries.add(new UpdateUserLastLoginQuery(user));
 			QueriesHandler.addQuery(new BatchQuery(queries)
 			{
 				@Override
 				public void onSuccess()
 				{
-					ChatUtil.sendMessage(player, ChatColor.AQUA
-							+ "Vous venez d'obtenir 5 pièces d'or en vous connectant !");
-					ChatUtil.sendMessage(player, ChatColor.AQUA
-							+ "Votre livret vous a rapporté %1$s pièces d'or.", benefit);
+					ChatUtil.sendMessage(player,
+							ChatColor.AQUA + "Vous venez d'obtenir 5 pièces d'or en vous connectant !");
+					ChatUtil.sendMessage(player,
+							ChatColor.AQUA + "Votre livret vous a rapporté %1$s pièces d'or.", benefit);
 				}
 			});
 		}

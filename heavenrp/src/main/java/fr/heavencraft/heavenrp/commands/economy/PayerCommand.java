@@ -29,6 +29,11 @@ public class PayerCommand extends AbstractCommandExecutor
 		super(plugin, "payer");
 	}
 
+	private static String buildTransactionLog(Player player)
+	{
+		return "Paiement de " + player.getName();
+	}
+
 	@Override
 	protected void onPlayerCommand(final Player player, String[] args) throws HeavenException
 	{
@@ -63,7 +68,7 @@ public class PayerCommand extends AbstractCommandExecutor
 
 		final User sender = UserProvider.getUserByName(player.getName());
 
-		QueriesHandler.addQuery(new MoneyTransfertQuery(sender, dest, delta)
+		QueriesHandler.addQuery(new MoneyTransfertQuery(sender, dest, delta, buildTransactionLog(player))
 		{
 			@Override
 			public void onSuccess()

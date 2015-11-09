@@ -28,9 +28,4 @@ public class LinkSignListener extends AbstractSignListener
 		ChatUtil.sendMessage(player, "Cliquez le lien suivant :");
 		ChatUtil.sendMessage(player, "{http://" + sign.getLine(1) + "}");
 	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
-	}
 }

@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -36,8 +35,6 @@ public abstract class AbstractSignListener
 	protected abstract boolean onSignPlace(Player player, SignChangeEvent event) throws HeavenException;
 
 	protected abstract void onSignClick(Player player, Sign sign) throws HeavenException;
-
-	protected abstract void onSignBreak(Player player, Sign sign) throws HeavenException;
 
 	private class InternalListener implements Listener
 	{
@@ -93,32 +90,6 @@ public abstract class AbstractSignListener
 			catch (final HeavenException ex)
 			{
 				ChatUtil.sendMessage(player, ex.getMessage());
-			}
-		}
-
-		@EventHandler(ignoreCancelled = true)
-		public void onBlockBreak(BlockBreakEvent event)
-		{
-			final Block block = event.getBlock();
-
-			if (block.getType() != Material.SIGN_POST && block.getType() != Material.WALL_SIGN)
-				return;
-
-			final Sign sign = (Sign) block.getState();
-
-			if (!sign.getLine(0).equals(ChatColor.GREEN + tag))
-				return;
-
-			final Player player = event.getPlayer();
-
-			try
-			{
-				onSignBreak(player, sign);
-			}
-			catch (final HeavenException ex)
-			{
-				ChatUtil.sendMessage(player, ex.getMessage());
-				event.setCancelled(true);
 			}
 		}
 	}

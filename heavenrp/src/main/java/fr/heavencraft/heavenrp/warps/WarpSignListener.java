@@ -33,9 +33,4 @@ public class WarpSignListener extends AbstractSignListener
 
 		PlayerUtil.teleportPlayer(player, location, "Vous avez été téléporté à {%1$s}.", name);
 	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
-	}
 }
