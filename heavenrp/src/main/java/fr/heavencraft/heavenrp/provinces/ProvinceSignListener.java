@@ -124,9 +124,4 @@ public class ProvinceSignListener extends AbstractSignListener
 			}
 		});
 	}
-
-	@Override
-	protected void onSignBreak(Player player, Sign sign) throws HeavenException
-	{
-	}
 }
