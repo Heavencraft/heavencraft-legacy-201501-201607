@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
@@ -52,19 +53,20 @@ public class PlotCommand extends AbstractCommandExecutor
 					final int z = region.getMinZ();
 
 					((Player) sender).teleport(new Location(world, x, 52, z));
-					plugin.sendMessage(sender, "Vous avez été téléporté à la parcelle {%1$s}.", region.getName());
+					ChatUtil.sendMessage(sender, "Vous avez été téléporté à la parcelle {%1$s}.",
+							region.getName());
 				}
 				break;
 
 			case "clear":
 				clearPlot(region, Material.REDSTONE_BLOCK);
-				plugin.sendMessage(sender, "La parcelle {%1$s} a bien été nettoyée.", region.getName());
+				ChatUtil.sendMessage(sender, "La parcelle {%1$s} a bien été nettoyée.", region.getName());
 				break;
 
 			case "remove":
 				clearPlot(region, Material.EMERALD_BLOCK);
 				hGuard.getRegionProvider().deleteRegion(region.getName());
-				plugin.sendMessage(sender, "La parcelle {%1$s} a bien été supprimée.", region.getName());
+				ChatUtil.sendMessage(sender, "La parcelle {%1$s} a bien été supprimée.", region.getName());
 				break;
 
 			default:
@@ -76,9 +78,9 @@ public class PlotCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{plot} tp <protection>");
-		plugin.sendMessage(sender, "/{plot} clear <protection>");
-		plugin.sendMessage(sender, "/{plot} remove <protection>");
+		ChatUtil.sendMessage(sender, "/{plot} tp <protection>");
+		ChatUtil.sendMessage(sender, "/{plot} clear <protection>");
+		ChatUtil.sendMessage(sender, "/{plot} remove <protection>");
 	}
 
 	private void clearPlot(Region region, final Material border) throws HeavenException

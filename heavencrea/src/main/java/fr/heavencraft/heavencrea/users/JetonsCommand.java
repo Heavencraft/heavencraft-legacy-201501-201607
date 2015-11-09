@@ -13,7 +13,8 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.users.UserProvider;
 import fr.heavencraft.heavencore.utils.DevUtil;
-import fr.heavencraft.heavencore.utils.PlayerUtil;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 
 public class JetonsCommand extends AbstractCommandExecutor
@@ -22,7 +23,7 @@ public class JetonsCommand extends AbstractCommandExecutor
 
 	public JetonsCommand(HeavenCrea plugin)
 	{
-		super(plugin, "jetons", Arrays.asList("jeton"));
+		super(plugin, "jetons", Arrays.asList("jeton", "money"));
 		userProvider = plugin.getUserProvider();
 	}
 
@@ -34,7 +35,7 @@ public class JetonsCommand extends AbstractCommandExecutor
 
 		if (args.length == 0)
 		{
-			plugin.sendMessage(player, "Vous avez {%1$s} jetons sur vous.", user.getBalance());
+			ChatUtil.sendMessage(player, "Vous avez {%1$s} jetons sur vous.", user.getBalance());
 			return;
 		}
 
@@ -51,7 +52,8 @@ public class JetonsCommand extends AbstractCommandExecutor
 					user.updateBalance(-delta);
 					receiver.updateBalance(delta);
 
-					plugin.sendMessage(player, "Vous avez donné {%1$s} jetons à {%2$s}.", delta, dest.getName());
+					ChatUtil.sendMessage(player, "Vous avez donné {%1$s} jetons à {%2$s}.", delta,
+							dest.getName());
 				}
 				else
 					sendUsage(player);
@@ -76,7 +78,7 @@ public class JetonsCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		plugin.sendMessage(sender, "/{jetons}");
-		plugin.sendMessage(sender, "/{jetons} donner <player> <nombre de jetons>");
+		ChatUtil.sendMessage(sender, "/{jetons}");
+		ChatUtil.sendMessage(sender, "/{jetons} donner <player> <nombre de jetons>");
 	}
 }

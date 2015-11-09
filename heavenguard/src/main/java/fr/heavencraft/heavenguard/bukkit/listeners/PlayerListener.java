@@ -12,6 +12,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
 
@@ -48,7 +49,7 @@ public class PlayerListener extends AbstractListener<HeavenGuard>
 
 		if (regions.isEmpty())
 		{
-			plugin.sendMessage(player, "Il n'y a aucune protection ici.");
+			ChatUtil.sendMessage(player, "Il n'y a aucune protection ici.");
 		}
 
 		else
@@ -63,16 +64,16 @@ public class PlayerListener extends AbstractListener<HeavenGuard>
 					str.append(", ");
 			}
 
-			plugin.sendMessage(player, str.toString());
+			ChatUtil.sendMessage(player, str.toString());
 		}
 
 		final StringBuilder canYouBuild = new StringBuilder("Pouvez-vous construire ? ");
-		canYouBuild.append(plugin.getRegionManager().canBuildAt(player.getUniqueId(), world, x, y, z) ? "Oui."
-				: "Non.");
-		plugin.sendMessage(player, canYouBuild.toString());
+		canYouBuild.append(
+				plugin.getRegionManager().canBuildAt(player.getUniqueId(), world, x, y, z) ? "Oui." : "Non.");
+		ChatUtil.sendMessage(player, canYouBuild.toString());
 
 		final StringBuilder pvpEnabled = new StringBuilder("PVP activé ? ");
 		pvpEnabled.append(plugin.getRegionManager().isPvp(world, x, y, z) ? "Oui." : "Non.");
-		plugin.sendMessage(player, pvpEnabled.toString());
+		ChatUtil.sendMessage(player, pvpEnabled.toString());
 	}
 }

@@ -11,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.hellcraft.HellCraft;
 import fr.heavencraft.hellcraft.HellCraftPermissions;
 import fr.heavencraft.hellcraft.back.BackListener;
@@ -77,17 +79,17 @@ public class HpsCommand extends AbstractCommandExecutor
 			}
 		}
 
-		plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Votre solde: §2"
-				+ plugin.getHpsManager().getBalance(player.getName()));
-		plugin.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Faites /hps liste pour une liste des produits.");
+		ChatUtil.sendMessage(player, FORMAT_WP, "HPS §aINFO",
+				"Votre solde: §2" + plugin.getHpsManager().getBalance(player.getName()));
+		ChatUtil.sendMessage(player, FORMAT_WP, "HPS §aINFO", "Faites /hps liste pour une liste des produits.");
 		return;
 	}
 
 	private void giveDiamondStuff(Player p)
 	{
-		final ItemStack[] items =
-		{ new ItemStack(Material.DIAMOND_HELMET, 1), new ItemStack(Material.DIAMOND_CHESTPLATE, 1),
-				new ItemStack(Material.DIAMOND_LEGGINGS, 1), new ItemStack(Material.DIAMOND_BOOTS, 1) };
+		final ItemStack[] items = { new ItemStack(Material.DIAMOND_HELMET, 1),
+				new ItemStack(Material.DIAMOND_CHESTPLATE, 1), new ItemStack(Material.DIAMOND_LEGGINGS, 1),
+				new ItemStack(Material.DIAMOND_BOOTS, 1) };
 
 		p.getInventory().addItem(items);
 
@@ -95,19 +97,17 @@ public class HpsCommand extends AbstractCommandExecutor
 		Epee.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
 		Epee.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
 		Epee.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
-		p.getInventory().addItem(new ItemStack[]
-		{ Epee });
+		p.getInventory().addItem(new ItemStack[] { Epee });
 
 		final ItemStack Pomme = new ItemStack(Material.GOLDEN_APPLE);
 		Pomme.setDurability((short) 1);
-		p.getInventory().addItem(new ItemStack[]
-		{ Pomme });
+		p.getInventory().addItem(new ItemStack[] { Pomme });
 	}
 
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args)
 	{
-		plugin.sendMessage(sender, "Cette commande ne peut pas être utilisée depuis la {console}.");
+		ChatUtil.sendMessage(sender, "Cette commande ne peut pas être utilisée depuis la {console}.");
 	}
 
 	@Override
@@ -117,18 +117,19 @@ public class HpsCommand extends AbstractCommandExecutor
 
 	private void liste(CommandSender sender)
 	{
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", "┌───────── Boutique HPS ─────────┐");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages Ponctuels ─────── ");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Restaure la vie, {5 HPS}: {/hps heal}");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Retour à la dernière position, {5 HPS}: {/hps back}");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages permanent ─────── ");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Equipement Diamant, {15 HPS}: {/hps diam}");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - Carte de réduction 33% boutique, {25 HPS}: {/hps reduc}");
-		plugin.sendMessage(sender, FORMAT_WP, "HPS", " - VIP (Téléportation, -33%, etc.) {50HPS}: {/hps vip}");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "┌───────── Boutique HPS ─────────┐");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages Ponctuels ─────── ");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", " - Restaure la vie, {5 HPS}: {/hps heal}");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", " - Retour à la dernière position, {5 HPS}: {/hps back}");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", " ─────── Avantages permanent ─────── ");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", " - Equipement Diamant, {15 HPS}: {/hps diam}");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
+				" - Carte de réduction 33% boutique, {25 HPS}: {/hps reduc}");
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", " - VIP (Téléportation, -33%, etc.) {50HPS}: {/hps vip}");
 
-		plugin.sendMessage(sender, FORMAT_WP, "HPS",
+		ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 				"Note: pour avoir plus d'information sur un kit: {/hps into <kit>}");
-		plugin.sendMessage(sender, "");
+		ChatUtil.sendMessage(sender, "");
 	}
 
 	private void info(CommandSender sender, String kit)
@@ -136,49 +137,49 @@ public class HpsCommand extends AbstractCommandExecutor
 		switch (kit.toLowerCase())
 		{
 			case "back":
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le /hps back vous permet de retourner au dernier point avant votre décès.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "La commande est risquée, soyez prudant.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 5HPS.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "La commande est risquée, soyez prudant.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 5HPS.");
 				break;
 
 			case "heal":
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Le /hps heal restaure votre vie et votre faim.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 5HPS.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Le /hps heal restaure votre vie et votre faim.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 5HPS.");
 				break;
 
 			case "diam":
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le /hps diam vous offre un équipement de combat a base de diamant.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 33HPS.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 33HPS.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Assurez vous d'avoir de la place dans votre inventaire.");
 				break;
 
 			case "vip":
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le VIP est un ensemble de commandes et d'avantages stratégiques pour simplifier votre vie.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le TPA (/rejoindre <joueur>) permet de se téléporter a un joueur.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le PTIME (/ptime <day|night>) permet de mettre le jour ou la nuit.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Le /spawn permet de retourner au spawn à tout moment.");
-				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				// ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 				// "Le compass (/compass) permet de connaitre la direction dans
 				// laquelle nous marchons.");
-				// plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				// ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 				// "Le getpos (/getpos) permet de savoir ces positions.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Une réduction 33% sur toute la boutique!");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Un équipement en diamant.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 50HPS.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Une réduction 33% sur toute la boutique!");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Un équipement en diamant.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 50HPS.");
 				break;
 
 			case "reduc":
-				plugin.sendMessage(sender, FORMAT_WP, "HPS",
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS",
 						"Il s'agit d'une réduction 33% sur toute la boutique et sur tout les achats!");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 25HPS.");
-				plugin.sendMessage(sender, FORMAT_WP, "HPS", "Ne s'accumule pas avec la réduction VIP.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Prix: 25HPS.");
+				ChatUtil.sendMessage(sender, FORMAT_WP, "HPS", "Ne s'accumule pas avec la réduction VIP.");
 				break;
 		}
 	}
@@ -194,10 +195,10 @@ public class HpsCommand extends AbstractCommandExecutor
 			throw new HeavenException("Vous devez être mort au moins une fois pour utiliser cette commande.");
 
 		plugin.getHpsManager().removeBalance(player.getName(), 5);
-		plugin.sendMessage(player, FORMAT_WP, "HPS Confirmation", " Vous avez acheté le /back, 5HPS débités.");
+		ChatUtil.sendMessage(player, FORMAT_WP, "HPS Confirmation", " Vous avez acheté le /back, 5HPS débités.");
 
-		plugin.teleportPlayer(player, deathLocation);
-		plugin.sendMessage(player, "Vous avez été téléporté à l'endroit où vous étiez mort.");
+		PlayerUtil.teleportPlayer(player, deathLocation,
+				"Vous avez été téléporté à l'endroit où vous étiez mort.");
 	}
 
 	private void heal(Player player) throws HeavenException
@@ -207,7 +208,7 @@ public class HpsCommand extends AbstractCommandExecutor
 		player.setFoodLevel(20);
 		player.setHealth(player.getMaxHealth());
 		player.setFireTicks(0);
-		plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation", "Vous avez été soigné, 5HPS débités.");
+		ChatUtil.sendMessage(player, FORMAT_WP, "HPS §2Confirmation", "Vous avez été soigné, 5HPS débités.");
 	}
 
 	private void diam(Player player) throws HeavenException
@@ -217,12 +218,12 @@ public class HpsCommand extends AbstractCommandExecutor
 			plugin.getHpsManager().removeBalance(player.getName(), 33);
 			giveDiamondStuff(player);
 			addPermission(player, HellCraftPermissions.DIAMOND_GRADE);
-			plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
+			ChatUtil.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
 					"Vous avez recu votre equipement, 33HPS débités.");
 		}
 		else
 		{
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
+			ChatUtil.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
 		}
 	}
 
@@ -240,12 +241,12 @@ public class HpsCommand extends AbstractCommandExecutor
 			player.setFoodLevel(20);
 			player.setHealth(player.getMaxHealth());
 			player.setFireTicks(0);
-			plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
+			ChatUtil.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
 					" Vous avez acheté le kit VIP, 50 HPS débités.");
 		}
 		else
 		{
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
+			ChatUtil.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
 		}
 	}
 
@@ -255,12 +256,12 @@ public class HpsCommand extends AbstractCommandExecutor
 		{
 			plugin.getHpsManager().removeBalance(player.getName(), 25);
 			addPermission(player, "BossShop.PriceMultiplier.Money1");
-			plugin.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
+			ChatUtil.sendMessage(player, FORMAT_WP, "HPS §2Confirmation",
 					" Vous avez acheté la carte de réduction, 25 HPS débités.");
 		}
 		else
 		{
-			plugin.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
+			ChatUtil.sendMessage(player, FORMAT_WP, "HPS", " Vous possedez déjà cet avantage.");
 		}
 	}
 }
