@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 
 public class JetonsTask extends BukkitRunnable
@@ -32,7 +33,7 @@ public class JetonsTask extends BukkitRunnable
 			try
 			{
 				plugin.getUserProvider().getUserByUniqueId(player.getUniqueId()).updateBalance(nbJetons);
-				plugin.sendMessage(player, "Vous venez de recevoir {%1$s} jetons.", nbJetons);
+				ChatUtil.sendMessage(player, "Vous venez de recevoir {%1$s} jetons.", nbJetons);
 			}
 			catch (final HeavenException ex)
 			{

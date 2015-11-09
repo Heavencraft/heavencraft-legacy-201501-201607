@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
 import fr.heavencraft.heavencrea.worlds.WorldsManager;
@@ -22,14 +23,12 @@ import fr.heavencraft.heavenguard.bukkit.RegionUtil;
 
 public class TalentSignListener extends AbstractPlotSignListener
 {
-	private final HeavenCrea plugin;
 	private final HeavenGuard regionPlugin;
 
 	public TalentSignListener(HeavenCrea plugin, HeavenGuard regionPlugin)
 	{
 		super(plugin, "Talent", CreaPermissions.PARCELLE_SIGN);
 
-		this.plugin = plugin;
 		this.regionPlugin = regionPlugin;
 	}
 
@@ -78,7 +77,7 @@ public class TalentSignListener extends AbstractPlotSignListener
 		}
 
 		sign.getBlock().breakNaturally();
-		plugin.sendMessage(player,
+		ChatUtil.sendMessage(player,
 				"Vous venez de recevoir la parcelle {%1$s}. Celle-ci sera supprimée dans 3 semaines.",
 				region.getName(), plot.price);
 	}
@@ -91,7 +90,7 @@ public class TalentSignListener extends AbstractPlotSignListener
 		if (regionProvider.regionExists(regionName))
 			throw new HeavenException("Vous avez déjà une parcelle Talent.");
 
-		final Region region = regionProvider.createRegion(regionName, plot.world.getName(),//
+		final Region region = regionProvider.createRegion(regionName, plot.world.getName(), //
 				plot.minX, 0, plot.minZ, //
 				plot.maxX, 0xFF, plot.maxZ);
 

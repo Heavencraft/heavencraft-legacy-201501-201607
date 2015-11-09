@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
 import fr.heavencraft.heavencrea.users.CreativeUser;
@@ -75,7 +76,7 @@ public class PlotSignListener extends AbstractPlotSignListener
 		}
 
 		sign.getBlock().breakNaturally();
-		plugin.sendMessage(player, "Vous venez d'acheter la parcelle {%1$s} pour {%2$s} jetons.",
+		ChatUtil.sendMessage(player, "Vous venez d'acheter la parcelle {%1$s} pour {%2$s} jetons.",
 				region.getName(), plot.price);
 	}
 
@@ -91,7 +92,7 @@ public class PlotSignListener extends AbstractPlotSignListener
 		}
 		while (regionProvider.regionExists(regionName));
 
-		final Region region = regionProvider.createRegion(regionName, world,//
+		final Region region = regionProvider.createRegion(regionName, world, //
 				plot.minX, 0, plot.minZ, //
 				plot.maxX, 0xFF, plot.maxZ);
 
