@@ -59,6 +59,14 @@ public class LivretSignListener extends AbstractBankAccountSignListener implemen
 		retirants.add(player.getName());
 	}
 
+	@Override
+	protected void onStatementSignClick(Player player) throws HeavenException
+	{
+		BankAccount account = BankAccountsManager.getBankAccount(player.getName(), BankAccountType.USER);
+
+		player.getInventory().addItem(createLastTransactionsBook(account, 2));
+	}
+
 	@EventHandler(ignoreCancelled = true)
 	public void onAsyncPlayerChat(AsyncPlayerChatEvent event)
 	{

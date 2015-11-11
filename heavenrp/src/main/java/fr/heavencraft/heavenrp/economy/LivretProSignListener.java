@@ -3,6 +3,7 @@ package fr.heavencraft.heavenrp.economy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,9 +25,15 @@ import fr.heavencraft.heavenrp.database.users.UserProvider;
 
 public class LivretProSignListener extends AbstractBankAccountSignListener implements Listener
 {
+	enum LivretProAction
+	{
+		DEPOSIT,
+		WITHDRAW,
+		STATEMENT
+	}
 
-	private final Map<String, Integer> deposants = new HashMap<String, Integer>();
-	private final Map<String, Integer> retirants = new HashMap<String, Integer>();
+	private final Map<UUID, LivretProAction> pendingActions = new HashMap<UUID, LivretProAction>();
+	private final Map<UUID, Integer> selectedAccounts = new HashMap<UUID, Integer>();
 
 	public LivretProSignListener(HeavenPlugin plugin)
 	{
@@ -59,107 +66,134 @@ public class LivretProSignListener extends AbstractBankAccountSignListener imple
 	@Override
 	protected void onDepositSignClick(Player player) throws HeavenException
 	{
-		String playerName = player.getName();
+		pendingActions.put(player.getUniqueId(), LivretProAction.DEPOSIT);
 
-		if (!deposants.containsKey(playerName))
-		{
-			onConsultSignClick(player);
-			ChatUtil.sendMessage(player, "{Trésorier} : Sur quel livret voulez-vous déposer ?");
-			deposants.put(playerName, -1);
-		}
+		onConsultSignClick(player);
+		ChatUtil.sendMessage(player, "{Trésorier} : Sur quel livret voulez-vous déposer ?");
 	}
 
 	@Override
 	protected void onWithdrawSignClick(Player player) throws HeavenException
 	{
-		String playerName = player.getName();
+		pendingActions.put(player.getUniqueId(), LivretProAction.WITHDRAW);
 
-		if (!retirants.containsKey(playerName))
-		{
-			onConsultSignClick(player);
-			ChatUtil.sendMessage(player, "{Trésorier} : Sur quel livret voulez-vous retirer ?");
-			retirants.put(playerName, -1);
-		}
+		onConsultSignClick(player);
+		ChatUtil.sendMessage(player, "{Trésorier} : Sur quel livret voulez-vous retirer ?");
+	}
+
+	@Override
+	protected void onStatementSignClick(Player player) throws HeavenException
+	{
+		pendingActions.put(player.getUniqueId(), LivretProAction.STATEMENT);
+
+		onConsultSignClick(player);
+		ChatUtil.sendMessage(player, "{Trésorier} : De quel livret voulez-vous le relevé ?");
 	}
 
 	@EventHandler(ignoreCancelled = true)
 	public void onAsyncPlayerChat(AsyncPlayerChatEvent event)
 	{
 		final Player player = event.getPlayer();
-		String playerName = player.getName();
+		UUID uniqueId = player.getUniqueId();
 
-		int accountId;
-		boolean isDepot = false;
-
-		if (deposants.containsKey(playerName))
-		{
-			accountId = deposants.get(playerName);
-			isDepot = true;
-		}
-		else if (retirants.containsKey(playerName))
-		{
-			accountId = retirants.get(playerName);
-			isDepot = false;
-		}
-		else
-		{
+		LivretProAction action = pendingActions.get(uniqueId);
+		if (action == null)
 			return;
-		}
 
 		event.setCancelled(true);
 
 		try
 		{
-			int delta = DevUtil.toUint(event.getMessage());
+			int input = DevUtil.toUint(event.getMessage());
 
-			if (accountId == -1)
+			Integer accountId = selectedAccounts.get(uniqueId);
+			if (accountId == null)
 			{
-				selectAccount(player, delta, isDepot ? deposants : retirants);
-				return;
+				BankAccount account = getAccount(player, input);
+
+				switch (action)
+				{
+					case DEPOSIT:
+						selectedAccounts.put(player.getUniqueId(), account.getId());
+						ChatUtil.sendMessage(player,
+								"{Trésorier} : Combien de pièces d'or souhaitez-vous déposer ?");
+						break;
+					case WITHDRAW:
+						selectedAccounts.put(player.getUniqueId(), account.getId());
+						ChatUtil.sendMessage(player,
+								"{Trésorier} : Combien de pièces d'or souhaitez-vous retirer ?");
+						break;
+					case STATEMENT:
+						player.getInventory().addItem(createLastTransactionsBook(account, 3));
+						clear(uniqueId);
+						ChatUtil.sendMessage(player, "{Trésorier} : L'opération a été effectuée avec succès.");
+						break;
+				}
 			}
-
-			deposants.remove(playerName);
-			retirants.remove(playerName);
-
-			User user = UserProvider.getUserByName(playerName);
-			BankAccount bank = BankAccountsManager.getBankAccountById(accountId);
-
-			QueriesHandler.addQuery(new MoneyTransfertQuery(isDepot ? user : bank, isDepot ? bank : user, delta,
-					buildTransactionLog(player, isDepot))
+			else
 			{
-				@Override
-				public void onSuccess()
-				{
-					ChatUtil.sendMessage(player, "{Trésorier} : L'opération a été effectuée avec succès.");
-				}
-
-				@Override
-				public void onHeavenException(HeavenException ex)
-				{
-					ChatUtil.sendMessage(player, ex.getMessage());
-				}
-			});
+				executeTransaction(player, accountId, action, input);
+				clear(uniqueId);
+			}
 		}
 		catch (HeavenException ex)
 		{
-			deposants.remove(playerName);
-			retirants.remove(playerName);
+			clear(uniqueId);
 			ChatUtil.sendMessage(player, ex.getMessage());
 		}
 	}
 
-	private void selectAccount(Player player, int id, Map<String, Integer> list) throws HeavenException
+	private static BankAccount getAccount(Player player, int id) throws HeavenException
 	{
 		BankAccount account = BankAccountsManager.getBankAccountById(id);
 
 		if (!account.getOwners().contains(player))
 			throw new HeavenException("{Trésorier} : Vous n'êtes pas propriétaire de ce compte.");
 
-		list.put(player.getName(), id);
+		return account;
+	}
 
-		if (list.equals(deposants))
-			ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous déposer ?");
-		else
-			ChatUtil.sendMessage(player, "{Trésorier} : Combien de pièces d'or souhaitez-vous retirer ?");
+	private void executeTransaction(Player player, int accountId, LivretProAction action, int delta)
+			throws HeavenException
+	{
+		User user = UserProvider.getUserByName(player.getName());
+		BankAccount bank = BankAccountsManager.getBankAccountById(accountId);
+
+		Object from, to;
+		switch (action)
+		{
+			case DEPOSIT:
+				from = user;
+				to = bank;
+				break;
+			case WITHDRAW:
+				from = bank;
+				to = user;
+				break;
+			default:
+				throw new HeavenException("Opération invalide.");
+		}
+
+		QueriesHandler.addQuery(new MoneyTransfertQuery(from, to, delta,
+				buildTransactionLog(player, action == LivretProAction.DEPOSIT))
+		{
+			@Override
+			public void onSuccess()
+			{
+				ChatUtil.sendMessage(player, "{Trésorier} : L'opération a été effectuée avec succès.");
+			}
+
+			@Override
+			public void onHeavenException(HeavenException ex)
+			{
+				ChatUtil.sendMessage(player, ex.getMessage());
+			}
+		});
+	}
+
+	private void clear(UUID uniqueId)
+	{
+		pendingActions.remove(uniqueId);
+		selectedAccounts.remove(uniqueId);
 	}
 }
