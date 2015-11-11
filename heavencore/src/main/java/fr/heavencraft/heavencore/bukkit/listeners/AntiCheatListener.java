@@ -6,8 +6,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.utils.BookBuilder;
 
 public class AntiCheatListener extends AbstractListener<HeavenPlugin>
 {
@@ -42,5 +47,23 @@ public class AntiCheatListener extends AbstractListener<HeavenPlugin>
 	{
 		if (event.getBlock().getType() == Material.MOB_SPAWNER)
 			event.setCancelled(true);
+	}
+
+	// Avoid trading of books made from the plugin
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	private void onInventoryClick(InventoryClickEvent event)
+	{
+		if (event.getInventory().getType() != InventoryType.MERCHANT)
+			return;
+
+		ItemStack item = event.getCurrentItem();
+		if (item.getType() != Material.WRITTEN_BOOK)
+			return;
+
+		BookMeta book = (BookMeta) item.getItemMeta();
+		if (book.getAuthor().equals(BookBuilder.HEAVENCRAFT))
+		{
+			event.setCancelled(true);
+		}
 	}
 }
