@@ -12,22 +12,30 @@ public class DateUtil
 {
 	private static final String DATETIME_FORMAT = "yyyyMMdd-HH:mm:ss";
 
-	private static final DateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
+	private static final DateFormat dateTimeFormat = new SimpleDateFormat(DATETIME_FORMAT);
+
 	static
 	{
-		dateFormat.setLenient(false);
+		dateTimeFormat.setLenient(false);
 	}
 
 	public static Date parseDateTime(String value) throws HeavenException
 	{
 		try
 		{
-			return dateFormat.parse(value);
+			return dateTimeFormat.parse(value);
 		}
 		catch (final ParseException ex)
 		{
 			throw new HeavenException("Le format de la date est incorrect. Utilisez {YYYYMMDD-HH:MM:SS}.");
 		}
+	}
+
+	private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+	public static String toDateString(Date date)
+	{
+		return dateFormat.format(date);
 	}
 
 	public static boolean isToday(Date date)
