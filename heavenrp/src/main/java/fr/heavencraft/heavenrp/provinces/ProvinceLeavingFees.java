@@ -4,6 +4,7 @@ import fr.heavencraft.heavenrp.database.users.User;
 
 public class ProvinceLeavingFees
 {
+	private static boolean ENABLE_RISING_FEES = false;
 	/**
 	 * Returns the fees the player has to pay if he leaves a province
 	 * @param user
@@ -11,6 +12,10 @@ public class ProvinceLeavingFees
 	 */
 	public static int getLeavingFees(User user)
 	{
+		
+		if(!ENABLE_RISING_FEES)
+			return 50;
+		
 		switch (user.getProvinceChanges())
 		{
 			case 0:
