@@ -17,6 +17,7 @@ public class User
 	private final int homeNumber;
 	private final Timestamp dealerLicense;
 	private final Timestamp lastLogin;
+	private final int provinceChanges;
 
 	User(ResultSet rs) throws SQLException
 	{
@@ -27,6 +28,7 @@ public class User
 		homeNumber = rs.getInt("homeNumber");
 		dealerLicense = rs.getTimestamp("dealer_license");
 		lastLogin = rs.getTimestamp("last_login");
+		provinceChanges = rs.getInt("province_changes");
 	}
 
 	public int getId()
@@ -89,5 +91,14 @@ public class User
 			e.printStackTrace();
 			throw new SQLErrorException();
 		}
+	}
+
+	/**
+	 * Returns the amount of province changes by this player
+	 * @return amount
+	 */
+	public int getProvinceChanges()
+	{
+		return provinceChanges;
 	}
 }

@@ -7,17 +7,16 @@ import fr.heavencraft.async.queries.AbstractQuery;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 
-public class IncrementHomeNumberQuery extends AbstractQuery
+public class IncrementProvinceChangesNumberQuery extends AbstractQuery
 {
-	private static final String QUERY = "UPDATE users SET province_changes = province_changes + 1 WHERE id = ? LIMIT 1";
+	private static final String QUERY = "UPDATE users SET homeNumber = homeNumber + 1 WHERE id = ? LIMIT 1";
 
 	private final User user;
 
-	public IncrementHomeNumberQuery(User user)
+	public IncrementProvinceChangesNumberQuery(User user)
 	{
 		this.user = user;
 	}
-
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
@@ -30,5 +29,7 @@ public class IncrementHomeNumberQuery extends AbstractQuery
 
 			UsersCache.invalidateCache(user);
 		}
+		
 	}
+
 }
