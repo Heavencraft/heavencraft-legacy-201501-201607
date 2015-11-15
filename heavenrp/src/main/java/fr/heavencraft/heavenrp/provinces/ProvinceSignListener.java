@@ -18,6 +18,7 @@ import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.provinces.RemoveProvinceQuery;
 import fr.heavencraft.heavenrp.database.provinces.UpdateProvinceQuery;
+import fr.heavencraft.heavenrp.database.users.IncrementProvinceChangesCountQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
@@ -75,14 +76,18 @@ public class ProvinceSignListener extends AbstractSignListener
 
 		final Province province = ProvincesManager.getProvinceByName(provinceName);
 
-		QueriesHandler.addQuery(new UpdateProvinceQuery(user, province)
+		// Prepare Query Chain
+		List<Query> queries = new ArrayList<Query>();
+		queries.add(new UpdateProvinceQuery(user, province));
+		queries.add(new IncrementProvinceChangesCountQuery(user));
+
+		QueriesHandler.addQuery(new BatchQuery(queries)
 		{
 			@Override
 			public void onSuccess()
 			{
 				// Apply province colors
 				ProvinceScoreboard.applyTeamColor(player, province);
-
 				ChatUtil.sendMessage(player, "Vous venez de rejoindre la province de {%1$s}.",
 						province.getName());
 			}
@@ -102,6 +107,7 @@ public class ProvinceSignListener extends AbstractSignListener
 		if (ProvincesManager.getProvinceByUser(user) == null)
 			throw new HeavenException("Vous n'êtes habitant d'aucune province.");
 
+		int fees = ProvinceLeavingFees.getLeavingFees(user);
 		List<Query> queries = new ArrayList<Query>();
 		queries.add(new UpdateUserBalanceQuery(user, -50));
 		queries.add(new RemoveProvinceQuery(user));
@@ -114,7 +120,7 @@ public class ProvinceSignListener extends AbstractSignListener
 				ProvinceScoreboard.applyTeamColor(player, null);
 
 				ChatUtil.sendMessage(player, "Vous ne faîtes plus partie d'aucune province.");
-				ChatUtil.sendMessage(player, "Les frais de dossier vous ont coûté {50} pièces d'or.");
+				ChatUtil.sendMessage(player, "Les frais de dossier vous ont coûté {%d} pièces d'or.", fees);
 			}
 
 			@Override
