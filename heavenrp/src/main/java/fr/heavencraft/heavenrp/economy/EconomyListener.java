@@ -54,8 +54,11 @@ public class EconomyListener implements Listener
 
 			List<Query> queries = new ArrayList<Query>();
 			queries.add(new UpdateUserBalanceQuery(user, 5));
-			queries.add(new UpdateBankAccountBalanceQuery(account, benefit));
-			queries.add(new AddTransactionQuery(account, benefit, "Intérets journaliers"));
+			if (benefit > 0)
+			{
+				queries.add(new UpdateBankAccountBalanceQuery(account, benefit));
+				queries.add(new AddTransactionQuery(account, benefit, "Intérets journaliers"));
+			}
 			queries.add(new UpdateUserLastLoginQuery(user));
 			QueriesHandler.addQuery(new BatchQuery(queries)
 			{
@@ -64,8 +67,12 @@ public class EconomyListener implements Listener
 				{
 					ChatUtil.sendMessage(player,
 							ChatColor.AQUA + "Vous venez d'obtenir 5 pièces d'or en vous connectant !");
-					ChatUtil.sendMessage(player,
-							ChatColor.AQUA + "Votre livret vous a rapporté %1$s pièces d'or.", benefit);
+
+					if (benefit > 0)
+					{
+						ChatUtil.sendMessage(player,
+								ChatColor.AQUA + "Votre livret vous a rapporté %1$s pièces d'or.", benefit);
+					}
 				}
 			});
 		}
