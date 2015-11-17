@@ -11,7 +11,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import fr.heavencraft.async.queries.BatchQuery;
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.async.queries.Query;
-import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignListener;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractSignWithConfirmationListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
@@ -25,10 +25,15 @@ import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.provinces.ProvincesManager.Province;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
 
-public class ProvinceSignListener extends AbstractSignListener
+public class ProvinceSignListener extends AbstractSignWithConfirmationListener
 {
 	private static final String JOIN = "Rejoindre";
 	private static final String LEAVE = "Quitter";
+	private static final String BLUE_JOIN = ChatColor.BLUE + JOIN;
+	private static final String BLUE_LEAVE = ChatColor.BLUE + LEAVE;
+
+	private static final String JOIN_MSG = "Vous vous apprêtez à rejoindre la province {%1$s}.";
+	private static final String LEAVE_MSG = "Vous vous apprêtez à quitter votre province. Les frais de dossier s'élèvent à {%1$s} pièces d'or.";
 
 	public ProvinceSignListener(HeavenRP plugin)
 	{
@@ -38,38 +43,57 @@ public class ProvinceSignListener extends AbstractSignListener
 	@Override
 	protected boolean onSignPlace(Player player, SignChangeEvent event) throws HeavenException
 	{
-		if (event.getLine(1).equalsIgnoreCase(JOIN))
-		{
-			// On vérifie si la province existe.
-			ProvincesManager.getProvinceByName(event.getLine(2));
+		final String line = event.getLine(1);
 
-			event.setLine(1, ChatColor.BLUE + JOIN);
+		if (line.equalsIgnoreCase(JOIN))
+		{
+			ProvincesManager.getProvinceByName(event.getLine(2)); // On vérifie si la province existe.
+			event.setLine(1, BLUE_JOIN);
 			return true;
 		}
 
-		else if (event.getLine(1).equalsIgnoreCase(LEAVE))
+		if (line.equalsIgnoreCase(LEAVE))
 		{
-			event.setLine(1, ChatColor.BLUE + LEAVE);
+			event.setLine(1, BLUE_LEAVE);
 			return true;
 		}
 
-		else
-			return false;
+		return false;
 	}
 
 	@Override
-	protected void onSignClick(Player player, Sign sign) throws HeavenException
+	protected void onFirstClick(Player player, Sign sign) throws HeavenException
 	{
-		if (sign.getLine(1).equals(ChatColor.BLUE + JOIN))
-			onJoinSignClick(player, sign.getLine(2));
+		final String line = sign.getLine(1);
 
-		else if (sign.getLine(1).equals(ChatColor.BLUE + LEAVE))
+		if (line.equals(BLUE_JOIN))
+		{
+			ChatUtil.sendMessage(player, JOIN_MSG, sign.getLine(2));
+		}
+		else if (line.equals(BLUE_LEAVE))
+		{
+			ChatUtil.sendMessage(player, LEAVE_MSG, getLeavingFees(UserProvider.getUserByName(player.getName())));
+		}
+	}
+
+	@Override
+	protected void onSecondClick(Player player, Sign sign) throws HeavenException
+	{
+		final String line = sign.getLine(1);
+
+		if (line.equals(BLUE_JOIN))
+		{
+			onJoinSignClick(player, sign.getLine(2));
+		}
+		else if (line.equals(BLUE_LEAVE))
+		{
 			onLeaveSignClick(player);
+		}
 	}
 
 	private void onJoinSignClick(final Player player, String provinceName) throws HeavenException
 	{
-		User user = UserProvider.getUserByName(player.getName());
+		final User user = UserProvider.getUserByName(player.getName());
 
 		if (ProvincesManager.getProvinceByUser(user) != null)
 			throw new HeavenException("Vous êtes déjà habitant d'une province");
@@ -77,10 +101,9 @@ public class ProvinceSignListener extends AbstractSignListener
 		final Province province = ProvincesManager.getProvinceByName(provinceName);
 
 		// Prepare Query Chain
-		List<Query> queries = new ArrayList<Query>();
+		final List<Query> queries = new ArrayList<Query>();
 		queries.add(new UpdateProvinceQuery(user, province));
 		queries.add(new IncrementProvinceChangesCountQuery(user));
-
 		QueriesHandler.addQuery(new BatchQuery(queries)
 		{
 			@Override
@@ -102,14 +125,14 @@ public class ProvinceSignListener extends AbstractSignListener
 
 	private void onLeaveSignClick(final Player player) throws HeavenException
 	{
-		User user = UserProvider.getUserByName(player.getName());
+		final User user = UserProvider.getUserByName(player.getName());
 
 		if (ProvincesManager.getProvinceByUser(user) == null)
 			throw new HeavenException("Vous n'êtes habitant d'aucune province.");
 
-		int fees = ProvinceLeavingFees.getLeavingFees(user);
-		List<Query> queries = new ArrayList<Query>();
-		queries.add(new UpdateUserBalanceQuery(user, -50));
+		final int fees = getLeavingFees(user);
+		final List<Query> queries = new ArrayList<Query>();
+		queries.add(new UpdateUserBalanceQuery(user, fees));
 		queries.add(new RemoveProvinceQuery(user));
 		QueriesHandler.addQuery(new BatchQuery(queries)
 		{
@@ -129,5 +152,40 @@ public class ProvinceSignListener extends AbstractSignListener
 				ChatUtil.sendMessage(player, ex.getMessage());
 			}
 		});
+	}
+
+	/**
+	 * Returns the fees the player has to pay if he leaves a province
+	 * 
+	 * @param user
+	 * @return fees (positive value)
+	 */
+	public static int getLeavingFees(User user)
+	{
+		switch (user.getProvinceChanges())
+		{
+			case 0:
+			case 1:
+				return 50;
+			case 2:
+				return 250;
+			case 3:
+				return 740;
+			case 4:
+				return 1250;
+			case 5:
+				return 1700;
+			case 6:
+				return 2400;
+			case 7:
+				return 3000;
+			case 8:
+				return 3600;
+			case 9:
+				return 4200;
+
+			default:
+				return 5000;
+		}
 	}
 }
