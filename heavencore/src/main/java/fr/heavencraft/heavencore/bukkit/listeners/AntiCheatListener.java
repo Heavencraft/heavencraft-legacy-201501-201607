@@ -56,11 +56,11 @@ public class AntiCheatListener extends AbstractListener<HeavenPlugin>
 		if (event.getInventory().getType() != InventoryType.MERCHANT)
 			return;
 
-		ItemStack item = event.getCurrentItem();
-		if (item.getType() != Material.WRITTEN_BOOK)
+		final ItemStack item = event.getCurrentItem();
+		if (item == null || item.getType() != Material.WRITTEN_BOOK)
 			return;
 
-		BookMeta book = (BookMeta) item.getItemMeta();
+		final BookMeta book = (BookMeta) item.getItemMeta();
 		if (book.getAuthor().equals(BookBuilder.HEAVENCRAFT))
 		{
 			event.setCancelled(true);
