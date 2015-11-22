@@ -37,4 +37,9 @@ public class RPPermissions
 
 	public static final String WEB_COMMAND = "heavencraft.commands.web";
 	public static final String KEY = "heavencraft.commands.key";
+	
+	/*
+	 * Dungeons
+	 */
+	public static final String DUNGEON_ADMIN = "heavencraft.donjon.admin";
 }
