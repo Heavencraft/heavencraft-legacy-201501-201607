@@ -48,7 +48,7 @@ public class AdventWoolEvent
 
 		public ItemStack create()
 		{
-			int quantity = (_maximalQuantity == 0 ? 1 : _plugin.randNext(1, _maximalQuantity));
+			final int quantity = (_maximalQuantity == 0 ? 1 : _plugin.randNext(1, _maximalQuantity));
 			ItemStack stack;
 			if (_itemDamage == -1)
 				stack = new ItemStack(_itemMaterial, quantity);
@@ -59,9 +59,10 @@ public class AdventWoolEvent
 				int max = _plugin.randNext(0, _enchants.length * 2);
 				while (max > 0)
 				{
-					Enchantment ench = _enchants[_plugin.randNext(0, _enchants.length)];
+					final Enchantment ench = _enchants[_plugin.randNext(0, _enchants.length)];
 					if (!stack.containsEnchantment(ench))
-						stack.addEnchantment(ench, _plugin.randNext(ench.getStartLevel(), ench.getMaxLevel() + 1));
+						stack.addEnchantment(ench,
+								_plugin.randNext(ench.getStartLevel(), ench.getMaxLevel() + 1));
 					max--;
 				}
 			}
@@ -78,6 +79,7 @@ public class AdventWoolEvent
 			_block = block;
 		}
 
+		@Override
 		public void run()
 		{
 			_block.setTypeIdAndData(Material.WOOL.getId(), (byte) _plugin.randNext(0, 15), false);
@@ -161,20 +163,21 @@ public class AdventWoolEvent
 		addRndItem(Material.PUMPKIN_SEEDS, 45);
 		addRndItem(Material.MELON_SEEDS, 25);
 
-		addRndItem(Material.WOOD_PICKAXE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
-		addRndItem(Material.STONE_PICKAXE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.WOOD_PICKAXE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.STONE_PICKAXE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
 		addRndItem(Material.IRON_PICKAXE, 0 /*
 											 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
 											 * Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS }
 											 */);
-		addRndItem(Material.GOLD_PICKAXE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
-		addRndItem(Material.DIAMOND_PICKAXE, 0 /*
-												 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-												 * Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS }
-												 */);
+		addRndItem(Material.GOLD_PICKAXE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.DIAMOND_PICKAXE,
+				0 /*
+					 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY,
+					 * Enchantment.LOOT_BONUS_BLOCKS }
+					 */);
 
 		addRndItem(Material.WOOD_HOE, 0);
 		addRndItem(Material.STONE_HOE, 0);
@@ -182,52 +185,54 @@ public class AdventWoolEvent
 		addRndItem(Material.GOLD_HOE, 0);
 		addRndItem(Material.DIAMOND_HOE, 0);
 
-		addRndItem(Material.WOOD_SWORD,
-				new Enchantment[] { Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD,
-						Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS });
-		addRndItem(Material.STONE_SWORD,
-				new Enchantment[] { Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD,
-						Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS });
-		addRndItem(Material.IRON_SWORD, 0 /*
-										 * new Enchantment[] { Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS,
-										 * Enchantment.DAMAGE_UNDEAD, Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT,
-										 * Enchantment.LOOT_BONUS_MOBS }
-										 */);
-		addRndItem(Material.GOLD_SWORD,
-				new Enchantment[] { Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD,
-						Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS });
-		addRndItem(Material.DIAMOND_SWORD, 0 /*
-											 * new Enchantment[] { Enchantment.DAMAGE_ALL,
-											 * Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD,
-											 * Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT,
-											 * Enchantment.LOOT_BONUS_MOBS }
-											 */);
+		addRndItem(Material.WOOD_SWORD, new Enchantment[]
+		{ Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD, Enchantment.KNOCKBACK,
+				Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS });
+		addRndItem(Material.STONE_SWORD, new Enchantment[]
+		{ Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD, Enchantment.KNOCKBACK,
+				Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS });
+		addRndItem(Material.IRON_SWORD,
+				0 /*
+					 * new Enchantment[] { Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS,
+					 * Enchantment.DAMAGE_UNDEAD, Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT,
+					 * Enchantment.LOOT_BONUS_MOBS }
+					 */);
+		addRndItem(Material.GOLD_SWORD, new Enchantment[]
+		{ Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD, Enchantment.KNOCKBACK,
+				Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS });
+		addRndItem(Material.DIAMOND_SWORD,
+				0 /*
+					 * new Enchantment[] { Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS,
+					 * Enchantment.DAMAGE_UNDEAD, Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT,
+					 * Enchantment.LOOT_BONUS_MOBS }
+					 */);
 
-		addRndItem(Material.WOOD_SPADE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
-		addRndItem(Material.STONE_SPADE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.WOOD_SPADE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.STONE_SPADE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
 		addRndItem(Material.IRON_SPADE, 0 /*
-										 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-										 * Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS }
-										 */);
-		addRndItem(Material.GOLD_SPADE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
-		addRndItem(Material.DIAMOND_SPADE, 0 /*
 											 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
 											 * Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS }
 											 */);
+		addRndItem(Material.GOLD_SPADE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.DIAMOND_SPADE,
+				0 /*
+					 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY,
+					 * Enchantment.LOOT_BONUS_BLOCKS }
+					 */);
 
-		addRndItem(Material.WOOD_AXE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
-		addRndItem(Material.STONE_AXE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.WOOD_AXE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.STONE_AXE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
 		addRndItem(Material.IRON_AXE, 0 /*
 										 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
 										 * Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS }
 										 */);
-		addRndItem(Material.GOLD_AXE, new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
-				Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
+		addRndItem(Material.GOLD_AXE, new Enchantment[]
+		{ Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS });
 		addRndItem(Material.DIAMOND_AXE, 0 /*
 											 * new Enchantment[] { Enchantment.SILK_TOUCH, Enchantment.DIG_SPEED,
 											 * Enchantment.DURABILITY, Enchantment.LOOT_BONUS_BLOCKS }
@@ -243,42 +248,43 @@ public class AdventWoolEvent
 
 	private ItemStack[] generateRandomItems()
 	{
-		HashSet<ItemStack> items = new HashSet<ItemStack>();
+		final HashSet<ItemStack> items = new HashSet<ItemStack>();
 
 		int itemCount = _plugin.randNext(3, 6);
 
 		while (itemCount > 0)
 		{
-			RandomItem rndItem = _rndItems.get(_plugin.randNext(0, _rndItems.size()));
+			final RandomItem rndItem = _rndItems.get(_plugin.randNext(0, _rndItems.size()));
 			items.add(rndItem.create());
 			itemCount--;
 		}
 
-		return items.toArray(new ItemStack[] {});
+		return items.toArray(new ItemStack[]
+		{});
 	}
 
 	private boolean isLocationCorrect(Location location)
 	{
-		int x = location.getBlockX();
-		int y = location.getBlockY();
-		int z = location.getBlockZ();
-		if (x == 158 && y == 67 && z == 117)
+		final int x = location.getBlockX();
+		final int y = location.getBlockY();
+		final int z = location.getBlockZ();
+		if (x == 265 && y == 60 && z == 133)
 			return true;
-		if (x == 159 && y == 67 && z == 115)
+		if (x == 266 && y == 59 && z == 125)
 			return true;
-		if (x == 162 && y == 67 && z == 114)
+		if (x == 265 && y == 60 && z == 129)
 			return true;
-		if (x == 163 && y == 67 && z == 118)
+		if (x == 260 && y == 59 && z == 125)
 			return true;
-		if (x == 163 && y == 71 && z == 113)
+		if (x == 258 && y == 59 && z == 127)
 			return true;
-		if (x == 157 && y == 72 && z == 118)
+		if (x == 260 && y == 59 && z == 138)
 			return true;
-		if (x == 162 && y == 74 && z == 118)
+		if (x == 267 && y == 59 && z == 138)
 			return true;
-		if (x == 158 && y == 76 && z == 115)
+		if (x == 270 && y == 59 && z == 130)
 			return true;
-		if (x == 161 && y == 78 && z == 115)
+		if (x == 262 && y == 59 && z == 124)
 			return true;
 		return false;
 	}
@@ -286,7 +292,7 @@ public class AdventWoolEvent
 	public void onWoolClick(Player player, Block block)
 	{
 		// User user = _plugin.getUsersManager().getUser(player.getName());
-		Location location = block.getLocation();
+		final Location location = block.getLocation();
 		if (isLocationCorrect(location))
 		{
 			// if (!user.getBooleanVariable("adventWool")) return;
@@ -295,11 +301,11 @@ public class AdventWoolEvent
 			// user.setBooleanVariable("adventWool", false);
 			// user.saveToFile();
 			_plugin.setAventDate(player.getName());
-			player.sendMessage(ChatColor.RED + "[Noël] " + ChatColor.GOLD
-					+ "Vous venez d'ouvrir votre laine de l'avent !");
+			player.sendMessage(
+					ChatColor.RED + "[Noël] " + ChatColor.GOLD + "Vous venez d'ouvrir votre laine de l'avent !");
 			block.getWorld().playEffect(location, Effect.POTION_BREAK, 1);
-			ItemStack[] stacks = generateRandomItems();
-			for (ItemStack stack : stacks)
+			final ItemStack[] stacks = generateRandomItems();
+			for (final ItemStack stack : stacks)
 			{
 				if (stack == null)
 					continue;
