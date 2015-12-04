@@ -61,6 +61,13 @@ public class WorldsManager
 			creator.environment(World.Environment.NORMAL);
 			creator.createWorld();
 		}
+		if (!isLoaded("world_noel"))
+		{
+			final WorldCreator creator = new WorldCreator("world_noel");
+			creator.generator(new EmptyChunkGenerator());
+			creator.environment(World.Environment.NORMAL);
+			creator.createWorld();
+		}
 		_spawn = new Location(getWorld(), 145.5D, 107D, 130.5D, 270F, 0F);
 		_spawnNether = new Location(getNether(), 96, 46, 176, 0, 0);
 		_spawnTheEnd = new Location(getTheEnd(), 4.5D, 61D, 23.5D, 0F, 0F);
