@@ -1,11 +1,13 @@
 package fr.heavencraft.heavenrp.worlds;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 
 import fr.heavencraft.heavencore.CorePermissions;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
@@ -94,6 +96,20 @@ public class WorldsListener extends AbstractListener<HeavenPlugin>
 					return;
 			}
 			PlayerUtil.teleportPlayer(event.getPlayer(), destination);
+		}
+	}
+	
+	@EventHandler
+	public void onChunkUnload(ChunkUnloadEvent event)
+	{
+		final Chunk spawnChunk = WorldsManager.getSpawn().getChunk();
+		// If is spawn chunk, do not unload
+		if(event.getChunk().getWorld().getName().equals(spawnChunk.getWorld().getName()) 
+				&& event.getChunk().getX() == spawnChunk.getX()
+				&& event.getChunk().getZ() == spawnChunk.getZ())
+		{
+			event.setCancelled(true);
+			return;
 		}
 	}
 }
