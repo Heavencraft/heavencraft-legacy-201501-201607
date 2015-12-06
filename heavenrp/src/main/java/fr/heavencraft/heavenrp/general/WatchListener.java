@@ -1,9 +1,12 @@
 package fr.heavencraft.heavenrp.general;
 
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -42,7 +45,7 @@ public class WatchListener extends AbstractListener<HeavenPlugin>
 					break;
 
 				case RIGHT_CLICK_AIR:
-					world.strikeLightning(player.getTargetBlock((Set<Material>) null, 120).getLocation());
+					world.strikeLightningEffect(player.getTargetBlock((Set<Material>) null, 120).getLocation());
 					event.setCancelled(true);
 					break;
 
@@ -52,7 +55,11 @@ public class WatchListener extends AbstractListener<HeavenPlugin>
 					break;
 
 				case RIGHT_CLICK_BLOCK:
-					world.strikeLightning(event.getClickedBlock().getLocation());
+					world.strikeLightningEffect(event.getClickedBlock().getLocation());
+					List<Entity> nearbyE = player.getNearbyEntities(1,  1, 1);
+					if(nearbyE.size() >= 1 && nearbyE.get(0) instanceof LivingEntity){
+						((LivingEntity)nearbyE.get(0)).damage(5.0);
+					}
 					event.setCancelled(true);
 					break;
 
