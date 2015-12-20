@@ -166,17 +166,17 @@ public class ProvincesManager
 	public static List<Province> getProvinces() {
 		List<Province> provinces = new ArrayList<Province>();
 		
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT * FROM mayor_cities"))
+		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("SELECT * FROM mayor_cities"))
 		{
 			final ResultSet rs = ps.executeQuery();
-	
+			Bukkit.broadcastMessage(rs.getRow() + "   ");
 			while(rs.next())
-			 provinces.add(new Province(rs));
+				provinces.add(new Province(rs));
 		}
 		catch (final SQLException ex)
 		{
 			ex.printStackTrace();
+			return null;
 		}
 		return provinces;
 	}
