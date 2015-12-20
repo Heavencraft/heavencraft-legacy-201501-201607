@@ -34,6 +34,7 @@ import fr.heavencraft.heavenrp.commands.homes.TphomeCommand;
 import fr.heavencraft.heavenrp.commands.horses.ChevalCommand;
 import fr.heavencraft.heavenrp.commands.hps.HpsCommand;
 import fr.heavencraft.heavenrp.commands.key.KeyCommand;
+import fr.heavencraft.heavenrp.commands.province.ProvinceCommand;
 import fr.heavencraft.heavenrp.commands.warps.WarpCommand;
 import fr.heavencraft.heavenrp.economy.EconomyListener;
 import fr.heavencraft.heavenrp.economy.GoldDropListener;
@@ -116,6 +117,9 @@ public class InitManager
 		new HomeCommand(plugin);
 		new SethomeCommand(plugin);
 		new TphomeCommand(plugin);
+		
+		// Provinces
+		new ProvinceCommand(plugin);
 
 		// Horses
 		new ChevalCommand(plugin);
