@@ -58,16 +58,16 @@ public class ParcheminPousseeQuantique implements IParchemin
 			public void run()
 			{
 
-				ParticleEffect.CLOUD.display(10, 0, 0, 0, 10, player.getPlayer().getLocation(), 1000);
-
-				List<Entity> entities = player.getPlayer().getNearbyEntities(6, 6, 6);
-				for (Entity e : entities)
-				{
-					Vector unitVector = e.getLocation().toVector()
-							.subtract(player.getPlayer().getLocation().toVector()).normalize();
-					// Set speed and push entity:
-					e.setVelocity(unitVector.multiply(4.0));
-				}
+//				ParticleEffect.CLOUD.display(10, 0, 0, 0, 10, player.getPlayer().getLocation(), 1000);
+//
+//				List<Entity> entities = player.getPlayer().getNearbyEntities(6, 6, 6);
+//				for (Entity e : entities)
+//				{
+//					Vector unitVector = e.getLocation().toVector()
+//							.subtract(player.getPlayer().getLocation().toVector()).normalize();
+//					// Set speed and push entity:
+//					e.setVelocity(unitVector.multiply(4.0));
+//				}
 
 				player.getPlayer().removePotionEffect(PotionEffectType.SLOW);
 				player.getPlayer().removePotionEffect(PotionEffectType.SLOW_DIGGING);
