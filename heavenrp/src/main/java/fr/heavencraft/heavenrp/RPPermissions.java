@@ -18,7 +18,9 @@ public class RPPermissions
 	public static final String TPHOME = "heavencraft.commands.tphome";
 	public static final String WARP = "heavencraft.commands.warp";
 	public static final String POSTE_ADMIN = "heavencraft.commands.poste.admin";
-
+	public static final String PROVINCE_EFFECT = "heavencraft.commands.province.effects";
+	public static final String PROVINCE_POINTS = "heavencraft.commands.province.points";
+	
 	/*
 	 * Signs
 	 */
