@@ -49,7 +49,8 @@ import fr.heavencraft.heavenrp.general.ServerListener;
 import fr.heavencraft.heavenrp.general.WatchListener;
 import fr.heavencraft.heavenrp.general.users.UserListener;
 import fr.heavencraft.heavenrp.horses.HorsesListener;
-import fr.heavencraft.heavenrp.key.DonjonSignListener;
+import fr.heavencraft.heavenrp.key.KeySignListener;
+import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceSignListener;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
@@ -120,6 +121,7 @@ public class InitManager
 		
 		// Provinces
 		new ProvinceCommand(plugin);
+		new ProvinceEffectTask(plugin);
 
 		// Horses
 		new ChevalCommand(plugin);
@@ -188,7 +190,7 @@ public class InitManager
 		new HorsesListener(plugin);
 
 		// Key
-		new DonjonSignListener(plugin);
+		new KeySignListener(plugin);
 
 		// Provinces
 		ProvinceScoreboard.initialize();

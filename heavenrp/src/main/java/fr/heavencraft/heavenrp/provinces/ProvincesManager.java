@@ -4,10 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
@@ -17,6 +19,8 @@ import fr.heavencraft.heavenrp.exceptions.ProvinceNotFoundException;
 
 public class ProvincesManager
 {
+	private static boolean applyEffects = true;
+	
 	public static class Province
 	{
 		private final int _id;
@@ -30,6 +34,7 @@ public class ProvincesManager
 			_id = rs.getInt("id");
 			_login = rs.getString("login");
 			_color = "§" + rs.getString("color");
+			_points = rs.getInt("points");
 
 			final String world = rs.getString("world");
 			final double x = rs.getDouble("x");
@@ -37,10 +42,8 @@ public class ProvincesManager
 			final double z = rs.getDouble("z");
 			final float yaw = rs.getFloat("yaw");
 			final float pitch = rs.getFloat("pitch");
-			final int points = rs.getInt("points");
 
 			_warp = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
-			_points = points;
 		}
 
 		private Province(int id, String login, String color, String world, double x, double y, double z,
@@ -145,7 +148,7 @@ public class ProvincesManager
 		try (PreparedStatement ps = HeavenRP
 				.getConnection()
 				.prepareStatement(
-						"SELECT mc.id, mc.login, mc.color, mc.world, mc.x, mc.y, mc.z, mc.yaw, mc.pitch FROM mayor_cities mc, mayor_people mp WHERE mc.id = mp.city_id AND mp.user_id = ? LIMIT 1"))
+						"SELECT mc.id, mc.login, mc.color, mc.world, mc.x, mc.y, mc.z, mc.yaw, mc.pitch, mc.points FROM mayor_cities mc, mayor_people mp WHERE mc.id = mp.city_id AND mp.user_id = ? LIMIT 1"))
 		{
 			ps.setInt(1, user.getId());
 
@@ -169,7 +172,6 @@ public class ProvincesManager
 		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("SELECT * FROM mayor_cities"))
 		{
 			final ResultSet rs = ps.executeQuery();
-			Bukkit.broadcastMessage(rs.getRow() + "   ");
 			while(rs.next())
 				provinces.add(new Province(rs));
 		}
@@ -181,6 +183,45 @@ public class ProvincesManager
 		return provinces;
 	}
 	
+	public static void setPoints(Province province, int pts) throws HeavenException {
+		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
+				"UPDATE mayor_cities SET points = ? WHERE id = ?"))
+		{
+			ps.setInt(1, pts);
+			ps.setInt(2, province.getId());
+			if (ps.executeUpdate() == 0)
+				throw new HeavenException("Une erreur est survenue lors de l'operation.");
+		}
+		catch (final SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	
+	public static Collection<PotionEffect> getEffects(Province p) {
+		Collection<PotionEffect> effects = new ArrayList<PotionEffect>();
+		// Get the province level
+		int level = getLevel(p.getPoints());
+		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
+				"SELECT * FROM province_effects WHERE level = ?"))
+		{
+			ps.setInt(1, level);
+			final ResultSet rs = ps.executeQuery();
+
+			while (rs.next())
+			{
+				PotionEffectType pet = getEffectType(rs.getInt("effect_id"));
+				PotionEffect pe = new PotionEffect(pet, 20*60*5, 1);
+				effects.add(pe);
+			}
+			return effects;
+		}
+		catch (final SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+		return null;
+	}
 	
 	/**
 	 * Returns a level by points
@@ -278,5 +319,15 @@ public class ProvincesManager
 		if(effectId == 23)
 			return PotionEffectType.SATURATION;
 		return null;
+	}
+
+	public static boolean applyEffects()
+	{
+		return applyEffects;
+	}
+
+	public static void setApplyEffects(boolean applyEffects)
+	{
+		ProvincesManager.applyEffects = applyEffects;
 	}
 }
