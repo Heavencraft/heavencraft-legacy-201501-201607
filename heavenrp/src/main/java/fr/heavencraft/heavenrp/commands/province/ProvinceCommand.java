@@ -2,7 +2,6 @@ package fr.heavencraft.heavenrp.commands.province;
 
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -18,9 +17,9 @@ import fr.heavencraft.heavenrp.provinces.ProvincesManager.Province;
 public class ProvinceCommand extends AbstractCommandExecutor
 {
 	private final static String PROVINCE_LIST_ENTRY = "- {%1$s} | Niveau: {%2$d} ({%3$d} Points)";
-	private final static String PROVINCE_EFFECT_STATE_CHANGE = "Les effets due au niveau des provinces sont: {%1$s}.";
-	private final static String PROVINCE_POINTS_UPDATED = "Le nombre de points a été mis a jour.";
-	private final static String PROVINCE_POINTS_BROADCAST = "La province {%1$s}({%2$d}) a atteint {%3$d} points.";
+	private final static String PROVINCE_EFFECT_STATE_CHANGE = "Les effets originaires des niveaux de province sont: {%1$s}.";
+	private final static String PROVINCE_POINTS_UPDATED = "Le nombre de points a été mis a jour. ({%1$s}, {%2$d} --> {%3$d} pts)";
+	private final static String PROVINCE_POINTS_BROADCAST = "La province {%1$s} a atteint {%3$d} points. Elle est niveau {%2$d} !";
 	
 	public ProvinceCommand(HeavenRP plugin)
 	{
@@ -32,7 +31,7 @@ public class ProvinceCommand extends AbstractCommandExecutor
 	{
 		// List provinces
 		if(args.length == 0) {
-			List<Province> provinces = ProvincesManager.getProvinces();
+			List<Province> provinces = ProvincesManager.getProvinces(true);
 			for(int i = 0; i < provinces.size(); i++) {
 				final int pts = provinces.get(i).getPoints();
 				ChatUtil.sendMessage(player, PROVINCE_LIST_ENTRY, 
@@ -59,11 +58,19 @@ public class ProvinceCommand extends AbstractCommandExecutor
 				return;
 			}
 		}
-		// Set/add/remove points
+		
+		// If we have rights to edit, call onConsoleCommand
+		if(player.hasPermission(RPPermissions.PROVINCE_POINTS)) {
+			onConsoleCommand(player, args);
+			return;
+		}
+		sendUsage(player);
+	}
+
+	@Override
+	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
+	{
 		if(args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("remove")) {
-			// Does the user has the permission?
-			if(!player.hasPermission(RPPermissions.PROVINCE_POINTS))
-				throw new HeavenException("Vous n'avez pas la permission.");
 			// Do we have the right amount of args?
 			if(args.length != 3)
 				throw new HeavenException("Commande Invalide");
@@ -73,39 +80,33 @@ public class ProvinceCommand extends AbstractCommandExecutor
 			if(p == null) 
 				throw new HeavenException("Province Invalide");
 			// Execute
-			int amount = p.getPoints();
-			int newPoints = amount;
+			int oldPoints = p.getPoints();
+			int newPoints = oldPoints;
 			int requestedPoints = DevUtil.toUint(args[2]);
 			// Set to new point count
 			if(args[0].equalsIgnoreCase("set"))
 				newPoints = requestedPoints;
 			// Add new amount to existing amount
 			if(args[0].equalsIgnoreCase("add"))
-				newPoints = amount + requestedPoints;
+				newPoints = oldPoints + requestedPoints;
 			// Remove some points
 			if(args[0].equalsIgnoreCase("remove"))
-				if((amount - requestedPoints) > 0)
-					newPoints = amount - requestedPoints;
+				if((oldPoints - requestedPoints) > 0)
+					newPoints = oldPoints - requestedPoints;
 				else 
 					newPoints = 0;
 			// Update points
 			ProvincesManager.setPoints(p, newPoints);
 			// Inform player
-			ChatUtil.sendMessage(player, PROVINCE_POINTS_UPDATED);
+			ChatUtil.sendMessage(sender, PROVINCE_POINTS_UPDATED, p.getName(), oldPoints, newPoints );
 			// If it is %10 OR amount is over 10 pts  than newPoints
-			if(((newPoints % 10 == 0) || ((amount + 10) <= newPoints)) && newPoints != amount)
-					ChatUtil.sendMessage(player, PROVINCE_POINTS_BROADCAST,
-							p.getName(), ProvincesManager.getLevel(newPoints), newPoints);
+			if(((newPoints % 10 == 0) || ((oldPoints + 10) <= newPoints)) && newPoints != oldPoints)
+				ChatUtil.broadcastMessage(PROVINCE_POINTS_BROADCAST,
+						p.getName(), ProvincesManager.getLevel(newPoints), newPoints);
 			return;
-		}	
-		
-		sendUsage(player);
-	}
-
-	@Override
-	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
-	{
-		throw new HeavenException("Commande interdite depuis la console.");
+		}
+		else
+			sendUsage(sender);
 	}
 
 	@Override
