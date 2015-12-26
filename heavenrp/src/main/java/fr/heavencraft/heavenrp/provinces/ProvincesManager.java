@@ -223,7 +223,7 @@ public class ProvincesManager
 			while (rs.next())
 			{
 				PotionEffectType pet = getEffectType(rs.getInt("effect_id"));
-				PotionEffect pe = new PotionEffect(pet, 20*60*5, 1);
+				PotionEffect pe = new PotionEffect(pet, 20*60*5, 0);
 				effects.add(pe);
 			}
 			return effects;
