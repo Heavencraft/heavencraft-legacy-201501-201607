@@ -12,6 +12,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import fr.heavencraft.heavencore.CorePlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 /**
  * API to create interactive menus.
@@ -22,19 +23,12 @@ public class MenuAPI {
 	/*
 	 *MenuAPI
 	 */
-	private static Map<String, Menu> menues;
-	private static Map<String, Inventory> sessions;
-	private static Map<String, TextField> textFields;
-	private static Map<String, ItemStack> handSave;
-	
-	public MenuAPI() {
-		MenuAPI.menues = new HashMap<String, Menu>();
-		MenuAPI.sessions = new HashMap<String, Inventory>();			
-		MenuAPI.textFields = new HashMap<String, TextField>();
-		MenuAPI.handSave = new HashMap<String, ItemStack>();
-	}
-	
-	public static void openMenu(final Player player, Menu menu) throws HeavenException {
+	private static Map<String, Menu> menues = new HashMap<String, Menu>();
+	private static Map<String, Inventory> sessions = new HashMap<String, Inventory>();
+	private static Map<String, TextField> textFields = new HashMap<String, TextField>();
+	private static Map<String, ItemStack> handSave = new HashMap<String, ItemStack>();
+		
+	public static void openMenu(Player player, Menu menu) throws HeavenException {
 		if(player == null)
 			throw new HeavenException("Cet utilisateur n'existe pas.");
 		if(menu == null)
@@ -139,7 +133,7 @@ public class MenuAPI {
 	}
 	
 	public static boolean hasTextField(Player player) {
-		return MenuAPI.getTextField(player) != null;
+		return (MenuAPI.getTextField(player) != null);
 	}
 
 	public static Map<String, Inventory> getSessions() {
