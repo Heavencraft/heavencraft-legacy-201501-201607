@@ -12,7 +12,6 @@ import org.bukkit.inventory.PlayerInventory;
 
 import fr.heavencraft.heavencore.CorePlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 /**
  * API to create interactive menus.
