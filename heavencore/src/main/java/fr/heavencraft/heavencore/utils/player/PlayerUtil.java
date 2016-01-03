@@ -81,4 +81,14 @@ public class PlayerUtil
 			}
 		});
 	}
+	
+	/**
+	 * Returns the UUID of the player wihout "-"
+	 * @param player
+	 * @return
+	 */
+	public static String getUUID(Player player)
+	{
+		return player.getUniqueId().toString().replaceAll("-", "");
+	}
 }
