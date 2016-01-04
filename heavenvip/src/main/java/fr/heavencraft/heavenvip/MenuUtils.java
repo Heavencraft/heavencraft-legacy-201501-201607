@@ -45,7 +45,7 @@ public class MenuUtils
 
 		return res.toArray(new String[0]);
 	}
-	
+
 	/**
 	 * Generates a default Lore for an effect
 	 * @param title
@@ -92,7 +92,7 @@ public class MenuUtils
 					MenuAPI.openMenu(player, lastMenu);
 				}
 			});
-		
+
 		// HPS count
 		int hpsCount;
 		try
@@ -115,20 +115,21 @@ public class MenuUtils
 			});
 		}
 	}
-	
+
 	/**
 	 * Add a player equipment
 	 * @param effectType ex: 'p' for particle.
 	 * @param p Player
 	 * @param effectId id of the effect
 	 */
-	public static void equipEffect(char effectType, Player p, int effectId)
+	public static void equipEffect(char effectType, Player p, int effectId, IMenuUpdateCallback callback)
 	{
 		ChatUtil.broadcastMessage("EQUIP :" + effectType +  " player: " + p.getName() +  " effect: " + effectId);
 		QueriesHandler.addQuery(new UpdateEquipedEffectsQuery(effectType, PlayerUtil.getUUID(p), effectId){
 			@Override
 			public void onSuccess()
 			{
+				callback.success();
 			}
 			@Override
 			public void onHeavenException(HeavenException ex)
@@ -141,7 +142,44 @@ public class MenuUtils
 				{
 				}
 				ChatUtil.sendMessage(p, ex.getMessage());
+				callback.fail();
 			}
 		});
+	}
+	
+	/**
+	 * Remove equipment
+	 * @param effectType
+	 * @param p
+	 * @param effectId
+	 */
+	public static void unequipEffect(char effectType, Player p, int effectId, IMenuUpdateCallback callback)
+	{
+		QueriesHandler.addQuery(new UnequipEffectQuery(effectType, PlayerUtil.getUUID(p), effectId){
+			@Override
+			public void onSuccess()
+			{
+				callback.success();
+			}
+			@Override
+			public void onHeavenException(HeavenException ex)
+			{
+				try
+				{
+					MenuAPI.closeMenu(p);
+				}
+				catch (HeavenException e)
+				{
+				}
+				ChatUtil.sendMessage(p, ex.getMessage());
+				callback.fail();
+			}
+		});
+	}
+	
+	public interface IMenuUpdateCallback
+	{
+	    public void success ();
+	    public void fail ();
 	}
 }
