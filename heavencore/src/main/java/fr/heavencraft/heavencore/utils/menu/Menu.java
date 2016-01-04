@@ -40,8 +40,8 @@ public class Menu implements Cloneable {
 		if (lines > Menu.MAX_HEIGHT) {
 			lines = Menu.MAX_HEIGHT; 
 		}
-		this.options = new Option[9][lines];
 		this.height = lines;
+		this.options = new Option[9][lines];
 	}
 	
 	public Menu setTitle(String title) {
@@ -104,8 +104,36 @@ public class Menu implements Cloneable {
 		return this.width;
 	}
 	
+	/**
+	 * Returns the number of lines.
+	 * @return
+	 */
 	public final int getHeight() {
 		return this.height;
+	}
+	
+	/**
+	 * Adds lines to a menu. Recommended for incrementing lines count only.
+	 * @param lines
+	 */
+	public void extendLines(int lines){
+		if (lines > Menu.MAX_HEIGHT) {
+			lines = Menu.MAX_HEIGHT; 
+		}
+		this.height = lines;
+		// Copy
+		Option[][] oldOption = this.options;
+		// Regenerate option table
+		this.options = new Option[9][lines];
+		// Add old elements
+		for (int x = 0; x < oldOption.length; x++) {
+			for (int y = 0; y < oldOption[x].length; y++) {
+				Option option = oldOption[x][y];
+				if (option != null) {
+					this.options[x][y] = option;
+				}
+			}
+		}
 	}
 	
 	public final int getSlots() {
