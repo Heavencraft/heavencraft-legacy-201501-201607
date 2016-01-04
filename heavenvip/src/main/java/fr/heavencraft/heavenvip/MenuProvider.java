@@ -28,7 +28,6 @@ public class MenuProvider
 	private final static String ITEM_NOT_FOR_SALE = "Cet objet n'est pas a vendre en ce moment.";
 	private final static String ITEM_BOUGHT = "Félécitaions! Vous venez d'acheter un nouvel objet! Vous pouvez dorénavant vous en équiper!";
 	private final static String NO_HPS_ACCOUNT = "Vous n'avez pas de HPS, plus d'informations: www.heavencraft.fr";
-	private final static String ALREADY_EQUIPED_ITEM = "Vous ètes déjà équipé de cet objet.";
 	
 	private final static byte PLAYER = 3;
 
@@ -266,12 +265,47 @@ public class MenuProvider
 					{
 						if(active)
 						{
-							ChatUtil.sendMessage(player, ALREADY_EQUIPED_ITEM);
+							MenuUtils.unequipEffect('p', p, effectId, new MenuUtils.IMenuUpdateCallback()
+							{
+								@Override
+								public void success()
+								{
+									try
+									{
+										MenuAPI.openMenu(player, getItemEquipMenu(player, packName, packId, lastMenu));
+									}
+									catch (HeavenException e)
+									{
+									}
+								}
+								@Override
+								public void fail()
+								{	
+								}
+							});
+							
 						}
 						else
 						{
-							MenuUtils.equipEffect('p', player, effectId);
-							MenuAPI.closeMenu(player);
+							MenuUtils.equipEffect('p', player, effectId, new MenuUtils.IMenuUpdateCallback() {
+
+								@Override
+								public void success()
+								{
+									try
+									{
+										MenuAPI.openMenu(player, getItemEquipMenu(player, packName, packId, lastMenu));
+									}
+									catch (HeavenException e)
+									{
+									}
+								}
+								@Override
+								public void fail()
+								{
+									
+								}
+							});
 						}
 					}
 				};
@@ -285,15 +319,6 @@ public class MenuProvider
 					public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current,
 							ClickType type) throws HeavenException
 					{
-						if(active)
-						{
-							ChatUtil.sendMessage(player, ALREADY_EQUIPED_ITEM);
-						}
-						else
-						{
-							MenuUtils.equipEffect('p', player, effectId);
-							MenuAPI.closeMenu(player);
-						}
 					}
 				};
 				menu.addOption(x, y+1, optLed);
