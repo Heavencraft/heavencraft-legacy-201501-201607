@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 
 public class JobActionTypeTest extends TestCase
 {
-	public void testGetByCode()
+	public void testGetActionTypeByCode()
 	{
 		assertEquals(JobActionType.BAKE, JobActionType.getActionTypeByCode('S'));
 		assertEquals(JobActionType.BREAK, JobActionType.getActionTypeByCode('B'));
