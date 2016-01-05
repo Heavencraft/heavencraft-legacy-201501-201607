@@ -20,15 +20,18 @@ import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.menu.ClickType;
 import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.MenuAPI;
+import fr.heavencraft.heavencore.utils.menu.options.CountOption;
+import fr.heavencraft.heavencore.utils.menu.options.EmptyOption;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
+import fr.heavencraft.heavenvip.querys.UpdateHPSBalanceQuery;
 
 public class MenuProvider
 {
 	private final static String ITEM_NOT_FOR_SALE = "Cet objet n'est pas a vendre en ce moment.";
 	private final static String ITEM_BOUGHT = "Félécitaions! Vous venez d'acheter un nouvel objet! Vous pouvez dorénavant vous en équiper!";
 	private final static String NO_HPS_ACCOUNT = "Vous n'avez pas de HPS, plus d'informations: www.heavencraft.fr";
-	
+
 	private final static byte PLAYER = 3;
 
 	public Menu getMainVIPMenu(Player p) {
@@ -51,6 +54,25 @@ public class MenuProvider
 			{
 				// Open the particle sub-menu
 				MenuAPI.openMenu(player, getPlayerHeadMenu(p));
+			}
+		});
+
+		//TODO remove this
+
+		menu.addOption(7, 0, new EmptyOption(Material.ANVIL) {
+			@Override
+			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
+			{
+				// Open the particle sub-menu
+				try
+				{
+					MenuAPI.openMenu(player, getTestMenu(p));
+				}
+				catch (HeavenException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -127,8 +149,8 @@ public class MenuProvider
 	 * @return
 	 */
 	public Menu getParticleMenu(Player p) {
-
 		Menu menu = new Menu("§6Particules -- HPS", 2);
+
 		// Get the list of particles
 		try (PreparedStatement ps = HeavenVIP.getMainConnection()
 				.getConnection().prepareStatement(
@@ -240,11 +262,11 @@ public class MenuProvider
 						"THEN 1 " +
 						"ELSE 0 " +
 						"END as active " +
-				"FROM vip_effects WHERE vip_effects.pack_id = ?"))
+						"FROM vip_effects WHERE vip_effects.pack_id = ?"))
 		{
 			ps.setString(1, PlayerUtil.getUUID(p));
 			ps.setInt(2, packId);
-			
+
 			final ResultSet rs = ps.executeQuery();
 			int x = 0;
 			int y = 0;
@@ -257,25 +279,33 @@ public class MenuProvider
 				final String desc = rs.getString("description");
 				final Material repMat = (Material.getMaterial(rs.getString("representative_item")) == null) ? 
 						Material.NETHER_STAR : Material.getMaterial(rs.getString("representative_item"));
+				// Generate LED
+				final short ledColor = (active ? (short)10 : (short)1);
+				final int fx = x;
+				final int fy = y;
+
 				// Generate option
 				Option opt = new Option(repMat, displayName, MenuUtils.generateEffectDescriptionLore(displayName, desc)) {
 					@Override
 					public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current,
 							ClickType type) throws HeavenException
 					{
-						if(active)
+						// Is active
+						if(MenuAPI.getMenu(player).getOption(fx, fy).getDamage() == 10)
 						{
-							MenuUtils.unequipEffect('p', p, effectId, new MenuUtils.IMenuUpdateCallback()
-							{
+							MenuUtils.unequipEffect('p', p, effectId, new MenuUtils.IMenuUpdateCallback() {
 								@Override
 								public void success()
 								{
+									MenuAPI.getMenu(player).getOption(fx, fy +1).setDamage((short)1);
 									try
 									{
-										MenuAPI.openMenu(player, getItemEquipMenu(player, packName, packId, lastMenu));
+										MenuAPI.getMenu(player).refresh(player);
+										ChatUtil.broadcastMessage("Refresh");
 									}
 									catch (HeavenException e)
 									{
+										e.printStackTrace();
 									}
 								}
 								@Override
@@ -283,18 +313,19 @@ public class MenuProvider
 								{	
 								}
 							});
-							
+
 						}
 						else
 						{
 							MenuUtils.equipEffect('p', player, effectId, new MenuUtils.IMenuUpdateCallback() {
-
 								@Override
 								public void success()
 								{
+									MenuAPI.getMenu(player).getOption(fx, fy +1).setDamage((short)10);
 									try
 									{
-										MenuAPI.openMenu(player, getItemEquipMenu(player, packName, packId, lastMenu));
+										MenuAPI.getMenu(player).refresh(player);
+										ChatUtil.broadcastMessage("Refresh");
 									}
 									catch (HeavenException e)
 									{
@@ -303,7 +334,6 @@ public class MenuProvider
 								@Override
 								public void fail()
 								{
-									
 								}
 							});
 						}
@@ -311,8 +341,7 @@ public class MenuProvider
 				};
 				// Representative item
 				menu.addOption(x, y, opt);
-				// Generate LED
-				final short ledColor = (active ? (short)10 : (short)1);
+
 				Option optLed = new Option(Material.INK_SACK, ledColor, "") {
 
 					@Override
@@ -322,7 +351,7 @@ public class MenuProvider
 					}
 				};
 				menu.addOption(x, y+1, optLed);
-				
+
 				// Handle wrapping
 				x+=2;
 				// have we filled a line?
@@ -412,4 +441,38 @@ public class MenuProvider
 		});
 		return menu;
 	}
+
+
+
+	public Menu getTestMenu(Player p) {
+		Menu menu = new Menu("§6TEST", 3);
+
+		// Emtpy menu
+		menu.addOption(0, 0, new EmptyOption(Material.CLAY));
+
+		// Count Option
+		menu.addOption(1, 0, new CountOption(Material.WOOD) {
+			@Override
+			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
+					throws HeavenException
+			{
+				ChatUtil.broadcastMessage("COUNT OF: " + current.getAmount());
+			}
+		});
+
+		// Inventory Update test
+		menu.addOption(2, 0, new Option(Material.STONE, (short)3, 1, ChatColor.GOLD + "Blablabla") {
+			@Override
+			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type) throws HeavenException
+			{
+				// Open the particle sub-menu
+				MenuAPI.getMenu(player).addOption(1, 2, new EmptyOption(Material.BEDROCK));
+				MenuAPI.getMenu(player).refresh(player);
+				ChatUtil.broadcastMessage("Blablabla");
+			}
+		});
+
+		return menu;
+	}
+
 }
