@@ -1,10 +1,11 @@
-package fr.heavencraft.heavenvip;
+package fr.heavencraft.heavenvip.querys;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import fr.heavencraft.async.queries.AbstractQuery;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavenvip.HeavenVIP;
 
 public class UnequipEffectQuery extends AbstractQuery
 {
