@@ -6,14 +6,17 @@ public class JobUtilTest extends TestCase
 {
 	public void testGetLevelFromXp()
 	{
-		// At level 498, the optimized method is shifted of 1xp (limitation of double mantissa)
+		// At level 498, the optimized method is shifted of 1xp (limitation of double precision)
+		// but 497 levels should be enough
 		for (int level = 1; level != 498; level++)
 		{
 			long minXp = getXpToLevel(level);
 			long maxXp = getXpToLevel(level + 1) - 1;
+			long midXp = (minXp + maxXp) / 2;
 
 			System.out.println("Level " + level + ": [" + minXp + " - " + maxXp + "]");
 			assertEquals(level, JobUtil.getLevelFromXp(minXp));
+			assertEquals(level, JobUtil.getLevelFromXp(midXp));
 			assertEquals(level, JobUtil.getLevelFromXp(maxXp));
 		}
 	}
