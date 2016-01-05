@@ -20,7 +20,7 @@ public class HeavenVipCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		MenuAPI.openMenu(player, menuProvider.getMainVIPMenu(player));
+		//MenuAPI.openMenu(player, menuProvider.getMainVIPMenu(player));
 	}
 
 	@Override

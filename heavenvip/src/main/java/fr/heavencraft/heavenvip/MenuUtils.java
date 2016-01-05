@@ -16,9 +16,22 @@ import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.MenuAPI;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
+import fr.heavencraft.heavenvip.menues.VipMenuItem;
+import fr.heavencraft.heavenvip.querys.UnequipEffectQuery;
+import fr.heavencraft.heavenvip.querys.UpdateEquipedEffectsQuery;
 
 public class MenuUtils
 {
+	
+	
+	public static void openMenu(VipMenuItem vipItem, Player p) 
+	{
+		Menu m = MenuAPI.getMenu(p);
+		if(m == null) {
+			m = new Menu()
+		}
+	}
+	
 	/**
 	 * Generates a default Lore for Store Items
 	 * @param title
