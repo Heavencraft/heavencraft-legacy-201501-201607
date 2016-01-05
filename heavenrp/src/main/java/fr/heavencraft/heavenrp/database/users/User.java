@@ -108,11 +108,13 @@ public class User
 
 	public Job getJob()
 	{
-		return Job.getJobByName(jobName);
+		return null; // TODO
+		// return Job.getJobByName(jobName);
 	}
 
 	public int getJobExperience()
 	{
-		return jobExperience;
+		return 0; // TODO
+		// return jobExperience;
 	}
 }
