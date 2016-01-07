@@ -8,6 +8,7 @@ import java.util.Date;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavenrp.jobs.Job;
+import fr.heavencraft.heavenrp.jobs.JobProvider;
 
 public class User
 {
@@ -20,6 +21,7 @@ public class User
 	private final Timestamp lastLogin;
 	private final int provinceChanges;
 	private final String jobName;
+	private final int jobExperience;
 
 	User(ResultSet rs) throws SQLException
 	{
@@ -32,6 +34,7 @@ public class User
 		lastLogin = rs.getTimestamp("last_login");
 		provinceChanges = rs.getInt("province_changes");
 		jobName = rs.getString("job_name");
+		jobExperience = rs.getInt("job_experience");
 	}
 
 	public int getId()
@@ -108,13 +111,11 @@ public class User
 
 	public Job getJob()
 	{
-		return null; // TODO
-		// return Job.getJobByName(jobName);
+		return JobProvider.getJobByName(jobName);
 	}
 
 	public int getJobExperience()
 	{
-		return 0; // TODO
-		// return jobExperience;
+		return jobExperience;
 	}
 }
