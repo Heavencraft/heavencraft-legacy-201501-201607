@@ -66,6 +66,11 @@ public class MenuAPI {
 		return true;
 	}
 	
+	/**
+	 * Returns the opened menu of the player.
+	 * @param player
+	 * @return
+	 */
 	public static Menu getMenu(Player player) {
 		return MenuAPI.getMenues().get(player.getName());
 	}

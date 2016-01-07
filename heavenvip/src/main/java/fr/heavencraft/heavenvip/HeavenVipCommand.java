@@ -8,10 +8,10 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.menu.MenuAPI;
+import fr.heavencraft.heavenvip.menus.MainMenu;
 
 public class HeavenVipCommand extends AbstractCommandExecutor
 {
-	private MenuProvider menuProvider = new MenuProvider();
 	public HeavenVipCommand(HeavenPlugin plugin)
 	{
 		super(plugin, "vip");
@@ -21,6 +21,9 @@ public class HeavenVipCommand extends AbstractCommandExecutor
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
 		//MenuAPI.openMenu(player, menuProvider.getMainVIPMenu(player));
+		// Open main menu
+		MainMenu mmenu = new MainMenu();
+		mmenu.openNewMenu(player);
 	}
 
 	@Override
