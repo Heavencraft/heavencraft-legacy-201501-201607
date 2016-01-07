@@ -16,21 +16,13 @@ import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.MenuAPI;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
-import fr.heavencraft.heavenvip.menues.VipMenuItem;
+import fr.heavencraft.heavenvip.menus.IVipMenu;
+import fr.heavencraft.heavenvip.menus.VipMenu;
 import fr.heavencraft.heavenvip.querys.UnequipEffectQuery;
 import fr.heavencraft.heavenvip.querys.UpdateEquipedEffectsQuery;
 
 public class MenuUtils
 {
-	
-	
-	public static void openMenu(VipMenuItem vipItem, Player p) 
-	{
-		Menu m = MenuAPI.getMenu(p);
-		if(m == null) {
-			m = new Menu()
-		}
-	}
 	
 	/**
 	 * Generates a default Lore for Store Items
@@ -121,6 +113,46 @@ public class MenuUtils
 		catch (HeavenException e)
 		{
 			actualMenu.addOption(8, y, new Option(Material.GOLD_INGOT, "Mes HPS: " + ChatColor.YELLOW + "0", e.getMessage()) {
+				@Override
+				public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
+						throws HeavenException
+				{}
+			});
+		}
+	}
+	
+	public static void attachNavigationBar(VipMenu actualMenu, VipMenu lastMenu, Player p, int y) 
+	{
+		// Check if we are in bound for the y coordinate
+		if(actualMenu.GetMenu().getHeight() <= y) {
+			actualMenu.GetMenu().extendLines(y+1);
+		}
+		// Back button
+		if(lastMenu != null)
+			actualMenu.GetMenu().addOption(0, y, new Option(Material.ARROW, "Précédent")
+			{ 
+				@Override
+				public void onClick(Menu menu, Player player, ItemStack cursor,ItemStack current, ClickType type)
+						throws HeavenException {			
+					lastMenu.openMenu(p);
+				}
+			});
+
+		// HPS count
+		int hpsCount;
+		try
+		{
+			hpsCount = HpsManager.getBalance(p.getName());
+			actualMenu.GetMenu().addOption(8, y, new Option(Material.GOLD_INGOT, "Mes HPS: " + ChatColor.YELLOW + hpsCount) {
+				@Override
+				public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
+						throws HeavenException
+				{}
+			});
+		}
+		catch (HeavenException e)
+		{
+			actualMenu.GetMenu().addOption(8, y, new Option(Material.GOLD_INGOT, "Mes HPS: " + ChatColor.YELLOW + "0", e.getMessage()) {
 				@Override
 				public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
 						throws HeavenException
