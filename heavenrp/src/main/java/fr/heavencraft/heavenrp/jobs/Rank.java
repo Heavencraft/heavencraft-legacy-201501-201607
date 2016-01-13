@@ -17,6 +17,12 @@ public enum Rank
 		this.pointsMultiplier = pointsMultiplier;
 	}
 
+	@Override
+	public String toString()
+	{
+		return getDisplayName();
+	}
+
 	public String getDisplayName()
 	{
 		return displayName;

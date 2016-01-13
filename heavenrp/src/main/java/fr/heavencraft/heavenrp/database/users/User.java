@@ -8,7 +8,7 @@ import java.util.Date;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavenrp.jobs.Job;
-import fr.heavencraft.heavenrp.jobs.JobProvider;
+import fr.heavencraft.heavenrp.jobs.JobsProvider;
 
 public class User
 {
@@ -111,7 +111,7 @@ public class User
 
 	public Job getJob()
 	{
-		return JobProvider.getJobByName(jobName);
+		return JobsProvider.getJobByName(jobName);
 	}
 
 	public int getJobExperience()
