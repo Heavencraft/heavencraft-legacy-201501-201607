@@ -18,6 +18,17 @@ public class Job
 		pointsByAction.put(action, points);
 	}
 
+	public String getDisplayName()
+	{
+		return name;
+	}
+
+	@Override
+	public String toString()
+	{
+		return getDisplayName();
+	}
+
 	public int getPointsForAction(JobAction action)
 	{
 		final Integer points = pointsByAction.get(action);

@@ -20,6 +20,7 @@ import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavenrp.database.users.UpdateJobExperienceQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
@@ -28,7 +29,7 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 {
 	private final Map<UUID, Integer> pointsByPlayer = new HashMap<UUID, Integer>();
 
-	protected JobActionListener(HeavenPlugin plugin)
+	public JobActionListener(HeavenPlugin plugin)
 	{
 		super(plugin);
 	}
@@ -37,17 +38,19 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 	{
 		ChatUtil.sendMessage(player, "[DEBUG] dispatchJobAction %1$s", action);
 
-		User user = UserProvider.getUserByName(player.getName());
+		final User user = UserProvider.getUserByName(player.getName());
 
-		Job job = user.getJob();
+		final Job job = user.getJob();
+		ChatUtil.sendMessage(player, "[DEBUG] job %1$s", job);
 		if (job == null)
 			return; // Nothing to do
 
 		int pointsToAdd = job.getPointsForAction(action);
+		ChatUtil.sendMessage(player, "[DEBUG] pointsToAdd %1$s", pointsToAdd);
 		if (pointsToAdd == 0)
 			return; // Nothing to do
 
-		Rank rank = Rank.getRankByLevel(JobUtil.getLevelFromXp(user.getJobExperience()));
+		final Rank rank = Rank.getRankByLevel(JobUtil.getLevelFromXp(user.getJobExperience()));
 		pointsToAdd = (int) (pointsToAdd * rank.getPointsMultiplier());
 
 		Integer currentPoints = pointsByPlayer.remove(player.getUniqueId());
@@ -57,10 +60,16 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 		else
 			currentPoints += pointsToAdd;
 
-		if (currentPoints > 1000)
+		ChatUtil.sendMessage(player, "[DEBUG] Added %1$s pts, total %2$s pts, Rank %3$s", pointsToAdd,
+				currentPoints, rank);
+
+		if (currentPoints >= 1000)
 		{
 			currentPoints -= 1000;
+			QueriesHandler.addQuery(new UpdateJobExperienceQuery(user, 1));
 			QueriesHandler.addQuery(new UpdateUserBalanceQuery(user, 1));
+
+			ChatUtil.sendMessage(player, "[DEBUG] Points > 1000 -> +1po +1xp", pointsToAdd, currentPoints, rank);
 		}
 
 		pointsByPlayer.put(player.getUniqueId(), currentPoints);
@@ -84,7 +93,7 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 	@EventHandler
 	private void onEntityDeath(EntityDeathEvent event) throws HeavenException
 	{
-		Player player = event.getEntity().getKiller();
+		final Player player = event.getEntity().getKiller();
 
 		if (player == null)
 			return;
@@ -95,11 +104,11 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 	@EventHandler(ignoreCancelled = true)
 	private void onCraftItem(CraftItemEvent event) throws HeavenException
 	{
-		ItemStack currentItem = event.getCurrentItem();
+		final ItemStack currentItem = event.getCurrentItem();
 		if (currentItem == null)
 			return;
 
-		HumanEntity player = event.getWhoClicked();
+		final HumanEntity player = event.getWhoClicked();
 		if (player.getType() != EntityType.PLAYER)
 			return;
 
