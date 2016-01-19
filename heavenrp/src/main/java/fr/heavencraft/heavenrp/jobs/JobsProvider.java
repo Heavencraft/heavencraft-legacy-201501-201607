@@ -19,8 +19,12 @@ public abstract class JobsProvider
 				new FileReader(HeavenRP.getInstance().getDataFolder().getPath() + "/jobs.cfg")))
 		{
 			String line;
-			while ((line = reader.readLine()) != null)
+			while ((line = reader.readLine().trim()) != null)
 			{
+				// Empty line and comments
+				if (line.isEmpty() || line.startsWith("#"))
+					continue;
+
 				createJobFromString(line);
 			}
 		}
