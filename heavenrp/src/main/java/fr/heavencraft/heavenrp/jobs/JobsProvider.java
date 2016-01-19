@@ -25,6 +25,8 @@ public abstract class JobsProvider
 				if (line.isEmpty() || line.startsWith("#"))
 					continue;
 
+				line.replaceAll(" ", ""); // Maybe better than do trim everywhere ?
+
 				createJobFromString(line);
 			}
 		}
