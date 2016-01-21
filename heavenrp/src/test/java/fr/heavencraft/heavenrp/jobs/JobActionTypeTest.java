@@ -1,13 +1,11 @@
 package fr.heavencraft.heavenrp.jobs;
 
-import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import junit.framework.TestCase;
 
 public class JobActionTypeTest extends TestCase
 {
-	public void testGetActionTypeByCode()
+	public void testGetActionTypeByCode() throws HeavenException
 	{
 		assertEquals(JobActionType.BAKE, JobActionType.getActionTypeByCode('S'));
 		assertEquals(JobActionType.BREAK, JobActionType.getActionTypeByCode('B'));
@@ -16,9 +14,4 @@ public class JobActionTypeTest extends TestCase
 		assertEquals(JobActionType.FISH, JobActionType.getActionTypeByCode('P'));
 	}
 
-	public void testCreateParamFromString()
-	{
-		assertEquals(Material.STONE, JobActionType.BREAK.createParamFromString("STONE"));
-		assertEquals(EntityType.CREEPER, JobActionType.KILL.createParamFromString("CREEPER"));
-	}
 }

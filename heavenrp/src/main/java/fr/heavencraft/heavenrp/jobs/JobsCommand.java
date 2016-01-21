@@ -3,10 +3,12 @@ package fr.heavencraft.heavenrp.jobs;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavenrp.database.users.SetJobQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 
@@ -20,6 +22,17 @@ public class JobsCommand extends AbstractCommandExecutor
 
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
+	{
+		if (args.length < 2)
+		{
+			displayJob(player);
+			return;
+		}
+
+		onConsoleCommand(player, args);
+	}
+
+	private void displayJob(Player player) throws HeavenException
 	{
 		final User user = UserProvider.getUserByName(player.getName());
 
@@ -38,10 +51,31 @@ public class JobsCommand extends AbstractCommandExecutor
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
+		switch (args[1])
+		{
+			case "set":
+				if (args.length == 3)
+				{
+					final User user = UserProvider.getUserByName(args[0]);
+					final Job job = JobsProvider.getJobByName(args[2]);
+
+					QueriesHandler.addQuery(new SetJobQuery(user, job)
+					{
+						@Override
+						public void onSuccess()
+						{
+							ChatUtil.sendMessage(sender, "Métier du joueur changé");
+						}
+					});
+				}
+				break;
+		}
 	}
 
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
+		ChatUtil.sendMessage(sender, "/{jobs} pour savoir son métier");
+		ChatUtil.sendMessage(sender, "/{jobs} <joueur> set <metier> pour changer le métier d'un joueur");
 	}
 }
