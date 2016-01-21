@@ -3,46 +3,47 @@ package fr.heavencraft.heavenrp.jobs;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 
 public enum JobActionType
 {
-	BAKE('S', Material.class), // Cuire
-	BREAK('B', Material.class), // Casser
-	CRAFT('C', Material.class), // Crafter
+	BAKE('S', BlockType.class), // Cuire
+	BREAK('B', BlockType.class), // Casser
+	CRAFT('C', BlockType.class), // Crafter
 	KILL('K', EntityType.class), // Kill
-	FISH('P', EntityType.class); // Pécher
+	FISH('P', BlockType.class); // Pécher
 
 	private final char code;
-	private final Class<?> actionParam;
+	private final Class<?> expectedParamClass;
 
-	private JobActionType(char code, Class<?> actionParam)
+	private JobActionType(char code, Class<?> expectedParamClass)
 	{
 		this.code = code;
-		this.actionParam = actionParam;
+		this.expectedParamClass = expectedParamClass;
 	}
 
-	public Object createParamFromString(String input)
+	public Class<?> getExpectedParamClass()
 	{
-		if (actionParam == EntityType.class)
-			return EntityType.fromName(input);
-		else if (actionParam == Material.class)
-			return Material.getMaterial(input);
-		else
-			return null;
+		return expectedParamClass;
 	}
 
 	private static final Map<Character, JobActionType> actionTypeByCode = new HashMap<Character, JobActionType>();
 
 	static
 	{
-		for (JobActionType actionType : values())
+		for (final JobActionType actionType : values())
 			actionTypeByCode.put(actionType.code, actionType);
 	}
 
-	public static JobActionType getActionTypeByCode(char code)
+	public static JobActionType getActionTypeByCode(char code) throws HeavenException
 	{
-		return actionTypeByCode.get(code);
+		final JobActionType actionType = actionTypeByCode.get(code);
+
+		if (actionType == null)
+			throw new HeavenException("No JobActionType found for code '%1$s'", code);
+
+		return actionType;
 	}
 }
