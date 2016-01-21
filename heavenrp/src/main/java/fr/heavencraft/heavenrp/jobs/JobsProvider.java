@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 
 public abstract class JobsProvider
@@ -19,13 +20,15 @@ public abstract class JobsProvider
 				new FileReader(HeavenRP.getInstance().getDataFolder().getPath() + "/jobs.cfg")))
 		{
 			String line;
-			while ((line = reader.readLine().trim()) != null)
+			while ((line = reader.readLine()) != null)
 			{
+				line = line.trim();
+
 				// Empty line and comments
 				if (line.isEmpty() || line.startsWith("#"))
 					continue;
 
-				line.replaceAll(" ", ""); // Maybe better than do trim everywhere ?
+				line = line.replaceAll("\\s", ""); // Maybe better than do trim everywhere ?
 
 				createJobFromString(line);
 			}
@@ -38,10 +41,14 @@ public abstract class JobsProvider
 		{
 			e.printStackTrace();
 		}
+		catch (final HeavenException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	// Input format : NAME=[<ACTION>.<MATERIAL>.<POINTS>]*
-	public static void createJobFromString(String input)
+	public static void createJobFromString(String input) throws HeavenException
 	{
 		final String[] splitEquals = input.split("=", 2);
 
@@ -54,18 +61,7 @@ public abstract class JobsProvider
 
 		for (final String action : actions)
 		{
-			final String[] actionParams = action.split("\\.");
-
-			final String code = actionParams[0];
-
-			final JobActionType actionType = JobActionType.getActionTypeByCode(code.charAt(0));
-			final JobAction jobAction = new JobAction(actionType,
-					actionType.createParamFromString(actionParams[1]));
-
-			final int points = Integer.parseInt(actionParams[2]);
-
-			System.out.println("Add action : " + jobAction + " -> " + points);
-			job.addAction(jobAction, points);
+			JobUtil.addActions(action, job);
 		}
 
 		jobsByName.put(name, job);
