@@ -34,14 +34,40 @@ public class JobUtil
 		double levelXp = 1;
 		final double xpLimit = xp / U0;
 
-		while (true)
+		while (levelXp <= xpLimit)
 		{
-			if (levelXp > xpLimit)
-				return level;
-
 			level++;
 			levelXp = 1 + XP_MULTIPLIER * levelXp;
 		}
+
+		return level;
+	}
+
+	// public static int getLevelFromXp(long xp)
+	// {
+	// int level = 1;
+	// double levelXp = 1;
+	// final double xpLimit = xp / U0;
+	//
+	// while (true)
+	// {
+	// if (levelXp > xpLimit)
+	// return level;
+	//
+	// level++;
+	// levelXp = 1 + XP_MULTIPLIER * levelXp;
+	// }
+	// }
+
+	public static long getXpToLevel(int targetLevel)
+	{
+		int level = 1;
+		double levelXp = 0;
+
+		while (level++ != targetLevel)
+			levelXp = 1 + XP_MULTIPLIER * levelXp;
+
+		return (long) Math.ceil(levelXp * U0);
 	}
 
 	public static void addActions(String input, Job job) throws HeavenException
