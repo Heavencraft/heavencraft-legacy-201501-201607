@@ -1,6 +1,8 @@
 package fr.heavencraft.heavenrp.jobs;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
 public class BlockType
 {
@@ -11,6 +13,24 @@ public class BlockType
 	{
 		this.type = type;
 		this.data = data;
+	}
+
+	public BlockType(ItemStack item)
+	{
+		this.type = item.getType();
+		this.data = item.getData().getData();
+	}
+
+	public BlockType(Block block)
+	{
+		this.type = block.getType();
+		this.data = block.getData();
+	}
+
+	@Override
+	public String toString()
+	{
+		return type + ":" + data;
 	}
 
 	@Override
