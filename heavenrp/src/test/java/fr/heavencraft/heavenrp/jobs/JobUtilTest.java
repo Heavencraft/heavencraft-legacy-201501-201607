@@ -10,14 +10,15 @@ public class JobUtilTest extends TestCase
 		// but 497 levels should be enough
 		for (int level = 1; level != 498; level++)
 		{
-			long minXp = getXpToLevel(level);
-			long maxXp = getXpToLevel(level + 1) - 1;
-			long midXp = (minXp + maxXp) / 2;
+			final long minXp = getXpToLevel(level);
+			final long maxXp = getXpToLevel(level + 1) - 1;
+			final long midXp = (minXp + maxXp) / 2;
 
 			System.out.println("Level " + level + ": [" + minXp + " - " + maxXp + "]");
 			assertEquals(level, JobUtil.getLevelFromXp(minXp));
 			assertEquals(level, JobUtil.getLevelFromXp(midXp));
 			assertEquals(level, JobUtil.getLevelFromXp(maxXp));
+			assertEquals(minXp, JobUtil.getXpToLevel(level));
 		}
 	}
 

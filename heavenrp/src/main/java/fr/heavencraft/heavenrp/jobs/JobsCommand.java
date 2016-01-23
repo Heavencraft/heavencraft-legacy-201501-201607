@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.jobs;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -43,8 +44,25 @@ public class JobsCommand extends AbstractCommandExecutor
 		}
 		else
 		{
+			final int currentXp = user.getJobExperience();
+			final int currentLevel = JobUtil.getLevelFromXp(currentXp);
+
+			final long minXpLevel = JobUtil.getXpToLevel(currentLevel);
+			final long maxXpLevel = JobUtil.getXpToLevel(currentLevel + 1);
+
+			final long barLevel = 10 * (currentXp - minXpLevel) / (maxXpLevel - minXpLevel);
+
+			String barLine = "[" + ChatColor.GREEN;
+			for (int i = 0; i != 10; i++)
+			{
+				if (i == barLevel)
+					barLine += ChatColor.RED;
+				barLine += "#";
+			}
+
 			ChatUtil.sendMessage(player, "Vous êtes actuellement un %1$s %2$s.", job.getDisplayName(),
-					Rank.getRankByLevel(JobUtil.getLevelFromXp(user.getJobExperience())));
+					Rank.getRankByLevel(currentLevel));
+			ChatUtil.sendMessage(player, "Xp : %1$s", barLine);
 		}
 	}
 
