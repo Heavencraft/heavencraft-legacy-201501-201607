@@ -10,15 +10,15 @@ import fr.heavencraft.heavenrp.jobs.Job;
 
 public class SetJobQuery extends AbstractQuery
 {
-	private static final String QUERY = "UPDATE users SET job_name = ?, job_experience = 0 WHERE id = ? LIMIT 1;";
+	private static final String QUERY = "UPDATE users SET job_id = ?, job_experience = 0 WHERE id = ? LIMIT 1;";
 
 	private final User user;
-	private final String jobName;
+	private final int job;
 
 	public SetJobQuery(User user, Job job)
 	{
 		this.user = user;
-		this.jobName = job.getDisplayName();
+		this.job = job.getId();
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class SetJobQuery extends AbstractQuery
 	{
 		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(QUERY))
 		{
-			ps.setString(1, jobName);
+			ps.setInt(1, job);
 			ps.setInt(2, user.getId());
 
 			System.out.println("Executing query " + ps);
