@@ -26,7 +26,6 @@ import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.database.users.UpdateJobExperienceQuery;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
@@ -53,17 +52,11 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 
 		final Job job = user.getJob();
 		if (job == null)
-		{
-			ChatUtil.sendMessage(player, "{[DEBUG] Cancelled: user '%1$s' don't have a job", user.getName());
 			return; // Nothing to do
-		}
 
 		int pointsToAdd = job.getPointsForAction(action);
 		if (pointsToAdd == 0)
-		{
-			ChatUtil.sendMessage(player, "{[DEBUG] Cancelled: job don't give points for action %1$s", action);
 			return; // Nothing to do
-		}
 
 		final Rank rank = Rank.getRankByLevel(JobUtil.getLevelFromXp(user.getJobExperience()));
 		pointsToAdd = (int) (pointsToAdd * noActions * rank.getPointsMultiplier());
@@ -74,9 +67,6 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 			currentPoints = pointsToAdd;
 		else
 			currentPoints += pointsToAdd;
-
-		ChatUtil.sendMessage(player, "[DEBUG] %1$s * %2$s | +%3$s pts | total %4$s pts, Rank %5$s", noActions,
-				action, pointsToAdd, currentPoints, rank);
 
 		if (currentPoints >= 1000)
 		{
@@ -91,8 +81,6 @@ public class JobActionListener extends AbstractListener<HeavenPlugin>
 
 			QueriesHandler.addQuery(new UpdateJobExperienceQuery(user, xp));
 			QueriesHandler.addQuery(new UpdateUserBalanceQuery(user, xp));
-
-			ChatUtil.sendMessage(player, "[DEBUG] XP UP -> +%1$spo +%1$sxp", xp);
 		}
 
 		pointsByPlayer.put(player.getUniqueId(), currentPoints);

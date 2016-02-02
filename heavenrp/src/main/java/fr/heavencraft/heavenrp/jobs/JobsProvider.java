@@ -12,7 +12,7 @@ import fr.heavencraft.heavenrp.HeavenRP;
 
 public abstract class JobsProvider
 {
-	private static final Map<String, Job> jobsByName = new HashMap<String, Job>();
+	private static final Map<Integer, Job> jobsById = new HashMap<Integer, Job>();
 
 	public static void loadConfig()
 	{
@@ -52,23 +52,28 @@ public abstract class JobsProvider
 	{
 		final String[] splitEquals = input.split("=", 2);
 
-		final String name = splitEquals[0];
-		System.out.println("Name : " + name);
+		final String[] identifiers = splitEquals[0].split("\\|", 2);
+		if (identifiers.length != 2)
+			throw new HeavenException("Invalid job identifier '%1$s'", splitEquals[0]);
+
+		final int id = Integer.parseInt(identifiers[0]);
+		final String name = identifiers[1];
+		System.out.println("Adding Job [Id : " + id + " Name : " + name);
 
 		final String[] actions = splitEquals[1].split("\\|");
 
-		final Job job = new Job(name);
+		final Job job = new Job(id, name);
 
 		for (final String action : actions)
 		{
 			JobUtil.addActions(action, job);
 		}
 
-		jobsByName.put(name, job);
+		jobsById.put(id, job);
 	}
 
-	public static Job getJobByName(String name)
+	public static Job getJobById(int id)
 	{
-		return jobsByName.get(name);
+		return jobsById.get(id);
 	}
 }

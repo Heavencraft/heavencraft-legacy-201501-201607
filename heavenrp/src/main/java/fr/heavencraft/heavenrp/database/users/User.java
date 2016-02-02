@@ -20,7 +20,7 @@ public class User
 	private final Timestamp dealerLicense;
 	private final Timestamp lastLogin;
 	private final int provinceChanges;
-	private final String jobName;
+	private final int jobId;
 	private final int jobExperience;
 
 	User(ResultSet rs) throws SQLException
@@ -33,7 +33,7 @@ public class User
 		dealerLicense = rs.getTimestamp("dealer_license");
 		lastLogin = rs.getTimestamp("last_login");
 		provinceChanges = rs.getInt("province_changes");
-		jobName = rs.getString("job_name");
+		jobId = rs.getInt("job_id");
 		jobExperience = rs.getInt("job_experience");
 	}
 
@@ -92,7 +92,7 @@ public class User
 		{
 			new UpdateUserBalanceQuery(this, delta).executeQuery();
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			e.printStackTrace();
 			throw new SQLErrorException();
@@ -111,7 +111,7 @@ public class User
 
 	public Job getJob()
 	{
-		return JobsProvider.getJobByName(jobName);
+		return JobsProvider.getJobById(jobId);
 	}
 
 	public int getJobExperience()

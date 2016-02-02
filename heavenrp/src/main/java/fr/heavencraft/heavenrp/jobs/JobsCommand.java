@@ -1,6 +1,5 @@
 package fr.heavencraft.heavenrp.jobs;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -39,31 +38,19 @@ public class JobsCommand extends AbstractCommandExecutor
 
 		final Job job = user.getJob();
 		if (job == null)
-		{
-			ChatUtil.sendMessage(player, "Vous n'avez actuellement pas de métier.");
-		}
-		else
-		{
-			final int currentXp = user.getJobExperience();
-			final int currentLevel = JobUtil.getLevelFromXp(currentXp);
+			throw new HeavenException("Vous n'avez actuellement pas de métier.");
 
-			final long minXpLevel = JobUtil.getXpToLevel(currentLevel);
-			final long maxXpLevel = JobUtil.getXpToLevel(currentLevel + 1);
+		final int currentXp = user.getJobExperience();
+		final int currentLevel = JobUtil.getLevelFromXp(currentXp);
 
-			final long barLevel = 10 * (currentXp - minXpLevel) / (maxXpLevel - minXpLevel);
+		final long minXpLevel = JobUtil.getXpToLevel(currentLevel);
+		final long maxXpLevel = JobUtil.getXpToLevel(currentLevel + 1);
 
-			String barLine = "[" + ChatColor.GREEN;
-			for (int i = 0; i != 10; i++)
-			{
-				if (i == barLevel)
-					barLine += ChatColor.RED;
-				barLine += "#";
-			}
+		final String barLine = ChatUtil.createBar(currentXp - minXpLevel, maxXpLevel - minXpLevel);
 
-			ChatUtil.sendMessage(player, "Vous êtes actuellement un %1$s %2$s.", job.getDisplayName(),
-					Rank.getRankByLevel(currentLevel));
-			ChatUtil.sendMessage(player, "Xp : %1$s", barLine);
-		}
+		ChatUtil.sendMessage(player, "Vous êtes actuellement un %1$s %2$s niveau %3$s.", job.getName(),
+				Rank.getRankByLevel(currentLevel), currentLevel);
+		ChatUtil.sendMessage(player, "Prochain niveau : %1$s", barLine);
 	}
 
 	@Override
@@ -75,7 +62,7 @@ public class JobsCommand extends AbstractCommandExecutor
 				if (args.length == 3)
 				{
 					final User user = UserProvider.getUserByName(args[0]);
-					final Job job = JobsProvider.getJobByName(args[2]);
+					final Job job = JobsProvider.getJobById(Integer.parseInt(args[2]));
 
 					QueriesHandler.addQuery(new SetJobQuery(user, job)
 					{
