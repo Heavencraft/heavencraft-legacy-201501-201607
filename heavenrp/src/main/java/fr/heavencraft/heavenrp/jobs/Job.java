@@ -5,11 +5,13 @@ import java.util.Map;
 
 public class Job
 {
+	private final int id;
 	private final String name;
 	private final Map<JobAction, Integer> pointsByAction = new HashMap<JobAction, Integer>();
 
-	/* package */ Job(String name)
+	/* package */ Job(int id, String name)
 	{
+		this.id = id;
 		this.name = name;
 	}
 
@@ -18,7 +20,12 @@ public class Job
 		pointsByAction.put(action, points);
 	}
 
-	public String getDisplayName()
+	public int getId()
+	{
+		return id;
+	}
+
+	public String getName()
 	{
 		return name;
 	}
@@ -26,7 +33,7 @@ public class Job
 	@Override
 	public String toString()
 	{
-		return getDisplayName();
+		return getName();
 	}
 
 	public int getPointsForAction(JobAction action)
