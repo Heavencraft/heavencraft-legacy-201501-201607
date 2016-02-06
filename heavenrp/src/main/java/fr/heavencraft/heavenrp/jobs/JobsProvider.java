@@ -28,8 +28,6 @@ public abstract class JobsProvider
 				if (line.isEmpty() || line.startsWith("#"))
 					continue;
 
-				line = line.replaceAll("\\s", ""); // Maybe better than do trim everywhere ?
-
 				createJobFromString(line);
 			}
 		}
@@ -56,11 +54,11 @@ public abstract class JobsProvider
 		if (identifiers.length != 2)
 			throw new HeavenException("Invalid job identifier '%1$s'", splitEquals[0]);
 
-		final int id = Integer.parseInt(identifiers[0]);
-		final String name = identifiers[1];
+		final int id = Integer.parseInt(identifiers[0].trim());
+		final String name = identifiers[1].trim();
 		System.out.println("Adding Job [Id : " + id + " Name : " + name);
 
-		final String[] actions = splitEquals[1].split("\\|");
+		final String[] actions = splitEquals[1].replaceAll("\\s", "").split("\\|");
 
 		final Job job = new Job(id, name);
 
