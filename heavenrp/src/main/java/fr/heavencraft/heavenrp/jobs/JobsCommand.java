@@ -1,5 +1,7 @@
 package fr.heavencraft.heavenrp.jobs;
 
+import java.util.Arrays;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,7 +19,7 @@ public class JobsCommand extends AbstractCommandExecutor
 
 	public JobsCommand(HeavenPlugin plugin)
 	{
-		super(plugin, "jobs");
+		super(plugin, "jobs", Arrays.asList("job", "metier", "metiers"));
 	}
 
 	@Override
