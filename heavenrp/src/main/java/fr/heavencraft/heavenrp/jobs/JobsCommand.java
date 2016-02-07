@@ -25,13 +25,7 @@ public class JobsCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		if (args.length < 2)
-		{
-			displayJob(player);
-			return;
-		}
-
-		onConsoleCommand(player, args);
+		displayJob(player);
 	}
 
 	private void displayJob(Player player) throws HeavenException
