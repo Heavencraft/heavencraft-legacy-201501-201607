@@ -59,3 +59,5 @@ commands:
   noentities:
   hurt:
   provinces:
+  jobs:
+    aliases: [job, metier, metiers]
