@@ -14,6 +14,7 @@ import fr.heavencraft.heavencore.bukkit.commands.TutoCommand;
 import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
+import fr.heavencraft.heavenrp.jobs.JobsProvider;
 import fr.heavencraft.heavenrp.stores.StoresListener;
 import fr.heavencraft.heavenrp.stores.StoresManager;
 import fr.heavencraft.heavenrp.worlds.WorldsManager;
@@ -40,6 +41,10 @@ public class HeavenRP extends HeavenPlugin
 			super.onEnable();
 
 			_instance = this;
+
+			// Load jobs configuration (do it first as it can take time)
+			JobsProvider.loadConfig();
+
 			srpConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString("database"));
 			mainConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
