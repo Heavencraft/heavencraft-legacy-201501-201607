@@ -42,7 +42,6 @@ public abstract class AbstractCommandExecutor implements CommandExecutor
 		command.setExecutor(this);
 		command.setPermission(permission);
 		command.setPermissionMessage("");
-		command.setAliases(aliases);
 
 		log.info("Command %1$s registered", name);
 	}
