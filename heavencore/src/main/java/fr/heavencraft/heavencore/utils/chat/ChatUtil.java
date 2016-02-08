@@ -35,7 +35,7 @@ public class ChatUtil
 
 	public static void sendMessage(List<CommandSender> senders, String message, Object... args)
 	{
-		for (CommandSender sender : senders)
+		for (final CommandSender sender : senders)
 			sendMessage(sender, message, args);
 	}
 
@@ -45,7 +45,7 @@ public class ChatUtil
 		{
 			sendMessage(PlayerUtil.getPlayer(playerName), message, args);
 		}
-		catch (PlayerNotConnectedException ex)
+		catch (final PlayerNotConnectedException ex)
 		{
 		}
 	}
@@ -57,5 +57,19 @@ public class ChatUtil
 	public static void broadcastMessage(String message, Object... args)
 	{
 		ActionsHandler.addAction(new BroadcastMessageAction(message, args));
+	}
+
+	public static String createBar(long current, long max)
+	{
+		final long barLevel = 20 * current / max;
+
+		String barLine = "[" + ChatColor.GREEN;
+		for (int i = 0; i != 20; i++)
+		{
+			if (i == barLevel)
+				barLine += ChatColor.RED;
+			barLine += "#";
+		}
+		return barLine + ChatColor.GOLD + "]";
 	}
 }
