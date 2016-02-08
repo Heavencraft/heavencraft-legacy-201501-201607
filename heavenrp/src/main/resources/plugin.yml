@@ -59,6 +59,4 @@ commands:
   noentities:
   hurt:
   jobs:
-  job:
-  metier:
-  metiers:
+    aliases: [job, metier, metiers]
