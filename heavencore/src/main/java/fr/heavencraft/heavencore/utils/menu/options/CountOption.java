@@ -77,7 +77,7 @@ public class CountOption extends Option {
 			amount = 1;
 		}
 		this.setAmount(amount);
-		menu.refresh(player);
+		menu.show(player);
 	}
 
 }

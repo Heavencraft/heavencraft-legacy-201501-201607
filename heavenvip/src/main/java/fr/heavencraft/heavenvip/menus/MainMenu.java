@@ -16,8 +16,8 @@ public class MainMenu extends VipMenu
 
 	public MainMenu()
 	{
-		super(new Menu("§6Aventages VIP -- HPS", 4));
-		super.m.addOption(3, 0, new Option(Material.NETHER_STAR, ChatColor.GOLD + "Particules")
+		super(new Menu("§6Aventages VIP -- HPS", 3));
+		super.m.addOption(3, 1, new Option(Material.NETHER_STAR, ChatColor.GOLD + "Particules")
 		{
 			@Override
 			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
@@ -27,7 +27,7 @@ public class MainMenu extends VipMenu
 				particleMenu.openMenu(player);
 			}
 		});
-		super.m.addOption(5, 0, new Option(Material.SKULL_ITEM, (short)3, ChatColor.GOLD + "Têtes du Staff")
+		super.m.addOption(4, 1, new Option(Material.SKULL_ITEM, (short)3, ChatColor.GOLD + "Têtes du Staff")
 		{
 			@Override
 			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
@@ -37,7 +37,8 @@ public class MainMenu extends VipMenu
 				hmenu.openMenu(player);
 			}
 		});
-		super.m.addOption(7, 0, new Option(Material.ANVIL, ChatColor.GOLD + "TEST")
+		
+		super.m.addOption(5, 1, new Option(Material.ANVIL, ChatColor.GOLD + "TEST")
 		{
 			@Override
 			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
@@ -61,18 +62,5 @@ public class MainMenu extends VipMenu
 			e.printStackTrace();
 		}
 
-	}
-
-	@Override
-	public void openNewMenu(Player p)
-	{
-		try
-		{
-			super.OpenNewMenu(p);
-		}
-		catch (HeavenException e)
-		{
-			e.printStackTrace();
-		}
 	}
 }
