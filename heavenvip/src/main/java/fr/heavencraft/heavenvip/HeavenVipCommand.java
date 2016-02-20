@@ -23,7 +23,7 @@ public class HeavenVipCommand extends AbstractCommandExecutor
 		//MenuAPI.openMenu(player, menuProvider.getMainVIPMenu(player));
 		// Open main menu
 		MainMenu mmenu = new MainMenu();
-		mmenu.openNewMenu(player);
+		mmenu.openMenu(player);
 	}
 
 	@Override

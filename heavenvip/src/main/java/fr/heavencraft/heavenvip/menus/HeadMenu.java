@@ -73,19 +73,4 @@ public class HeadMenu extends VipMenu
 		}
 	}
 
-	@Override
-	public void openNewMenu(Player p)
-	{
-		// Attach Navigation Bar
-		MenuUtils.attachNavigationBar(this, new MainMenu(), p, super.m.getHeight());
-		try
-		{
-			super.OpenNewMenu(p);
-		}
-		catch (HeavenException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 }
