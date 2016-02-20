@@ -7,13 +7,16 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.menu.ClickType;
 import fr.heavencraft.heavencore.utils.menu.Menu;
+import fr.heavencraft.heavencore.utils.menu.MenuAPI;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavenvip.HpsManager;
 import fr.heavencraft.heavenvip.MenuUtils;
+import fr.heavencraft.heavenvip.querys.UpdateHPSBalanceQuery;
 import fr.heavencraft.heavenvip.vippacks.PackType;
 import fr.heavencraft.heavenvip.vippacks.VipPack;
 import fr.heavencraft.heavenvip.vippacks.VipPackProvider;
@@ -22,7 +25,8 @@ public class ParticlePackMenu extends VipMenu
 {
 	private final static String ITEM_NOT_FOR_SALE = "Cet objet n'est pas a vendre en ce moment.";
 	private final static String NOT_ENOUGH_HPS = "Vous n'avez pas assez d'HPS, plus d'informations: www.heavencraft.fr";
-
+	private final static String ITEM_BOUGHT = "Merci pour votre achat! Vous pouvez désormez vous en équiper.";
+	
 	public ParticlePackMenu(Player p)
 	{
 		super(new Menu("Packs Particles", 4));
@@ -67,9 +71,29 @@ public class ParticlePackMenu extends VipMenu
 							ChatUtil.sendMessage(player, NOT_ENOUGH_HPS);
 							return;
 						}
-						// We can buy it
-						ChatUtil.broadcastMessage("OPEN ITEM BUY PROMPT");
-						//TODO open Item buy prompt
+						// Update balance
+						QueriesHandler.addQuery(new UpdateHPSBalanceQuery(player.getName(), -pack.getPrice()) {
+							@Override
+							public void onSuccess() {
+								// Add pack
+								VipPackProvider.addPack(player, pack.getVipPackId());
+								ChatUtil.sendMessage(player, ITEM_BOUGHT);
+								//TODO open equip menu
+								try
+								{
+									MenuAPI.openMenu(player, new MainMenu().GetMenu());
+								}
+								catch (HeavenException e)
+								{
+									e.printStackTrace();
+								}
+							}
+							@Override
+							public void onHeavenException(HeavenException ex) {
+								// Error
+								ChatUtil.sendMessage(player, ex.getMessage());
+							}
+						});
 					}
 				}
 			});
@@ -95,20 +119,4 @@ public class ParticlePackMenu extends VipMenu
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void openNewMenu(Player p)
-	{
-		// Attach Navigation Bar
-		MenuUtils.attachNavigationBar(this, new MainMenu(), p, super.m.getHeight());
-		try
-		{
-			super.OpenNewMenu(p);
-		}
-		catch (HeavenException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 }
