@@ -26,8 +26,14 @@ public class MenuAPI {
 	private static Map<String, Inventory> sessions = new HashMap<String, Inventory>();
 	private static Map<String, TextField> textFields = new HashMap<String, TextField>();
 	private static Map<String, ItemStack> handSave = new HashMap<String, ItemStack>();
-		
-	public static void openMenu(Player player, Menu menu) throws HeavenException {
+	
+	/**
+	 * Opens a menu
+	 * @param player
+	 * @param menu
+	 * @throws HeavenException
+	 */
+	public static void openMenu(Player player, final Menu menu) throws HeavenException {
 		if(player == null)
 			throw new HeavenException("Cet utilisateur n'existe pas.");
 		if(menu == null)
@@ -36,14 +42,16 @@ public class MenuAPI {
 		if (MenuAPI.hasTextField(player)) {
 			MenuAPI.closeTextField(player);
 		}
-		MenuAPI.closeMenu(player);
-		final Menu menu_ = menu.clone();
+		
+		//Removed because resets pointer
+		//MenuAPI.closeMenu(player);
+		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(CorePlugin.getInstance(), new Runnable() {
 			@Override
 			public void run() {
 				try
 				{
-					menu_.refresh(player);
+					menu.show(player);
 				}
 				catch (HeavenException e)
 				{

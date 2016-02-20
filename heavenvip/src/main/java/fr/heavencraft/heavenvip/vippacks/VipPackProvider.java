@@ -22,6 +22,8 @@ public class VipPackProvider
 			"END as owns " +
 			"FROM vip_pack WHERE vip_pack.effect_type = ? ORDER BY vip_pack.month ASC";
 
+	private final static String BUY_PACK = "INSERT INTO vip_bought(user_uuid, pack_id, timestamp) VALUES (?, ?, ?)";
+	
 	/**
 	 * Returns a collection of available packs.
 	 * @param p
@@ -55,5 +57,30 @@ public class VipPackProvider
 			e.printStackTrace();
 		}
 		return packCollection;
+	}
+	
+	/**
+	 * Add an owned pack to a player
+	 * @param p
+	 * @param packId
+	 * @return
+	 */
+	public static boolean addPack(final Player p, final int packId) {
+		try (PreparedStatement ps = HeavenVIP.getMainConnection()
+				.getConnection().prepareStatement(BUY_PACK))
+		{
+			// Inject contextual player & pack values
+			ps.setString(1, PlayerUtil.getUUID(p));
+			ps.setInt(2, packId);
+			ps.setLong(3, System.currentTimeMillis());
+			// Query
+			ps.executeUpdate();
+			ps.close();
+			return true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

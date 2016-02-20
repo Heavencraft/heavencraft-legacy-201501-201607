@@ -162,9 +162,36 @@ public class Menu implements Cloneable {
 		return this.clickHandler != null;
 	}
 	
+	/**
+	 * Shows the inventory to the player
+	 * Method should only be called through scheduled task. (openInventory during Inventory Click event)
+	 * @param player
+	 * @throws HeavenException
+	 */
+	public final void show(final Player player) throws HeavenException {
+		Inventory inv = Bukkit.createInventory(null, this.getSlots(), this.getTitle());
+		// Set content
+		for (int x = 0; x < this.options.length; x++) {
+			for (int y = 0; y < this.options[x].length; y++) {
+				Option option = this.getOption(x, y);
+				ItemStack item = null;
+				if (option != null) {
+					item = option.toItemStack();
+				}
+				inv.setItem(x + y * 9, item);
+			}
+		}
+		player.openInventory(inv);
+		// Update session lists
+		MenuAPI.getSessions().put(player.getName(), inv);
+		MenuAPI.getMenues().put(player.getName(), this);
+	}
+	
+	@Deprecated
 	public final void refresh(Player player) throws HeavenException {
 		Inventory inv = null;
 		String name = player.getName();
+		// does the player
 		if (MenuAPI.getSessions().containsKey(name)) {
 			inv = MenuAPI.getSessions().get(name);
 		}

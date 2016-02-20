@@ -19,21 +19,8 @@ public abstract class VipMenu implements IVipMenu{
 	}
 	
 	public void OpenMenu(Player player) throws HeavenException {
-		Menu oldMenu = MenuAPI.getMenu(player);
-		// If player has no menu open, open a new one
-		if(oldMenu == null) {
-			ChatUtil.broadcastMessage("OPENING NEW MENU"); //TODO remove
-			MenuAPI.openMenu(player, this.m);
-			return;
-		}
-		// Player has already an open menu, update it.
-		ChatUtil.broadcastMessage("Refreshing"); //TODO remove
-		oldMenu = this.m;
-		oldMenu.refresh(player);
-	}
-	
-	public void OpenNewMenu(Player player) throws HeavenException {
 		MenuAPI.openMenu(player, this.m);
+		return;
 	}
 	
 	public Menu GetMenu() {
