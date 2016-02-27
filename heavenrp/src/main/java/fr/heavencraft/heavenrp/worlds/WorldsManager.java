@@ -3,6 +3,7 @@ package fr.heavencraft.heavenrp.worlds;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -36,7 +37,9 @@ public class WorldsManager
 			final WorldCreator creator = new WorldCreator("world_resources");
 			creator.environment(World.Environment.NORMAL);
 			// creator.seed(1423174317);
-			creator.createWorld();
+			creator.seed(-5001027545084418649l);
+			final World worldResources = creator.createWorld();
+			worldResources.setDifficulty(Difficulty.NORMAL);
 		}
 
 		if (!isLoaded("world_dungeon"))
