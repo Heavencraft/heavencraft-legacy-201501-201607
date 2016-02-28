@@ -11,6 +11,7 @@ import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
+import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
@@ -39,8 +40,10 @@ public class MoneyTask extends BukkitRunnable
 
 			for (Player player : players)
 			{
-				User user = UserProvider.getUserByName(player.getName());
-				QueriesHandler.addQuery(new UpdateUserBalanceQuery(user, amount));
+				if(!player.hasPermission(RPPermissions.PRIVILEGES_LOSS)) {
+					User user = UserProvider.getUserByName(player.getName());
+					QueriesHandler.addQuery(new UpdateUserBalanceQuery(user, amount));
+				}
 			}
 		}
 		catch (HeavenException ex)
