@@ -49,6 +49,8 @@ import fr.heavencraft.heavenrp.general.ServerListener;
 import fr.heavencraft.heavenrp.general.WatchListener;
 import fr.heavencraft.heavenrp.general.users.UserListener;
 import fr.heavencraft.heavenrp.horses.HorsesListener;
+import fr.heavencraft.heavenrp.jobs.JobActionListener;
+import fr.heavencraft.heavenrp.jobs.JobsCommand;
 import fr.heavencraft.heavenrp.key.KeySignListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
@@ -128,6 +130,10 @@ public class InitManager
 
 		// HPs
 		new HpsCommand(plugin);
+
+		// Jobs
+		new JobsCommand(plugin);
+		new JobActionListener(plugin);
 
 		// Key
 		new KeyCommand(plugin);

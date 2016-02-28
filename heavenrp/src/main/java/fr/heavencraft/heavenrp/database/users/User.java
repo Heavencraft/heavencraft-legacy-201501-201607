@@ -7,6 +7,8 @@ import java.util.Date;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
+import fr.heavencraft.heavenrp.jobs.Job;
+import fr.heavencraft.heavenrp.jobs.JobsProvider;
 
 public class User
 {
@@ -18,6 +20,8 @@ public class User
 	private final Timestamp dealerLicense;
 	private final Timestamp lastLogin;
 	private final int provinceChanges;
+	private final int jobId;
+	private final int jobExperience;
 
 	User(ResultSet rs) throws SQLException
 	{
@@ -29,6 +33,8 @@ public class User
 		dealerLicense = rs.getTimestamp("dealer_license");
 		lastLogin = rs.getTimestamp("last_login");
 		provinceChanges = rs.getInt("province_changes");
+		jobId = rs.getInt("job_id");
+		jobExperience = rs.getInt("job_experience");
 	}
 
 	public int getId()
@@ -86,7 +92,7 @@ public class User
 		{
 			new UpdateUserBalanceQuery(this, delta).executeQuery();
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			e.printStackTrace();
 			throw new SQLErrorException();
@@ -95,10 +101,21 @@ public class User
 
 	/**
 	 * Returns the amount of times, the user has switched provinces
+	 * 
 	 * @return
 	 */
 	public int getProvinceChanges()
 	{
 		return provinceChanges;
+	}
+
+	public Job getJob()
+	{
+		return JobsProvider.getJobById(jobId);
+	}
+
+	public int getJobExperience()
+	{
+		return jobExperience;
 	}
 }
