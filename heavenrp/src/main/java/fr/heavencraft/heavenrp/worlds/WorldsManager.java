@@ -25,6 +25,9 @@ public class WorldsManager
 
 	public static void init()
 	{
+		// Force difficulty of SRP to HARD
+		getWorld().setDifficulty(Difficulty.HARD);
+		
 		if (!isLoaded("world_nether"))
 		{
 			final WorldCreator creator = new WorldCreator("world_nether");
