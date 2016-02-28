@@ -166,10 +166,22 @@ public class ProvincesManager
 		}
 	}
 	
-	public static List<Province> getProvinces() {
+	/**
+	 * Returns a list of available provinces
+	 * @param orderedByPoints Shall we return an ordered list by province points descendant?
+	 * @return
+	 */
+	public static List<Province> getProvinces(boolean orderedByPoints) {
 		List<Province> provinces = new ArrayList<Province>();
 		
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("SELECT * FROM mayor_cities"))
+		String statement;
+		if(orderedByPoints)
+			statement = "SELECT * FROM mayor_cities ORDER BY points DESC";
+		else
+			statement = "SELECT * FROM mayor_cities";
+			
+		
+		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(statement))
 		{
 			final ResultSet rs = ps.executeQuery();
 			while(rs.next())
@@ -211,7 +223,7 @@ public class ProvincesManager
 			while (rs.next())
 			{
 				PotionEffectType pet = getEffectType(rs.getInt("effect_id"));
-				PotionEffect pe = new PotionEffect(pet, 20*60*5, 1);
+				PotionEffect pe = new PotionEffect(pet, 20*60*5, 0);
 				effects.add(pe);
 			}
 			return effects;
