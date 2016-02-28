@@ -56,8 +56,8 @@ public class ParticlePackMenu extends VipMenu
 				{
 					if(itemColor == 5) {
 						// We own this pack, open equip menu.
-						ChatUtil.broadcastMessage("OPEN EQUIP MENU");
-						//TODO open equip menu
+						EquipMenu eMenu = new EquipMenu(player, pack.getPackName(), pack.getVipPackId());
+						eMenu.openMenu(player);
 					}
 					else if(itemColor == 7) {
 						// Item is not for sale this month.

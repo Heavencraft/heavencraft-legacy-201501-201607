@@ -16,7 +16,6 @@ import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.MenuAPI;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
-import fr.heavencraft.heavenvip.menus.IVipMenu;
 import fr.heavencraft.heavenvip.menus.VipMenu;
 import fr.heavencraft.heavenvip.querys.UnequipEffectQuery;
 import fr.heavencraft.heavenvip.querys.UpdateEquipedEffectsQuery;
@@ -169,7 +168,6 @@ public class MenuUtils
 	 */
 	public static void equipEffect(char effectType, Player p, int effectId, IMenuUpdateCallback callback)
 	{
-		ChatUtil.broadcastMessage("EQUIP :" + effectType +  " player: " + p.getName() +  " effect: " + effectId);
 		QueriesHandler.addQuery(new UpdateEquipedEffectsQuery(effectType, PlayerUtil.getUUID(p), effectId){
 			@Override
 			public void onSuccess()
