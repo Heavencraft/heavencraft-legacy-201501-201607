@@ -34,6 +34,7 @@ public class RPPermissions
 	/*
 	 * Others
 	 */
+	public static final String PRIVILEGES_LOSS = "heavencraft.bagne";
 	public static final String HORSE_BYPASS = "heavencraft.horses.bypass";
 	public static final String WATCH = "heavencraft.watch";
 
