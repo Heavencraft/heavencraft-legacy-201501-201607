@@ -33,7 +33,7 @@ public class UpdateEquipedEffectsQuery extends AbstractQuery
 			ps1.setString(1, (String.valueOf(this.type)));
 			ps1.setString(2, this.uuid);
 			final ResultSet rs = ps1.executeQuery();
-
+			
 			while (rs.next())
 			{
 				// No entry found, insert new

@@ -10,19 +10,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.menu.ClickType;
 import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenvip.HeavenVIP;
 import fr.heavencraft.heavenvip.MenuUtils;
+import fr.heavencraft.heavenvip.vipeffects.EffectCache;
 
 public class EquipMenu extends VipMenu
 {
 	public EquipMenu(final Player p, final String packName, final int packId)
 	{
 		super(new Menu("§7Equipement pour " + packName, 3));
-		
+
 		// Get a list of effects in this pack
 		try (PreparedStatement ps = HeavenVIP.getMainConnection().getConnection()
 				.prepareStatement("SELECT vip_effects.*, CASE WHEN EXISTS(" +
@@ -45,8 +47,9 @@ public class EquipMenu extends VipMenu
 				final String displayName = ChatColor.translateAlternateColorCodes('§', rs.getString("name"));
 				final boolean active = rs.getBoolean("active");
 				final String desc = rs.getString("description");
-				final Material repMat = (Material.getMaterial(rs.getString("representative_item")) == null) ? 
-						Material.NETHER_STAR : Material.getMaterial(rs.getString("representative_item"));
+				ChatUtil.broadcastMessage(rs.getString("representative_item"));
+				final Material repMat = (Material.getMaterial(rs.getString("representative_item").toUpperCase()) == null) ? 
+						Material.NETHER_STAR : Material.getMaterial(rs.getString("representative_item").toUpperCase());
 				// Generate LED
 				final short ledColor = (active ? (short)10 : (short)1);
 				final int fx = x;
@@ -68,6 +71,7 @@ public class EquipMenu extends VipMenu
 									menu.getOption(fx, fy +1).setDamage((short)1);
 									EquipMenu eMenu = new EquipMenu(player, packName, packId);
 									eMenu.openMenu(player);
+									EffectCache.updateCache(p);
 								}
 								@Override
 								public void fail()
@@ -86,6 +90,7 @@ public class EquipMenu extends VipMenu
 									menu.getOption(fx, fy +1).setDamage((short)10);
 									EquipMenu eMenu = new EquipMenu(player, packName, packId);
 									eMenu.openMenu(player);
+									EffectCache.updateCache(p);
 								}
 								@Override
 								public void fail()

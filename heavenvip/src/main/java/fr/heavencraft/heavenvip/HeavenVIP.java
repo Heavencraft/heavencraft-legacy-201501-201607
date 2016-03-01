@@ -7,6 +7,7 @@ import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavencore.utils.menu.MenuListener;
+import fr.heavencraft.heavenvip.vipeffects.EffectListener;
 
 public class HeavenVIP extends HeavenPlugin
 {
@@ -37,6 +38,7 @@ public class HeavenVIP extends HeavenPlugin
 		super.afterEnable();
 		new HeavenVipCommand(getInstance());
 		new MenuListener();
+		new EffectListener(this);
 		
 		/*
 		 * Timer for effects
