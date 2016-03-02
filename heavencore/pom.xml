@@ -18,7 +18,7 @@
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
-			<url>http://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 		</repository>
 
 		<repository>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.8.8-R0.1-SNAPSHOT</version>
+			<version>1.9-R0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
