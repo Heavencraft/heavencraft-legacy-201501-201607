@@ -22,51 +22,51 @@ public class QueriesHandler extends BukkitRunnable
 	@Override
 	public void run()
 	{
-		if (!queries.isEmpty())
+		if (queries.isEmpty())
+			return;
+
+		Query tmp;
+
+		while ((tmp = queries.poll()) != null)
 		{
-			Query tmp;
+			final Query query = tmp; // Gruge final
 
-			while ((tmp = queries.poll()) != null)
+			try
 			{
-				final Query query = tmp; // Gruge final
+				query.executeQuery();
 
-				try
+				Bukkit.getScheduler().runTask(CorePlugin.getInstance(), new Runnable()
 				{
-					query.executeQuery();
+					@Override
+					public void run()
+					{
+						query.onSuccess();
+					}
+				});
+			}
+			catch (final HeavenException ex)
+			{
+				Bukkit.getScheduler().runTask(CorePlugin.getInstance(), new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						query.onHeavenException(ex);
+					}
+				});
+			}
+			catch (final SQLException ex)
+			{
+				ex.printStackTrace();
 
-					Bukkit.getScheduler().runTask(CorePlugin.getInstance(), new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							query.onSuccess();
-						}
-					});
-				}
-				catch (final HeavenException ex)
+				Bukkit.getScheduler().runTask(CorePlugin.getInstance(), new Runnable()
 				{
-					Bukkit.getScheduler().runTask(CorePlugin.getInstance(), new Runnable()
+					@Override
+					public void run()
 					{
-						@Override
-						public void run()
-						{
-							query.onHeavenException(ex);
-						}
-					});
-				}
-				catch (final SQLException ex)
-				{
-					ex.printStackTrace();
-
-					Bukkit.getScheduler().runTask(CorePlugin.getInstance(), new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							query.onSQLException(ex);
-						}
-					});
-				}
+						query.onSQLException(ex);
+					}
+				});
 			}
 		}
 	}

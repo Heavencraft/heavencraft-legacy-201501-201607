@@ -58,3 +58,6 @@ commands:
   removePoste:
   noentities:
   hurt:
+  provinces:
+  jobs:
+    aliases: [job, metier, metiers]

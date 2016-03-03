@@ -59,7 +59,7 @@ public class WorldsManager
 
 		creativeSpawnLocation = new Location(getWorldCreative(), 8, 44, 8, 0, 0);
 		biomeSpawnLocation = new Location(getWorldBiome(), 120, 144, 652, 0, 0);
-		talentSpawnLocation = new Location(getWorldTalent(), 0, 50, 0, 0, 0);
+		talentSpawnLocation = new Location(getWorldTalent(), -34.5, 126, 60.5, -135, 0);
 		architectSpawnLocation = new Location(getWorldArchitect(), 0, 50, 0, 0, 0);
 	}
 

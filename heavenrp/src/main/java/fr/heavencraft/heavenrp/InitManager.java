@@ -34,6 +34,7 @@ import fr.heavencraft.heavenrp.commands.homes.TphomeCommand;
 import fr.heavencraft.heavenrp.commands.horses.ChevalCommand;
 import fr.heavencraft.heavenrp.commands.hps.HpsCommand;
 import fr.heavencraft.heavenrp.commands.key.KeyCommand;
+import fr.heavencraft.heavenrp.commands.province.ProvinceCommand;
 import fr.heavencraft.heavenrp.commands.warps.WarpCommand;
 import fr.heavencraft.heavenrp.economy.EconomyListener;
 import fr.heavencraft.heavenrp.economy.GoldDropListener;
@@ -48,7 +49,10 @@ import fr.heavencraft.heavenrp.general.ServerListener;
 import fr.heavencraft.heavenrp.general.WatchListener;
 import fr.heavencraft.heavenrp.general.users.UserListener;
 import fr.heavencraft.heavenrp.horses.HorsesListener;
-import fr.heavencraft.heavenrp.key.DonjonSignListener;
+import fr.heavencraft.heavenrp.jobs.JobActionListener;
+import fr.heavencraft.heavenrp.jobs.JobsCommand;
+import fr.heavencraft.heavenrp.key.KeySignListener;
+import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceSignListener;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
@@ -116,12 +120,20 @@ public class InitManager
 		new HomeCommand(plugin);
 		new SethomeCommand(plugin);
 		new TphomeCommand(plugin);
+		
+		// Provinces
+		new ProvinceCommand(plugin);
+		new ProvinceEffectTask(plugin);
 
 		// Horses
 		new ChevalCommand(plugin);
 
 		// HPs
 		new HpsCommand(plugin);
+
+		// Jobs
+		new JobsCommand(plugin);
+		new JobActionListener(plugin);
 
 		// Key
 		new KeyCommand(plugin);
@@ -184,7 +196,7 @@ public class InitManager
 		new HorsesListener(plugin);
 
 		// Key
-		new DonjonSignListener(plugin);
+		new KeySignListener(plugin);
 
 		// Provinces
 		ProvinceScoreboard.initialize();
