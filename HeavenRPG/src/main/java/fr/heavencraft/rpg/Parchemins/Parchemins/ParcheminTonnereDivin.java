@@ -66,14 +66,14 @@ public class ParcheminTonnereDivin implements IParchemin{
 				Entity e = getTarget(player.getPlayer(),45);
 				if (e != null)
 				{
-					e.getWorld().strikeLightning(e.getLocation());
-					e.setFireTicks(100);
+					e.getWorld().strikeLightningEffect(e.getLocation());
+					//e.setFireTicks(100);
 					
 				}
 				else
 				{
-					player.getPlayer().getWorld().strikeLightning(player.getPlayer().getLocation());
-					player.getPlayer().setFireTicks(40);
+					player.getPlayer().getWorld().strikeLightningEffect(player.getPlayer().getLocation());
+					//player.getPlayer().setFireTicks(40);
 				}
 				
 				player.getPlayer().removePotionEffect(PotionEffectType.SLOW);
