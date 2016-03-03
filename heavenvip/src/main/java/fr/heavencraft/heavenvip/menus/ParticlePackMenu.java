@@ -81,7 +81,7 @@ public class ParticlePackMenu extends VipMenu
 								//TODO open equip menu
 								try
 								{
-									MenuAPI.openMenu(player, new MainMenu().GetMenu());
+									MenuAPI.openMenu(player, new ParticlePackMenu(player).GetMenu());
 								}
 								catch (HeavenException e)
 								{
