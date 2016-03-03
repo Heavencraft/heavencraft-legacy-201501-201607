@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.menu.ClickType;
 import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
@@ -38,16 +37,15 @@ public class MainMenu extends VipMenu
 			}
 		});
 		
-		super.m.addOption(5, 1, new Option(Material.ANVIL, ChatColor.GOLD + "TEST")
-		{
-			@Override
-			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
-					throws HeavenException
-			{
-				// TODO Open test menu
-				ChatUtil.broadcastMessage("OPEN TEST MENU LEL");
-			}
-		});
+//		super.m.addOption(5, 1, new Option(Material.ANVIL, ChatColor.GOLD + "TEST")
+//		{
+//			@Override
+//			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
+//					throws HeavenException
+//			{
+//				ChatUtil.broadcastMessage("OPEN TEST MENU LEL");
+//			}
+//		});
 	}
 
 	@Override

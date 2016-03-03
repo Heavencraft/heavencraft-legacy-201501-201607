@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.menu.ClickType;
 import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
@@ -47,7 +46,6 @@ public class EquipMenu extends VipMenu
 				final String displayName = ChatColor.translateAlternateColorCodes('§', rs.getString("name"));
 				final boolean active = rs.getBoolean("active");
 				final String desc = rs.getString("description");
-				ChatUtil.broadcastMessage(rs.getString("representative_item"));
 				final Material repMat = (Material.getMaterial(rs.getString("representative_item").toUpperCase()) == null) ? 
 						Material.NETHER_STAR : Material.getMaterial(rs.getString("representative_item").toUpperCase());
 				// Generate LED
