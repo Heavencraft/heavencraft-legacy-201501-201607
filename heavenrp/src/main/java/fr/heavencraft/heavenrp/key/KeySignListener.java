@@ -17,11 +17,11 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
 
-public class DonjonSignListener extends AbstractSignListener
+public class KeySignListener extends AbstractSignListener
 {
-	public DonjonSignListener(HeavenRP plugin)
+	public KeySignListener(HeavenRP plugin)
 	{
-		super(plugin, "Donjon", RPPermissions.DONJON_SIGN);
+		super(plugin, "Key", RPPermissions.DONJON_SIGN);
 	}
 
 	@Override

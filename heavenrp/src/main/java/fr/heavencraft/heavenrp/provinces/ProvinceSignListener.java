@@ -132,7 +132,7 @@ public class ProvinceSignListener extends AbstractSignWithConfirmationListener
 
 		final int fees = getLeavingFees(user);
 		final List<Query> queries = new ArrayList<Query>();
-		queries.add(new UpdateUserBalanceQuery(user, fees));
+		queries.add(new UpdateUserBalanceQuery(user, -fees));
 		queries.add(new RemoveProvinceQuery(user));
 		QueriesHandler.addQuery(new BatchQuery(queries)
 		{

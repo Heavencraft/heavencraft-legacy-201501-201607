@@ -3,6 +3,7 @@ package fr.heavencraft.heavenrp.worlds;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -24,6 +25,9 @@ public class WorldsManager
 
 	public static void init()
 	{
+		// Force difficulty of SRP to HARD
+		getWorld().setDifficulty(Difficulty.HARD);
+		
 		if (!isLoaded("world_nether"))
 		{
 			final WorldCreator creator = new WorldCreator("world_nether");
@@ -36,7 +40,9 @@ public class WorldsManager
 			final WorldCreator creator = new WorldCreator("world_resources");
 			creator.environment(World.Environment.NORMAL);
 			// creator.seed(1423174317);
-			creator.createWorld();
+			creator.seed(-5001027545084418649l);
+			final World worldResources = creator.createWorld();
+			worldResources.setDifficulty(Difficulty.NORMAL);
 		}
 
 		if (!isLoaded("world_dungeon"))
@@ -61,10 +67,17 @@ public class WorldsManager
 			creator.environment(World.Environment.NORMAL);
 			creator.createWorld();
 		}
+		if (!isLoaded("world_noel"))
+		{
+			final WorldCreator creator = new WorldCreator("world_noel");
+			creator.generator(new EmptyChunkGenerator());
+			creator.environment(World.Environment.NORMAL);
+			creator.createWorld();
+		}
 		_spawn = new Location(getWorld(), 145.5D, 107D, 130.5D, 270F, 0F);
 		_spawnNether = new Location(getNether(), 96, 46, 176, 0, 0);
 		_spawnTheEnd = new Location(getTheEnd(), 4.5D, 61D, 23.5D, 0F, 0F);
-		_tuto = new Location(getWorld(), -818D, 35D, -728D, 0F, 0F);
+		_tuto = new Location(getWorld(), -90D, 64D, 128D, 0F, 0F);
 	}
 
 	public static Location getSpawn()
