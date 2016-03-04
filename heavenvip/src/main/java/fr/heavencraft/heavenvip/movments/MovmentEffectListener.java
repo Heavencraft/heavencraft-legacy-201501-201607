@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenvip.vipeffects;
+package fr.heavencraft.heavenvip.movments;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -16,10 +16,10 @@ import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.utils.particles.ParticleEffect;
 import fr.heavencraft.heavenvip.HeavenVIP;
 
-public class EffectListener extends AbstractListener<HeavenVIP>
+public class MovmentEffectListener extends AbstractListener<HeavenVIP>
 {
 	private int EFFECT_VISIBILITY_RANGE = 50;
-	public EffectListener(HeavenVIP plugin)
+	public MovmentEffectListener(HeavenVIP plugin)
 	{
 		super(plugin);
 	}
@@ -43,13 +43,13 @@ public class EffectListener extends AbstractListener<HeavenVIP>
 				&& event.getFrom().getBlockZ() == event.getTo().getBlockZ())
 				return;
 		// Start applying effects
-		ArrayList<AppliedEffectProperty> effects = EffectCache.getEffectsByUUID(walker.getUniqueId());
+		ArrayList<AppliedDescriptorProperties> effects = MovmentEffectCache.getEffectsByUUID(walker.getUniqueId());
 		if(effects == null)
 			return;
 		// For each element, show particle effect
 		for(int i = 0; i < effects.size(); i++) 
 		{
-			AppliedEffectProperty aep = effects.get(i);
+			AppliedDescriptorProperties aep = effects.get(i);
 			ParticleEffect pu = aep.getEffect();
 			// Has custom color?
 			if (aep.getOrdinaryColor() != null) {
@@ -60,7 +60,7 @@ public class EffectListener extends AbstractListener<HeavenVIP>
 				pu.display(aep.getNoteColor(), walker.getLocation(), EFFECT_VISIBILITY_RANGE);
 			} else {
 				// No color
-				pu.display(0f, 0f, 0f, 1f, aep.getAmount(), walker.getLocation(), EFFECT_VISIBILITY_RANGE);
+				pu.display(0f, 0f, 0f, aep.getSpeed(), aep.getAmount(), walker.getLocation(), EFFECT_VISIBILITY_RANGE);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ public class EffectListener extends AbstractListener<HeavenVIP>
 	 */
 	@EventHandler   
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		EffectCache.updateCache(event.getPlayer());
+		MovmentEffectCache.updateCache(event.getPlayer());
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public class EffectListener extends AbstractListener<HeavenVIP>
 	 */
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent event) {
-		EffectCache.invalidateCache(event.getPlayer());
+		MovmentEffectCache.invalidateCache(event.getPlayer());
 	}
 	
 	private static UUID myUUID = UUID.fromString("1d396b17-99f9-42c7-82c6-7bf0bbfb38b4");
@@ -90,8 +90,8 @@ public class EffectListener extends AbstractListener<HeavenVIP>
 	 */
 	@EventHandler
 	public void onPlayerSneat(PlayerToggleSneakEvent event) {
-		if(event.getPlayer().getUniqueId().equals(EffectListener.myUUID)) {
-			EffectUtils.SpawnEing(event.getPlayer(), new ParticleEffect.OrdinaryColor(Color.PURPLE), new ParticleEffect.OrdinaryColor(Color.PURPLE), new ParticleEffect.OrdinaryColor(Color.SILVER));
+		if(event.getPlayer().getUniqueId().equals(MovmentEffectListener.myUUID)) {
+			EffectDescriptorUtils.SpawnEing(event.getPlayer(), new ParticleEffect.OrdinaryColor(Color.PURPLE), new ParticleEffect.OrdinaryColor(Color.PURPLE), new ParticleEffect.OrdinaryColor(Color.SILVER));
 		}
 	}
 }
