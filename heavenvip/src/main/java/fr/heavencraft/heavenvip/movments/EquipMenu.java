@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenvip.menus;
+package fr.heavencraft.heavenvip.movments;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenvip.HeavenVIP;
 import fr.heavencraft.heavenvip.MenuUtils;
-import fr.heavencraft.heavenvip.vipeffects.EffectCache;
+import fr.heavencraft.heavenvip.menus.VipMenu;
 
 public class EquipMenu extends VipMenu
 {
@@ -26,12 +26,12 @@ public class EquipMenu extends VipMenu
 
 		// Get a list of effects in this pack
 		try (PreparedStatement ps = HeavenVIP.getMainConnection().getConnection()
-				.prepareStatement("SELECT vip_effects.*, CASE WHEN EXISTS(" +
-						"SELECT 1 FROM vip_equiped WHERE vip_equiped.uuid = ? AND vip_equiped.effect_id = vip_effects.vip_effect_id LIMIT 1)" +
+				.prepareStatement("SELECT vip_movment_descriptors.*, CASE WHEN EXISTS(" +
+						"SELECT 1 FROM vip_equiped WHERE vip_equiped.uuid = ? AND vip_equiped.descriptor_id = vip_movment_descriptors.vip_movment_descriptor_id LIMIT 1)" +
 						"THEN 1 " +
 						"ELSE 0 " +
 						"END as active " +
-						"FROM vip_effects WHERE vip_effects.pack_id = ?"))
+						"FROM vip_movment_descriptors WHERE vip_movment_descriptors.pack_id = ?"))
 		{
 			ps.setString(1, PlayerUtil.getUUID(p));
 			ps.setInt(2, packId);
@@ -42,7 +42,7 @@ public class EquipMenu extends VipMenu
 			// For each effect
 			while (rs.next())
 			{
-				final int effectId = rs.getInt("vip_effect_id");
+				final int effectId = rs.getInt("vip_movment_descriptor_id");
 				final String displayName = ChatColor.translateAlternateColorCodes('§', rs.getString("name"));
 				final boolean active = rs.getBoolean("active");
 				final String desc = rs.getString("description");
@@ -69,7 +69,7 @@ public class EquipMenu extends VipMenu
 									menu.getOption(fx, fy +1).setDamage((short)1);
 									EquipMenu eMenu = new EquipMenu(player, packName, packId);
 									eMenu.openMenu(player);
-									EffectCache.updateCache(p);
+									MovmentEffectCache.updateCache(p);
 								}
 								@Override
 								public void fail()
@@ -88,7 +88,7 @@ public class EquipMenu extends VipMenu
 									menu.getOption(fx, fy +1).setDamage((short)10);
 									EquipMenu eMenu = new EquipMenu(player, packName, packId);
 									eMenu.openMenu(player);
-									EffectCache.updateCache(p);
+									MovmentEffectCache.updateCache(p);
 								}
 								@Override
 								public void fail()
@@ -130,7 +130,7 @@ public class EquipMenu extends VipMenu
 	public void openMenu(Player p)
 	{
 		// Attach Navigation Bar
-		MenuUtils.attachNavigationBar(this, new ParticlePackMenu(p), p, super.m.getHeight());
+		MenuUtils.attachNavigationBar(this, new MovmentParticlePackMenu(p), p, super.m.getHeight());
 		try
 		{
 			super.OpenMenu(p);

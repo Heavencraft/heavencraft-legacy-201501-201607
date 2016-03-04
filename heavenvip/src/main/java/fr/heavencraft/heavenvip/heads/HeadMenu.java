@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenvip.menus;
+package fr.heavencraft.heavenvip.heads;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,8 +12,8 @@ import fr.heavencraft.heavencore.utils.menu.ClickType;
 import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavenvip.MenuUtils;
-import fr.heavencraft.heavenvip.heads.Head;
-import fr.heavencraft.heavenvip.heads.HeadProvider;
+import fr.heavencraft.heavenvip.menus.MainMenu;
+import fr.heavencraft.heavenvip.menus.VipMenu;
 import fr.heavencraft.heavenvip.querys.UpdateHPSBalanceQuery;
 
 public class HeadMenu extends VipMenu

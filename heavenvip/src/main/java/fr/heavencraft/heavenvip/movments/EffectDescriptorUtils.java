@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenvip.vipeffects;
+package fr.heavencraft.heavenvip.movments;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.particles.ParticleEffect;
 
-public class EffectUtils
+public class EffectDescriptorUtils
 {
 	/**
 	 * Translates a formatted data sting to a usable effect: 
@@ -25,73 +25,73 @@ public class EffectUtils
 	 * @return
 	 * @throws HeavenException
 	 */
-	public static ArrayList<AppliedEffectProperty> translateEffectString(String data) throws HeavenException
+	public static ArrayList<AppliedDescriptorProperties> translateEffectString(String data) throws HeavenException
 	{
-		ArrayList<AppliedEffectProperty> effect = new ArrayList<AppliedEffectProperty>();
+		ArrayList<AppliedDescriptorProperties> effect = new ArrayList<AppliedDescriptorProperties>();
 
 		// Token each element separated by |
-		String[] tokenizedEffects = data.split("\\|");
-		for (int i = 0; i < tokenizedEffects.length; i++)
+		String[] descriptorBlocs = data.split("\\|");
+		for (int i = 0; i < descriptorBlocs.length; i++)
 		{
 			// extract amount
-			String[] tokenizedEffectParameters = tokenizedEffects[i].split(":");
+			String[] tEffectParameters = descriptorBlocs[i].split(":");
 
-			// Do we have more than 1 parameters?
-			if (tokenizedEffectParameters.length <= 1)
+			// Do we have more than 3 parameters? {effectID}:{amount}:{speed}:[SOMETHEING]
+			if (tEffectParameters.length <= 3)
 				throw new HeavenException(
 						"Incomplete Particle Effect Description String (not enougth parameters): " + data);
 
-			ParticleEffect pe = ParticleEffect.fromId(Integer.parseInt(tokenizedEffectParameters[0]));
+			ParticleEffect pe = ParticleEffect.fromId(Integer.parseInt(tEffectParameters[0]));
 			if (pe == null)
-				throw new HeavenException("Unkonwn Particle Effect ID used: " + tokenizedEffectParameters[0]);
+				throw new HeavenException("Unkonwn Particle Effect ID used: " + tEffectParameters[0]);
 
 			// Do we have additional data?
-			if (tokenizedEffectParameters.length == 3)
+			if (tEffectParameters.length == 4)
 			{
-				// {effectID}:{amount}:{SOMETHEING}
+				// {effectID}:{amount}:{speed}:{SOMETHEING}
 				// Token the {SOMETHING} bloc in format
 				// {typeOfData}.{xxx}.{xxx}...
-				String[] tokenizedParameters = tokenizedEffectParameters[2].split("\\.");
-				if (tokenizedParameters[0].equalsIgnoreCase("color"))
+				String[] tArguments = tEffectParameters[3].split("\\,");
+				if (tArguments[0].equalsIgnoreCase("color"))
 				{
-					// Ordinary Color: color.{R 0-255}.{G 0-255}.{B 0-255}
-					if (tokenizedParameters.length != 4)
+					// Ordinary Color: color,{R 0-255},{G 0-255},{B 0-255}
+					if (tArguments.length != 4)
 						throw new HeavenException(
 								"Invalid token for effect parameter count. Color: color.{R 0-255}.{G 0-255}.{B 0-255}, but got: "
-										+ tokenizedEffectParameters[2]);
+										+ tEffectParameters[2]);
 					ParticleEffect.OrdinaryColor oc = new ParticleEffect.OrdinaryColor(Color.fromRGB(
-							DevUtil.toUint(tokenizedParameters[1]), DevUtil.toUint(tokenizedParameters[2]),
-							DevUtil.toUint(tokenizedParameters[3])));
+							DevUtil.toUint(tArguments[1]), DevUtil.toUint(tArguments[2]),
+							DevUtil.toUint(tArguments[3])));
 					
-					// Color format {effectID}:{amount}:color.{255}.{255}.{255}
-					AppliedEffectProperty tp = new AppliedEffectProperty(pe,
-							Integer.parseInt(tokenizedEffectParameters[1]), oc);
+					// Color format {effectID}:{amount}:{speed}:color,{255},{255},{255}
+					AppliedDescriptorProperties tp = new AppliedDescriptorProperties(pe,
+							Integer.parseInt(tEffectParameters[1]), oc);
 					effect.add(tp);
 				} 
-				else if(tokenizedParameters[0].equalsIgnoreCase("note")) 
+				else if(tArguments[0].equalsIgnoreCase("note")) 
 				{
-					if (tokenizedParameters.length != 2)
+					if (tArguments.length != 2)
 						throw new HeavenException(
-								"Invalid token for effect parameter count. Note Color: note.{0-24}, but got: "
-										+ tokenizedEffectParameters[2]);
-					ParticleEffect.NoteColor nc = new ParticleEffect.NoteColor(DevUtil.toUint(tokenizedParameters[1]));
+								"Invalid token for effect parameter count. Note Color: note,{0-24}, but got: "
+										+ tEffectParameters[2]);
+					ParticleEffect.NoteColor nc = new ParticleEffect.NoteColor(DevUtil.toUint(tArguments[1]));
 					
-					// Note Color format {effectID}:{amount}:note.{0-24}
-					AppliedEffectProperty tp = new AppliedEffectProperty(pe,
-							Integer.parseInt(tokenizedEffectParameters[1]), nc);
+					// Note Color format {effectID}:{amount}:note,{0-24}
+					AppliedDescriptorProperties tp = new AppliedDescriptorProperties(pe,
+							Integer.parseInt(tEffectParameters[1]), nc);
 					effect.add(tp);
 				}
 				else
 				{
-					throw new HeavenException("Unkown effect description parameter type: " + tokenizedParameters[0] + " of " + tokenizedEffects[i]);
+					throw new HeavenException("Unkown effect description parameter type: " + tArguments[0] + " of " + descriptorBlocs[i]);
 				}
 
 			}
-			else if (tokenizedEffectParameters.length == 2)
+			else if (tEffectParameters.length == 2)
 			{
-				// Simple format {effectID}:{amount}
-				AppliedEffectProperty tp = new AppliedEffectProperty(pe,
-						Integer.parseInt(tokenizedEffectParameters[1]));
+				// Simple format {effectID}:{amount}:{speed}
+				AppliedDescriptorProperties tp = new AppliedDescriptorProperties(pe,
+						Integer.parseInt(tEffectParameters[1]), Float.parseFloat(tEffectParameters[2]));
 				effect.add(tp);
 			}
 			else
