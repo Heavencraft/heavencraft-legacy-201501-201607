@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenvip.menus;
+package fr.heavencraft.heavenvip.movments;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,18 +16,20 @@ import fr.heavencraft.heavencore.utils.menu.MenuAPI;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
 import fr.heavencraft.heavenvip.HpsManager;
 import fr.heavencraft.heavenvip.MenuUtils;
+import fr.heavencraft.heavenvip.menus.MainMenu;
+import fr.heavencraft.heavenvip.menus.VipMenu;
 import fr.heavencraft.heavenvip.querys.UpdateHPSBalanceQuery;
 import fr.heavencraft.heavenvip.vippacks.PackType;
 import fr.heavencraft.heavenvip.vippacks.VipPack;
 import fr.heavencraft.heavenvip.vippacks.VipPackProvider;
 
-public class ParticlePackMenu extends VipMenu
+public class MovmentParticlePackMenu extends VipMenu
 {
 	private final static String ITEM_NOT_FOR_SALE = "Cet objet n'est pas a vendre en ce moment.";
 	private final static String NOT_ENOUGH_HPS = "Vous n'avez pas assez d'HPS, plus d'informations: www.heavencraft.fr";
 	private final static String ITEM_BOUGHT = "Merci pour votre achat! Vous pouvez désormez vous en équiper.";
 	
-	public ParticlePackMenu(Player p)
+	public MovmentParticlePackMenu(Player p)
 	{
 		super(new Menu("Packs Particles", 4));
 		// Variables for item coordinates inside inventory
@@ -81,7 +83,7 @@ public class ParticlePackMenu extends VipMenu
 								//TODO open equip menu
 								try
 								{
-									MenuAPI.openMenu(player, new ParticlePackMenu(player).GetMenu());
+									MenuAPI.openMenu(player, new MovmentParticlePackMenu(player).GetMenu());
 								}
 								catch (HeavenException e)
 								{
