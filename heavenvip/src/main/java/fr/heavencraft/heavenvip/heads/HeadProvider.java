@@ -10,8 +10,7 @@ import fr.heavencraft.heavenvip.HeavenVIP;
 
 public class HeadProvider
 {
-	private final static String SELECT_HEADS = "SELECT * from vip_pack WHERE effect_type = 'h' " +
-			"ORDER BY vip_pack_id ASC";
+	private final static String SELECT_HEADS = "SELECT * from vip_head ORDER BY price DESC";
 
 	/**
 	 * Returns a collection of available heads
@@ -27,7 +26,7 @@ public class HeadProvider
 			while (rs.next())
 			{
 				Head hd = new Head(rs.getInt("price"),
-						rs.getString("data"),
+						rs.getString("name"),
 						rs.getString("description"));
 				
 				headCollection.add(hd);

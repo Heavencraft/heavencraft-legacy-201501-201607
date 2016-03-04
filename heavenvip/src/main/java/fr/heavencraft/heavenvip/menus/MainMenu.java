@@ -9,6 +9,8 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.menu.ClickType;
 import fr.heavencraft.heavencore.utils.menu.Menu;
 import fr.heavencraft.heavencore.utils.menu.options.Option;
+import fr.heavencraft.heavenvip.heads.HeadMenu;
+import fr.heavencraft.heavenvip.movments.MovmentParticlePackMenu;
 
 public class MainMenu extends VipMenu
 {
@@ -22,7 +24,7 @@ public class MainMenu extends VipMenu
 			public void onClick(Menu menu, Player player, ItemStack cursor, ItemStack current, ClickType type)
 					throws HeavenException
 			{
-				ParticlePackMenu particleMenu = new ParticlePackMenu(player);
+				MovmentParticlePackMenu particleMenu = new MovmentParticlePackMenu(player);
 				particleMenu.openMenu(player);
 			}
 		});
