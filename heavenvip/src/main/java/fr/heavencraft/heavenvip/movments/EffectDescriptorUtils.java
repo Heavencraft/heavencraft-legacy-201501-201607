@@ -13,12 +13,9 @@ import fr.heavencraft.heavencore.utils.particles.ParticleEffect;
 public class EffectDescriptorUtils
 {
 	/**
-	 * Translates a formatted data sting to a usable effect: 
-	 * Simple:
-	 * {effectID}:{amount}|{effectID}:{amount}|... 
-	 * With Color:
-	 * {effectID}:{amount}:color.{0-255}.{0-255}.{0-255}
-	 * With Note Color
+	 * Translates a formatted data sting to a usable effect: Simple:
+	 * {effectID}:{amount}|{effectID}:{amount}|... With Color:
+	 * {effectID}:{amount}:color.{0-255}.{0-255}.{0-255} With Note Color
 	 * {effectID}:{amount}:note.{0-24}
 	 * 
 	 * @param data
@@ -36,7 +33,8 @@ public class EffectDescriptorUtils
 			// extract amount
 			String[] tEffectParameters = descriptorBlocs[i].split(":");
 
-			// Do we have more than 3 parameters? {effectID}:{amount}:{speed}:[SOMETHEING]
+			// Do we have more than 3 parameters?
+			// {effectID}:{amount}:{speed}:[SOMETHEING]
 			if (tEffectParameters.length < 3)
 				throw new HeavenException(
 						"Incomplete Particle Effect Description String (not enougth parameters): " + data);
@@ -59,23 +57,24 @@ public class EffectDescriptorUtils
 						throw new HeavenException(
 								"Invalid token for effect parameter count. Color: color.{R 0-255}.{G 0-255}.{B 0-255}, but got: "
 										+ tEffectParameters[2]);
-					ParticleEffect.OrdinaryColor oc = new ParticleEffect.OrdinaryColor(Color.fromRGB(
-							DevUtil.toUint(tArguments[1]), DevUtil.toUint(tArguments[2]),
-							DevUtil.toUint(tArguments[3])));
-					
-					// Color format {effectID}:{amount}:{speed}:color,{255},{255},{255}
+					ParticleEffect.OrdinaryColor oc = new ParticleEffect.OrdinaryColor(
+							Color.fromRGB(DevUtil.toUint(tArguments[1]), DevUtil.toUint(tArguments[2]),
+									DevUtil.toUint(tArguments[3])));
+
+					// Color format
+					// {effectID}:{amount}:{speed}:color,{255},{255},{255}
 					AppliedDescriptorProperties tp = new AppliedDescriptorProperties(pe,
 							Integer.parseInt(tEffectParameters[1]), oc);
 					effect.add(tp);
-				} 
-				else if(tArguments[0].equalsIgnoreCase("note")) 
+				}
+				else if (tArguments[0].equalsIgnoreCase("note"))
 				{
 					if (tArguments.length != 2)
 						throw new HeavenException(
 								"Invalid token for effect parameter count. Note Color: note,{0-24}, but got: "
 										+ tEffectParameters[2]);
 					ParticleEffect.NoteColor nc = new ParticleEffect.NoteColor(DevUtil.toUint(tArguments[1]));
-					
+
 					// Note Color format {effectID}:{amount}:note,{0-24}
 					AppliedDescriptorProperties tp = new AppliedDescriptorProperties(pe,
 							Integer.parseInt(tEffectParameters[1]), nc);
@@ -83,11 +82,12 @@ public class EffectDescriptorUtils
 				}
 				else
 				{
-					throw new HeavenException("Unkown effect description parameter type: " + tArguments[0] + " of " + descriptorBlocs[i]);
+					throw new HeavenException("Unkown effect description parameter type: " + tArguments[0]
+							+ " of " + descriptorBlocs[i]);
 				}
 
 			}
-			else if (tEffectParameters.length == 2)
+			else if (tEffectParameters.length == 3)
 			{
 				// Simple format {effectID}:{amount}:{speed}
 				AppliedDescriptorProperties tp = new AppliedDescriptorProperties(pe,
@@ -95,7 +95,9 @@ public class EffectDescriptorUtils
 				effect.add(tp);
 			}
 			else
-				throw new HeavenException("Invalid Particle Effect data: " + data);
+				throw new HeavenException(
+						"Invalid Particle Effect data: '%1$s' Parsing bloc '%2$s' (%3$d Parameters) ", data,
+						descriptorBlocs[i], tEffectParameters.length);
 		}
 
 		return effect;
