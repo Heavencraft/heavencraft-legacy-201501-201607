@@ -4,6 +4,12 @@ import org.bukkit.Location;
 
 public class DungeonRoom
 {
+	public enum DungeonRoomType
+	{
+		LOBBY,
+		ROOM
+	}
+	
 	private int roomId;
 
 	public int getRoomId()
