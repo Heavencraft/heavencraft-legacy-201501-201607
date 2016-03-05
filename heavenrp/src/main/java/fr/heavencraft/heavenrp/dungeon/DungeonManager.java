@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavenrp.HeavenRP;
-import fr.heavencraft.heavenrp.database.users.User;
 
 public class DungeonManager
 {
@@ -56,7 +55,7 @@ public class DungeonManager
 						dungeonResultSet.getDouble("triggerY"),
 						dungeonResultSet.getDouble("triggerZ"));
 				// Generate a lobby room
-				DungeonRoom lobby = new DungeonRoom(0, spawn, trigger, DungeonRoomType.LOBBY);
+				DungeonRoom lobby = new DungeonRoom(0, spawn, trigger, DungeonRoom.DungeonRoomType.LOBBY);
 				// Store Dungeon
 				dungeons.add(dg);
 				// Store room
@@ -76,24 +75,28 @@ public class DungeonManager
 	/* ~~ Generic Section ~~ */
 
 	/**
-	 * Makes a user enter a dungeon.
+	 * Makes a Player enter a dungeon.
 	 * 
 	 * @param u
 	 * @return
 	 */
-	public static boolean UserJoin(User u)
+	public static boolean PlayerJoin(Player u)
 	{
 		// TODO self generated function
+		// Check if user is already inside a dungeon
+		if(playerDungeon.containsKey(u.getUniqueId())){
+			
+		}
 		return true;
 	}
 
 	/**
-	 * Makes a user leave a dungeon
+	 * Makes a Player leave a dungeon
 	 * 
 	 * @param u
 	 * @return
 	 */
-	public static boolean UserLeave(User u)
+	public static boolean PlayerLeave(Player u)
 	{
 		// TODO self generated function
 		return true;
@@ -106,19 +109,19 @@ public class DungeonManager
 	 * @param nextRoomId next room id
 	 * @return
 	 */
-	public static boolean AttempNextRoom(User u, int nextRoomId)
+	public static boolean AttempNextRoom(Player u, int nextRoomId)
 	{
 		// TODO self generated function
 		return true;
 	}
 
-	public static boolean UserDies(User u)
+	public static boolean PlayerDies(Player u)
 	{
 		// TODO self generated function
 		return true;
 	}
 
-	public static boolean RestoreInventory(User u)
+	public static boolean RestoreInventory(Player u)
 	{
 		// TODO self generated function
 		return true;
@@ -148,19 +151,19 @@ public class DungeonManager
 		}
 	}
 
-	public static boolean DeleteDungeon(User u)
+	public static boolean DeleteDungeon(Player u)
 	{
 		// TODO self generated function
 		return true;
 	}
 
-	public static boolean AddDungeonRoom(User u)
+	public static boolean AddDungeonRoom(Player u)
 	{
 		// TODO self generated function
 		return true;
 	}
 
-	public static boolean RemoveDungeonRoom(User u)
+	public static boolean RemoveDungeonRoom(Player u)
 	{
 		// TODO self generated function
 		return true;
