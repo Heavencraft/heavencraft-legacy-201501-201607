@@ -37,7 +37,7 @@ public class EffectDescriptorUtils
 			String[] tEffectParameters = descriptorBlocs[i].split(":");
 
 			// Do we have more than 3 parameters? {effectID}:{amount}:{speed}:[SOMETHEING]
-			if (tEffectParameters.length <= 3)
+			if (tEffectParameters.length < 3)
 				throw new HeavenException(
 						"Incomplete Particle Effect Description String (not enougth parameters): " + data);
 
