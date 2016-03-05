@@ -11,7 +11,6 @@ import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
-import fr.heavencraft.heavenrp.database.users.UserProvider;
 
 public class DungeonSignListener extends AbstractSignListener
 {
@@ -25,7 +24,6 @@ public class DungeonSignListener extends AbstractSignListener
 	public enum DungeonSignType {
 		JOIN("Join", ChatColor.BLUE + "Entrer"),
 		NEXT("Next", ChatColor.BLUE + "Continuer"),
-		EXIT("Exit", ChatColor.BLUE + "Vers la sortie"),
 		LEAVE("Quitter", ChatColor.BLUE + "Quitter");
 		
 		private String signText = "";
@@ -49,12 +47,7 @@ public class DungeonSignListener extends AbstractSignListener
 	{
 		final String line = event.getLine(1);
 		
-		// ## Signs without arguments
-		if(line.equalsIgnoreCase(DungeonSignType.EXIT.toString())) {
-			event.setLine(1, DungeonSignType.EXIT.getDisplay());
-			return true;
-		}
-		
+		// ## Signs without arguments	
 		if(line.equalsIgnoreCase(DungeonSignType.LEAVE.toString())) {
 			event.setLine(1, DungeonSignType.LEAVE.getDisplay());
 			return true;
@@ -98,11 +91,7 @@ public class DungeonSignListener extends AbstractSignListener
 		final String line = sign.getLine(1);
 		
 		if(line.equals(DungeonSignType.NEXT.getDisplay())) {
-			
-			return;
-		}
-		if(line.equals(DungeonSignType.EXIT.getDisplay())) {
-			
+			DungeonManager.AttempNextRoom(player, DevUtil.toUint(sign.getLine(2)));
 			return;
 		}
 		if(line.equals(DungeonSignType.JOIN.getDisplay())) {
@@ -110,7 +99,7 @@ public class DungeonSignListener extends AbstractSignListener
 			return;
 		}
 		if(line.equals(DungeonSignType.LEAVE.getDisplay())) {
-			
+			DungeonManager.PlayerLeave(player);
 			return;
 		}
 	}
