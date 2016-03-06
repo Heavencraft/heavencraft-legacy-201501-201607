@@ -95,7 +95,7 @@ public class DungeonSignListener extends AbstractSignListener
 			return;
 		}
 		if(line.equals(DungeonSignType.JOIN.getDisplay())) {
-			DungeonManager.PlayerJoin(player);
+			DungeonManager.PlayerJoin(player, null);
 			return;
 		}
 		if(line.equals(DungeonSignType.LEAVE.getDisplay())) {
