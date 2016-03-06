@@ -14,22 +14,23 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 
 public class DungeonManager
 {
 	// Exceptions
 	private static String ALREADY_IN_DUNGEON = "Vous ètes déjà dans un donjon.";
+	private static String NAME_UNKNOWN_DUNGEON = "Le nom du donjon est invalide.";
+	private static String DUNGEON_FULL = "Il y a déjà quelqu'un dans ce donjon...";
+	private static String DUNGEON_WAITING_FOR_PLAYERS = "Je dois attendre encore %1$d camarade(s).";
 	
 	
-	// Hashmap assiociation between player and the dungeon he is inside
-	private static HashMap<UUID, Dungeon> playerDungeon = new HashMap<UUID, Dungeon>();
-	// List containing all Dungeons
-	private static List<Dungeon> dungeons = new ArrayList<Dungeon>();
-	// Hashmap assiociation between dungeon ID and the rooms
-	private static HashMap<Integer, DungeonRoom> dungeonRooms = new HashMap<Integer, DungeonRoom>();
+	// Hashmap association playerUUID --> DungeonID
+	private static HashMap<UUID, Integer> playerDungeon = new HashMap<UUID, Integer>();
+	// Hashmap association DungeonID --> Dungeon
+	private static HashMap<Integer, Dungeon> dungeons = new HashMap<Integer, Dungeon>();
 
-	// TODO load dungeons
 	/**
 	 * Constructor, loads dungeons from database
 	 * @throws Exception 
@@ -61,15 +62,15 @@ public class DungeonManager
 						dungeonResultSet.getDouble("triggerZ"));
 				// Generate a lobby room
 				DungeonRoom lobby = new DungeonRoom(0, spawn, trigger, DungeonRoomType.LOBBY);
-				// Store Dungeon
-				dungeons.add(dg);
 				// Store room
-				dungeonRooms.put(dg.getId(), lobby);
+				dg.getRooms().put(0, lobby);
+				// Store Dungeon
+				dungeons.put(dg.getId(), dg);
+				
+				// For each room, add into dungeonRoom
+				//TODO Load rooms and register them
+				
 			}
-
-			// For each room, add into dungeonRoom
-			//TODO Load rooms and register them
-
 		}
 		catch (final SQLException ex)
 		{
@@ -82,20 +83,41 @@ public class DungeonManager
 	/**
 	 * Makes a Player enter a dungeon.
 	 * 
-	 * @param u
-	 * @return
+	 * @param p
+	 * @param dungeonName 
 	 * @throws HeavenException 
 	 */
-	public static boolean PlayerJoin(Player u) throws HeavenException
+	public static void PlayerJoin(Player p, String dungeonName) throws HeavenException
 	{
-		// TODO self generated function
-		// Check if user is already inside a dungeon
-		if(playerDungeon.containsKey(u.getUniqueId())){
+		// Already in dungeon?
+		if(playerDungeon.containsKey(p.getUniqueId())){
 			throw new HeavenException(ALREADY_IN_DUNGEON);
 		}
+		// Dungeon exists?
+		Dungeon dungeon = null;
+		for(final Dungeon dg : dungeons.values())
+			if(dg.getName().equalsIgnoreCase(dungeonName))
+				dungeon = dg;
+		if(dungeon == null)
+			throw new HeavenException(NAME_UNKNOWN_DUNGEON);
+		// Dungeon has free slots?
+		if(dungeon.PlayerCount >= dungeon.requiredPlayer)
+			throw new HeavenException(DUNGEON_FULL);
 		
+		// Add player to list
+		playerDungeon.put(p.getUniqueId(), dungeon.getId());
+		// Teleport player to lobby
+		p.teleport(dungeon.getRooms().get(0).getSpawn());
+		++dungeon.PlayerCount;
 		
-		return true;
+		// Do we meet requirements to play?
+		if(dungeon.PlayerCount == dungeon.requiredPlayer){
+			//TODO trigger start
+		} 
+		else
+		{
+			ChatUtil.sendMessage(p, DUNGEON_WAITING_FOR_PLAYERS, dungeon.requiredPlayer - dungeon.PlayerCount);
+		}
 	}
 
 	/**
@@ -137,12 +159,10 @@ public class DungeonManager
 
 	/* ~~ Edit Section ~~ */
 
-	public static void CreateDungeon(Player p, String dungeonName) throws SQLErrorException
+	public static void CreateDungeon(Player p, String dungeonName) throws HeavenException
 	{
 		if (getDungeon(dungeonName) != null)
-		{
-			//throw new HeavenException("Ce donjon existe déjà.");
-		}
+			throw new HeavenException("Ce donjon existe déjà.");
 
 		//TODO Finish this one
 		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
@@ -155,7 +175,6 @@ public class DungeonManager
 		catch (final SQLException ex)
 		{
 			ex.printStackTrace();
-			throw new SQLErrorException();
 		}
 	}
 
@@ -177,11 +196,17 @@ public class DungeonManager
 		return true;
 	}
 
-	/* ~~ Utils Section ~~ */
-
+	/* ~~ Utilities Section ~~ */
+	
+	/**
+	 * Returns a dungeon object. 
+	 * NULL if no dungeon found.
+	 * @param dungeonName
+	 * @return
+	 */
 	private static Dungeon getDungeon(String dungeonName)
 	{
-		for (Dungeon dg : dungeons)
+		for (Dungeon dg : dungeons.values())
 			if (dg.getName().equalsIgnoreCase(dungeonName))
 				return dg;
 		return null;
@@ -214,9 +239,18 @@ public class DungeonManager
 		{
 			return requiredPlayer;
 		}
+		public HashMap<Integer, DungeonRoom> getRooms()
+		{
+			return rooms;
+		}
+		
 		private int id;
 		private String name;
 		private int requiredPlayer = 1;
+		public int PlayerCount = 0;
+
+		private HashMap<Integer, DungeonRoom> rooms = new HashMap<Integer, DungeonRoom>();
+
 
 	}
 
