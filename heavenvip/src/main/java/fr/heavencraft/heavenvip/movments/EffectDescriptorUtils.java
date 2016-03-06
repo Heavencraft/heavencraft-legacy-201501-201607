@@ -49,7 +49,7 @@ public class EffectDescriptorUtils
 				// {effectID}:{amount}:{speed}:{SOMETHEING}
 				// Token the {SOMETHING} bloc in format
 				// {typeOfData}.{xxx}.{xxx}...
-				String[] tArguments = tEffectParameters[3].split("\\,");
+				String[] tArguments = tEffectParameters[3].split("\\.");
 				if (tArguments[0].equalsIgnoreCase("color"))
 				{
 					// Ordinary Color: color,{R 0-255},{G 0-255},{B 0-255}
@@ -82,8 +82,8 @@ public class EffectDescriptorUtils
 				}
 				else
 				{
-					throw new HeavenException("Unkown effect description parameter type: " + tArguments[0]
-							+ " of " + descriptorBlocs[i]);
+					throw new HeavenException("Unkown effect description argument type: '%1$s' of bloc '%2$s'" ,
+							tArguments[0], descriptorBlocs[i]);
 				}
 
 			}
