@@ -36,6 +36,9 @@ import fr.heavencraft.heavenrp.commands.hps.HpsCommand;
 import fr.heavencraft.heavenrp.commands.key.KeyCommand;
 import fr.heavencraft.heavenrp.commands.province.ProvinceCommand;
 import fr.heavencraft.heavenrp.commands.warps.WarpCommand;
+import fr.heavencraft.heavenrp.dungeon.DungeonCommand;
+import fr.heavencraft.heavenrp.dungeon.DungeonListener;
+import fr.heavencraft.heavenrp.dungeon.DungeonSignListener;
 import fr.heavencraft.heavenrp.economy.EconomyListener;
 import fr.heavencraft.heavenrp.economy.GoldDropListener;
 import fr.heavencraft.heavenrp.economy.LivretProSignListener;
@@ -106,6 +109,9 @@ public class InitManager
 		/*
 		 * from HeavenRP
 		 */
+		
+		// Dungeon
+		new DungeonCommand(plugin);
 
 		// Economy
 		new BourseCommand(plugin);
@@ -175,7 +181,11 @@ public class InitManager
 		/*
 		 * HeavenRP
 		 */
-
+		
+		// Dungeon
+		new DungeonListener(plugin);
+		new DungeonSignListener(plugin);
+		
 		// Economy
 		new EconomyListener();
 		new GoldDropListener(plugin);
