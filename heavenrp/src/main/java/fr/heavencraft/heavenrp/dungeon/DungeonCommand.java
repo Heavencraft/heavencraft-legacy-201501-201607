@@ -1,10 +1,11 @@
-package fr.heavencraft.heavenrp.commands.dungeon;
+package fr.heavencraft.heavenrp.dungeon;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.RPPermissions;
@@ -30,24 +31,42 @@ public class DungeonCommand extends AbstractCommandExecutor
 
 	public DungeonCommand(HeavenRP plugin)
 	{
-		super(plugin, "adonjon", RPPermissions.DUNGEON_ADMIN);
+		super(plugin, "djn");
 	}
 	
 	@Override
-	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
+	protected void onPlayerCommand(final Player player, final String[] args) throws HeavenException
 	{
 		// Check if no parameter is given.
-		if(args.length == 0)
-		{
+		
+		// Do we access admin commands?
+		if(args.length <= 1 && args[0].equalsIgnoreCase("admin")){
 			sendUsage(player);
 			return;
 		}
+		
 		// LIST DUNGEONS
-		if(args[0].equalsIgnoreCase("list"))
+		if(args[1].equalsIgnoreCase("list"))
 		{
-			ChatUtil.sendMessage(player, "Donjons: ");
+			DungeonUtils.ListDungeons(player);
 			return;
 		}
+		
+		if(args[1].equalsIgnoreCase("create")) {
+			if(args.length != 4){
+				throw new HeavenException("/donjon admin create <nom> <joueurs requis>");
+			}
+			final String dgName = args[2];
+			final int necessaryPlayerAmount = DevUtil.toUint(args[3]);
+			DungeonManager.CreateDungeon(player, dgName, necessaryPlayerAmount);
+		}
+		if(args[1].equalsIgnoreCase("delete")) {
+			if(args.length != 3)
+				throw new HeavenException("/donjon admin delete <nom>");
+			final String dgName = args[2];
+			DungeonManager.DeleteDungeon(player, dgName);
+		}
+		
 		
 		//TODO Commandes de creation des donjons
 	}
@@ -60,7 +79,7 @@ public class DungeonCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{	
-		ChatUtil.sendMessage(sender, "/{adonjon} list : Liste & etats des donjons.");
+		ChatUtil.sendMessage(sender, "/{adonjon} admin list : Liste & etats des donjons.");
 	}
 
 }
