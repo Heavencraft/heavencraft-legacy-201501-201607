@@ -25,6 +25,8 @@ public class DungeonCommand extends AbstractCommandExecutor
 			+ ChatColor.WHITE + "Crée une nouvelle salle. (Spawn = Votre position)";
 	private final static String ADMIN_DELROOM = "/donjon {admin} delroom <idSalle> : " + ChatColor.WHITE
 			+ "Supprime une salle.";
+	private final static String ADMIN_FIRST_ROOM = "/donjon {admin} firstRoom <donjon> <idSalle> : "
+			+ ChatColor.WHITE + "Definie la première Salle";
 
 	public DungeonCommand(HeavenRP plugin)
 	{
@@ -117,6 +119,15 @@ public class DungeonCommand extends AbstractCommandExecutor
 			return;
 		}
 
+		// DUNGEON UPDATE ROOM
+		if (args[1].equalsIgnoreCase("firstRoom"))
+		{
+			if (args.length != 4)
+				throw new HeavenException(ADMIN_FIRST_ROOM);
+			DungeonManager.UpdateFirstRoom(player, args[2], DevUtil.toUint(args[3]));
+			return;
+		}
+
 		sendUsage(player);
 		return;
 	}
@@ -136,6 +147,7 @@ public class DungeonCommand extends AbstractCommandExecutor
 		ChatUtil.sendMessage(sender, ADMIN_DELETE);
 		ChatUtil.sendMessage(sender, ADMIN_ADDROOM);
 		ChatUtil.sendMessage(sender, ADMIN_DELROOM);
+		ChatUtil.sendMessage(sender, ADMIN_FIRST_ROOM);
 	}
 
 }
