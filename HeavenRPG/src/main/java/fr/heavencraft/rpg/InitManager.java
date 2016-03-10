@@ -35,7 +35,7 @@ public class InitManager {
 		// Zone
 		new ZoneCommand();
 		new ParcheminCommand();
-		new DungeonCommand();
+		//new DungeonCommand();
 		
 		// Task is runned after done loading
 		Bukkit.getScheduler().runTaskLater(HeavenRPG.getInstance(), new Runnable()
@@ -56,8 +56,8 @@ public class InitManager {
 		new RPGPlayerListener();
 		new ZoneListener();
 		new ParcheminsListener();
-		new DungeonSignListener();
-		new DungeonListener();
+		//new DungeonSignListener();
+		//new DungeonListener();
 	}
 	
 	private static void initOther()
