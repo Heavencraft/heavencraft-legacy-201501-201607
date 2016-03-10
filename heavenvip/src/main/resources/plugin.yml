@@ -1,0 +1,6 @@
+name: HeavenVIP
+version: 1.0
+main: fr.heavencraft.heavenvip.HeavenVIP
+depend: [HeavenCore]
+commands:
+  vip:
