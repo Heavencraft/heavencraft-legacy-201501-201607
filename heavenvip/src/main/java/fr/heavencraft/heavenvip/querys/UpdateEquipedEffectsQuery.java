@@ -34,7 +34,7 @@ public class UpdateEquipedEffectsQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
-		try (PreparedStatement ps1 = HeavenVIP.getMainConnection().getConnection().prepareStatement(QUERY1))
+		try (PreparedStatement ps1 = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY1))
 		{
 			ps1.setString(1, (String.valueOf(this.type)));
 			ps1.setString(2, this.uuid);
@@ -45,7 +45,7 @@ public class UpdateEquipedEffectsQuery extends AbstractQuery
 				// No entry found, insert new
 				if(rs.getInt("count") == 0)
 				{
-					try (PreparedStatement ps2 = HeavenVIP.getMainConnection().getConnection().prepareStatement(QUERY_INSERT))
+					try (PreparedStatement ps2 = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY_INSERT))
 					{
 						ps2.setString(1, (String.valueOf(this.type)));
 						ps2.setString(2, this.uuid);
@@ -60,7 +60,7 @@ public class UpdateEquipedEffectsQuery extends AbstractQuery
 				}
 				else
 				{
-					try (PreparedStatement ps2 = HeavenVIP.getMainConnection().getConnection().prepareStatement(QUERY_UPDATE))
+					try (PreparedStatement ps2 = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY_UPDATE))
 					{
 						ps2.setInt(1, this.descriptor_id);
 						ps2.setString(2, (String.valueOf(this.type)));

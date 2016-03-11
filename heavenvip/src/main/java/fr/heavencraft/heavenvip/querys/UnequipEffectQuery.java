@@ -25,7 +25,7 @@ public class UnequipEffectQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
-		try (PreparedStatement ps = HeavenVIP.getMainConnection().getConnection().prepareStatement(QUERY))
+		try (PreparedStatement ps = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY))
 		{
 			ps.setString(1, (String.valueOf(this.type)));
 			ps.setString(2, this.uuid);
