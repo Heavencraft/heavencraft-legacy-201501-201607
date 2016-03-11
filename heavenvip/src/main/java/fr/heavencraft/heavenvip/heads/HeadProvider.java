@@ -19,7 +19,7 @@ public class HeadProvider
 	public static Collection<Head> getSoldHeads() {
 		Collection<Head> headCollection = new ArrayList<Head>();
 
-		try (PreparedStatement ps = HeavenVIP.getMainConnection()
+		try (PreparedStatement ps = HeavenVIP.getProxyConnection()
 				.getConnection().prepareStatement(SELECT_HEADS))
 		{
 			final ResultSet rs = ps.executeQuery();

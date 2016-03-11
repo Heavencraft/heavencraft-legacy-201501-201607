@@ -23,7 +23,7 @@ public class UpdateHPSBalanceQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
-		try (PreparedStatement ps = HeavenVIP.getMainConnection().getConnection().prepareStatement(QUERY))
+		try (PreparedStatement ps = HeavenVIP.getWebConnection().getConnection().prepareStatement(QUERY))
 		{
 			ps.setInt(1, delta);
 			ps.setString(2, name);
