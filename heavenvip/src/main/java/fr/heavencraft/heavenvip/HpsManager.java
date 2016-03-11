@@ -11,7 +11,7 @@ public class HpsManager
 
 	public static int getBalance(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenVIP.getMainConnection().getConnection().prepareStatement(
+		try (PreparedStatement ps = HeavenVIP.getWebConnection().getConnection().prepareStatement(
 				"SELECT balance FROM heavencraft_users WHERE username = ?"))
 		{
 			ps.setString(1, name);

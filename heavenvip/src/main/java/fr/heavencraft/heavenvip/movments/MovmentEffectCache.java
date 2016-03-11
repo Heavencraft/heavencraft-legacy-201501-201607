@@ -32,7 +32,7 @@ public class MovmentEffectCache
 		// load effects from DB
 		
 		// "SELECT vip_equiped.* FROM vip_equiped WHERE vip_equiped.uuid = ?"
-		try (PreparedStatement ps = HeavenVIP.getMainConnection()
+		try (PreparedStatement ps = HeavenVIP.getProxyConnection()
 				.getConnection().prepareStatement(QUERY))
 		{
 			ArrayList<AppliedDescriptorProperties> effect = new ArrayList<AppliedDescriptorProperties>();

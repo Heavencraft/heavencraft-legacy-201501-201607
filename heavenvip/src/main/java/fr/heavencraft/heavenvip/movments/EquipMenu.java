@@ -25,7 +25,7 @@ public class EquipMenu extends VipMenu
 		super(new Menu("§7Equipement pour " + packName, 3));
 
 		// Get a list of effects in this pack
-		try (PreparedStatement ps = HeavenVIP.getMainConnection().getConnection()
+		try (PreparedStatement ps = HeavenVIP.getProxyConnection().getConnection()
 				.prepareStatement("SELECT vip_movment_descriptors.*, CASE WHEN EXISTS(" +
 						"SELECT 1 FROM vip_equiped WHERE vip_equiped.uuid = ? AND vip_equiped.descriptor_id = vip_movment_descriptors.vip_movment_descriptor_id LIMIT 1)" +
 						"THEN 1 " +
