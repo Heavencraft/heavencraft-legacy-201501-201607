@@ -12,8 +12,8 @@ import fr.heavencraft.heavenvip.movments.MovmentEffectListener;
 public class HeavenVIP extends HeavenPlugin
 {
 	private static HeavenVIP _instance;
-	private static ConnectionHandler mainConnection;
-
+	private static ConnectionHandler proxyConnection;
+	private static ConnectionHandler webConnection;
 
 	@Override
 	public void onEnable()
@@ -22,7 +22,8 @@ public class HeavenVIP extends HeavenPlugin
 		{
 			super.onEnable();
 			_instance = this;
-			mainConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
+			proxyConnection = ConnectionHandlerFactory.getConnectionHandler(Database.PROXY);
+			webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
 		}
 		catch (final Exception ex)
@@ -69,9 +70,14 @@ public class HeavenVIP extends HeavenPlugin
 		return _instance;
 	}
 
-	public static ConnectionHandler getMainConnection()
+	public static ConnectionHandler getProxyConnection()
 	{
-		return mainConnection;
+		return proxyConnection;
+	}
+	
+	public static ConnectionHandler getWebConnection()
+	{
+		return webConnection;
 	}
 
 }

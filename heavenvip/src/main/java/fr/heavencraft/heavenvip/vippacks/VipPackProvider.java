@@ -33,7 +33,7 @@ public class VipPackProvider
 	public static Collection<VipPack> getPacks(final Player p, final PackType type) {
 		Collection<VipPack> packCollection = new ArrayList<VipPack>();
 
-		try (PreparedStatement ps = HeavenVIP.getMainConnection()
+		try (PreparedStatement ps = HeavenVIP.getProxyConnection()
 				.getConnection().prepareStatement(SELECT_OWNING_PACKS))
 		{
 			// Inject contextual player values
@@ -66,7 +66,7 @@ public class VipPackProvider
 	 * @return
 	 */
 	public static boolean addPack(final Player p, final int packId) {
-		try (PreparedStatement ps = HeavenVIP.getMainConnection()
+		try (PreparedStatement ps = HeavenVIP.getProxyConnection()
 				.getConnection().prepareStatement(BUY_PACK))
 		{
 			// Inject contextual player & pack values
