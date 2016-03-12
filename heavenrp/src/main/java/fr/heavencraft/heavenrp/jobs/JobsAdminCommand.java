@@ -49,7 +49,7 @@ public class JobsAdminCommand extends AbstractCommandExecutor
 				final int xp = user.getJobExperience();
 				final int level = JobUtil.getLevelFromXp(xp);
 
-				ChatUtil.sendMessage(sender, "Métier: ", user.getJob().getName());
+				ChatUtil.sendMessage(sender, "Métier: ", user.getJob());
 				ChatUtil.sendMessage(sender, "Expérience: %1$s", xp);
 				ChatUtil.sendMessage(sender, "Niveau: %1$s", level);
 				ChatUtil.sendMessage(sender, "Prochain niveau: %1$s xp", JobUtil.getXpToLevel(level + 1) - xp);
