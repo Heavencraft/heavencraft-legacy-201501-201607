@@ -20,7 +20,8 @@ public class RPPermissions
 	public static final String POSTE_ADMIN = "heavencraft.commands.poste.admin";
 	public static final String PROVINCE_EFFECT = "heavencraft.commands.province.effects";
 	public static final String PROVINCE_POINTS = "heavencraft.commands.province.points";
-	
+	public static final String JOBSADMIN_COMMAND = "heavencraft.commands.jobsadmin";
+
 	/*
 	 * Signs
 	 */
