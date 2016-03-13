@@ -1,11 +1,17 @@
 package fr.heavencraft.heavencore.logs;
 
-
 public abstract class HeavenLog
 {
+	private static HeavenLogFactory factory;
+
+	public static void setFactory(HeavenLogFactory factory)
+	{
+		HeavenLog.factory = factory;
+	}
+
 	public static HeavenLog getLogger(Class<?> clazz)
 	{
-		return new BukkitHeavenLog(clazz);
+		return factory.newHeavenLog(clazz);
 	}
 
 	public abstract void enableDebug();
