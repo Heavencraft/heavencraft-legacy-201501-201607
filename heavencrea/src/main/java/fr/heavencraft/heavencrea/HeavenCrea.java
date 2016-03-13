@@ -20,7 +20,7 @@ import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import fr.heavencraft.heavencore.bukkit.listeners.WorldAccessListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavencore.users.HasUserProvider;
@@ -60,9 +60,9 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 			super.onEnable();
 			saveDefaultConfig();
 
-			final ConnectionHandler creaConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig()
+			final ConnectionProvider creaConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig()
 					.getString("database"));
-			final ConnectionHandler webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
+			final ConnectionProvider webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 
 			userProvider = new CreativeUserProvider(creaConnection);
 			hpsManager = new HpsManager(webConnection);
