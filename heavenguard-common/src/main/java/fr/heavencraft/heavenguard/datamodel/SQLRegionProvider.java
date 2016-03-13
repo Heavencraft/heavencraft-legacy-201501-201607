@@ -9,10 +9,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
-
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
+import fr.heavencraft.heavencore.exceptions.StopServerException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavenguard.api.GlobalRegion;
@@ -42,7 +41,7 @@ public class SQLRegionProvider implements RegionProvider
 	// Connection to the database
 	private final ConnectionProvider connectionProvider;
 
-	public SQLRegionProvider(ConnectionProvider connectionProvider)
+	public SQLRegionProvider(ConnectionProvider connectionProvider) throws StopServerException
 	{
 		this.connectionProvider = connectionProvider;
 
@@ -54,7 +53,7 @@ public class SQLRegionProvider implements RegionProvider
 	 * Cache
 	 */
 
-	private void loadFromDatabase()
+	private void loadFromDatabase() throws StopServerException
 	{
 		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(PRELOAD_REGIONS))
 		{
@@ -74,7 +73,7 @@ public class SQLRegionProvider implements RegionProvider
 		catch (final SQLException ex)
 		{
 			ex.printStackTrace();
-			Bukkit.shutdown(); // Close server if we can't load regions
+			throw new StopServerException(); // Close server if we can't load regions
 		}
 	}
 
@@ -101,7 +100,7 @@ public class SQLRegionProvider implements RegionProvider
 		}
 	}
 
-	private void loadGlobalRegions()
+	private void loadGlobalRegions() throws StopServerException
 	{
 		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(PRELOAD_GLOBAL_REGIONS))
 		{
@@ -121,7 +120,7 @@ public class SQLRegionProvider implements RegionProvider
 		catch (final SQLException ex)
 		{
 			ex.printStackTrace();
-			Bukkit.shutdown(); // Close server if we can't load regions
+			throw new StopServerException(); // Close server if we can't load regions
 		}
 	}
 
@@ -157,7 +156,7 @@ public class SQLRegionProvider implements RegionProvider
 	}
 
 	@Override
-	public void clearCache()
+	public void clearCache() throws StopServerException
 	{
 		// Clear caches
 		regionsByName.clear();
@@ -168,8 +167,8 @@ public class SQLRegionProvider implements RegionProvider
 	}
 
 	@Override
-	public Region createRegion(String name, String world, int minX, int minY, int minZ, int maxX, int maxY,
-			int maxZ) throws HeavenException
+	public Region createRegion(String name, String world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
+			throws HeavenException
 	{
 		if (regionsByName.get(name) != null)
 			throw new HeavenException("La protection {%1$s} existe déjà.", name);
