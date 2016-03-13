@@ -5,15 +5,11 @@
 	<artifactId>heavenguard</artifactId>
 	<version>1.0</version>
 
-	<properties><!-- Fix encoding warnings -->
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-
-	<build>
-		<finalName>${project.artifactId}</finalName>
-	</build>
 
 	<dependencies>
 		<dependency>
@@ -28,4 +24,31 @@
 			<version>2.0</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<artifactSet>
+						<includes>
+							<include>fr.heavencraft:heavenguard-common</include>
+						</includes>
+					</artifactSet>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
