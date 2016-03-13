@@ -50,6 +50,7 @@ import fr.heavencraft.heavenrp.general.WatchListener;
 import fr.heavencraft.heavenrp.general.users.UserListener;
 import fr.heavencraft.heavenrp.horses.HorsesListener;
 import fr.heavencraft.heavenrp.jobs.JobActionListener;
+import fr.heavencraft.heavenrp.jobs.JobsAdminCommand;
 import fr.heavencraft.heavenrp.jobs.JobsCommand;
 import fr.heavencraft.heavenrp.key.KeySignListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
@@ -120,7 +121,7 @@ public class InitManager
 		new HomeCommand(plugin);
 		new SethomeCommand(plugin);
 		new TphomeCommand(plugin);
-		
+
 		// Provinces
 		new ProvinceCommand(plugin);
 		new ProvinceEffectTask(plugin);
@@ -133,6 +134,7 @@ public class InitManager
 
 		// Jobs
 		new JobsCommand(plugin);
+		new JobsAdminCommand(plugin);
 		new JobActionListener(plugin);
 
 		// Key

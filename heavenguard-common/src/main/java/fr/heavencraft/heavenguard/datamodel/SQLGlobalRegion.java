@@ -3,7 +3,7 @@ package fr.heavencraft.heavenguard.datamodel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavenguard.api.FlagHandler;
 import fr.heavencraft.heavenguard.api.GlobalRegion;
 
@@ -13,7 +13,7 @@ public class SQLGlobalRegion implements GlobalRegion
 
 	private final FlagHandler flagHandler;
 
-	public SQLGlobalRegion(ConnectionHandler connectionHandler, ResultSet rs) throws SQLException
+	public SQLGlobalRegion(ConnectionProvider connectionHandler, ResultSet rs) throws SQLException
 	{
 		name = rs.getString("name");
 

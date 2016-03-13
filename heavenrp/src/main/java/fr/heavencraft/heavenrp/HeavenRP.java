@@ -11,7 +11,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TutoCommand;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavenrp.jobs.JobsProvider;
@@ -25,8 +25,8 @@ public class HeavenRP extends HeavenPlugin
 	private static WorldGuardPlugin _WGP;
 	private static HeavenRP _instance;
 
-	private static ConnectionHandler srpConnection;
-	private static ConnectionHandler mainConnection;
+	private static ConnectionProvider srpConnection;
+	private static ConnectionProvider mainConnection;
 
 	private static StoresManager _storesManager;
 	private static AuctionManager _auctionManager;

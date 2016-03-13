@@ -13,7 +13,7 @@ import org.bukkit.Location;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.users.User;
 import fr.heavencraft.heavencore.users.color.TabColor;
 
@@ -29,7 +29,7 @@ public class CreativeUser implements User
 	private static final String UPDATE_NAME = "UPDATE users SET name = ? WHERE uuid = ? LIMIT 1";
 	private static final String INCREMENT_HOME_NUMBER = "UPDATE users SET home_number = home_number + 1 WHERE id = ? LIMIT 1";
 
-	private final ConnectionHandler connectionHandler;
+	private final ConnectionProvider connectionHandler;
 
 	private final int id;
 	private final String uuid;
@@ -39,7 +39,7 @@ public class CreativeUser implements User
 	private int homeNumber;
 	private Timestamp lastLogin;
 
-	public CreativeUser(ConnectionHandler connectionHandler, ResultSet rs) throws SQLException
+	public CreativeUser(ConnectionProvider connectionHandler, ResultSet rs) throws SQLException
 	{
 		this.connectionHandler = connectionHandler;
 
