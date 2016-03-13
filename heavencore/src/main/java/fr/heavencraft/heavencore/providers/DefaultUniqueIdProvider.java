@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 
 public class DefaultUniqueIdProvider implements UniqueIdProvider
 {
@@ -17,10 +17,10 @@ public class DefaultUniqueIdProvider implements UniqueIdProvider
 
 	protected final HeavenLog log = HeavenLog.getLogger(getClass());
 
-	private final ConnectionHandler connectionProvider;
+	private final ConnectionProvider connectionProvider;
 	private final Map<UUID, String> nameByUniqueId = new ConcurrentHashMap<UUID, String>();
 
-	public DefaultUniqueIdProvider(ConnectionHandler connectionProvider)
+	public DefaultUniqueIdProvider(ConnectionProvider connectionProvider)
 	{
 		this.connectionProvider = connectionProvider;
 	}
