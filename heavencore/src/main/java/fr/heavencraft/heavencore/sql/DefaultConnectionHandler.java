@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 
 import fr.heavencraft.heavencore.logs.HeavenLog;
 
-public class DefaultConnectionHandler implements ConnectionHandler
+public class DefaultConnectionHandler implements ConnectionProvider
 {
 	private static final long TEST_QUERY_INTERVAL = 600000; // 10 minutes
 	private static final String DB_URL = "jdbc:mysql://%1$s:3306/%2$s?user=%3$s&password=%4$s&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
