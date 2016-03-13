@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.FlagHandler;
 import fr.heavencraft.heavenguard.api.FlagType;
@@ -27,9 +27,9 @@ public class SQLFlagHandler implements FlagHandler
 	private static final String SET_FLAG = "UPDATE regions SET %1$s = ? WHERE name = LOWER(?) LIMIT 1;";
 
 	private final Region region;
-	private final ConnectionHandler connectionHandler;
+	private final ConnectionProvider connectionHandler;
 
-	public SQLFlagHandler(ConnectionHandler connectionHandler, ResultSet rs, Region region) throws SQLException
+	public SQLFlagHandler(ConnectionProvider connectionHandler, ResultSet rs, Region region) throws SQLException
 	{
 		this.region = region;
 		this.connectionHandler = connectionHandler;
