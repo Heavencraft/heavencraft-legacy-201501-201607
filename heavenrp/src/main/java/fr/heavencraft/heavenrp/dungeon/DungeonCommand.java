@@ -18,7 +18,7 @@ public class DungeonCommand extends AbstractCommandExecutor
 	private final static String ADMIN_INFO = "/donjon {admin} info <donjon> : " + ChatColor.WHITE
 			+ "Donne des informations détailés sur un donjon.";
 	private final static String ADMIN_CREATE = "/donjon {admin} create <nom> <joueurs requis> <outX> <outY> <outZ> <outYaw> <outPitch> : "
-			+ ChatColor.WHITE + "Crée un nouvau donjon. (Spawn = Votre position)";
+			+ ChatColor.WHITE + "Crée un nouvau donjon. (Spawn Lobby = Votre position)";
 	private final static String ADMIN_DELETE = "/donjon {admin} delete <donjon> : " + ChatColor.WHITE
 			+ "Supprime un dojon.";
 	private final static String ADMIN_ADDROOM = "/donjon {admin} addroom <donjon> <minX> <minY> <minZ> <maxX> <maxY> <maxZ> <trigX> <trigY> <trigZ> : "
