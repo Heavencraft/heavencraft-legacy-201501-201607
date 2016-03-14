@@ -14,7 +14,7 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.users.UserProvider;
 
 public class CreativeUserProvider implements UserProvider<CreativeUser>
@@ -27,11 +27,11 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 	// Logger
 	private static final HeavenLog log = HeavenLog.getLogger(CreativeUserProvider.class);
 
-	private final ConnectionHandler connectionHandler;
+	private final ConnectionProvider connectionHandler;
 	private final Map<UUID, CreativeUser> usersByUniqueId = new HashMap<UUID, CreativeUser>();
 	private final Map<String, CreativeUser> usersByName = new HashMap<String, CreativeUser>();
 
-	public CreativeUserProvider(ConnectionHandler connectionHandler)
+	public CreativeUserProvider(ConnectionProvider connectionHandler)
 	{
 		this.connectionHandler = connectionHandler;
 
