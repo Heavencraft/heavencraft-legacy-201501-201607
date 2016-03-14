@@ -24,10 +24,10 @@
 	</repositories>
 
 	<dependencies>
-			<dependency>
+		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.8-R0.1-SNAPSHOT</version>
+			<version>1.9-R0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -41,7 +41,7 @@
 			<artifactId>worldguard</artifactId>
 			<version>5.9</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
