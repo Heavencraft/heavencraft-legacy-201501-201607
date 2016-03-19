@@ -12,11 +12,13 @@ import fr.heavencraft.heavencore.utils.particles.ParticleEffect;
 
 public class EffectDescriptorUtils
 {
+	public static String EXC_INVALID_AMMOUNT_OF_PARAMETER_IN_DESC = "Incomplete Particle Effect Description String (not enougth parameters): %1$s";
+	public static String EXC_USELESS_SEPARATOR = "Using descriptor separator | without following bloc";
+	public static String EXC_INVALID_AUXILARY_OPERATOR_USED = "Unkown effect description argument type: '%1$s' of bloc '%2$s', valid parameter are:'note', 'color'";
+	
 	/**
-	 * Translates a formatted data sting to a usable effect: Simple:
-	 * {effectID}:{amount}|{effectID}:{amount}|... With Color:
-	 * {effectID}:{amount}:color.{0-255}.{0-255}.{0-255} With Note Color
-	 * {effectID}:{amount}:note.{0-24}
+	 * Translates a formatted data sting to a usable effect: Simple: {effectID}:{amount}|{effectID}:{amount}|... With
+	 * Color: {effectID}:{amount}:color.{0-255}.{0-255}.{0-255} With Note Color {effectID}:{amount}:note.{0-24}
 	 * 
 	 * @param data
 	 * @return
@@ -24,6 +26,10 @@ public class EffectDescriptorUtils
 	 */
 	public static ArrayList<AppliedDescriptorProperties> translateEffectString(String data) throws HeavenException
 	{
+		// Do we have a | as last char? --> Wrong input
+		if(data.charAt(data.length() -1) == '|')
+			throw new HeavenException(EXC_USELESS_SEPARATOR);
+		
 		ArrayList<AppliedDescriptorProperties> effect = new ArrayList<AppliedDescriptorProperties>();
 
 		// Token each element separated by |
@@ -36,8 +42,7 @@ public class EffectDescriptorUtils
 			// Do we have more than 3 parameters?
 			// {effectID}:{amount}:{speed}:[SOMETHEING]
 			if (tEffectParameters.length < 3)
-				throw new HeavenException(
-						"Incomplete Particle Effect Description String (not enougth parameters): " + data);
+				throw new HeavenException(EXC_INVALID_AMMOUNT_OF_PARAMETER_IN_DESC, data);
 
 			ParticleEffect pe = ParticleEffect.fromId(Integer.parseInt(tEffectParameters[0]));
 			if (pe == null)
@@ -82,7 +87,7 @@ public class EffectDescriptorUtils
 				}
 				else
 				{
-					throw new HeavenException("Unkown effect description argument type: '%1$s' of bloc '%2$s'" ,
+					throw new HeavenException(EXC_INVALID_AUXILARY_OPERATOR_USED,
 							tArguments[0], descriptorBlocs[i]);
 				}
 
@@ -95,9 +100,8 @@ public class EffectDescriptorUtils
 				effect.add(tp);
 			}
 			else
-				throw new HeavenException(
-						"Invalid Particle Effect data: '%1$s' Parsing bloc '%2$s' (%3$d Parameters) ", data,
-						descriptorBlocs[i], tEffectParameters.length);
+				throw new HeavenException("Invalid Particle Effect data: '%1$s' Parsing bloc '%2$s' (%3$d Parameters) ",
+						data, descriptorBlocs[i], tEffectParameters.length);
 		}
 
 		return effect;
