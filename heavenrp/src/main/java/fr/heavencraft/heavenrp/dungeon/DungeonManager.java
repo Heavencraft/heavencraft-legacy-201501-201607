@@ -36,13 +36,13 @@ public class DungeonManager
 	private static String NOT_IDLE = "Je ne peux pas entrer pour l'instant, il y a déjà quelqu'un...";
 	// Messages
 	private static String DUNGEON_WAITING_FOR_PLAYERS = "Je dois attendre encore %1$d camarade(s).";
-	private static String DUNGEON_CREATED = "Le dojnon %1$s a été crée avec succes.";
-	private static String DUNGEON_UPDATED = "Le dojnon %1$s a été mis a jour avec succes.";
+	private static String DUNGEON_CREATED = "Le dojnon %1$s a été crée avec succès.";
+	private static String DUNGEON_UPDATED = "Le dojnon %1$s a été mis a jour avec succès.";
 	private static String DUNGEON_DELETED = "Le dojnon %1$s a été supprimé avec succes.";
-	private static String DUNGEON_ROOM_CREATED = "La salle {%1$d} a été ajouté avec succes.";
-	private static String DUNGEON_ROOM_DELETED = "La salle {%1$d} a été supprimée avec succes.";
+	private static String DUNGEON_ROOM_CREATED = "La salle {%1$d} a été ajouté avec succès.";
+	private static String DUNGEON_ROOM_DELETED = "La salle {%1$d} a été supprimée avec succès.";
 	private static String LOADING_DUNGEON = "Je me prépare a enter dans le donjon!";
-	private static String NOT_ALL_MOBS_DEAD = "Il y a encore {%1$d} monstres!";
+	private static String NOT_ALL_MOBS_DEAD = "Il y a encore {%1$d} monstre(s)!";
 	private static String WON_DUNGEON = "{Victoire}!";
 	private static String LOST_DUNGEON = "{Défaite}!";
 	private static String YOU_LEFT_DUNGEON = "Vous avez pris la {fuite}!";
@@ -417,7 +417,7 @@ public class DungeonManager
 
 		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
 				"INSERT INTO dungeons (name, requiredPlayers, world, spawnX, spawnY, spawnZ, spawnYaw, spawnPitch, "
-						+ "outX, outY, outZ, outYaw, outPitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+						+ "outX, outY, outZ, outYaw, outPitch, firstRoom) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
 				Statement.RETURN_GENERATED_KEYS))
 		{
 			// General
@@ -436,6 +436,7 @@ public class DungeonManager
 			ps.setDouble(11, out.getZ());
 			ps.setFloat(12, out.getYaw());
 			ps.setFloat(13, out.getPitch());
+			ps.setInt(14, 0);
 
 			ps.executeUpdate();
 
@@ -586,6 +587,10 @@ public class DungeonManager
 				DungeonRoom dgr = new DungeonRoom(dg.getId(), roomUuniqueId, spawn, trigger, corner1, corner2);
 				dg.Rooms.put(roomUuniqueId, dgr);
 				ChatUtil.sendMessage(p, DUNGEON_ROOM_CREATED, roomUuniqueId);
+				if(dg.firstRoomId == 0)
+				{
+					DungeonManager.UpdateFirstRoom(p, dungeonName, roomUuniqueId);
+				}
 				return;
 			}
 		}
@@ -846,7 +851,6 @@ public class DungeonManager
 	{
 		ChatUtil.sendMessage(p, "");
 		ChatUtil.sendMessage(p, "╔═════════Donjons═════════╗");
-		ChatUtil.sendMessage(p, "║");
 		int i = 1; // Counter
 		for (DungeonManager.Dungeon dg : DungeonManager.Dungeons.values())
 		{
@@ -886,7 +890,7 @@ public class DungeonManager
 			// Get Trigger block type
 			String blockType = "";
 			if (dgr.getTriggerBlock().getBlock() != null)
-				dgr.getTriggerBlock().getBlock().getState().getType().toString();
+				blockType = dgr.getTriggerBlock().getBlock().getState().getType().toString();
 
 			ChatUtil.sendMessage(p,
 					"%1$c {ID}: %2$d | {Spawn}: %3$.2f %4$.2f %5$.2f %6$.2f %7$.2f | {Trigger}: %8$d %9$d %10$d (%11$s)",
