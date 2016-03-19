@@ -61,5 +61,5 @@ commands:
   provinces:
   jobs:
     aliases: [job, metier, metiers]
-  jobsadmin
+  jobsadmin:
   djn:
