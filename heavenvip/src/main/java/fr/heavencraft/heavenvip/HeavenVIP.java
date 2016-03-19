@@ -3,8 +3,8 @@ package fr.heavencraft.heavenvip;
 import org.bukkit.Bukkit;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavencore.utils.menu.MenuListener;
 import fr.heavencraft.heavenvip.movments.MovmentEffectListener;
@@ -12,8 +12,8 @@ import fr.heavencraft.heavenvip.movments.MovmentEffectListener;
 public class HeavenVIP extends HeavenPlugin
 {
 	private static HeavenVIP _instance;
-	private static ConnectionHandler proxyConnection;
-	private static ConnectionHandler webConnection;
+	private static ConnectionProvider proxyConnection;
+	private static ConnectionProvider webConnection;
 
 	@Override
 	public void onEnable()
@@ -70,12 +70,12 @@ public class HeavenVIP extends HeavenPlugin
 		return _instance;
 	}
 
-	public static ConnectionHandler getProxyConnection()
+	public static ConnectionProvider getProxyConnection()
 	{
 		return proxyConnection;
 	}
 	
-	public static ConnectionHandler getWebConnection()
+	public static ConnectionProvider getWebConnection()
 	{
 		return webConnection;
 	}
