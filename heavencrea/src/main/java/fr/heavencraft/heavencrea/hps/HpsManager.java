@@ -5,14 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 
 public class HpsManager
 {
 	public static final int TAUX_JETON = 80;
-	private final ConnectionHandler connectionHandler;
+	private final ConnectionProvider connectionHandler;
 
-	public HpsManager(ConnectionHandler connectionHandler)
+	public HpsManager(ConnectionProvider connectionHandler)
 	{
 		this.connectionHandler = connectionHandler;
 	}
