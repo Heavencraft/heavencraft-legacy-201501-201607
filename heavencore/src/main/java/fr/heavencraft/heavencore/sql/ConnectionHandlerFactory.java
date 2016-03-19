@@ -4,12 +4,12 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 
 public class ConnectionHandlerFactory
 {
-	public static ConnectionHandler getConnectionHandler(Database database)
+	public static ConnectionProvider getConnectionHandler(Database database)
 	{
 		return new DefaultConnectionHandler(database);
 	}
 
-	public static ConnectionHandler getConnectionHandler(String database) throws HeavenException
+	public static ConnectionProvider getConnectionHandler(String database) throws HeavenException
 	{
 		return getConnectionHandler(Database.getUniqueInstanceByName(database));
 	}

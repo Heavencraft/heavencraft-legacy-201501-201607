@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.FlagHandler;
 import fr.heavencraft.heavenguard.api.Region;
@@ -24,7 +24,7 @@ public class SQLRegion implements Region
 	private static final String ADD_MEMBER = "INSERT INTO regions_members (region_name, uuid, owner) VALUES (LOWER(?), ?, ?);";
 	private static final String REMOVE_MEMBER = "DELETE FROM regions_members WHERE region_name = LOWER(?) AND uuid = ? AND owner = ? LIMIT 1;";
 
-	private final ConnectionHandler connectionProvider;
+	private final ConnectionProvider connectionProvider;
 	private final RegionProvider regionProvider;
 
 	private final String name;
@@ -42,7 +42,7 @@ public class SQLRegion implements Region
 	private final Collection<UUID> owners = new HashSet<UUID>();
 	private final FlagHandler flagHandler;
 
-	SQLRegion(ConnectionHandler connectionHandler, ResultSet rs, RegionProvider regionProvider) throws SQLException
+	SQLRegion(ConnectionProvider connectionHandler, ResultSet rs, RegionProvider regionProvider) throws SQLException
 	{
 		this.connectionProvider = connectionHandler;
 		this.regionProvider = regionProvider;

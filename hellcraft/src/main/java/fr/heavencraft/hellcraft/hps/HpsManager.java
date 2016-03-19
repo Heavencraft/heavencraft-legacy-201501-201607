@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 
 public class HpsManager
 {
-	private final ConnectionHandler connectionHandler;
+	private final ConnectionProvider connectionHandler;
 
-	public HpsManager(ConnectionHandler connectionHandler)
+	public HpsManager(ConnectionProvider connectionHandler)
 	{
 		this.connectionHandler = connectionHandler;
 	}
