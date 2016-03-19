@@ -2,7 +2,7 @@ package fr.heavencraft.heavencore.sql;
 
 import java.sql.Connection;
 
-public interface ConnectionHandler
+public interface ConnectionProvider
 {
 	Connection getConnection();
 }

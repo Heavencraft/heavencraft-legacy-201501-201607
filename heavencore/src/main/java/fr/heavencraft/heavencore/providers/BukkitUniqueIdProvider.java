@@ -5,11 +5,11 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 
 public class BukkitUniqueIdProvider extends DefaultUniqueIdProvider
 {
-	public BukkitUniqueIdProvider(ConnectionHandler connectionProvider)
+	public BukkitUniqueIdProvider(ConnectionProvider connectionProvider)
 	{
 		super(connectionProvider);
 	}

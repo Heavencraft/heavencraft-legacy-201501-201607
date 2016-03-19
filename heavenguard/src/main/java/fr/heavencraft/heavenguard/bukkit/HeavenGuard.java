@@ -3,7 +3,7 @@ package fr.heavencraft.heavenguard.bukkit;
 import org.bukkit.Bukkit;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
-import fr.heavencraft.heavencore.sql.ConnectionHandler;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavenguard.api.RegionManager;
 import fr.heavencraft.heavenguard.api.RegionProvider;
@@ -30,7 +30,7 @@ public class HeavenGuard extends HeavenPlugin
 	private RegionProvider regionProvider;
 	private RegionManager regionManager;
 
-	private ConnectionHandler connectionHandler;
+	private ConnectionProvider connectionHandler;
 
 	@Override
 	public void onEnable()
