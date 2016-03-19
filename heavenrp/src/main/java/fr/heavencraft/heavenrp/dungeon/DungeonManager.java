@@ -31,13 +31,13 @@ public class DungeonManager
 	private static String NOT_IN_DUNGEON = "Vous n'ètes pas dans un donjon.";
 	private static String NAME_UNKNOWN_DUNGEON = "Le nom du donjon est invalide.";
 	private static String UNKNOWN_ROOM = "Salle inconnue dans ce donjon.";
-	private static String NO_LOBBY_DUNGEON = "Ce donjon n'a pas de salon.";
+	private static String NO_ROOMS_IN_DUNGEON = "Ce donjon n'a pas de salles.";
 	private static String DUNGEON_FULL = "Il y a déjà quelqu'un dans ce donjon...";
 	private static String NOT_IDLE = "Je ne peux pas entrer pour l'instant, il y a déjà quelqu'un...";
 	// Messages
 	private static String DUNGEON_WAITING_FOR_PLAYERS = "Je dois attendre encore %1$d camarade(s).";
 	private static String DUNGEON_CREATED = "Le dojnon %1$s a été crée avec succès.";
-	private static String DUNGEON_UPDATED = "Le dojnon %1$s a été mis a jour avec succès.";
+	private static String DUNGEON_FIRST_ROOM_SET = "Vous avez changé la première salle du dojnon %1$s avec succès.";
 	private static String DUNGEON_DELETED = "Le dojnon %1$s a été supprimé avec succes.";
 	private static String DUNGEON_ROOM_CREATED = "La salle {%1$d} a été ajouté avec succès.";
 	private static String DUNGEON_ROOM_DELETED = "La salle {%1$d} a été supprimée avec succès.";
@@ -188,18 +188,16 @@ public class DungeonManager
 			throw new HeavenException(ALREADY_IN_DUNGEON);
 		}
 		// Dungeon exists?
-		Dungeon dungeon = null;
-		for (final Dungeon dg : Dungeons.values())
-			if (dg.getName().equalsIgnoreCase(dungeonName))
-				dungeon = dg;
+		Dungeon dungeon = getDungeon(dungeonName);
 		if (dungeon == null)
 			throw new HeavenException(NAME_UNKNOWN_DUNGEON);
+		
 		// Dungeon idle?
 		if (dungeon.DungeonState != DungeonStates.IDLE)
 			throw new HeavenException(NOT_IDLE);
 		// Dungeon has lobby?
 		if (dungeon.Lobby == null)
-			throw new HeavenException(NO_LOBBY_DUNGEON);
+			throw new HeavenException(NO_ROOMS_IN_DUNGEON);
 		// Dungeon has free slots?
 		if (dungeon.PlayerCount >= dungeon.requiredPlayer)
 			throw new HeavenException(DUNGEON_FULL);
@@ -444,7 +442,8 @@ public class DungeonManager
 			if (rs.next())
 			{
 				int id = rs.getInt(1);
-				final Dungeon dg = new Dungeon(id, dungeonName, requiredPlayers);
+				Dungeon dg = new Dungeon(id, dungeonName, requiredPlayers);
+				dg.Lobby = spawn;
 				Dungeons.put(id, dg);
 				ChatUtil.sendMessage(p, DUNGEON_CREATED, dg.getName());
 			}
@@ -527,7 +526,7 @@ public class DungeonManager
 			throw new HeavenException(
 					"Erreur fatale lors de la mise a jour du donjon. Informez en un administrateur.");
 		}
-		ChatUtil.sendMessage(invoker, DUNGEON_UPDATED, dg.getName());
+		ChatUtil.sendMessage(invoker, DUNGEON_FIRST_ROOM_SET, dg.getName());
 		return;
 	}
 
@@ -584,8 +583,8 @@ public class DungeonManager
 			if (rs.next())
 			{
 				int roomUuniqueId = rs.getInt(1);
-				DungeonRoom dgr = new DungeonRoom(dg.getId(), roomUuniqueId, spawn, trigger, corner1, corner2);
-				dg.Rooms.put(roomUuniqueId, dgr);
+				final DungeonRoom dgr = new DungeonRoom(dg.getId(), roomUuniqueId, spawn, trigger, corner1, corner2);
+				Dungeons.get(dg.getId()).Rooms.put(roomUuniqueId, dgr);
 				ChatUtil.sendMessage(p, DUNGEON_ROOM_CREATED, roomUuniqueId);
 				if(dg.firstRoomId == 0)
 				{
