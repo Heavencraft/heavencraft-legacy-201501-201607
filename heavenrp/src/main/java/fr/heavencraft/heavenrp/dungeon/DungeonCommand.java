@@ -22,7 +22,7 @@ public class DungeonCommand extends AbstractCommandExecutor
 	private final static String ADMIN_DELETE = "/donjon {admin} delete <donjon> : " + ChatColor.WHITE
 			+ "Supprime un dojon.";
 	private final static String ADMIN_ADDROOM = "/donjon {admin} addroom <donjon> <minX> <minY> <minZ> <maxX> <maxY> <maxZ> <trigX> <trigY> <trigZ> : "
-			+ ChatColor.WHITE + "Crée une nouvelle salle. (Spawn = Votre position)";
+			+ ChatColor.WHITE + "Crée une nouvelle salle. (Spawn salle = Votre position)";
 	private final static String ADMIN_DELROOM = "/donjon {admin} delroom <idSalle> : " + ChatColor.WHITE
 			+ "Supprime une salle.";
 	private final static String ADMIN_FIRST_ROOM = "/donjon {admin} firstRoom <donjon> <idSalle> : "
@@ -120,7 +120,7 @@ public class DungeonCommand extends AbstractCommandExecutor
 		}
 
 		// DUNGEON UPDATE ROOM
-		if (args[1].equalsIgnoreCase("firstRoom"))
+		if (args[1].equalsIgnoreCase("firstroom"))
 		{
 			if (args.length != 4)
 				throw new HeavenException(ADMIN_FIRST_ROOM);
@@ -141,13 +141,22 @@ public class DungeonCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
+		ChatUtil.sendMessage(sender, "");
+		ChatUtil.sendMessage(sender, "==== {Commandes Administratives} ====");
 		ChatUtil.sendMessage(sender, ADMIN_LIST);
 		ChatUtil.sendMessage(sender, ADMIN_INFO);
+		ChatUtil.sendMessage(sender, "");
+		ChatUtil.sendMessage(sender, "---- {Édition de donjons} ----");
 		ChatUtil.sendMessage(sender, ADMIN_CREATE);
 		ChatUtil.sendMessage(sender, ADMIN_DELETE);
+		ChatUtil.sendMessage(sender, ADMIN_FIRST_ROOM);
+		ChatUtil.sendMessage(sender, "");
+		ChatUtil.sendMessage(sender, "---- {Édition de salles} ----");
 		ChatUtil.sendMessage(sender, ADMIN_ADDROOM);
 		ChatUtil.sendMessage(sender, ADMIN_DELROOM);
-		ChatUtil.sendMessage(sender, ADMIN_FIRST_ROOM);
+		ChatUtil.sendMessage(sender, "");
+		ChatUtil.sendMessage(sender, "---- {Remarques} ----");
+		ChatUtil.sendMessage(sender, "Par {trigger}, on entends le bloc qui gènere une impulsion de redstone au lancement de la salle.");
 	}
 
 }
