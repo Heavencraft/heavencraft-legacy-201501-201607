@@ -5,11 +5,11 @@ import org.bukkit.command.CommandSender;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public class RemoveSubCommand extends AbstractSubCommand
 {
-	public RemoveSubCommand(HeavenGuard plugin)
+	public RemoveSubCommand(BukkitHeavenGuard plugin)
 	{
 		super(plugin, HeavenGuardPermissions.REMOVE_COMMAND);
 	}

@@ -22,7 +22,7 @@ public class RemoveRegionTask extends BukkitRunnable
 
 	private final RegionProvider regionProvider;
 
-	public RemoveRegionTask(HeavenGuard plugin)
+	public RemoveRegionTask(BukkitHeavenGuard plugin)
 	{
 		regionProvider = plugin.getRegionProvider();
 
