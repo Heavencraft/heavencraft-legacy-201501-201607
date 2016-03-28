@@ -11,11 +11,11 @@ import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public class InfoSubCommand extends AbstractOwnerSubCommand
 {
-	public InfoSubCommand(HeavenGuard plugin)
+	public InfoSubCommand(BukkitHeavenGuard plugin)
 	{
 		super(plugin, HeavenGuardPermissions.INFO_COMMAND);
 	}

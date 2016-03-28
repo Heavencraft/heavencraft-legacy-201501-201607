@@ -1,6 +1,7 @@
 package fr.heavencraft.heavenrp;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -11,8 +12,8 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TutoCommand;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavenrp.jobs.JobsProvider;
 import fr.heavencraft.heavenrp.stores.StoresListener;
@@ -74,13 +75,13 @@ public class HeavenRP extends HeavenPlugin
 		new TutoCommand(this, WorldsManager.getTutoLocation());
 	}
 
-	public static Connection getConnection()
+	public static Connection getConnection() throws SQLException
 	{
 		return srpConnection.getConnection();
 	}
 
 	@Deprecated
-	public static Connection getMainConnection()
+	public static Connection getMainConnection() throws SQLException
 	{
 		return mainConnection.getConnection();
 	}

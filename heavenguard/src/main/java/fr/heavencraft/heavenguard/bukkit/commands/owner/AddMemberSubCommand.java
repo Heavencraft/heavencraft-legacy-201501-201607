@@ -8,11 +8,11 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public class AddMemberSubCommand extends AbstractOwnerSubCommand
 {
-	public AddMemberSubCommand(HeavenGuard plugin)
+	public AddMemberSubCommand(BukkitHeavenGuard plugin)
 	{
 		super(plugin, HeavenGuardPermissions.ADDMEMBER_COMMAND);
 	}

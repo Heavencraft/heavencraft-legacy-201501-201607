@@ -4,12 +4,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 import fr.heavencraft.heavenguard.bukkit.commands.AbstractSubCommand;
 
 abstract class AbstractOwnerSubCommand extends AbstractSubCommand
 {
-	protected AbstractOwnerSubCommand(HeavenGuard plugin, String permission)
+	protected AbstractOwnerSubCommand(BukkitHeavenGuard plugin, String permission)
 	{
 		super(plugin, permission);
 	}
