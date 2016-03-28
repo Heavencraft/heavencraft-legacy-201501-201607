@@ -1,0 +1,9 @@
+name: HeavenSurvival
+version: 1.0
+main: fr.heavencraft.heavensurvival.bukkit.BukkitHeavenSurvival
+depend: [HeavenCore, HeavenGuard]
+commands:
+  lit:
+  spawn:
+  setspawn:
+  protection:

@@ -13,13 +13,13 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public class PlotCommand extends AbstractCommandExecutor
 {
-	private final HeavenGuard hGuard;
+	private final BukkitHeavenGuard hGuard;
 
-	public PlotCommand(HeavenPlugin plugin, HeavenGuard hGuard)
+	public PlotCommand(HeavenPlugin plugin, BukkitHeavenGuard hGuard)
 	{
 		super(plugin, "plot", CreaPermissions.PLOT_COMMAND);
 

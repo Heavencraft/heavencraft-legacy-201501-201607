@@ -16,11 +16,12 @@ public class Database
 
 	public static final Database UAT_CREATIVE = new Database("minecraft-creative-test");
 	public static final Database UAT_SEMIRP = new Database("minecraft-semirp-test");
-	
+	public static final Database UAT_SURVIVAL = new Database("minecraft-survie-test");
+
 	public static final Database TEST = new Database("test");
 
-	public static final Database HELLCRAFT_WEB = new Database("91.121.170.189", "hellcraft",
-			"CUynkyKVI3CHaCsSPis9", "mc-db");
+	public static final Database HELLCRAFT_WEB = new Database("91.121.170.189", "hellcraft", "CUynkyKVI3CHaCsSPis9",
+			"mc-db");
 
 	public static Database getUniqueInstanceByName(String name) throws HeavenException
 	{

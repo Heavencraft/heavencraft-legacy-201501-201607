@@ -16,14 +16,14 @@ import fr.heavencraft.heavencrea.HeavenCrea;
 import fr.heavencraft.heavencrea.users.CreativeUser;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public class PlotSignListener extends AbstractPlotSignListener
 {
 	private final HeavenCrea plugin;
-	private final HeavenGuard regionPlugin;
+	private final BukkitHeavenGuard regionPlugin;
 
-	public PlotSignListener(HeavenCrea plugin, HeavenGuard regionPlugin)
+	public PlotSignListener(HeavenCrea plugin, BukkitHeavenGuard regionPlugin)
 	{
 		super(plugin, "Parcelle", CreaPermissions.PARCELLE_SIGN);
 
