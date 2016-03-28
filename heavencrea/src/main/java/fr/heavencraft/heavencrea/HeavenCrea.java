@@ -44,7 +44,7 @@ import fr.heavencraft.heavencrea.users.homes.SethomeCommand;
 import fr.heavencraft.heavencrea.users.homes.TphomeCommand;
 import fr.heavencraft.heavencrea.worlds.PortalListener;
 import fr.heavencraft.heavencrea.worlds.WorldsManager;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public class HeavenCrea extends HeavenPlugin implements HasUserProvider<CreativeUser>
 {
@@ -78,7 +78,7 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 			new HpsCommand(this);
 
 			// Plots
-			final HeavenGuard hGuard = loadHeavenGuard();
+			final BukkitHeavenGuard hGuard = loadHeavenGuard();
 			new ParcelleCommand(this, hGuard);
 			new PlotCommand(this, hGuard);
 			new PlotSignListener(this, hGuard);
@@ -137,13 +137,13 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 		new TabColorListener(this);
 	}
 
-	private static HeavenGuard loadHeavenGuard() throws HeavenException
+	private static BukkitHeavenGuard loadHeavenGuard() throws HeavenException
 	{
 		final Plugin plugin = Bukkit.getPluginManager().getPlugin("HeavenGuard");
 
-		if (plugin != null && plugin instanceof HeavenGuard)
+		if (plugin != null && plugin instanceof BukkitHeavenGuard)
 		{
-			return (HeavenGuard) plugin;
+			return (BukkitHeavenGuard) plugin;
 		}
 
 		throw new HeavenException("Impossible to load HeavenGuard");

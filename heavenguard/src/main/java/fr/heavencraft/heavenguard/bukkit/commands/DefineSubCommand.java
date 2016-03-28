@@ -16,11 +16,11 @@ import fr.heavencraft.heavencore.utils.WorldEditUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public class DefineSubCommand extends AbstractSubCommand
 {
-	public DefineSubCommand(HeavenGuard plugin)
+	public DefineSubCommand(BukkitHeavenGuard plugin)
 	{
 		super(plugin, HeavenGuardPermissions.DEFINE_COMMAND);
 	}
