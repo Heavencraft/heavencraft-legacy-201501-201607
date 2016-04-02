@@ -6,18 +6,15 @@ import org.bukkit.util.Vector;
 
 public class StructureBlock extends JavaPlugin
 {
-
-	// Smeltery Properties
+	// smeltery Properties
 	final Vector smelterySize = new Vector(9, 10, 9);
-	final String smelteryFileName = "/smeltery.cfg";
-	final Material[][][] smelteryLayers = StructureBlockReader.fillStructureList(smelteryFileName, smelterySize,
+	final String SMELTERYFILENAME = "/smeltery.cfg";
+	final Material[][][] smelteryLayers = StructureBlockReader.fillStructureList(SMELTERYFILENAME, smelterySize,
 			this);
 
-	@Override
 	public void onEnable()
 	{
 		new StructureBlockSmelteryListener(this, smelterySize);
 		new StructureBlockSmelteryInventoryListener(this);
 	}
-
 }
