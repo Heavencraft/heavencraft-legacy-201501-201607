@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
@@ -54,8 +56,7 @@ public class PVPManager extends AbstractListener<HeavenPlugin>
 			broadcastMessage("%1$s : %2$s", _team2.getName(), _team2.getPlayers());
 		}
 		else
-			broadcastMessage("* Le combat entre %1$s et %2$s vient de commencer !", _team1.getName(),
-					_team2.getName());
+			broadcastMessage("* Le combat entre %1$s et %2$s vient de commencer !", _team1.getName(), _team2.getName());
 	}
 
 	public static void StopBattle()
@@ -249,10 +250,8 @@ public class PVPManager extends AbstractListener<HeavenPlugin>
 				p.getInventory().setChestplate(null);
 				p.getInventory().setHelmet(null);
 
-				/*
-				 * for (PotionEffectType Po : PotionEffectType.values()) { if
-				 * (p.hasPotionEffect(Po)) p.removePotionEffect(Po); }
-				 */
+				p.getActivePotionEffects().clear();
+
 				p.setHealth(20);
 				p.setFoodLevel(30);
 				p.setFireTicks(0);
