@@ -1,6 +1,8 @@
 package fr.heavencraft.structureblock;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,34 +18,42 @@ import org.bukkit.inventory.ItemStack;
 
 public class StructureBlockSmelteryInventoryListener implements Listener
 {
-	private final String inventoryTitle = ChatColor.RED + "              Fonderie";
+	private final String INVENTORYTITLE = ChatColor.RED + "              Fonderie";
 
-	// smeltery message
-	private final String invalidPlaceMessage = ChatColor.RED
+	// Smeltery messages
+	private final String INVALIDPLACEMESSAGE = ChatColor.RED
 			+ "Ceci est la zone de récuperation des ressources. Vous ne pouvez pas placer d'objets dans cette zone.";
-	private final String lavaError = ChatColor.RED
+	private final String LAVAERROR = ChatColor.RED
 			+ "Il vous faut un seau de lave pour faire fonctionner la fonderie.";
-	private final String invalidItemError = ChatColor.RED
+	private final String INVALIDITEMERROR = ChatColor.RED
 			+ "Certains des objets que vous voulez faire fondre ne sont pas valide, veuillez les retirer.";
-	private final String nothingError = ChatColor.RED + "Il n'y a rien à faire fondre.";
-	private final String smelterySuccess = ChatColor.DARK_GREEN + "Vous avez bien fais fondre vos Objets !";
-	private final String withdrawFullError = ChatColor.RED + "Il y a déjà des matériaux à récuperer.";
-	private final String insufficientError = ChatColor.RED
+	private final String NOTHINGERROR = ChatColor.RED + "Il n'y a rien à faire fondre.";
+	private final String SMELTERYSUCCESS = ChatColor.DARK_GREEN + "Vous avez bien fais fondre vos Objets !";
+	private final String WITHDRAWFULLERROR = ChatColor.RED + "Il y a déjà des matériaux à récuperer.";
+	private final String INSUFFICIENTERROR = ChatColor.RED
 			+ "Au moins un des Objet que vous avez déposer ne vous rapportera rien. Corriger cela avant de faire fonctionner la fonderie.";
 
-	// slot and action list
-	private final ArrayList<Integer> slotTakeList = new ArrayList<>();
-	private final ArrayList<Integer> slotPutList = new ArrayList<>();
-	private final ArrayList<InventoryAction> placeAction = new ArrayList<>();
+	// define list and map
+	private final ArrayList<Integer> slotTakeList = new ArrayList<Integer>();
+	private final ArrayList<Integer> slotPutList = new ArrayList<Integer>();
+	private final ArrayList<InventoryAction> placeAction = new ArrayList<InventoryAction>();
+	private final Map<Material, ItemStack> smeltResult = new HashMap<Material, ItemStack>();
+	private final ArrayList<Material> insufficientList = new ArrayList<Material>();
 
-	// material to smelt list
-	private final ArrayList<Material> smeltList = new ArrayList<>();
-	private final ArrayList<Material> insufficientList = new ArrayList<>();
-	private final ArrayList<Material> ironList = new ArrayList<>();
-	private final ArrayList<Material> goldList = new ArrayList<>();
-	private final ArrayList<Material> diamondList = new ArrayList<>();
-
+	// define basic item
 	private final ItemStack air = new ItemStack(Material.AIR);
+
+	private final ItemStack simpleIron = new ItemStack(Material.IRON_INGOT, 1);
+	private final ItemStack simpleGold = new ItemStack(Material.GOLD_INGOT, 1);
+	private final ItemStack simpleDiamond = new ItemStack(Material.DIAMOND, 1);
+
+	private final ItemStack doubleIron = new ItemStack(Material.IRON_INGOT, 2);
+	private final ItemStack doubleGold = new ItemStack(Material.GOLD_INGOT, 2);
+	private final ItemStack doubleDiamond = new ItemStack(Material.DIAMOND, 2);
+
+	private final ItemStack tripleIron = new ItemStack(Material.IRON_INGOT, 3);
+	private final ItemStack tripleGold = new ItemStack(Material.GOLD_INGOT, 3);
+	private final ItemStack tripleDiamond = new ItemStack(Material.DIAMOND, 3);
 
 	public StructureBlockSmelteryInventoryListener(StructureBlock plugin)
 	{
@@ -61,44 +71,44 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 		placeAction.add(InventoryAction.PLACE_ONE);
 		placeAction.add(InventoryAction.SWAP_WITH_CURSOR);
 
-		// fill material to smelt list
-		ironList.add(Material.IRON_AXE);
-		ironList.add(Material.IRON_PICKAXE);
-		ironList.add(Material.IRON_SWORD);
-		ironList.add(Material.IRON_CHESTPLATE);
-		ironList.add(Material.IRON_LEGGINGS);
-		ironList.add(Material.IRON_BOOTS);
-		ironList.add(Material.IRON_HELMET);
-		ironList.add(Material.IRON_BARDING);
+		// fill smelt Result
+		smeltResult.put(Material.BUCKET, simpleIron);
+		smeltResult.put(Material.IRON_AXE, simpleIron);
+		smeltResult.put(Material.IRON_PICKAXE, simpleIron);
+		smeltResult.put(Material.IRON_SWORD, simpleIron);
+		smeltResult.put(Material.IRON_CHESTPLATE, tripleIron);
+		smeltResult.put(Material.IRON_LEGGINGS, doubleIron);
+		smeltResult.put(Material.IRON_BOOTS, simpleIron);
+		smeltResult.put(Material.IRON_HELMET, simpleIron);
+		smeltResult.put(Material.IRON_BARDING, tripleIron);
+
+		smeltResult.put(Material.GOLD_AXE, simpleGold);
+		smeltResult.put(Material.GOLD_PICKAXE, simpleGold);
+		smeltResult.put(Material.GOLD_SWORD, simpleGold);
+		smeltResult.put(Material.GOLD_CHESTPLATE, tripleGold);
+		smeltResult.put(Material.GOLD_LEGGINGS, doubleGold);
+		smeltResult.put(Material.GOLD_BOOTS, simpleGold);
+		smeltResult.put(Material.GOLD_HELMET, simpleGold);
+		smeltResult.put(Material.GOLD_BARDING, tripleGold);
+
+		smeltResult.put(Material.DIAMOND_AXE, simpleDiamond);
+		smeltResult.put(Material.DIAMOND_PICKAXE, simpleDiamond);
+		smeltResult.put(Material.DIAMOND_SWORD, simpleDiamond);
+		smeltResult.put(Material.DIAMOND_CHESTPLATE, tripleDiamond);
+		smeltResult.put(Material.DIAMOND_LEGGINGS, doubleDiamond);
+		smeltResult.put(Material.DIAMOND_BOOTS, simpleDiamond);
+		smeltResult.put(Material.DIAMOND_HELMET, simpleDiamond);
+		smeltResult.put(Material.DIAMOND_BARDING, tripleDiamond);
+
+		smeltResult.put(Material.AIR, air);
+
+		// fill insufficient list
 		insufficientList.add(Material.IRON_SPADE);
 		insufficientList.add(Material.IRON_HOE);
-
-		goldList.add(Material.GOLD_AXE);
-		goldList.add(Material.GOLD_PICKAXE);
-		goldList.add(Material.GOLD_SWORD);
-		goldList.add(Material.GOLD_CHESTPLATE);
-		goldList.add(Material.GOLD_LEGGINGS);
-		goldList.add(Material.GOLD_BOOTS);
-		goldList.add(Material.GOLD_HELMET);
-		goldList.add(Material.GOLD_BARDING);
 		insufficientList.add(Material.GOLD_SPADE);
 		insufficientList.add(Material.GOLD_HOE);
-
-		diamondList.add(Material.DIAMOND_AXE);
-		diamondList.add(Material.DIAMOND_PICKAXE);
-		diamondList.add(Material.DIAMOND_SWORD);
-		diamondList.add(Material.DIAMOND_CHESTPLATE);
-		diamondList.add(Material.DIAMOND_LEGGINGS);
-		diamondList.add(Material.DIAMOND_BOOTS);
-		diamondList.add(Material.DIAMOND_HELMET);
-		diamondList.add(Material.DIAMOND_BARDING);
 		insufficientList.add(Material.DIAMOND_SPADE);
 		insufficientList.add(Material.DIAMOND_HOE);
-
-		smeltList.addAll(diamondList);
-		smeltList.addAll(ironList);
-		smeltList.addAll(goldList);
-		smeltList.add(Material.AIR);
 
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
@@ -106,57 +116,55 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	@EventHandler
 	private void onPlayerInteractWithInventory(InventoryClickEvent event)
 	{
-		if (!event.getInventory().getName().equals(inventoryTitle))
+		if (!event.getInventory().getName().equals(INVENTORYTITLE))
+		{
 			return;
-
-		// cancelled dangerous action
+		}
 		InventoryAction action = event.getAction();
 		if (action == InventoryAction.COLLECT_TO_CURSOR)
 		{
 			event.setCancelled(true);
 			return;
 		}
-
 		if (event.getRawSlot() >= 27)
 		{
 			if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY)
-				event.setCancelled(true);
-			return;
-		}
-
-		// test action in withdraw slot
-		else if (slotTakeList.contains(event.getRawSlot()))
-		{
-			if (placeAction.contains(action))
 			{
-				event.getWhoClicked().sendMessage(invalidPlaceMessage);
 				event.setCancelled(true);
 			}
 			return;
 		}
-
-		// test if player want to smelt
-		else if (event.getRawSlot() == 13)
+		if (slotTakeList.contains(event.getRawSlot()))
+		{
+			if (placeAction.contains(action))
+			{
+				event.getWhoClicked().sendMessage(INVALIDPLACEMESSAGE);
+				event.setCancelled(true);
+			}
+			return;
+		}
+		if (event.getRawSlot() == 13)
 		{
 			playerLaunchSmelt(event.getWhoClicked(), event.getInventory());
 			event.setCancelled(true);
 		}
-
-		// test if player want to put item in smeltery
-		else if (slotPutList.contains(event.getRawSlot()))
-			return;
-
 		else
+		{
+			if (slotPutList.contains(Integer.valueOf(event.getRawSlot())))
+			{
+				return;
+			}
 			event.setCancelled(true);
+		}
 	}
 
 	@EventHandler
 	private void onPlayerCloseInventory(InventoryCloseEvent event)
 	{
-		if (!event.getInventory().getName().equals(inventoryTitle))
+		if (!event.getInventory().getName().equals(INVENTORYTITLE))
+		{
 			return;
-
-		// test if there is some item left in the smeltery
+		}
 		if (event.getInventory().getItem(10) != null)
 		{
 			event.getPlayer().getInventory().addItem(event.getInventory().getItem(10));
@@ -180,109 +188,83 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	}
 
 	/**
+	 * When player want to smelt
 	 * 
 	 * @param player
 	 * @param inventory
 	 */
-	private void playerLaunchSmelt(final HumanEntity player, Inventory inventory)
+	private void playerLaunchSmelt(HumanEntity player, Inventory inventory)
 	{
-		// define withdraw and deposit item
 		ItemStack slot1 = inventory.getItem(10);
 		ItemStack slot2 = inventory.getItem(11);
-		ItemStack slot3 = inventory.getItem(15);
-		ItemStack slot4 = inventory.getItem(16);
 		if (slot1 == null)
+		{
 			slot1 = air;
+		}
 		if (slot2 == null)
+		{
 			slot2 = air;
-		if (slot3 == null)
-			slot3 = air;
-		if (slot4 == null)
-			slot4 = air;
-
-		if (testBasicError(slot1, slot2, slot3, slot4, player) == true)
+		}
+		if (checkBasicError(player, slot1, slot2))
+		{
 			return;
-		defineSmelteryResult(slot1, slot2, inventory);
+		}
+		inventory.setItem(15, smeltResult.get(slot1.getType()));
+		inventory.setItem(16, smeltResult.get(slot2.getType()));
 
-		// delete smelt item and lava bucket
 		inventory.setItem(10, null);
 		inventory.setItem(11, null);
 		player.getInventory().removeItem(new ItemStack(Material.LAVA_BUCKET, 1));
 		player.getInventory().addItem(new ItemStack(Material.BUCKET, 1));
 
-		player.sendMessage(smelterySuccess);
-		return;
+		player.sendMessage(SMELTERYSUCCESS);
 	}
 
 	/**
+	 * check basic smeltery error
 	 * 
-	 * @param slot1 deposit slot
-	 * @param slot2 deposit slot
-	 * @param inventory
-	 */
-	private void defineSmelteryResult(final ItemStack slot1, final ItemStack slot2, Inventory inventory)
-	{
-		if (goldList.contains(slot1.getType()))
-			inventory.setItem(15, new ItemStack(Material.GOLD_INGOT, 1));
-		else if (ironList.contains(slot1.getType()))
-			inventory.setItem(15, new ItemStack(Material.IRON_INGOT, 1));
-		else if (diamondList.contains(slot1.getType()))
-			inventory.setItem(15, new ItemStack(Material.DIAMOND, 1));
-		if (goldList.contains(slot2.getType()))
-			inventory.setItem(16, new ItemStack(Material.GOLD_INGOT, 1));
-		else if (ironList.contains(slot2.getType()))
-			inventory.setItem(16, new ItemStack(Material.IRON_INGOT, 1));
-		else if (diamondList.contains(slot2.getType()))
-			inventory.setItem(16, new ItemStack(Material.DIAMOND, 1));
-	}
-
-	/**
-	 * 
-	 * @param slot1 deposit slot
-	 * @param slot2 deposit slot
-	 * @param slot3 withdraw slot
-	 * @param slot4 withdraw slot
 	 * @param player
+	 * @param slot1
+	 * @param slot2
 	 * @return
 	 */
-	private boolean testBasicError(final ItemStack slot1, final ItemStack slot2, final ItemStack slot3,
-			final ItemStack slot4, final HumanEntity player)
+	private boolean checkBasicError(HumanEntity player, ItemStack slot1, ItemStack slot2)
 	{
-		// if nothing to smelt
-		if (slot1 == air && slot2 == air)
+		ItemStack slot3 = player.getOpenInventory().getTopInventory().getItem(15);
+		ItemStack slot4 = player.getOpenInventory().getTopInventory().getItem(16);
+		if (slot3 == null)
 		{
-			player.sendMessage(nothingError);
+			slot3 = air;
+		}
+		if (slot4 == null)
+		{
+			slot4 = air;
+		}
+		if ((slot1 == air) && (slot2 == air))
+		{
+			player.sendMessage(NOTHINGERROR);
 			return true;
 		}
-
-		// if there is a spade or a hoe
-		if (insufficientList.contains(slot1.getType()) || insufficientList.contains(slot2.getType()))
+		if ((insufficientList.contains(slot1.getType())) || (insufficientList.contains(slot2.getType())))
 		{
-			player.sendMessage(insufficientError);
+			player.sendMessage(INSUFFICIENTERROR);
 			return true;
 		}
-
-		// if there is invalid item
-		if (!smeltList.contains(slot1.getType()) || !smeltList.contains(slot2.getType()))
+		if ((!smeltResult.containsKey(slot1.getType())) || (!smeltResult.containsKey(slot2.getType())))
 		{
-			player.sendMessage(invalidItemError);
+			player.sendMessage(INVALIDITEMERROR);
 			return true;
 		}
-
-		// if withdraw zone is not empty
-		if (slot3 != air || slot4 != air)
+		if ((slot3 != air) || (slot4 != air))
 		{
-			player.sendMessage(withdrawFullError);
+			player.sendMessage(WITHDRAWFULLERROR);
 			return true;
 		}
-
-		// if player didn't have lava bucket
 		if (!player.getInventory().contains(Material.LAVA_BUCKET))
 		{
-			player.sendMessage(lavaError);
+			player.sendMessage(LAVAERROR);
 			return true;
 		}
-
 		return false;
 	}
 }
