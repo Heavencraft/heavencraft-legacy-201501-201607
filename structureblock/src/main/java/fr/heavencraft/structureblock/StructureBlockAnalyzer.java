@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
 public class StructureBlockAnalyzer
 {
 	/**
-	 * Check if the IG structure correspond with the theoric one
+	 * Check if the IG structure correspond with the theoretical one
 	 * 
 	 * @param player
 	 * @param relative

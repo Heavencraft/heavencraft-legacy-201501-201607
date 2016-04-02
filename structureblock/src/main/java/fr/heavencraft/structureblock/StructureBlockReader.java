@@ -16,6 +16,7 @@ public class StructureBlockReader
 	 * 
 	 * @param fileName name of the configuration file
 	 * @param skillsJobs
+	 * @param smelterySize
 	 */
 	static Material[][][] fillStructureList(String fileName, Vector smelterySize, StructureBlock plugin)
 	{

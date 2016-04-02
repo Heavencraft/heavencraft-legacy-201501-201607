@@ -26,6 +26,11 @@ public class StructureBlockSmelteryListener implements Listener
 	// basic item
 	final ItemStack obsidian = new ItemStack(Material.OBSIDIAN, 1);
 
+	// cauldron properties
+	final String FIRSTLORE = ChatColor.GRAY + "Cliquez pour faire fondre";
+	final String SECONDLORE = ChatColor.GRAY + "(Consomme un seau de lave)";
+	final String DISPLAYNAME = ChatColor.RED + "Faire Fondre";
+
 	public StructureBlockSmelteryListener(StructureBlock plugin, Vector smelterySize)
 	{
 		this.smelterySize = smelterySize;
@@ -77,10 +82,10 @@ public class StructureBlockSmelteryListener implements Listener
 		ItemMeta cauldronMeta = cauldron.getItemMeta();
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("");
-		lore.add(ChatColor.GRAY + "Cliquez pour faire fondre");
-		lore.add(ChatColor.GRAY + "(Consomme un seau de lave)");
+		lore.add(FIRSTLORE);
+		lore.add(SECONDLORE);
 		cauldronMeta.setLore(lore);
-		cauldronMeta.setDisplayName(ChatColor.RED + "Faire Fondre");
+		cauldronMeta.setDisplayName(DISPLAYNAME);
 		cauldron.setItemMeta(cauldronMeta);
 		smelteryInventory.setItem(13, cauldron);
 

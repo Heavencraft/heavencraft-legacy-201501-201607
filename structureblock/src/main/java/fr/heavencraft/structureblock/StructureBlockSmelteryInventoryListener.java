@@ -23,15 +23,14 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	// Smeltery messages
 	private final String INVALIDPLACEMESSAGE = ChatColor.RED
 			+ "Ceci est la zone de récuperation des ressources. Vous ne pouvez pas placer d'objets dans cette zone.";
-	private final String LAVAERROR = ChatColor.RED
-			+ "Il vous faut un seau de lave pour faire fonctionner la fonderie.";
+	private final String LAVAERROR = ChatColor.RED + "Il vous faut un seau de lave pour faire fonctionner la fonderie.";
 	private final String INVALIDITEMERROR = ChatColor.RED
-			+ "Certains des objets que vous voulez faire fondre ne sont pas valide, veuillez les retirer.";
+			+ "Certains des objets que vous voulez faire fondre, ne sont pas valides. Veuillez les retirer.";
 	private final String NOTHINGERROR = ChatColor.RED + "Il n'y a rien à faire fondre.";
-	private final String SMELTERYSUCCESS = ChatColor.DARK_GREEN + "Vous avez bien fais fondre vos Objets !";
-	private final String WITHDRAWFULLERROR = ChatColor.RED + "Il y a déjà des matériaux à récuperer.";
+	private final String SMELTERYSUCCESS = ChatColor.DARK_GREEN + "Vous avez bien fait fondre vos Objets !";
+	private final String WITHDRAWFULLERROR = ChatColor.RED + "Vous devez liberer la zone de récuperation.";
 	private final String INSUFFICIENTERROR = ChatColor.RED
-			+ "Au moins un des Objet que vous avez déposer ne vous rapportera rien. Corriger cela avant de faire fonctionner la fonderie.";
+			+ "Au moins un des Objets que vous avez déposé ne vous rapportera rien.";
 
 	// define list and map
 	private final ArrayList<Integer> slotTakeList = new ArrayList<Integer>();
@@ -120,7 +119,7 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 		{
 			return;
 		}
-		InventoryAction action = event.getAction();
+		final InventoryAction action = event.getAction();
 		if (action == InventoryAction.COLLECT_TO_CURSOR)
 		{
 			event.setCancelled(true);
