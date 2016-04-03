@@ -20,6 +20,6 @@
 		<module>heavensurvival-common</module>
 		<module>hellcraft</module>
 		<module>Vault</module>		
-		<module>structureblock</module>
+		
 	</modules>
 </project>
