@@ -17,6 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 
 public class StructureBlockSmelteryInventoryListener implements Listener
 {
@@ -115,12 +116,11 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	}
 
 	@EventHandler
-	private void onPlayerInteractWithInventory(InventoryClickEvent event)
+	private void onPlayerInteractWithInventory(InventoryClickEvent event) throws HeavenException
 	{
 		if (!event.getInventory().getName().equals(INVENTORYTITLE))
-		{
 			return;
-		}
+
 		final InventoryAction action = event.getAction();
 		if (action == InventoryAction.COLLECT_TO_CURSOR)
 		{
@@ -130,31 +130,27 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 		if (event.getRawSlot() >= 27)
 		{
 			if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY)
-			{
 				event.setCancelled(true);
-			}
 			return;
 		}
 		if (slotTakeList.contains(event.getRawSlot()))
 		{
 			if (placeAction.contains(action))
 			{
-				event.getWhoClicked().sendMessage(INVALIDPLACEMESSAGE);
 				event.setCancelled(true);
+				throw new HeavenException(INVALIDPLACEMESSAGE);
 			}
 			return;
 		}
 		if (event.getRawSlot() == 13)
 		{
-			playerLaunchSmelt(event.getWhoClicked(), event.getInventory());
 			event.setCancelled(true);
+			playerLaunchSmelt(event.getWhoClicked(), event.getInventory());
 		}
 		else
 		{
-			if (slotPutList.contains(Integer.valueOf(event.getRawSlot())))
-			{
+			if (slotPutList.contains(event.getRawSlot()))
 				return;
-			}
 			event.setCancelled(true);
 		}
 	}
@@ -163,9 +159,8 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	private void onPlayerCloseInventory(InventoryCloseEvent event)
 	{
 		if (!event.getInventory().getName().equals(INVENTORYTITLE))
-		{
 			return;
-		}
+
 		if (event.getInventory().getItem(10) != null)
 		{
 			event.getPlayer().getInventory().addItem(event.getInventory().getItem(10));
@@ -193,23 +188,19 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	 * 
 	 * @param player
 	 * @param inventory
+	 * @throws HeavenException
 	 */
-	private void playerLaunchSmelt(HumanEntity player, Inventory inventory)
+	private void playerLaunchSmelt(HumanEntity player, Inventory inventory) throws HeavenException
 	{
 		ItemStack slot1 = inventory.getItem(10);
 		ItemStack slot2 = inventory.getItem(11);
 		if (slot1 == null)
-		{
 			slot1 = air;
-		}
 		if (slot2 == null)
-		{
 			slot2 = air;
-		}
-		if (checkBasicError(player, slot1, slot2))
-		{
-			return;
-		}
+
+		checkBasicError(player, slot1, slot2);
+
 		inventory.setItem(15, smeltResult.get(slot1.getType()));
 		inventory.setItem(16, smeltResult.get(slot2.getType()));
 
@@ -228,44 +219,32 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	 * @param slot1
 	 * @param slot2
 	 * @return
+	 * @throws HeavenException
 	 */
-	private boolean checkBasicError(HumanEntity player, ItemStack slot1, ItemStack slot2)
+	private void checkBasicError(HumanEntity player, ItemStack slot1, ItemStack slot2) throws HeavenException
 	{
 		ItemStack slot3 = player.getOpenInventory().getTopInventory().getItem(15);
 		ItemStack slot4 = player.getOpenInventory().getTopInventory().getItem(16);
 		if (slot3 == null)
-		{
 			slot3 = air;
-		}
 		if (slot4 == null)
-		{
 			slot4 = air;
-		}
+
 		if ((slot1 == air) && (slot2 == air))
-		{
-			player.sendMessage(NOTHINGERROR);
-			return true;
-		}
+			throw new HeavenException(NOTHINGERROR);
+
 		if ((insufficientList.contains(slot1.getType())) || (insufficientList.contains(slot2.getType())))
-		{
-			player.sendMessage(INSUFFICIENTERROR);
-			return true;
-		}
+			throw new HeavenException(INSUFFICIENTERROR);
+
 		if ((!smeltResult.containsKey(slot1.getType())) || (!smeltResult.containsKey(slot2.getType())))
-		{
-			player.sendMessage(INVALIDITEMERROR);
-			return true;
-		}
+			throw new HeavenException(INVALIDITEMERROR);
+
 		if ((slot3 != air) || (slot4 != air))
-		{
-			player.sendMessage(WITHDRAWFULLERROR);
-			return true;
-		}
+			throw new HeavenException(WITHDRAWFULLERROR);
+
 		if (!player.getInventory().contains(Material.LAVA_BUCKET))
-		{
-			player.sendMessage(LAVAERROR);
-			return true;
-		}
-		return false;
+			throw new HeavenException(LAVAERROR);
+
+		return;
 	}
 }
