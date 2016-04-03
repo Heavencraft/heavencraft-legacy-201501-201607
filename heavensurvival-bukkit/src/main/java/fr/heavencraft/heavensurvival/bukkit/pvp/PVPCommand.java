@@ -1,35 +1,38 @@
-package fr.heavencraft.heavensurvival.bukkit.teleport;
+package fr.heavencraft.heavensurvival.bukkit.pvp;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
-import fr.heavencraft.heavensurvival.common.users.UpdateUserPvpQuery;
+import fr.heavencraft.heavensurvival.common.pvp.PVPManager;
 import fr.heavencraft.heavensurvival.common.users.User;
 import fr.heavencraft.heavensurvival.common.users.UserProvider;
 
-public class PvpCommand extends AbstractCommandExecutor
+public class PVPCommand extends AbstractCommandExecutor
 {
-	public PvpCommand(HeavenPlugin plugin)
+	public PVPCommand(HeavenPlugin plugin)
 	{
 		super(plugin, "pvp");
 	}
 
 	@Override
-	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
+	protected void onPlayerCommand(final Player player, String[] args) throws HeavenException
 	{
 		final User user = UserProvider.getInstance().getUserByUniqueId(player.getUniqueId());
 
 		if (user.isPvp())
 		{
-			QueriesHandler.addQuery(new UpdateUserPvpQuery(user, false));
+			PVPManager.get().setEnabled(user, false);
 			ChatUtil.sendMessage(player, "Le pvp a été désactivé");
 		}
-
+		else
+		{
+			PVPManager.get().setEnabled(user, true);
+			ChatUtil.sendMessage(player, "Le pvp a été activé");
+		}
 	}
 
 	@Override
