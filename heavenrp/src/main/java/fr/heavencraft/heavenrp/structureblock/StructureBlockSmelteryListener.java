@@ -1,4 +1,4 @@
-package fr.heavencraft.structureblock;
+package fr.heavencraft.heavenrp.structureblock;
 
 import java.util.ArrayList;
 
@@ -15,12 +15,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import fr.heavencraft.heavenrp.HeavenRP;
+
 public class StructureBlockSmelteryListener implements Listener
 {
-	final StructureBlock plugin;
+	final HeavenRP plugin;
 
 	// smeltery properties
-	final Vector smelterySize;
 	final Vector relativeVector = new Vector(-4, 2, 2);
 
 	// basic item
@@ -31,11 +32,9 @@ public class StructureBlockSmelteryListener implements Listener
 	final String SECONDLORE = ChatColor.GRAY + "(Consomme un seau de lave)";
 	final String DISPLAYNAME = ChatColor.RED + "Faire Fondre";
 
-	public StructureBlockSmelteryListener(StructureBlock plugin, Vector smelterySize)
+	public StructureBlockSmelteryListener(HeavenRP plugin)
 	{
-		this.smelterySize = smelterySize;
 		this.plugin = plugin;
-
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
 
@@ -46,13 +45,13 @@ public class StructureBlockSmelteryListener implements Listener
 		{
 			return;
 		}
-		Block clickedBlock = event.getClickedBlock();
+		final Block clickedBlock = event.getClickedBlock();
 		if (clickedBlock.getType() != Material.DROPPER)
 		{
 			return;
 		}
-		if (StructureBlockAnalyzer.checkStructure(event.getPlayer(), event.getBlockFace(),
-				clickedBlock.getLocation(), relativeVector, smelterySize, plugin.smelteryLayers) == false)
+		if (StructureBlockAnalyzer.checkStructure(event.getPlayer(), event.getBlockFace(), clickedBlock.getLocation(),
+				relativeVector) == false)
 		{
 			return;
 		}
@@ -67,7 +66,7 @@ public class StructureBlockSmelteryListener implements Listener
 	 */
 	private Inventory getInventory()
 	{
-		Inventory smelteryInventory = Bukkit.createInventory(null, 27, ChatColor.RED + "              Fonderie");
+		final Inventory smelteryInventory = Bukkit.createInventory(null, 27, ChatColor.RED + "              Fonderie");
 		for (int i = 0; i < 9; i++)
 		{
 			smelteryInventory.setItem(i, obsidian);
@@ -78,9 +77,9 @@ public class StructureBlockSmelteryListener implements Listener
 		smelteryInventory.setItem(14, obsidian);
 		smelteryInventory.setItem(17, obsidian);
 
-		ItemStack cauldron = new ItemStack(Material.CAULDRON_ITEM, 1);
-		ItemMeta cauldronMeta = cauldron.getItemMeta();
-		ArrayList<String> lore = new ArrayList<String>();
+		final ItemStack cauldron = new ItemStack(Material.CAULDRON_ITEM, 1);
+		final ItemMeta cauldronMeta = cauldron.getItemMeta();
+		final ArrayList<String> lore = new ArrayList<String>();
 		lore.add("");
 		lore.add(FIRSTLORE);
 		lore.add(SECONDLORE);

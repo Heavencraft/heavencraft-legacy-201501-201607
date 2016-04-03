@@ -11,12 +11,13 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TutoCommand;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavenrp.jobs.JobsProvider;
 import fr.heavencraft.heavenrp.stores.StoresListener;
 import fr.heavencraft.heavenrp.stores.StoresManager;
+import fr.heavencraft.heavenrp.structureblock.StructureBlock;
 import fr.heavencraft.heavenrp.worlds.WorldsManager;
 import fr.lorgan17.heavenrp.managers.AuctionManager;
 
@@ -44,6 +45,9 @@ public class HeavenRP extends HeavenPlugin
 
 			// Load jobs configuration (do it first as it can take time)
 			JobsProvider.loadConfig();
+
+			// Load jobs configuration (do it first as it can take time)
+			StructureBlock.loadStructure();
 
 			srpConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString("database"));
 			mainConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);

@@ -1,7 +1,6 @@
-package fr.heavencraft.structureblock;
+package fr.heavencraft.heavenrp.structureblock;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -15,15 +14,13 @@ public class StructureBlockAnalyzer
 	 * @param relative
 	 * @param location
 	 * @param relativeVector
-	 * @param sizeVector
-	 * @param smelteryLayers
 	 * @return
 	 */
-	static boolean checkStructure(Player player, BlockFace relative, Location location, Vector relativeVector,
-			Vector sizeVector, Material[][][] smelteryLayers)
+	static boolean checkStructure(Player player, BlockFace relative, Location location, Vector relativeVector)
 	{
-		Vector addx = new Vector(0, 0, 0);
-		Vector addz = new Vector(0, 0, 0);
+		final Vector sizeVector = StructureBlock.smelterySize;
+		final Vector addx = new Vector(0, 0, 0);
+		final Vector addz = new Vector(0, 0, 0);
 		switch (relative)
 		{
 			case NORTH:
@@ -49,16 +46,16 @@ public class StructureBlockAnalyzer
 			default:
 				return false;
 		}
-		Vector subx = addx.clone().multiply(-sizeVector.getX());
-		Vector subz = addz.clone().multiply(-sizeVector.getZ());
+		final Vector subx = addx.clone().multiply(-sizeVector.getX());
+		final Vector subz = addz.clone().multiply(-sizeVector.getZ());
 		for (int y = 0; y < sizeVector.getY(); y++)
 		{
 			for (int z = 0; z < sizeVector.getZ(); z++)
 			{
 				for (int x = 0; x < sizeVector.getX(); x++)
 				{
-					if ((smelteryLayers[y][z][x] != null)
-							&& (location.getBlock().getType() != smelteryLayers[y][z][x]))
+					if ((StructureBlock.smelteryLayers[y][z][x] != null)
+							&& (location.getBlock().getType() != StructureBlock.smelteryLayers[y][z][x]))
 					{
 						return false;
 					}

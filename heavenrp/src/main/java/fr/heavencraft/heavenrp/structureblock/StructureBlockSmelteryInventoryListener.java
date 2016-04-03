@@ -1,4 +1,4 @@
-package fr.heavencraft.structureblock;
+package fr.heavencraft.heavenrp.structureblock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +15,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 
 public class StructureBlockSmelteryInventoryListener implements Listener
 {
@@ -54,7 +56,7 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	private final ItemStack tripleGold = new ItemStack(Material.GOLD_INGOT, 3);
 	private final ItemStack tripleDiamond = new ItemStack(Material.DIAMOND, 3);
 
-	public StructureBlockSmelteryInventoryListener(StructureBlock plugin)
+	public StructureBlockSmelteryInventoryListener(HeavenPlugin plugin)
 	{
 		// fill slot list
 		slotPutList.add(10);
