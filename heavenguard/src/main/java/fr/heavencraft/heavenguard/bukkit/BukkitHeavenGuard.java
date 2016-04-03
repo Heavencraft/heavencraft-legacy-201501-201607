@@ -3,13 +3,15 @@ package fr.heavencraft.heavenguard.bukkit;
 import org.bukkit.Bukkit;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavenguard.api.RegionManager;
 import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.bukkit.listeners.PlayerListener;
 import fr.heavencraft.heavenguard.bukkit.listeners.ProtectionEnvironmentListener;
 import fr.heavencraft.heavenguard.bukkit.listeners.ProtectionPlayerListener;
+import fr.heavencraft.heavenguard.common.HeavenGuard;
+import fr.heavencraft.heavenguard.common.HeavenGuardInstance;
 import fr.heavencraft.heavenguard.datamodel.SQLRegionProvider;
 
 /*
@@ -25,12 +27,17 @@ import fr.heavencraft.heavenguard.datamodel.SQLRegionProvider;
  * hg_uuid (id, uuid, last_name)
  * 
  */
-public class HeavenGuard extends HeavenPlugin
+public class BukkitHeavenGuard extends HeavenPlugin implements HeavenGuard
 {
 	private RegionProvider regionProvider;
 	private RegionManager regionManager;
 
 	private ConnectionProvider connectionHandler;
+
+	public BukkitHeavenGuard()
+	{
+		HeavenGuardInstance.set(this);
+	}
 
 	@Override
 	public void onEnable()
@@ -60,6 +67,7 @@ public class HeavenGuard extends HeavenPlugin
 		}
 	}
 
+	@Override
 	public RegionProvider getRegionProvider()
 	{
 		return regionProvider;

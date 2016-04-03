@@ -3,7 +3,7 @@ package fr.heavencraft.heavencore;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.heavencraft.async.actions.ActionsHandler;
-import fr.heavencraft.async.queries.QueriesHandler;
+import fr.heavencraft.async.queries.BukkitQueriesHandlerTask;
 import fr.heavencraft.heavencore.logs.BukkitHeavenLogFactory;
 import fr.heavencraft.heavencore.logs.HeavenLog;
 
@@ -23,7 +23,7 @@ public class CorePlugin extends JavaPlugin
 		instance = this;
 
 		new ActionsHandler();
-		new QueriesHandler();
+		new BukkitQueriesHandlerTask();
 	}
 
 	public static CorePlugin getInstance()

@@ -18,14 +18,14 @@ import fr.heavencraft.heavencrea.worlds.WorldsManager;
 import fr.heavencraft.heavenguard.api.Flag;
 import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 import fr.heavencraft.heavenguard.bukkit.RegionUtil;
 
 public class TalentSignListener extends AbstractPlotSignListener
 {
-	private final HeavenGuard regionPlugin;
+	private final BukkitHeavenGuard regionPlugin;
 
-	public TalentSignListener(HeavenCrea plugin, HeavenGuard regionPlugin)
+	public TalentSignListener(HeavenCrea plugin, BukkitHeavenGuard regionPlugin)
 	{
 		super(plugin, "Talent", CreaPermissions.PARCELLE_SIGN);
 

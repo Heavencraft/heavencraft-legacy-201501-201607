@@ -2,14 +2,14 @@ package fr.heavencraft.heavenguard.bukkit.commands;
 
 import org.bukkit.command.CommandSender;
 
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public abstract class AbstractSubCommand implements SubCommand
 {
-	protected final HeavenGuard plugin;
+	protected final BukkitHeavenGuard plugin;
 	private final String permission;
 
-	protected AbstractSubCommand(HeavenGuard plugin, String permission)
+	protected AbstractSubCommand(BukkitHeavenGuard plugin, String permission)
 	{
 		this.plugin = plugin;
 		this.permission = permission;
