@@ -20,7 +20,7 @@ import fr.heavencraft.heavensurvival.common.users.UserProvider;
 // Listener used to update users table
 public class UsersListener extends AbstractListener<HeavenPlugin>
 {
-	protected UsersListener(BukkitHeavenSurvival plugin)
+	public UsersListener(BukkitHeavenSurvival plugin)
 	{
 		super(plugin);
 	}
