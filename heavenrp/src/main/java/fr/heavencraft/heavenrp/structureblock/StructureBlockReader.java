@@ -1,4 +1,4 @@
-package fr.heavencraft.structureblock;
+package fr.heavencraft.heavenrp.structureblock;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,7 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import org.bukkit.Material;
-import org.bukkit.util.Vector;
+
+import fr.heavencraft.heavenrp.HeavenRP;
 
 public class StructureBlockReader
 {
@@ -14,19 +15,16 @@ public class StructureBlockReader
 	/**
 	 * define a material 3D list with by reading a configuration file
 	 * 
-	 * @param fileName name of the configuration file
-	 * @param skillsJobs
-	 * @param smelterySize
+	 * @param fileName
+	 * @param layers
+	 * @return
 	 */
-	static Material[][][] fillStructureList(String fileName, Vector smelterySize, StructureBlock plugin)
+	static Material[][][] fillStructureList(String fileName, Material[][][] layers)
 	{
-		// Creation of the 3D list
-		Material[][][] layers = (Material[][][]) new Material[(int) smelterySize.getY()][(int) smelterySize
-				.getZ()][(int) smelterySize.getX()];
 
 		// fill 3D list by reading a configuration file
 		try (final BufferedReader reader = new BufferedReader(
-				new FileReader(plugin.getDataFolder().getPath() + fileName)))
+				new FileReader(HeavenRP.getInstance().getDataFolder().getPath() + fileName)))
 		{
 			String line;
 			int y = 0;
@@ -62,9 +60,9 @@ public class StructureBlockReader
 	/**
 	 * fill a line of the structure
 	 * 
-	 * @param line current line of the config file
-	 * @param y current layer
-	 * @param layers (3D list)
+	 * @param line
+	 * @param y
+	 * @param layers
 	 * @return
 	 */
 	private static Material[][][] addMaterial(String line, int y, Material[][][] layers)

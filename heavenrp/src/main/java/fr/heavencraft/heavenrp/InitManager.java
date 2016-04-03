@@ -57,6 +57,8 @@ import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceSignListener;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
+import fr.heavencraft.heavenrp.structureblock.StructureBlockSmelteryInventoryListener;
+import fr.heavencraft.heavenrp.structureblock.StructureBlockSmelteryListener;
 import fr.heavencraft.heavenrp.warps.WarpSignListener;
 import fr.heavencraft.heavenrp.worlds.WorldsListener;
 import fr.heavencraft.heavenrp.worlds.WorldsManager;
@@ -211,6 +213,10 @@ public class InitManager
 		// Worlds
 		WorldsManager.init();
 		new WorldsListener(plugin);
+
+		// Structure Block
+		new StructureBlockSmelteryListener(plugin);
+		new StructureBlockSmelteryInventoryListener(plugin);
 
 		/*
 		 * A trier
