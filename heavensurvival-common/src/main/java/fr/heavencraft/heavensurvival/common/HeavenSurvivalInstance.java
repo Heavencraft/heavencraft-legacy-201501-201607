@@ -8,4 +8,9 @@ public class HeavenSurvivalInstance
 	{
 		return instance;
 	}
+
+	public static void set(HeavenSurvival instance)
+	{
+		HeavenSurvivalInstance.instance = instance;
+	}
 }
