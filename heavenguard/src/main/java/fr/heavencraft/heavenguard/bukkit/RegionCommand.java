@@ -28,7 +28,7 @@ public class RegionCommand extends AbstractCommandExecutor
 {
 	private final Map<String, SubCommand> subCommands = new HashMap<String, SubCommand>();
 
-	public RegionCommand(HeavenGuard plugin)
+	public RegionCommand(BukkitHeavenGuard plugin)
 	{
 		super(plugin, "region", Arrays.asList("rg"));
 

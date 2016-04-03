@@ -1,6 +1,7 @@
 package fr.heavencraft.heavenrp;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -78,13 +79,13 @@ public class HeavenRP extends HeavenPlugin
 		new TutoCommand(this, WorldsManager.getTutoLocation());
 	}
 
-	public static Connection getConnection()
+	public static Connection getConnection() throws SQLException
 	{
 		return srpConnection.getConnection();
 	}
 
 	@Deprecated
-	public static Connection getMainConnection()
+	public static Connection getMainConnection() throws SQLException
 	{
 		return mainConnection.getConnection();
 	}

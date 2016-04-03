@@ -14,13 +14,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
-public class PlayerListener extends AbstractListener<HeavenGuard>
+public class PlayerListener extends AbstractListener<BukkitHeavenGuard>
 {
-	private final HeavenGuard plugin;
+	private final BukkitHeavenGuard plugin;
 
-	public PlayerListener(HeavenGuard plugin)
+	public PlayerListener(BukkitHeavenGuard plugin)
 	{
 		super(plugin);
 		this.plugin = plugin;

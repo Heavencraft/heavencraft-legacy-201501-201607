@@ -1,8 +1,6 @@
 package fr.heavencraft.async.queries;
 
 import java.sql.SQLException;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -10,11 +8,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.heavencraft.heavencore.CorePlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 
-public class QueriesHandler extends BukkitRunnable
+public class BukkitQueriesHandlerTask extends BukkitRunnable
 {
-	private static Queue<Query> queries = new ConcurrentLinkedQueue<Query>();
-
-	public QueriesHandler()
+	public BukkitQueriesHandlerTask()
 	{
 		runTaskTimerAsynchronously(CorePlugin.getInstance(), 1L, 1L);
 	}
@@ -22,12 +18,9 @@ public class QueriesHandler extends BukkitRunnable
 	@Override
 	public void run()
 	{
-		if (queries.isEmpty())
-			return;
-
 		Query tmp;
 
-		while ((tmp = queries.poll()) != null)
+		while ((tmp = QueriesHandler.pollQuery()) != null)
 		{
 			final Query query = tmp; // Gruge final
 
@@ -69,10 +62,5 @@ public class QueriesHandler extends BukkitRunnable
 				});
 			}
 		}
-	}
-
-	public static void addQuery(Query query)
-	{
-		queries.add(query);
 	}
 }

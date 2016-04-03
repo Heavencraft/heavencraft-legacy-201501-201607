@@ -63,6 +63,12 @@ public class SQLRegion implements Region
 		flagHandler = new SQLFlagHandler(connectionHandler, rs, this);
 	}
 
+	@Override
+	public String toString()
+	{
+		return name;
+	}
+
 	private void loadMembers() throws SQLException
 	{
 		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(LOAD_MEMBERS))
@@ -171,7 +177,8 @@ public class SQLRegion implements Region
 	}
 
 	@Override
-	public void redefine(String world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) throws HeavenException
+	public void redefine(String world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
+			throws HeavenException
 	{
 		// Update database
 		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(REDEFINE))
@@ -254,7 +261,8 @@ public class SQLRegion implements Region
 	public void addMember(UUID player, boolean owner) throws HeavenException
 	{
 		if (isMember(player, false))
-			throw new HeavenException("Le joueur {%1$s} est déjà membre de la protection {%2$s}.", player.toString(), name);
+			throw new HeavenException("Le joueur {%1$s} est déjà membre de la protection {%2$s}.", player.toString(),
+					name);
 
 		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(ADD_MEMBER))
 		{
