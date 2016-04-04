@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -15,7 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.heavenrp.database.users.User;
+import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.heavenrp.jobs.Job;
 
 public class StructureBlockSmelteryListener implements Listener
 {
@@ -23,6 +28,7 @@ public class StructureBlockSmelteryListener implements Listener
 
 	// smeltery properties
 	final Vector relativeVector = new Vector(-4, 2, 2);
+	final ArrayList<Integer> jobList = new ArrayList<Integer>();
 
 	// basic item
 	final ItemStack obsidian = new ItemStack(Material.OBSIDIAN, 1);
@@ -34,29 +40,36 @@ public class StructureBlockSmelteryListener implements Listener
 
 	public StructureBlockSmelteryListener(HeavenRP plugin)
 	{
+		jobList.add(9);
+		jobList.add(11);
+
 		this.plugin = plugin;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
-	private void onPlayerInteract(PlayerInteractEvent event)
+	private void onPlayerInteract(PlayerInteractEvent event) throws HeavenException
 	{
+		final Player player = event.getPlayer();
+
 		if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
-		{
 			return;
-		}
+
 		final Block clickedBlock = event.getClickedBlock();
 		if (clickedBlock.getType() != Material.DROPPER)
-		{
 			return;
-		}
-		if (StructureBlockAnalyzer.checkStructure(event.getPlayer(), event.getBlockFace(), clickedBlock.getLocation(),
+
+		if (StructureBlockAnalyzer.checkStructure(player, event.getBlockFace(), clickedBlock.getLocation(),
 				relativeVector) == false)
-		{
 			return;
-		}
+
+		final User user = UserProvider.getUserByName(player.getName());
+		final Job job = user.getJob();
+		if (!jobList.contains(job.getId()))
+			return;
+
 		event.setCancelled(true);
-		event.getPlayer().openInventory(getInventory());
+		player.openInventory(getInventory());
 	}
 
 	/**
