@@ -10,9 +10,9 @@ import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.heavenrp.RPGLocks;
 import fr.heavencraft.heavenrp.database.homes.HomeProvider;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
-import fr.heavencraft.heavenrp.dungeon.DungeonManager;
 
 public class HomeCommand extends AbstractCommandExecutor
 {
@@ -38,9 +38,7 @@ public class HomeCommand extends AbstractCommandExecutor
 
 		Location home = HomeProvider.getHome(UserProvider.getUserByName(player.getName()), nb);
 		
-		if(DungeonManager.isPlayeing(player))
-			throw new HeavenException("Vous êtes actuellement dans un dojnon.");
-		
+		RPGLocks.canTeleport(player);
 		PlayerUtil.teleportPlayer(player, home);
 	}
 
