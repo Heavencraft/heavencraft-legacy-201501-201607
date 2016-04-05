@@ -62,4 +62,5 @@ commands:
   jobs:
     aliases: [job, metier, metiers]
   jobsadmin:
-  djn:
+  donjon:
+    aliases: [dj, djn]
