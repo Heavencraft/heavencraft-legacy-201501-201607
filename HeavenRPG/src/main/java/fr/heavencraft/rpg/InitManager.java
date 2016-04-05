@@ -7,10 +7,6 @@ import fr.heavencraft.Utils.DevUtils;
 import fr.heavencraft.rpg.Parchemins.ParcheminCommand;
 import fr.heavencraft.rpg.Parchemins.ParcheminProvider;
 import fr.heavencraft.rpg.Parchemins.ParcheminsListener;
-import fr.heavencraft.rpg.donjon.DungeonCommand;
-import fr.heavencraft.rpg.donjon.DungeonListener;
-import fr.heavencraft.rpg.donjon.DungeonManager;
-import fr.heavencraft.rpg.donjon.DungeonSignListener;
 import fr.heavencraft.rpg.mobs.MobManager;
 import fr.heavencraft.rpg.player.RPGPlayerListener;
 import fr.heavencraft.rpg.zones.ZoneCommand;
@@ -45,7 +41,6 @@ public class InitManager {
 			{
 				ZoneManager.loadAllZones();
 				ParcheminProvider.LoadParchemins();
-				DungeonManager.loadDungeons();
 			}
 		}, 0);	
 		

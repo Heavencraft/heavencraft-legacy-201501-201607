@@ -11,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-import fr.heavencraft.rpg.donjon.DungeonManager;
 import fr.heavencraft.rpg.mobs.MobManager;
 
 public class HeavenRPG extends JavaPlugin {
@@ -41,8 +40,6 @@ public class HeavenRPG extends JavaPlugin {
 	@Override
     public void onDisable() {
         
-		DungeonManager.evacutateDungeon();
-		
         MobManager.killAllMobs();
         
     }
