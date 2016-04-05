@@ -47,7 +47,7 @@ public class HeavenRP extends HeavenPlugin
 			// Load jobs configuration (do it first as it can take time)
 			JobsProvider.loadConfig();
 
-			// Load jobs configuration (do it first as it can take time)
+			// Load structure for Structure Block
 			StructureBlock.loadStructure();
 
 			srpConnection = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString("database"));
