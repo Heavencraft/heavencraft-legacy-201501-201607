@@ -9,6 +9,7 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.heavenrp.RPGLocks;
 import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.warps.WarpsManager;
 
@@ -50,6 +51,7 @@ public class WarpCommand extends AbstractCommandExecutor
 				}
 				else if (args[0].equalsIgnoreCase("tp"))
 				{
+					RPGLocks.canTeleport(player);
 					player.teleport(WarpsManager.getWarp(args[1]).getLocation());
 					ChatUtil.sendMessage(player, "Vous avez été téléporté à {%1$s}.", args[1]);
 				}

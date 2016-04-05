@@ -10,6 +10,7 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.heavenrp.RPGLocks;
 import fr.heavencraft.heavenrp.RPPermissions;
 
 public class EventCommand extends AbstractCommandExecutor
@@ -35,6 +36,7 @@ public class EventCommand extends AbstractCommandExecutor
 		{
 			if (_started)
 			{
+				RPGLocks.canTeleport(player);
 				player.teleport(_spawn);
 				ChatUtil.sendMessage(player, "Vous avez été téléporté à l'event.");
 			}
