@@ -1207,6 +1207,14 @@ public enum ParticleEffect {
 			}
 			this.note = note;
 		}
+		
+		/**
+		 * Returns the note value
+		 * @return
+		 */
+		public int getNoteId(){
+			return note;
+		}
 
 		/**
 		 * Returns the note value divided by 24
