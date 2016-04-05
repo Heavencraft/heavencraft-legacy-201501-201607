@@ -8,7 +8,7 @@ public abstract class StructureBlock
 	// smeltery properties
 	final static Vector smelterySize = new Vector(9, 10, 9);
 	final static String SMELTERYFILENAME = "/smeltery.cfg";
-	public static Material[][][] smelteryLayers = new Material[(int) smelterySize.getY()][(int) smelterySize
+	static Material[][][] smelteryLayers = new Material[(int) smelterySize.getY()][(int) smelterySize
 			.getZ()][(int) smelterySize.getX()];;
 
 	public static void loadStructure()

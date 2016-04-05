@@ -18,9 +18,12 @@ public class StructureBlockAnalyzer
 	 */
 	static boolean checkStructure(Player player, BlockFace relative, Location location, Vector relativeVector)
 	{
+		// initialize vector
 		final Vector sizeVector = StructureBlock.smelterySize;
 		final Vector addx = new Vector(0, 0, 0);
 		final Vector addz = new Vector(0, 0, 0);
+
+		// set vector and location values according to BlockFace
 		switch (relative)
 		{
 			case NORTH:
@@ -46,8 +49,12 @@ public class StructureBlockAnalyzer
 			default:
 				return false;
 		}
+
+		// set vector value according to structure size
 		final Vector subx = addx.clone().multiply(-sizeVector.getX());
 		final Vector subz = addz.clone().multiply(-sizeVector.getZ());
+
+		// test if the structure IG correspond with the configuration file
 		for (int y = 0; y < sizeVector.getY(); y++)
 		{
 			for (int z = 0; z < sizeVector.getZ(); z++)
