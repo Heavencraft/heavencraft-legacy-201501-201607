@@ -64,9 +64,9 @@ public class DungeonPlayerListener extends AbstractListener<HeavenPlugin>
 		Dungeon dg = DungeonManager.getDungeonByPlayer(p);
 		if (dg == null)
 			return;
-		// All other events we caught, here
-		if (e.getCause() != DamageCause.FALL)
-			return;
+		// Damages types to ignore
+//		if (e.getCause() == DamageCause.FALL)
+//			return;
 		// Would the player die?
 		if (p.getHealth() < e.getFinalDamage())
 		{
