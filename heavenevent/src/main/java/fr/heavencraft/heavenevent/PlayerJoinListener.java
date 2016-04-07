@@ -18,7 +18,7 @@ public class PlayerJoinListener implements Listener
 	@EventHandler
 	private void onPlayerConnect(PlayerJoinEvent event)
 	{
-		// load Timer board
+		// load Timer Scoreboard
 		event.getPlayer().setScoreboard(TimerScoreboard.getTimer());
 	}
 
