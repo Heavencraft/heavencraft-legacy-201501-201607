@@ -1,13 +1,48 @@
 package fr.heavencraft.heavenevent;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.Bukkit;
 
-public class HeavenEvent extends JavaPlugin
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavenevent.timer.Timer;
+
+public class HeavenEvent extends HeavenPlugin
 {
+	private static HeavenEvent _instance;
+
 	@Override
 	public void onEnable()
 	{
 
+		try
+		{
+			super.onEnable();
+
+			InitManager.init(this);
+
+		}
+		catch (final Exception ex)
+		{
+			ex.printStackTrace();
+			Bukkit.shutdown();
+		}
+
+		saveConfig();
+
+		/**
+		 * load Timer
+		 */
+		Timer.loadTimer();
+
 	}
 
+	@Override
+	public void onDisable()
+	{
+		saveConfig();
+	}
+
+	public static HeavenEvent getInstance()
+	{
+		return _instance;
+	}
 }
