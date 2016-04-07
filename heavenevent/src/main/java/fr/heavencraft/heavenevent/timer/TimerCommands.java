@@ -24,21 +24,30 @@ public class TimerCommands extends AbstractCommandExecutor
 	{
 		if (!player.isOp())
 			throw new HeavenException(ERRORPERMISSION);
+
+		// Launch Timer
 		if (args[0].equalsIgnoreCase("start"))
 		{
+			// if Timer already running
 			if (TimerConfigurationEditor.start)
 				throw new HeavenException(STARTERROR);
 
+			// Save Started Time of the event
 			final String RESULT = TimerConfigurationEditor.saveCurrentTime();
 			player.sendMessage(RESULT);
 
+			// launch Scoreboard
 			TimerScoreboard.initScoreboard();
 		}
+
+		// Stop Timer
 		else if (args[0].equalsIgnoreCase("stop"))
 		{
+			// if there is no Timer running
 			if (!TimerConfigurationEditor.start)
 				throw new HeavenException(STOPERROR);
 
+			// Reset Event Timer
 			TimerScoreboard.stopScoreboard();
 			TimerConfigurationEditor.resetConfig();
 		}
@@ -48,7 +57,16 @@ public class TimerCommands extends AbstractCommandExecutor
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		// TODO Auto-generated method stub
+		if (args[0].equalsIgnoreCase("stop"))
+		{
+			// if there is no Timer running
+			if (!TimerConfigurationEditor.start)
+				throw new HeavenException(STOPERROR);
+
+			// Reset Event Timer
+			TimerScoreboard.stopScoreboard();
+			TimerConfigurationEditor.resetConfig();
+		}
 
 	}
 

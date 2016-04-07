@@ -16,34 +16,41 @@ import fr.heavencraft.heavenevent.HeavenEvent;
 
 public class TimerScoreboard
 {
-	static ScoreboardManager manager = Bukkit.getScoreboardManager();
-	static Scoreboard timer = manager.getNewScoreboard();
-	static Objective objective;
+	private final static String TIMERTITLE = ChatColor.GRAY + "  -*-*-*-*-*-*-";
+	private final static String OBJECTIVETITLE = ChatColor.AQUA + "Infos " + ChatColor.GOLD + "Event";
 
-	static BukkitScheduler updateTimer = Bukkit.getServer().getScheduler();
+	private static ScoreboardManager manager = Bukkit.getScoreboardManager();
+	private static Scoreboard timer = manager.getNewScoreboard();
+	private static Objective objective;
 
-	static int currentDay;
-	static int currentHours;
-	static int currentMinutes;
-	static int currentSeconds;
+	private static BukkitScheduler updateTimer = Bukkit.getServer().getScheduler();
+
+	private static int currentDay;
+	private static int currentHours;
+	private static int currentMinutes;
+	private static int currentSeconds;
 
 	/**
 	 * initialize the Scoreboard timer
 	 */
 	static void initScoreboard()
 	{
+		// define objective timer
 		objective = timer.registerNewObjective("Event", "dummy");
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		objective.setDisplayName(ChatColor.AQUA + "Infos " + ChatColor.GOLD + "Event");
+		objective.setDisplayName(OBJECTIVETITLE);
 
+		// get the time since event start
 		getCurrentTime();
 
-		objective.getScore(ChatColor.GRAY + "  -*-*-*-*-*-*-").setScore(0);
+		// set points
+		objective.getScore(TIMERTITLE).setScore(0);
 		objective.getScore("Jours : " + currentDay).setScore(-1);
 		objective.getScore("Heures : " + currentHours).setScore(-2);
 		objective.getScore("Minutes : " + currentMinutes).setScore(-3);
 		objective.getScore("Secondes : " + currentSeconds).setScore(-4);
 
+		// launch Scoreboard repetable task
 		runScoreboard();
 
 	}
@@ -56,18 +63,21 @@ public class TimerScoreboard
 		final Calendar myCalendar = GregorianCalendar.getInstance();
 
 		currentDay = myCalendar.get(Calendar.DAY_OF_YEAR) - TimerConfigurationEditor.day;
+
 		currentHours = myCalendar.get(Calendar.HOUR_OF_DAY) - TimerConfigurationEditor.hours;
 		if (currentHours < 0)
 		{
 			currentDay -= 1;
 			currentHours += 24;
 		}
+
 		currentMinutes = myCalendar.get(Calendar.MINUTE) - TimerConfigurationEditor.minutes;
 		if (currentMinutes < 0)
 		{
 			currentHours -= 1;
 			currentMinutes += 60;
 		}
+
 		currentSeconds = myCalendar.get(Calendar.SECOND) - TimerConfigurationEditor.seconds;
 		if (currentSeconds < 0)
 		{
@@ -81,8 +91,11 @@ public class TimerScoreboard
 	 */
 	static void runScoreboard()
 	{
+		// set scoreboard for all connected player
 		for (final Player online : Bukkit.getOnlinePlayers())
 			online.setScoreboard(timer);
+
+		// launch Timer
 		updateTimer.scheduleSyncRepeatingTask(HeavenEvent.getInstance(), new Runnable()
 		{
 			@Override
