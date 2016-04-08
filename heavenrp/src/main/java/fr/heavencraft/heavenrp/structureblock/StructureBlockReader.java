@@ -56,37 +56,4 @@ public class StructureBlockReader
 		}
 		return layers;
 	}
-
-	/**
-	 * fill a line of the structure
-	 * 
-	 * @param line
-	 * @param y
-	 * @param layers
-	 * @return
-	 */
-	private static Material[][][] addMaterial(String line, int y, Material[][][] layers)
-	{
-
-		// search Z
-		final String[] splitEquals = line.split("=", 2);
-		final int z = Integer.parseInt(splitEquals[0].trim());
-
-		// search X part
-		line = splitEquals[1];
-		int x = 0;
-
-		// search materials
-		while (line.contains("|"))
-		{
-			final String[] block = line.split("\\|", 2);
-			if (!block[0].isEmpty())
-				layers[y][z][x] = (Material.getMaterial(block[0].trim()));
-			line = block[1];
-			x++;
-		}
-		if (!line.isEmpty())
-			layers[y][z][x] = (Material.getMaterial(line.trim()));
-		return layers;
-	}
 }

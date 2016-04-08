@@ -1,22 +1,31 @@
 package fr.heavencraft.heavenrp.structureblock;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public class StructureBlockAnalyzer
+public class Structure
 {
-	/**
-	 * Check if the IG structure correspond with the theoretical one
-	 * 
-	 * @param player
-	 * @param relative
-	 * @param location
-	 * @param relativeVector
-	 * @return
-	 */
-	static boolean checkStructure(Player player, BlockFace relative, Location location, Vector relativeVector)
+	private final Map<Integer, Layer> layersByYCoordinate = new HashMap<Integer, Layer>();
+
+	private Layer getOrCreateLayer(int y)
+	{
+		Layer layer = layersByYCoordinate.get(y);
+		if (layer == null)
+			layersByYCoordinate.put(y, layer = new Layer());
+		return layer;
+	}
+
+	public void setMaterial(int x, int y, int z, Material block)
+	{
+		getOrCreateLayer(y).setMaterial(x, z, block);
+	}
+
+	public boolean checkStructure(BlockFace relative, Location location, Vector relativeVector)
 	{
 		// initialize vector
 		final Vector sizeVector = StructureBlock.smelterySize;
