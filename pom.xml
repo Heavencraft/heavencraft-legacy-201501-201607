@@ -19,7 +19,8 @@
 		<module>heavensurvival-bukkit</module>
 		<module>heavensurvival-common</module>
 		<module>hellcraft</module>
-		<module>Vault</module>		
-		
+		<module>Vault</module>
+
+		<module>heavenevent</module>
 	</modules>
 </project>
