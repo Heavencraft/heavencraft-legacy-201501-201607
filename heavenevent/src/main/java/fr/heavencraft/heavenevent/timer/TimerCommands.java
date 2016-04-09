@@ -13,6 +13,7 @@ public class TimerCommands extends AbstractCommandExecutor
 	private final String ERRORPERMISSION = "Vous ne pouvez pas faire ça.";
 	private final String STARTERROR = "Il y a déjà une partie en cours.";
 	private final String STOPERROR = "Il n'y a pas de partie en cours";
+	private final String SUCCESS = "Timer sauvegardé";
 
 	public TimerCommands(HeavenPlugin plugin)
 	{
@@ -33,8 +34,7 @@ public class TimerCommands extends AbstractCommandExecutor
 				throw new HeavenException(STARTERROR);
 
 			// Save Started Time of the event
-			final String RESULT = TimerConfigurationEditor.saveCurrentTime();
-			player.sendMessage(RESULT);
+			player.sendMessage(SUCCESS);
 
 			// launch Scoreboard
 			TimerScoreboard.initScoreboard();
