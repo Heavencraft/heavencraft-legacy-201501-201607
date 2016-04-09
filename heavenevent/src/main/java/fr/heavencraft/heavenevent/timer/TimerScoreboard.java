@@ -1,8 +1,5 @@
 package fr.heavencraft.heavenevent.timer;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -25,10 +22,11 @@ public class TimerScoreboard
 
 	private static BukkitScheduler updateTimer = Bukkit.getServer().getScheduler();
 
-	private static int currentDay;
-	private static int currentHours;
-	private static int currentMinutes;
-	private static int currentSeconds;
+	private static long currentTime;
+	private static long currentDay;
+	private static long currentHours;
+	private static long currentMinutes;
+	private static long currentSeconds;
 
 	/**
 	 * initialize the Scoreboard timer
@@ -40,19 +38,18 @@ public class TimerScoreboard
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		objective.setDisplayName(OBJECTIVETITLE);
 
+		// delete old timer
+		resetTimer();
+
 		// get the time since event start
 		getCurrentTime();
 
 		// set points
 		objective.getScore(TIMERTITLE).setScore(0);
-		objective.getScore("Jours : " + currentDay).setScore(-1);
-		objective.getScore("Heures : " + currentHours).setScore(-2);
-		objective.getScore("Minutes : " + currentMinutes).setScore(-3);
-		objective.getScore("Secondes : " + currentSeconds).setScore(-4);
+		updateScoreboardTime();
 
 		// launch Scoreboard repetable task
 		runScoreboard();
-
 	}
 
 	/**
@@ -60,30 +57,38 @@ public class TimerScoreboard
 	 */
 	static void getCurrentTime()
 	{
-		final Calendar myCalendar = GregorianCalendar.getInstance();
+		currentTime = ((System.currentTimeMillis() - TimerConfigurationEditor.time) / 1000);
 
-		currentDay = myCalendar.get(Calendar.DAY_OF_YEAR) - TimerConfigurationEditor.day;
+		currentSeconds = currentTime % 60;
+		currentTime /= 60;
 
-		currentHours = myCalendar.get(Calendar.HOUR_OF_DAY) - TimerConfigurationEditor.hours;
-		if (currentHours < 0)
-		{
-			currentDay -= 1;
-			currentHours += 24;
-		}
+		currentMinutes = currentTime % 60;
+		currentTime /= 60;
 
-		currentMinutes = myCalendar.get(Calendar.MINUTE) - TimerConfigurationEditor.minutes;
-		if (currentMinutes < 0)
-		{
-			currentHours -= 1;
-			currentMinutes += 60;
-		}
+		currentHours = currentTime % 60;
+		currentTime /= 60;
 
-		currentSeconds = myCalendar.get(Calendar.SECOND) - TimerConfigurationEditor.seconds;
-		if (currentSeconds < 0)
-		{
-			currentMinutes -= 1;
-			currentSeconds += 60;
-		}
+		currentDay = currentTime / 24;
+	}
+
+	static void updateScoreboardTime()
+	{
+		objective.getScore("Jours : " + currentDay).setScore(-1);
+		objective.getScore("Heures : " + currentHours).setScore(-2);
+		objective.getScore("Minutes : " + currentMinutes).setScore(-3);
+		objective.getScore("Secondes : " + currentSeconds).setScore(-4);
+	}
+
+	/**
+	 * reset Timer line
+	 */
+	static void resetTimer()
+	{
+		timer.resetScores("Jours : " + currentDay);
+		timer.resetScores("Heures : " + currentHours);
+		timer.resetScores("Minutes : " + currentMinutes);
+		timer.resetScores("Secondes : " + currentSeconds);
+
 	}
 
 	/**
@@ -101,69 +106,13 @@ public class TimerScoreboard
 			@Override
 			public void run()
 			{
-				currentSeconds += 1;
-				if (currentSeconds >= 60)
-				{
-					resetTimer("Secondes : ", currentSeconds, -4);
-					currentMinutes += 1;
-					updateTimer("Minutes : ", currentMinutes, -3);
-					currentSeconds = 0;
-				}
-				else
-					updateTimer("Secondes : ", currentSeconds, -4);
-
-				if (currentMinutes >= 60)
-				{
-					resetTimer("Minutes : ", currentMinutes, -3);
-					currentHours += 1;
-					updateTimer("Heures : ", currentHours, -2);
-					currentMinutes = 0;
-				}
-				else
-					updateTimer("Minutes : ", currentMinutes, -3);
-
-				if (currentHours >= 24)
-				{
-					resetTimer("Heures : ", currentHours, -2);
-					currentDay += 1;
-					updateTimer("Jours : ", currentDay, -1);
-					currentHours = 0;
-				}
-				else
-					updateTimer("Heures : ", currentHours, -2);
+				resetTimer();
+				getCurrentTime();
+				updateScoreboardTime();
 			}
 
 		}, 20L, 20L);
 
-	}
-
-	/**
-	 * reset Timer line
-	 * 
-	 * @param name
-	 *            line to update
-	 * @param time
-	 *            time to update
-	 */
-	static void resetTimer(String name, Integer time, Integer index)
-	{
-		timer.resetScores(name + (time - 1));
-		objective.getScore(name + 0).setScore(index);
-
-	}
-
-	/**
-	 * update scoreboard
-	 * 
-	 * @param name
-	 *            line to update
-	 * @param time
-	 *            time to update
-	 */
-	static void updateTimer(final String name, Integer time, Integer index)
-	{
-		timer.resetScores(name + (time - 1));
-		objective.getScore(name + time).setScore(index);
 	}
 
 	static void stopScoreboard()
