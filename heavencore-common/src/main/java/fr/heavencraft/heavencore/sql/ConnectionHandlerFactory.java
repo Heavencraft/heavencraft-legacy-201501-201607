@@ -6,7 +6,7 @@ public class ConnectionHandlerFactory
 {
 	public static ConnectionProvider getConnectionHandler(Database database)
 	{
-		return new DefaultConnectionHandler(database);
+		return new HikariConnectionProvider(database);
 	}
 
 	public static ConnectionProvider getConnectionHandler(String database) throws HeavenException

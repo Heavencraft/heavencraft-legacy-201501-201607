@@ -10,7 +10,7 @@ import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavensurvival.bukkit.BukkitHeavenSurvival;
-import fr.heavencraft.heavensurvival.common.users.UserProvider;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUserProvider;
 
 public class PVPListener extends AbstractListener<BukkitHeavenSurvival>
 {
@@ -40,14 +40,14 @@ public class PVPListener extends AbstractListener<BukkitHeavenSurvival>
 		else
 			return;
 
-		if (!UserProvider.getInstance().getUserByUniqueId(attacker.getUniqueId()).isPvp())
+		if (!SurvivalUserProvider.get().getUserByUniqueId(attacker.getUniqueId()).isPvp())
 		{
 			ChatUtil.sendMessage(attacker, "Vous n'êtes pas en mode PVP.");
 			event.setCancelled(true);
 			return;
 		}
 
-		if (!UserProvider.getInstance().getUserByUniqueId(defender.getUniqueId()).isPvp())
+		if (!SurvivalUserProvider.get().getUserByUniqueId(defender.getUniqueId()).isPvp())
 		{
 			ChatUtil.sendMessage(attacker, "{%1$s] n'est pas en mode PVP.", defender.getName());
 			event.setCancelled(true);

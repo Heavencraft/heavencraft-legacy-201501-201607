@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenguard.datamodel;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,7 +72,8 @@ public class SQLRegion implements Region
 
 	private void loadMembers() throws SQLException
 	{
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(LOAD_MEMBERS))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(LOAD_MEMBERS))
 		{
 			ps.setString(1, name);
 
@@ -139,7 +141,8 @@ public class SQLRegion implements Region
 	public void setParent(String parentName) throws HeavenException
 	{
 		// Update database
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(SETPARENT))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(SETPARENT))
 		{
 			ps.setString(1, parentName);
 			ps.setString(2, name);
@@ -181,7 +184,8 @@ public class SQLRegion implements Region
 			throws HeavenException
 	{
 		// Update database
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(REDEFINE))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(REDEFINE))
 		{
 			ps.setString(1, world);
 			ps.setInt(2, minX);
@@ -264,7 +268,8 @@ public class SQLRegion implements Region
 			throw new HeavenException("Le joueur {%1$s} est déjà membre de la protection {%2$s}.", player.toString(),
 					name);
 
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(ADD_MEMBER))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(ADD_MEMBER))
 		{
 			ps.setString(1, name);
 			ps.setString(2, player.toString());
@@ -297,7 +302,8 @@ public class SQLRegion implements Region
 	@Override
 	public void removeMember(UUID player, boolean owner) throws HeavenException
 	{
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(REMOVE_MEMBER))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(REMOVE_MEMBER))
 		{
 			ps.setString(1, name);
 			ps.setString(2, player.toString());

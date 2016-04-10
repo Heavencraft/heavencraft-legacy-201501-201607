@@ -1,44 +1,36 @@
-package fr.heavencraft.heavensurvival.common.users;
+package fr.heavencraft.heavencore.users;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.UUID;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavensurvival.common.HeavenSurvivalInstance;
 
-public class UserProvider
+public abstract class UserProvider<U extends User>
 {
 	private static final String SELECT_USER_BY_UUID = "SELECT * FROM users WHERE uuid = ? LIMIT 1;";
 	private static final String SELECT_USER_BY_NAME = "SELECT * FROM users WHERE name = ? LIMIT 1;";
 
-	private static UserProvider instance;
-
-	public static UserProvider getInstance()
-	{
-		if (instance == null)
-			instance = new UserProvider(HeavenSurvivalInstance.get().getConnectionProvider());
-
-		return instance;
-	}
-
 	private final ConnectionProvider connectionProvider;
-	private final UsersCache cache = new UsersCache();
+	private final UsersCache<U> cache = new UsersCache<U>();
+	private final UserFactory<U> factory;
 
-	private UserProvider(ConnectionProvider connectionProvider)
+	protected UserProvider(ConnectionProvider connectionProvider, UserFactory<U> factory)
 	{
 		this.connectionProvider = connectionProvider;
+		this.factory = factory;
 	}
 
-	public User getUserByUniqueId(UUID uniqueId) throws HeavenException
+	public U getUserByUniqueId(UUID uniqueId) throws HeavenException
 	{
 		// Try to get user from cache
-		User user = cache.getUserByUniqueId(uniqueId);
+		U user = cache.getUserByUniqueId(uniqueId);
 		if (user != null)
 			return user;
 
@@ -53,7 +45,7 @@ public class UserProvider
 			if (!rs.next())
 				throw new UserNotFoundException(uniqueId);
 
-			user = new User(rs);
+			user = factory.newUser(rs);
 			cache.addToCache(user);
 			return user;
 		}
@@ -64,10 +56,10 @@ public class UserProvider
 		}
 	}
 
-	public User getUserByName(String name) throws HeavenException
+	public U getUserByName(String name) throws HeavenException
 	{
 		// Try to get user from cache
-		User user = cache.getUserByName(name);
+		U user = cache.getUserByName(name);
 		if (user != null)
 			return user;
 
@@ -82,7 +74,7 @@ public class UserProvider
 			if (!rs.next())
 				throw new UserNotFoundException(name);
 
-			user = new User(rs);
+			user = factory.newUser(rs);
 			cache.addToCache(user);
 			return user;
 		}
@@ -109,7 +101,12 @@ public class UserProvider
 		}
 	}
 
-	public void invalidateCache(User user)
+	public Collection<U> getAllUsers()
+	{
+		return null;
+	}
+
+	public void invalidateCache(U user)
 	{
 		cache.invalidateCache(user);
 	}

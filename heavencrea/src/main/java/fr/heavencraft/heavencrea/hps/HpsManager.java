@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencrea.hps;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,10 +24,10 @@ public class HpsManager
 		if (getBalance(name) < hps)
 			throw new HeavenException("Vous n'avez pas assez d'argent sur votre compte.");
 
-		try
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("UPDATE heavencraft_users SET balance = balance - ? WHERE username = ?"))
 		{
-			final PreparedStatement ps = connectionHandler.getConnection().prepareStatement(
-					"UPDATE heavencraft_users SET balance = balance - ? WHERE username = ?");
 			ps.setInt(1, hps);
 			ps.setString(2, name);
 
@@ -41,10 +42,10 @@ public class HpsManager
 
 	public int getBalance(String name) throws HeavenException
 	{
-		try
+		try (final Connection connection = connectionHandler.getConnection();
+				final PreparedStatement ps = connection
+						.prepareStatement("SELECT balance FROM heavencraft_users WHERE username = ?"))
 		{
-			final PreparedStatement ps = connectionHandler.getConnection().prepareStatement(
-					"SELECT balance FROM heavencraft_users WHERE username = ?");
 			ps.setString(1, name);
 
 			final ResultSet rs = ps.executeQuery();

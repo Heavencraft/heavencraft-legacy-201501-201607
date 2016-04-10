@@ -1,4 +1,4 @@
-package fr.heavencraft.heavensurvival.bukkit.teleport;
+package fr.heavencraft.heavensurvival.bukkit.protection;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,9 +10,11 @@ import fr.heavencraft.heavenguard.api.Region;
 import fr.heavencraft.heavenguard.api.RegionProvider;
 import fr.heavencraft.heavenguard.common.HeavenGuardInstance;
 import fr.heavencraft.heavensurvival.bukkit.BukkitHeavenSurvival;
+import fr.heavencraft.heavensurvival.bukkit.teleport.NotEnoughNuggetsException;
+import fr.heavencraft.heavensurvival.bukkit.teleport.NotOwnerException;
 import fr.heavencraft.heavensurvival.bukkit.worlds.WorldsManager;
-import fr.heavencraft.heavensurvival.common.users.User;
-import fr.heavencraft.heavensurvival.common.users.UserProvider;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUser;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUserProvider;
 
 public class ProtectionCommand extends AbstractCommandExecutor
 {
@@ -32,23 +34,10 @@ public class ProtectionCommand extends AbstractCommandExecutor
 			throw new NotOwnerException(region);
 	}
 
-	private static String generateRegionName(Player player)
-	{
-		String regionName;
-		int i = 1;
-		do
-		{
-			regionName = player.getName() + '_' + i++;
-		}
-		while (getRegionProvider().regionExists(regionName));
-
-		return regionName;
-	}
-
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		if (!player.getWorld().equals(WorldsManager.getInstance().getWorld()))
+		if (!player.getWorld().equals(WorldsManager.get().getWorld()))
 		{
 			ChatUtil.sendMessage(player, "Cette commande n'est pas accessible dans ce monde.");
 			return;
@@ -90,8 +79,7 @@ public class ProtectionCommand extends AbstractCommandExecutor
 				throw new NotEnoughNuggetsException(amount);
 
 			final String regionName = createRegionName(player);
-			final Region region = getRegionProvider().createRegion(regionName,
-					WorldsManager.getInstance().getWorld().getName(), //
+			final Region region = getRegionProvider().createRegion(regionName, WorldsManager.get().getWorld().getName(), //
 					selection.getMinX(), 0, selection.getMinZ(), //
 					selection.getMaxX(), 0xFF, selection.getMaxZ());
 
@@ -120,7 +108,7 @@ public class ProtectionCommand extends AbstractCommandExecutor
 		else if (args[0].equalsIgnoreCase("ajouter") && args.length == 3)
 		{
 			final Region region = getRegionProvider().getRegionByName(args[1]);
-			final User user = UserProvider.getInstance().getUserByName(args[2]);
+			final SurvivalUser user = SurvivalUserProvider.get().getUserByName(args[2]);
 
 			checkRegionOwnership(region, player);
 
@@ -133,7 +121,7 @@ public class ProtectionCommand extends AbstractCommandExecutor
 		else if (args[0].equalsIgnoreCase("enlever") && args.length == 3)
 		{
 			final Region region = getRegionProvider().getRegionByName(args[1]);
-			final User user = UserProvider.getInstance().getUserByName(args[2]);
+			final SurvivalUser user = SurvivalUserProvider.get().getUserByName(args[2]);
 
 			checkRegionOwnership(region, player);
 
