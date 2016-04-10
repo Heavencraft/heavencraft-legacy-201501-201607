@@ -42,7 +42,7 @@ public class DungeonCreatureListener extends AbstractListener<HeavenPlugin>
 
 		Dungeon dg = DungeonManager.getDungeon(dgr.getDungeonId());
 		// Prevent spawn when dungeon is not running
-		if (dg.DungeonState == DungeonManager.DungeonStates.IDLE)
+		if (dg.DungeonState != DungeonManager.DungeonStates.RUNNING)
 		{
 			mob.remove();
 			event.setCancelled(true);

@@ -18,7 +18,7 @@ public class DungeonCommand extends AbstractCommandExecutor
 	private final static String ADMIN_INFO = "/donjon {admin} info <donjon> : " + ChatColor.WHITE
 			+ "Donne des informations détailés sur un donjon.";
 	private final static String ADMIN_CREATE = "/donjon {admin} create <nom> <joueurs requis> <outX> <outY> <outZ> <outYaw> <outPitch> : "
-			+ ChatColor.WHITE + "Crée un nouvau donjon. (Spawn Lobby = Votre position)";
+			+ ChatColor.WHITE + "Crée un nouvau donjon. (Spawn Lobby = Votre position, outX/Y/Z sont les coordonées de sortie)";
 	private final static String ADMIN_DELETE = "/donjon {admin} delete <donjon> : " + ChatColor.WHITE
 			+ "Supprime un dojon.";
 	private final static String ADMIN_ADDROOM = "/donjon {admin} addroom <donjon> <minX> <minY> <minZ> <maxX> <maxY> <maxZ> <trigX> <trigY> <trigZ> : "
@@ -58,6 +58,14 @@ public class DungeonCommand extends AbstractCommandExecutor
 			if (args.length != 3)
 				throw new HeavenException("/donjon admin info <nom>");
 			DungeonManager.PrintDungeonInfo(player, args[2]);
+			return;
+		}
+		
+		if (args[1].equalsIgnoreCase("mobs"))
+		{
+			if (args.length != 3)
+				throw new HeavenException("/donjon admin info <nom>");
+			DungeonManager.PrintDungeonMobInfo(player, args[2]);
 			return;
 		}
 
@@ -156,7 +164,7 @@ public class DungeonCommand extends AbstractCommandExecutor
 		ChatUtil.sendMessage(sender, ADMIN_DELROOM);
 		ChatUtil.sendMessage(sender, "");
 		ChatUtil.sendMessage(sender, "---- {Remarques} ----");
-		ChatUtil.sendMessage(sender, "Par {trigger}, on entends le bloc qui gènere une impulsion de redstone au lancement de la salle.");
+		ChatUtil.sendMessage(sender, "Par {trigger}, on entend le bloc qui gènere une impulsion de redstone au lancement de la salle.");
 	}
 
 }
