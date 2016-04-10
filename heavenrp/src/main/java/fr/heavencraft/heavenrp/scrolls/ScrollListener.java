@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 
 public class ScrollListener extends AbstractListener<HeavenPlugin>
@@ -42,10 +43,20 @@ public class ScrollListener extends AbstractListener<HeavenPlugin>
 		if (itemInHand == null || itemInHand.getType() == Material.AIR)
 			return;
 
-		Scroll scr = ScrollProvider.getInstance().getScroll(itemInHand.getItemMeta().getDisplayName());
-		if (scr == null)
+		try
+		{
+			Scroll scr = ScrollProvider.getInstance().getScroll(itemInHand.getItemMeta().getDisplayName());
+			if (scr == null)
+				return;
+			scr.executeScroll(p);
+		}
+		catch (HeavenException ex)
+		{
+			ChatUtil.sendMessage(p, ex.getMessage());
+			event.setCancelled(true);
 			return;
-		scr.executeScroll(p);
+		}
+
 		// Remove 1 scroll
 		try
 		{
