@@ -11,9 +11,10 @@ public class DifficultyTask implements Runnable
 
 	public DifficultyTask(JavaPlugin plugin)
 	{
-		Bukkit.getScheduler().runTaskTimer(plugin, this, 1, 1);
+		Bukkit.getScheduler().runTaskTimer(plugin, this, 20, 20);
 	}
 
+	@Override
 	public void run()
 	{
 		if (!isNight && Bukkit.getWorld("world").getTime() > NIGHT_TIME)
@@ -25,8 +26,8 @@ public class DifficultyTask implements Runnable
 		else if (isNight && Bukkit.getWorld("world").getTime() < NIGHT_TIME)
 		{
 			isNight = false;
-			WorldsManager.setDifficulty(Difficulty.EASY);
-			Bukkit.broadcastMessage("§6Il fait jour, difficulté EASY");
+			WorldsManager.setDifficulty(Difficulty.NORMAL);
+			Bukkit.broadcastMessage("§6Il fait jour, difficulté NORMAL");
 		}
 	}
 }

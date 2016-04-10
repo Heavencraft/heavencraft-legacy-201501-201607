@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.warps;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +43,8 @@ public class WarpsManager
 
 		public void remove() throws HeavenException
 		{
-			try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("DELETE FROM warps WHERE name = ? LIMIT 1"))
+			try (Connection connection = HeavenRP.getConnection();
+					PreparedStatement ps = connection.prepareStatement("DELETE FROM warps WHERE name = ? LIMIT 1"))
 			{
 				ps.setString(1, _name);
 
@@ -58,7 +60,8 @@ public class WarpsManager
 
 	public static Warp getWarp(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("SELECT * FROM warps WHERE name = ? LIMIT 1"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT * FROM warps WHERE name = ? LIMIT 1"))
 		{
 			ps.setString(1, name);
 
@@ -78,7 +81,8 @@ public class WarpsManager
 
 	public static List<String> listWarps() throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("SELECT name FROM warps"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT name FROM warps"))
 		{
 			final List<String> warps = new ArrayList<String>();
 
@@ -98,8 +102,9 @@ public class WarpsManager
 
 	public static void createWarp(String name, Location location) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"REPLACE INTO warps SET name = ?, world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"REPLACE INTO warps SET name = ?, world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ?"))
 		{
 			ps.setString(1, name);
 			ps.setString(2, location.getWorld().getName());

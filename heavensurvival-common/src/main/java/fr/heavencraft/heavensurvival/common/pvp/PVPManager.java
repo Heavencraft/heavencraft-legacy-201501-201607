@@ -7,7 +7,7 @@ import java.util.UUID;
 import fr.heavencraft.async.queries.QueriesHandler;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavensurvival.common.users.UpdateUserPvpQuery;
-import fr.heavencraft.heavensurvival.common.users.User;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUser;
 
 public class PVPManager
 {
@@ -19,7 +19,7 @@ public class PVPManager
 	{
 	}
 
-	public void setEnabled(User user, boolean enabled) throws HeavenException
+	public void setEnabled(SurvivalUser user, boolean enabled) throws HeavenException
 	{
 		final long currentTime = System.currentTimeMillis();
 		final Long lastChange = lastChangeByPlayer.get(user.getUniqueId());

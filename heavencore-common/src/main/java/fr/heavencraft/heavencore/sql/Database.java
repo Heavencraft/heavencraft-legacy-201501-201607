@@ -33,6 +33,8 @@ public class Database
 		return database;
 	}
 
+	private static final String DB_URL = "jdbc:mysql://%1$s:3306/%2$s?user=%3$s&password=%4$s&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
+
 	private final String host;
 	private final String user;
 	private final String password;
@@ -72,6 +74,11 @@ public class Database
 	public String getDatabaseName()
 	{
 		return databaseName;
+	}
+
+	public String getJdbcUrl()
+	{
+		return String.format(DB_URL, host, databaseName, user, password);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package fr.lorgan17.heavenrp.managers;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,8 +34,9 @@ public class TownsManager
 
 	public static List<String> getMayors(String name)
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT u.name FROM users u, mayors m WHERE m.region_name = ? AND m.user_id = u.id"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"SELECT u.name FROM users u, mayors m WHERE m.region_name = ? AND m.user_id = u.id"))
 		{
 			ps.setString(1, name);
 
@@ -58,8 +60,9 @@ public class TownsManager
 	public static void addMayor(String town, User mayor) throws HeavenException
 	{
 		town = town.toLowerCase();
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("INSERT INTO mayors (user_id, region_name) VALUES (?, ?);"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("INSERT INTO mayors (user_id, region_name) VALUES (?, ?);"))
 		{
 			ps.setInt(1, mayor.getId());
 			ps.setString(2, town);
@@ -76,8 +79,9 @@ public class TownsManager
 	public static void removeMayor(String town, User mayor) throws HeavenException
 	{
 		town = town.toLowerCase();
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("DELETE FROM mayors WHERE user_id = ? AND region_name = ?;"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("DELETE FROM mayors WHERE user_id = ? AND region_name = ?;"))
 		{
 			ps.setInt(1, mayor.getId());
 			ps.setString(2, town);
@@ -182,8 +186,9 @@ public class TownsManager
 
 	public static boolean isMayor(User mayor, String townName)
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("SELECT m.user_id FROM mayors m WHERE m.user_id = ? AND m.region_name = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("SELECT m.user_id FROM mayors m WHERE m.user_id = ? AND m.region_name = ?"))
 		{
 			ps.setInt(1, mayor.getId());
 			ps.setString(2, townName);

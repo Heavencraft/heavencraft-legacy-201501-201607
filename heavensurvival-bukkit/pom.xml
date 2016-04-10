@@ -52,8 +52,6 @@
 					<artifactSet>
 						<includes>
 							<include>fr.heavencraft:heavensurvival-common</include>
-							<include>com.zaxxer:HikariCP</include>
-							<include>org.slf4j:slf4j-api</include>
 						</includes>
 					</artifactSet>
 				</configuration>

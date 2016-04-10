@@ -10,14 +10,14 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
+import fr.heavencraft.deprecated.DeprecatedUserProvider;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavencore.users.UserProvider;
 
-public class CreativeUserProvider implements UserProvider<CreativeUser>
+public class CreativeUserProvider implements DeprecatedUserProvider<CreativeUser>
 {
 	// SQL Queries
 	private static final String PRELOAD_USERS = "SELECT * FROM users;";

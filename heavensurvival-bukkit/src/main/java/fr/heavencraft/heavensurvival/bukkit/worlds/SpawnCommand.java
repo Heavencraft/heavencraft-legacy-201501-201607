@@ -19,7 +19,7 @@ public class SpawnCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		PlayerUtil.teleportPlayer(player, WorldsManager.getInstance().getSpawnLocation());
+		PlayerUtil.teleportPlayer(player, WorldsManager.get().getSpawnLocation());
 	}
 
 	@Override

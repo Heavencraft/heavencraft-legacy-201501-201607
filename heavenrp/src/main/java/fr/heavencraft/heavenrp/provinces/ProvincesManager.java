@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.provinces;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ import fr.heavencraft.heavenrp.exceptions.ProvinceNotFoundException;
 public class ProvincesManager
 {
 	private static boolean applyEffects = true;
-	
+
 	public static class Province
 	{
 		private final int _id;
@@ -46,8 +47,8 @@ public class ProvincesManager
 			_warp = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
 		}
 
-		private Province(int id, String login, String color, String world, double x, double y, double z,
-				float yaw, float pitch, int points)
+		private Province(int id, String login, String color, String world, double x, double y, double z, float yaw,
+				float pitch, int points)
 		{
 			_id = id;
 			_login = login;
@@ -75,7 +76,7 @@ public class ProvincesManager
 		{
 			return _warp;
 		}
-		
+
 		public int getPoints()
 		{
 			return _points;
@@ -88,23 +89,19 @@ public class ProvincesManager
 		 */
 
 		/*
-		 * private void update() { try { PreparedStatement ps =
-		 * HeavenRP.getConnection().prepareStatement(
-		 * "UPDATE mayor_cities SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ? WHERE id = ?"
-		 * ); ps.setString(1, _warp.getWorld().getName()); ps.setDouble(2,
-		 * _warp.getX()); ps.setDouble(3, _warp.getY()); ps.setDouble(4,
-		 * _warp.getZ()); ps.setFloat(5, _warp.getYaw()); ps.setFloat(6,
-		 * _warp.getPitch()); ps.setInt(7, _id);
+		 * private void update() { try { PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
+		 * "UPDATE mayor_cities SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ? WHERE id = ?" ); ps.setString(1,
+		 * _warp.getWorld().getName()); ps.setDouble(2, _warp.getX()); ps.setDouble(3, _warp.getY()); ps.setDouble(4,
+		 * _warp.getZ()); ps.setFloat(5, _warp.getYaw()); ps.setFloat(6, _warp.getPitch()); ps.setInt(7, _id);
 		 * 
-		 * ps.executeUpdate(); } catch (SQLException ex) { ex.printStackTrace();
-		 * } }
+		 * ps.executeUpdate(); } catch (SQLException ex) { ex.printStackTrace(); } }
 		 */
 	}
 
 	public static Province getProvinceById(int id) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT * FROM mayor_cities WHERE id = ? LIMIT 1"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT * FROM mayor_cities WHERE id = ? LIMIT 1"))
 		{
 			ps.setInt(1, id);
 
@@ -124,8 +121,9 @@ public class ProvincesManager
 
 	public static Province getProvinceByName(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT * FROM mayor_cities WHERE login = ? LIMIT 1"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("SELECT * FROM mayor_cities WHERE login = ? LIMIT 1"))
 		{
 			ps.setString(1, name);
 
@@ -145,9 +143,8 @@ public class ProvincesManager
 
 	public static Province getProvinceByUser(User user)
 	{
-		try (PreparedStatement ps = HeavenRP
-				.getConnection()
-				.prepareStatement(
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
 						"SELECT mc.id, mc.login, mc.color, mc.world, mc.x, mc.y, mc.z, mc.yaw, mc.pitch, mc.points FROM mayor_cities mc, mayor_people mp WHERE mc.id = mp.city_id AND mp.user_id = ? LIMIT 1"))
 		{
 			ps.setInt(1, user.getId());
@@ -165,26 +162,29 @@ public class ProvincesManager
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Returns a list of available provinces
-	 * @param orderedByPoints Shall we return an ordered list by province points descendant?
+	 * 
+	 * @param orderedByPoints
+	 *            Shall we return an ordered list by province points descendant?
 	 * @return
 	 */
-	public static List<Province> getProvinces(boolean orderedByPoints) {
-		List<Province> provinces = new ArrayList<Province>();
-		
+	public static List<Province> getProvinces(boolean orderedByPoints)
+	{
+		final List<Province> provinces = new ArrayList<Province>();
+
 		String statement;
-		if(orderedByPoints)
+		if (orderedByPoints)
 			statement = "SELECT * FROM mayor_cities ORDER BY points DESC";
 		else
 			statement = "SELECT * FROM mayor_cities";
-			
-		
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(statement))
+
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(statement))
 		{
 			final ResultSet rs = ps.executeQuery();
-			while(rs.next())
+			while (rs.next())
 				provinces.add(new Province(rs));
 		}
 		catch (final SQLException ex)
@@ -194,10 +194,11 @@ public class ProvincesManager
 		}
 		return provinces;
 	}
-	
-	public static void setPoints(Province province, int pts) throws HeavenException {
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"UPDATE mayor_cities SET points = ? WHERE id = ?"))
+
+	public static void setPoints(Province province, int pts) throws HeavenException
+	{
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("UPDATE mayor_cities SET points = ? WHERE id = ?"))
 		{
 			ps.setInt(1, pts);
 			ps.setInt(2, province.getId());
@@ -209,21 +210,22 @@ public class ProvincesManager
 			ex.printStackTrace();
 		}
 	}
-	
-	public static Collection<PotionEffect> getEffects(Province p) {
-		Collection<PotionEffect> effects = new ArrayList<PotionEffect>();
+
+	public static Collection<PotionEffect> getEffects(Province p)
+	{
+		final Collection<PotionEffect> effects = new ArrayList<PotionEffect>();
 		// Get the province level
-		int level = getLevel(p.getPoints());
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT * FROM province_effects WHERE level = ?"))
+		final int level = getLevel(p.getPoints());
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT * FROM province_effects WHERE level = ?"))
 		{
 			ps.setInt(1, level);
 			final ResultSet rs = ps.executeQuery();
 
 			while (rs.next())
 			{
-				PotionEffectType pet = getEffectType(rs.getInt("effect_id"));
-				PotionEffect pe = new PotionEffect(pet, 20*60*5, 0);
+				final PotionEffectType pet = getEffectType(rs.getInt("effect_id"));
+				final PotionEffect pe = new PotionEffect(pet, 20 * 60 * 5, 0);
 				effects.add(pe);
 			}
 			return effects;
@@ -234,7 +236,7 @@ public class ProvincesManager
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns a level by points
 	 * 
@@ -243,92 +245,94 @@ public class ProvincesManager
 	 */
 	public static int getLevel(int points)
 	{
-		if(points >= 2000)
+		if (points >= 2000)
 			return 16;
-		if(points >= 1800)
+		if (points >= 1800)
 			return 15;
-		if(points >= 1600)
+		if (points >= 1600)
 			return 14;
-		if(points >= 1400)
+		if (points >= 1400)
 			return 13;
-		if(points >= 1200)
+		if (points >= 1200)
 			return 12;
-		if(points >= 1000)
+		if (points >= 1000)
 			return 11;
-		if(points >= 850)
+		if (points >= 850)
 			return 10;
-		if(points >= 750)
+		if (points >= 750)
 			return 9;
-		if(points >= 650)
+		if (points >= 650)
 			return 8;
-		if(points >= 500)
+		if (points >= 500)
 			return 7;
-		if(points >= 400)
+		if (points >= 400)
 			return 6;
-		if(points >= 300)
+		if (points >= 300)
 			return 5;
-		if(points >= 200)
+		if (points >= 200)
 			return 4;
-		if(points >= 150)
+		if (points >= 150)
 			return 3;
-		if(points >= 100)
+		if (points >= 100)
 			return 2;
-		if(points >= 50)
+		if (points >= 50)
 			return 1;
 		return 0;
 	}
-	
+
 	/**
 	 * Returns an effect type depending on the /effect ID
+	 * 
 	 * @param effectId
 	 * @return
 	 */
-	public static PotionEffectType getEffectType(int effectId) {
-		if(effectId == 1)
+	public static PotionEffectType getEffectType(int effectId)
+	{
+		if (effectId == 1)
 			return PotionEffectType.SPEED;
-		if(effectId == 2)
+		if (effectId == 2)
 			return PotionEffectType.SLOW;
-		if(effectId == 3)
+		if (effectId == 3)
 			return PotionEffectType.FAST_DIGGING;
-		if(effectId == 4)
+		if (effectId == 4)
 			return PotionEffectType.SLOW_DIGGING;
-		if(effectId == 5)
+		if (effectId == 5)
 			return PotionEffectType.INCREASE_DAMAGE;
-		if(effectId == 6)
+		if (effectId == 6)
 			return PotionEffectType.HEAL;
-		if(effectId == 7)
+		if (effectId == 7)
 			return PotionEffectType.HARM;
-		if(effectId == 8)
+		if (effectId == 8)
 			return PotionEffectType.JUMP;
-		if(effectId == 9)
+		if (effectId == 9)
 			return PotionEffectType.CONFUSION;
-		if(effectId == 10)
+		if (effectId == 10)
 			return PotionEffectType.REGENERATION;
-		if(effectId == 11)
+		if (effectId == 11)
 			return PotionEffectType.DAMAGE_RESISTANCE;
-		if(effectId == 12)
+		if (effectId == 12)
 			return PotionEffectType.FIRE_RESISTANCE;
-		if(effectId == 13)
+		if (effectId == 13)
 			return PotionEffectType.WATER_BREATHING;
-		if(effectId == 14)
+		if (effectId == 14)
 			return PotionEffectType.INVISIBILITY;
-		if(effectId == 15)
+		if (effectId == 15)
 			return PotionEffectType.BLINDNESS;
-		if(effectId == 16)
+		if (effectId == 16)
 			return PotionEffectType.NIGHT_VISION;
-		if(effectId == 17)
+		if (effectId == 17)
 			return PotionEffectType.HUNGER;
-		if(effectId == 18)
+		if (effectId == 18)
 			return PotionEffectType.WEAKNESS;
-		if(effectId == 19)
+		if (effectId == 19)
 			return PotionEffectType.POISON;
-		if(effectId == 20)
+		if (effectId == 20)
 			return PotionEffectType.WITHER;
-		if(effectId == 21)
+		if (effectId == 21)
 			return PotionEffectType.HEALTH_BOOST;
-		if(effectId == 22)
+		if (effectId == 22)
 			return PotionEffectType.ABSORPTION;
-		if(effectId == 23)
+		if (effectId == 23)
 			return PotionEffectType.SATURATION;
 		return null;
 	}

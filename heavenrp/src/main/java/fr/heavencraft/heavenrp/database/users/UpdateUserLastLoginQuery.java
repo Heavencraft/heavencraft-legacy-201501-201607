@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.users;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -22,7 +23,8 @@ public class UpdateUserLastLoginQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws SQLException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(QUERY))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(QUERY))
 		{
 			ps.setTimestamp(1, new Timestamp(new Date().getTime()));
 			ps.setInt(2, user.getId());
