@@ -15,6 +15,6 @@ public class RPGLocks
 	public static void canTeleport(Player p) throws HeavenException
 	{
 		if (DungeonManager.isPlayeing(p))
-			throw new HeavenException("Vous êtes actuellement dans un dojnon.");
+			throw new HeavenException("Vous êtes actuellement dans un donjon.");
 	}
 }

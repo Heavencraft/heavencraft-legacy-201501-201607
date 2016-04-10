@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
@@ -284,8 +285,7 @@ public class DungeonManager
 			{
 				ChatUtil.sendMessage(invoker, NOT_ALL_MOBS_DEAD, dgr.Mobs.size());
 				// Trigger a check for corruption
-				Bukkit.getServer().getScheduler()
-				.scheduleSyncDelayedTask(HeavenRP.getInstance(),
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HeavenRP.getInstance(),
 						new DungeonMobCacheCorruptionCheckTask());
 				return;
 			}
@@ -364,6 +364,9 @@ public class DungeonManager
 
 		if (dgr.Mobs.size() > 0)
 		{
+			// Trigger a check for corruption
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HeavenRP.getInstance(),
+					new DungeonMobCacheCorruptionCheckTask());
 			ChatUtil.sendMessage(invoker, NOT_ALL_MOBS_DEAD, dgr.Mobs.size());
 			return;
 		}
@@ -785,7 +788,6 @@ public class DungeonManager
 				if (dgr.Mobs.containsKey(e.getUniqueId()))
 				{
 					dgr.Mobs.remove(e.getUniqueId());
-					System.out.println("MOB DEAD, left: " + dgr.Mobs.size());
 					return;
 				}
 			}
@@ -1088,15 +1090,17 @@ public class DungeonManager
 
 	static class DungeonMobCacheCorruptionCheckTask implements Runnable
 	{
-
+		// TODO There is surely a better way to handle this
 		@Override
 		public void run()
 		{
+			System.out.println("Running dungeon Mob cache desyncronisation check task...");
 			for (Dungeon dg : Dungeons.values())
 			{
 				if (dg.DungeonState != DungeonManager.DungeonStates.RUNNING)
 					continue;
 
+				List<UUID> corruptedMobs = new ArrayList<UUID>();
 				for (DungeonRoom dgr : dg.Rooms.values())
 				{
 					if (dgr.Mobs.size() <= 0)
@@ -1107,16 +1111,21 @@ public class DungeonManager
 						boolean found = false;
 						for (LivingEntity lety : dgr.getSpawn().getWorld().getLivingEntities())
 						{
-							if(lety.getUniqueId() == uid)
+							if (lety.getUniqueId() == uid)
 							{
 								found = true;
 								break;
 							}
 						}
 						// Mob not found, it is a bugged one.
-						if(!found)
-							dgr.Mobs.remove(uid);
+						if (!found)
+						{
+							corruptedMobs.add(uid);
+							System.out.println("Found mob in cache, with no physical existance, removeing!");
+						}
 					}
+					for (int i = 0; i < corruptedMobs.size(); i++)
+						dgr.Mobs.remove(corruptedMobs.get(i));
 				}
 			}
 		}
