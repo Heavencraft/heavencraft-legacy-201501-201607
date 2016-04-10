@@ -63,6 +63,8 @@ import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceSignListener;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
+import fr.heavencraft.heavenrp.scrolls.ScrollCommand;
+import fr.heavencraft.heavenrp.scrolls.ScrollListener;
 import fr.heavencraft.heavenrp.warps.WarpSignListener;
 import fr.heavencraft.heavenrp.worlds.WorldsListener;
 import fr.heavencraft.heavenrp.worlds.WorldsManager;
@@ -116,6 +118,9 @@ public class InitManager
 		
 		// Dungeon
 		new DungeonCommand(plugin);
+		
+		// Scroll
+		new ScrollCommand(plugin);
 
 		// Economy
 		new BourseCommand(plugin);
@@ -192,6 +197,9 @@ public class InitManager
 		new DungeonPlayerListener(plugin);
 		new DungeonSignListener(plugin);
 		new DungeonManager();
+		
+		// Scroll
+		new ScrollListener(plugin);
 		
 		// Economy
 		new EconomyListener();
