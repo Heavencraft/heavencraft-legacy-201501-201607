@@ -14,10 +14,10 @@ public class UpdateUserPvpQuery extends AbstractQuery
 	private static final String QUERY = "UPDATE users SET pvp = ? WHERE uuid = ? LIMIT 1;";
 
 	private final ConnectionProvider connectionProvider = HeavenSurvivalInstance.get().getConnectionProvider();
-	private final User user;
+	private final SurvivalUser user;
 	private final boolean pvp;
 
-	public UpdateUserPvpQuery(User user, boolean pvp)
+	public UpdateUserPvpQuery(SurvivalUser user, boolean pvp)
 	{
 		this.user = user;
 		this.pvp = pvp;
@@ -38,7 +38,7 @@ public class UpdateUserPvpQuery extends AbstractQuery
 			System.out.println("Executing query " + ps);
 			ps.executeUpdate();
 
-			UserProvider.getInstance().invalidateCache(user);
+			SurvivalUserProvider.get().invalidateCache(user);
 		}
 	}
 }

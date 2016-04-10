@@ -1,10 +1,11 @@
-package fr.heavencraft.heavensurvival.bukkit.teleport;
+package fr.heavencraft.heavensurvival.bukkit.protection;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavensurvival.bukkit.teleport.NotEnoughNuggetsException;
 
 public class MoneyManager
 {

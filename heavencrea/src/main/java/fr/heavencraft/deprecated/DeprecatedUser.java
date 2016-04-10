@@ -1,4 +1,4 @@
-package fr.heavencraft.heavencore.users;
+package fr.heavencraft.deprecated;
 
 import java.util.Date;
 import java.util.UUID;
@@ -7,7 +7,7 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.users.color.TabColor;
 
-public interface User
+public interface DeprecatedUser
 {
 	UUID getUniqueId();
 

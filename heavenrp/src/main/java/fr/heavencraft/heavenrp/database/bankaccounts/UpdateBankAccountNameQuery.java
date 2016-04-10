@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.bankaccounts;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -31,7 +32,8 @@ public class UpdateBankAccountNameQuery extends AbstractQuery
 		if (name.equals(bankAccount.getName()))
 			return; // Nothing to do
 
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(QUERY))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(QUERY))
 		{
 			ps.setString(1, name);
 			ps.setInt(2, bankAccount.getId());

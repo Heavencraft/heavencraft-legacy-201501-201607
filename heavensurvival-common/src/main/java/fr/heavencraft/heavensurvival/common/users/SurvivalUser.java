@@ -2,9 +2,13 @@ package fr.heavencraft.heavensurvival.common.users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.UUID;
 
-public class User
+import fr.heavencraft.heavencore.users.User;
+import fr.heavencraft.heavencore.users.color.TabColor;
+
+public class SurvivalUser implements User
 {
 	private final String uniqueIdAsString;
 
@@ -12,7 +16,7 @@ public class User
 	private final String name;
 	private final boolean pvp;
 
-	User(ResultSet rs) throws SQLException
+	SurvivalUser(ResultSet rs) throws SQLException
 	{
 		uniqueIdAsString = rs.getString("uuid");
 
@@ -45,5 +49,15 @@ public class User
 	public boolean isPvp()
 	{
 		return pvp;
+	}
+
+	public TabColor getTabColor()
+	{
+		return isPvp() ? TabColor.RED : TabColor.WHITE;
+	}
+
+	public Date getLastLogin()
+	{
+		return null;
 	}
 }
