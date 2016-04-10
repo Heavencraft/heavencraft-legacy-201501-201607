@@ -7,7 +7,7 @@ import fr.heavencraft.heavenevent.timer.Timer;
 
 public class HeavenEvent extends HeavenPlugin
 {
-	private static HeavenEvent _instance;
+	public static HeavenEvent _instance;
 
 	@Override
 	public void onEnable()
