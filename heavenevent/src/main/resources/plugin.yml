@@ -1,0 +1,6 @@
+name: HeavenEvent
+version: 1.0
+main: fr.heavencraft.heavenevent.HeavenEvent
+depend: [HeavenCore]
+commands:
+  timer:
