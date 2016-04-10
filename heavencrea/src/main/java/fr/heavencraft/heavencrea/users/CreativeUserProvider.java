@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencrea.users;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +45,8 @@ public class CreativeUserProvider implements DeprecatedUserProvider<CreativeUser
 
 	private void loadUsers()
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(PRELOAD_USERS))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(PRELOAD_USERS))
 		{
 			try (ResultSet rs = ps.executeQuery())
 			{
@@ -68,7 +70,8 @@ public class CreativeUserProvider implements DeprecatedUserProvider<CreativeUser
 
 	private CreativeUser loadUser(UUID uuid) throws UserNotFoundException, SQLErrorException
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(LOAD_USER))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(LOAD_USER))
 		{
 			ps.setString(1, uuid.toString());
 
@@ -115,7 +118,8 @@ public class CreativeUserProvider implements DeprecatedUserProvider<CreativeUser
 	@Override
 	public CreativeUser createUser(UUID uuid, String name) throws HeavenException
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(CREATE_USERS))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(CREATE_USERS))
 		{
 			ps.setString(1, uuid.toString());
 			ps.setString(2, name);
