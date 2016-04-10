@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.bankaccounts;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class BankAccount
 	private final int id;
 	private final String owner;
 	private final BankAccountType type;
-	private int balance;
+	private final int balance;
 
 	BankAccount(ResultSet rs) throws HeavenException, SQLException
 	{
@@ -49,8 +50,9 @@ public class BankAccount
 				owners.add(owner);
 				break;
 			case TOWN:
-				try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-						"SELECT u.name FROM users u, mayors m WHERE u.id = m.user_id AND region_name = ?"))
+				try (Connection connection = HeavenRP.getConnection();
+						PreparedStatement ps = connection.prepareStatement(
+								"SELECT u.name FROM users u, mayors m WHERE u.id = m.user_id AND region_name = ?"))
 				{
 					ps.setString(1, owner);
 					final ResultSet rs = ps.executeQuery();
@@ -71,7 +73,7 @@ public class BankAccount
 				{
 					owners.addAll(EnterprisesManager.getEnterpriseByName(owner).getMembers(false));
 				}
-				catch (HeavenException ex)
+				catch (final HeavenException ex)
 				{
 					ex.printStackTrace();
 					// Erreur :D

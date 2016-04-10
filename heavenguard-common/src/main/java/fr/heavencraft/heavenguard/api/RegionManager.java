@@ -112,7 +112,8 @@ public class RegionManager
 					pvpDisabled = true;
 			}
 
-			return !pvpDisabled && pvpEnabled;
+			if (pvpEnabled || pvpDisabled)
+				return !pvpDisabled && pvpEnabled;
 		}
 
 		// No regions here : this block is pvp if the world is pvp

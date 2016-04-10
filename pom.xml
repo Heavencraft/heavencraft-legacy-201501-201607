@@ -17,6 +17,8 @@
 		<module>HeavenRPG</module>
         <module>heavenvip</module>
 		<module>heavenskyblock</module>
+		<module>heavensurvival-bukkit</module>
+		<module>heavensurvival-common</module>
 		<module>hellcraft</module>
 		<module>Vault</module>
 	</modules>
