@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.economy.enterprise;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,8 +41,9 @@ public class EnterprisesManager
 
 		public void addMember(User user, boolean owner) throws HeavenException
 		{
-			try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-					"REPLACE INTO enterprises_members (enterprise_id, user_id, owner) " + "VALUES (?, ?, ?);"))
+			try (Connection connection = HeavenRP.getConnection();
+					PreparedStatement ps = connection.prepareStatement(
+							"REPLACE INTO enterprises_members (enterprise_id, user_id, owner) " + "VALUES (?, ?, ?);"))
 			{
 				ps.setInt(1, _id);
 				ps.setInt(2, user.getId());
@@ -59,10 +61,10 @@ public class EnterprisesManager
 
 		public boolean isMember(String name, boolean owner) throws HeavenException
 		{
-			try (PreparedStatement ps = HeavenRP.getConnection()
-					.prepareStatement("SELECT em.owner " + "FROM enterprises_members em, users u "
-							+ "WHERE em.enterprise_id = ? " + "AND em.user_id = u.id " + "AND u.name = ? "
-							+ "LIMIT 1;"))
+			try (Connection connection = HeavenRP.getConnection();
+					PreparedStatement ps = connection.prepareStatement(
+							"SELECT em.owner " + "FROM enterprises_members em, users u " + "WHERE em.enterprise_id = ? "
+									+ "AND em.user_id = u.id " + "AND u.name = ? " + "LIMIT 1;"))
 			{
 				ps.setInt(1, _id);
 				ps.setString(2, name);
@@ -84,8 +86,9 @@ public class EnterprisesManager
 
 		public void removeMember(User user) throws HeavenException
 		{
-			try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-					"DELETE FROM enterprises_members " + "WHERE enterprise_id = ? " + "AND user_id = ?;"))
+			try (Connection connection = HeavenRP.getConnection();
+					PreparedStatement ps = connection.prepareStatement(
+							"DELETE FROM enterprises_members " + "WHERE enterprise_id = ? " + "AND user_id = ?;"))
 			{
 				ps.setInt(1, _id);
 				ps.setInt(2, user.getId());
@@ -104,10 +107,10 @@ public class EnterprisesManager
 		{
 			final List<String> members = new ArrayList<String>();
 
-			try (PreparedStatement ps = HeavenRP.getConnection()
-					.prepareStatement("SELECT u.name " + "FROM enterprises_members em, users u "
-							+ "WHERE enterprise_id = ? " + "AND em.user_id = u.id "
-							+ (owner ? "AND owner = 1" : "")))
+			try (Connection connection = HeavenRP.getConnection();
+					PreparedStatement ps = connection.prepareStatement(
+							"SELECT u.name " + "FROM enterprises_members em, users u " + "WHERE enterprise_id = ? "
+									+ "AND em.user_id = u.id " + (owner ? "AND owner = 1" : "")))
 			{
 				ps.setInt(1, _id);
 				final ResultSet rs = ps.executeQuery();
@@ -127,8 +130,8 @@ public class EnterprisesManager
 
 	public static Enterprise getEnterpriseByName(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("SELECT * FROM enterprises WHERE name = ? LIMIT 1"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT * FROM enterprises WHERE name = ? LIMIT 1"))
 		{
 			ps.setString(1, name);
 			final ResultSet rs = ps.executeQuery();
@@ -147,8 +150,8 @@ public class EnterprisesManager
 
 	public static void createEnterprise(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("INSERT INTO enterprises (name) VALUES (?);"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO enterprises (name) VALUES (?);"))
 		{
 			ps.setString(1, name);
 
@@ -157,7 +160,7 @@ public class EnterprisesManager
 
 			BankAccountsManager.createBankAccount(name, BankAccountType.ENTERPRISE);
 		}
-		catch (SQLIntegrityConstraintViolationException ex)
+		catch (final SQLIntegrityConstraintViolationException ex)
 		{
 			throw new HeavenException("Une entreprise existe déjà avec le nom {%1$s}.", name);
 		}
@@ -170,8 +173,8 @@ public class EnterprisesManager
 
 	public static void deleteEnterprise(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("DELETE FROM enterprises WHERE name = ? LIMIT 1;"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("DELETE FROM enterprises WHERE name = ? LIMIT 1;"))
 		{
 			ps.setString(1, name);
 

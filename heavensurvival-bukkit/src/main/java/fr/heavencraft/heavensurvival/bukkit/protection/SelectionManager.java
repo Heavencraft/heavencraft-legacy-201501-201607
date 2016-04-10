@@ -1,4 +1,4 @@
-package fr.heavencraft.heavensurvival.bukkit.teleport;
+package fr.heavencraft.heavensurvival.bukkit.protection;
 
 import java.util.HashMap;
 import java.util.Map;

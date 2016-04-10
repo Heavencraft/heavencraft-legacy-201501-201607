@@ -1,4 +1,4 @@
-package fr.heavencraft.heavencore.users;
+package fr.heavencraft.deprecated;
 
 import java.util.Date;
 import java.util.UUID;
@@ -14,12 +14,12 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.utils.DateUtil;
 
-public class DefaultUserListener<P extends HeavenPlugin & HasUserProvider<U>, U extends User> extends
+public class DeprecatedDefaultUserListener<P extends HeavenPlugin & DeprecatedHasUserProvider<U>, U extends DeprecatedUser> extends
 		AbstractListener<P>
 {
-	private final UserProvider<U> userProvider;
+	private final DeprecatedUserProvider<U> userProvider;
 
-	public DefaultUserListener(P plugin)
+	public DeprecatedDefaultUserListener(P plugin)
 	{
 		super(plugin);
 		userProvider = plugin.getUserProvider();

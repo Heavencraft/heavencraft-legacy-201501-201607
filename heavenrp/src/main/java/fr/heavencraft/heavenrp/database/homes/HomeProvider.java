@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.homes;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +24,9 @@ public class HomeProvider
 		if (home != null)
 			return home;
 
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT world, x, y, z, yaw, pitch FROM homes WHERE user_id = ? AND home_nb = ? LIMIT 1"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"SELECT world, x, y, z, yaw, pitch FROM homes WHERE user_id = ? AND home_nb = ? LIMIT 1"))
 		{
 			ps.setInt(1, user.getId());
 			ps.setInt(2, nb);

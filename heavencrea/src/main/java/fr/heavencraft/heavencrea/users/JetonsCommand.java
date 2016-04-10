@@ -9,9 +9,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.heavencraft.deprecated.DeprecatedUserProvider;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.users.UserProvider;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
@@ -19,7 +19,7 @@ import fr.heavencraft.heavencrea.HeavenCrea;
 
 public class JetonsCommand extends AbstractCommandExecutor
 {
-	private final UserProvider<CreativeUser> userProvider;
+	private final DeprecatedUserProvider<CreativeUser> userProvider;
 
 	public JetonsCommand(HeavenCrea plugin)
 	{

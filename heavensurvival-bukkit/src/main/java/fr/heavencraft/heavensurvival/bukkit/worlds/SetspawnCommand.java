@@ -19,7 +19,7 @@ public class SetspawnCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
-		WorldsManager.getInstance().setSpawnLocation(player.getLocation());
+		WorldsManager.get().setSpawnLocation(player.getLocation());
 		ChatUtil.sendMessage(player, "L'emplacement du spawn a bien été changé.");
 	}
 

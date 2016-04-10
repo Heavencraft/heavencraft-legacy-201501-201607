@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.users;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -26,7 +27,8 @@ public class UpdateJobExperienceQuery extends AbstractQuery
 		if (delta == 0)
 			return; // Nothing to do
 
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(QUERY))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(QUERY))
 		{
 			ps.setInt(1, delta);
 			ps.setInt(2, user.getId());

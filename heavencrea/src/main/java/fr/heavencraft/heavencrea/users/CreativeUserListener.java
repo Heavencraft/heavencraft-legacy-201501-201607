@@ -5,12 +5,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
+import fr.heavencraft.deprecated.DeprecatedDefaultUserListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.users.DefaultUserListener;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencrea.HeavenCrea;
 
-public class CreativeUserListener extends DefaultUserListener<HeavenCrea, CreativeUser>
+public class CreativeUserListener extends DeprecatedDefaultUserListener<HeavenCrea, CreativeUser>
 {
 	public CreativeUserListener(HeavenCrea plugin)
 	{

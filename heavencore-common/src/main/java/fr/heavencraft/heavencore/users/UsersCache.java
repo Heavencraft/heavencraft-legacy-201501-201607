@@ -1,32 +1,32 @@
-package fr.heavencraft.heavensurvival.common.users;
+package fr.heavencraft.heavencore.users;
 
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 // Only accessible from package
-class UsersCache
+class UsersCache<U extends User>
 {
-	private final Map<UUID, User> usersByUniqueId = new ConcurrentHashMap<UUID, User>();
-	private final Map<String, User> usersByName = new ConcurrentHashMap<String, User>();
+	private final Map<UUID, U> usersByUniqueId = new ConcurrentHashMap<UUID, U>();
+	private final Map<String, U> usersByName = new ConcurrentHashMap<String, U>();
 
-	public User getUserByUniqueId(UUID uniqueId)
+	public U getUserByUniqueId(UUID uniqueId)
 	{
 		return usersByUniqueId.get(uniqueId);
 	}
 
-	public User getUserByName(String name)
+	public U getUserByName(String name)
 	{
 		return usersByName.get(name);
 	}
 
-	public void addToCache(User user)
+	public void addToCache(U user)
 	{
 		usersByUniqueId.put(user.getUniqueId(), user);
 		usersByName.put(user.getName(), user);
 	}
 
-	public void invalidateCache(User user)
+	public void invalidateCache(U user)
 	{
 		System.out.println("Invalidate cache: User [ " + user.getName() + "]");
 

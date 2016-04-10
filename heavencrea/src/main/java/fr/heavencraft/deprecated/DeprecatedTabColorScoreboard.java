@@ -1,22 +1,22 @@
-package fr.heavencraft.heavencore.users.color;
+package fr.heavencraft.deprecated;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import fr.heavencraft.heavencore.users.User;
-import fr.heavencraft.heavencore.users.UserProvider;
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.users.color.ScoreboardTeam;
+import fr.heavencraft.heavencore.users.color.TabColor;
 
-public class TabColorScoreboard
+public class DeprecatedTabColorScoreboard<P extends HeavenPlugin & DeprecatedHasUserProvider<U>, U extends DeprecatedUser>
 {
 	private final Map<TabColor, ScoreboardTeam> teams = new HashMap<TabColor, ScoreboardTeam>();
 
-	public TabColorScoreboard(UserProvider<? extends User> userProvider, JavaPlugin plugin)
+	public DeprecatedTabColorScoreboard(P plugin)
 	{
 		final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
@@ -39,7 +39,7 @@ public class TabColorScoreboard
 			teams.put(color, team);
 		}
 
-		for (final User user : userProvider.getAllUsers())
+		for (final DeprecatedUser user : plugin.getUserProvider().getAllUsers())
 		{
 			setPlayerColor(Bukkit.getOfflinePlayer(user.getUniqueId()), user.getTabColor());
 		}
