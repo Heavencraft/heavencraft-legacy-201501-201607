@@ -66,15 +66,21 @@ public class ScrollProvider
 
 		// Du mineur
 		String[] loreMines = { "&eTéléportation", "&eVers les Mines" };
-		Scroll scrollMines = new TeleportationScroll("Téléporation: les Mines",
-				Arrays.asList(loreMines), new Location(WorldsManager.getWorld(), -4174.0, 76.0, -196.0, 63f, 0f));
+		Scroll scrollMines = new TeleportationScroll("Téléporation: les Mines", Arrays.asList(loreMines),
+				new Location(WorldsManager.getWorld(), -4174.0, 76.0, -196.0, 63f, 0f));
 		scrolls.put(scrollMines.getItem().getItemMeta().getDisplayName(), scrollMines);
-		
+
 		// Les mines de charbon
 		String[] loreCoalMines = { "&eTéléportation", "&eVers les Mines de charbon" };
 		Scroll scrollCoalMines = new TeleportationScroll("Téléporation: les Mines de charbon",
 				Arrays.asList(loreCoalMines), new Location(WorldsManager.getWorld(), 2263.0, 75.0, -1619.0, 66f, 0f));
 		scrolls.put(scrollCoalMines.getItem().getItemMeta().getDisplayName(), scrollCoalMines);
+
+		// L'antre des Poissons
+		String[] loreFischs = { "&eTéléportation", "&eVers L'antre des Poissons" };
+		Scroll scrollFischs = new TeleportationScroll("Téléporation: L'antre des Poissons",
+				Arrays.asList(loreFischs), new Location(WorldsManager.getWorld(), 2263.0, 75.0, -1619.0, 66f, 0f));
+		scrolls.put(scrollFischs.getItem().getItemMeta().getDisplayName(), scrollFischs);
 
 	}
 
