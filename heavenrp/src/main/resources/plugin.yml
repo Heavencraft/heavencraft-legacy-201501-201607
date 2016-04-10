@@ -64,3 +64,4 @@ commands:
   jobsadmin:
   donjon:
     aliases: [dj, djn]
+  scrolls:

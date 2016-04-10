@@ -15,7 +15,7 @@ public class ParcheminsListener implements Listener {
 
 	public ParcheminsListener()
 	{
-		Bukkit.getPluginManager().registerEvents(this, HeavenRPG.getInstance());
+		//Bukkit.getPluginManager().registerEvents(this, HeavenRPG.getInstance());
 	}
 	private final static String REQUIREMENT_NOT_MET = "Vous n'avez pas les aptitudes a utiliser cet objet.";
 

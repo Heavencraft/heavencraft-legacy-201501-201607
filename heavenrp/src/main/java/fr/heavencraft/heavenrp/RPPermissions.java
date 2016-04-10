@@ -46,4 +46,9 @@ public class RPPermissions
 	 * Dungeons
 	 */
 	public static final String DUNGEON_ADMIN = "heavencraft.donjon.admin";
+	
+	/*
+	 * Scrolls
+	 */
+	public static final String SCROLL_GIVE = "heavencraft.scrolls.admin";
 }
