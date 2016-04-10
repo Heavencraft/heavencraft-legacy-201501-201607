@@ -11,6 +11,7 @@
 		<module>heavencore</module>
 		<module>heavencore-common</module>
 		<module>heavencrea</module>
+		<module>heavenevent</module>
 		<module>heavenguard</module>
 		<module>heavenguard-common</module>
 		<module>heavenrp</module>
@@ -20,7 +21,5 @@
 		<module>heavensurvival-common</module>
 		<module>hellcraft</module>
 		<module>Vault</module>
-
-		<module>heavenevent</module>
 	</modules>
 </project>
