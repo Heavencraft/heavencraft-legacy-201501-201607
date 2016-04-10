@@ -27,8 +27,8 @@ import fr.heavencraft.heavenrp.HeavenRP;
 public class DungeonManager
 {
 	// Exceptions
-	private static String ALREADY_IN_DUNGEON = "Vous ètes déjà dans un donjon.";
-	private static String NOT_IN_DUNGEON = "Vous n'ètes pas dans un donjon.";
+	private static String ALREADY_IN_DUNGEON = "Vous êtes déjà dans un donjon.";
+	private static String NOT_IN_DUNGEON = "Vous n'êtes pas dans un donjon.";
 	private static String NAME_UNKNOWN_DUNGEON = "Le nom du donjon est invalide.";
 	private static String UNKNOWN_ROOM = "Salle inconnue dans ce donjon.";
 	private static String NO_ROOMS_IN_DUNGEON = "Ce donjon n'a pas de salles.";
@@ -36,9 +36,9 @@ public class DungeonManager
 	private static String NOT_IDLE = "Je ne peux pas entrer pour l'instant, il y a déjà quelqu'un...";
 	// Messages
 	private static String DUNGEON_WAITING_FOR_PLAYERS = "Je dois attendre encore %1$d camarade(s).";
-	private static String DUNGEON_CREATED = "Le dojnon %1$s a été crée avec succès.";
+	private static String DUNGEON_CREATED = "Le donjon %1$s a été crée avec succès.";
 	private static String DUNGEON_FIRST_ROOM_SET = "Vous avez changé la première salle du dojnon %1$s avec succès.";
-	private static String DUNGEON_DELETED = "Le dojnon %1$s a été supprimé avec succes.";
+	private static String DUNGEON_DELETED = "Le donjon %1$s a été supprimé avec succes.";
 	private static String DUNGEON_ROOM_CREATED = "La salle {%1$d} a été ajouté avec succès.";
 	private static String DUNGEON_ROOM_DELETED = "La salle {%1$d} a été supprimée avec succès.";
 	private static String LOADING_DUNGEON = "Je me prépare a enter dans le donjon!";
@@ -81,8 +81,7 @@ public class DungeonManager
 	{
 		// Is someone playing in dungeons?
 		if (playerDungeon.values().size() > 0)
-			throw new HeavenException(
-					"Impossible de recharger les donjons. Des joueurs sont en train de l'utiliser.");
+			throw new HeavenException("Impossible de recharger les donjons. Des joueurs sont en train de l'utiliser.");
 
 		DungeonManager.playerDungeon.clear();
 		DungeonManager.Dungeons.clear();
@@ -95,8 +94,8 @@ public class DungeonManager
 			while (dungeonResultSet.next())
 			{
 				// Create a new dungeon object
-				Dungeon dg = new Dungeon(dungeonResultSet.getInt("dungeon_id"),
-						dungeonResultSet.getString("name"), dungeonResultSet.getInt("requiredPlayers"));
+				Dungeon dg = new Dungeon(dungeonResultSet.getInt("dungeon_id"), dungeonResultSet.getString("name"),
+						dungeonResultSet.getInt("requiredPlayers"));
 
 				dg.setFirstRoomId(dungeonResultSet.getInt("firstRoom"));
 
@@ -136,8 +135,7 @@ public class DungeonManager
 	private static void LoadDungeonRooms(final int dungeonId) throws HeavenException
 	{
 		if (!Dungeons.containsKey(dungeonId))
-			throw new HeavenException(
-					"Erreur lors d'une tentative de chargement de salles d'un donjon inexistant.");
+			throw new HeavenException("Erreur lors d'une tentative de chargement de salles d'un donjon inexistant.");
 
 		try (PreparedStatement ps = HeavenRP.getConnection()
 				.prepareStatement("SELECT * FROM dungeon_rooms WHERE dungeon_id = ?"))
@@ -154,13 +152,11 @@ public class DungeonManager
 				Location trigger = new Location(spawnWorld, rs.getInt("triggerX"), rs.getInt("triggerY"),
 						rs.getInt("triggerZ"));
 
-				Location corner1 = new Location(spawnWorld, rs.getInt("minX"), rs.getInt("minY"),
-						rs.getInt("minZ"));
-				Location corner2 = new Location(spawnWorld, rs.getInt("maxX"), rs.getInt("maxY"),
-						rs.getInt("maxZ"));
+				Location corner1 = new Location(spawnWorld, rs.getInt("minX"), rs.getInt("minY"), rs.getInt("minZ"));
+				Location corner2 = new Location(spawnWorld, rs.getInt("maxX"), rs.getInt("maxY"), rs.getInt("maxZ"));
 
-				DungeonRoom dgr = new DungeonRoom(dungeonId, rs.getInt("dungeon_room_id"), spawn, trigger,
-						corner1, corner2);
+				DungeonRoom dgr = new DungeonRoom(dungeonId, rs.getInt("dungeon_room_id"), spawn, trigger, corner1,
+						corner2);
 
 				Dungeons.get(dungeonId).Rooms.put(dgr.getRoomId(), dgr);
 			}
@@ -191,7 +187,7 @@ public class DungeonManager
 		Dungeon dungeon = getDungeon(dungeonName);
 		if (dungeon == null)
 			throw new HeavenException(NAME_UNKNOWN_DUNGEON);
-		
+
 		// Dungeon idle?
 		if (dungeon.DungeonState != DungeonStates.IDLE)
 			throw new HeavenException(NOT_IDLE);
@@ -226,7 +222,7 @@ public class DungeonManager
 	 * @param invoker
 	 * @throws HeavenException
 	 */
-	public static void PlayerLeave(Player invoker) throws HeavenException
+	public static void PlayerLeave(Player invoker, boolean disconnecting) throws HeavenException
 	{
 		// Currently playing ?
 		if (!DungeonManager.playerDungeon.containsKey(invoker.getUniqueId()))
@@ -244,6 +240,9 @@ public class DungeonManager
 		// Dungeon running?
 		else
 		{
+			// is the invoker disconnecting?
+			if (disconnecting)
+				invoker.teleport(dg.ExitPoint);
 			EndDungeon(dg, DungeonEndingCauses.FLEED);
 		}
 	}
@@ -252,8 +251,8 @@ public class DungeonManager
 	 * A player attempt to change room
 	 * 
 	 * @param invoker
-	 * @param nextRoomId next room id (-1 if you should be teleported from lobby
-	 *            to room 1)
+	 * @param nextRoomId
+	 *            next room id (-1 if you should be teleported from lobby to room 1)
 	 * @return
 	 * @throws HeavenException
 	 */
@@ -284,6 +283,10 @@ public class DungeonManager
 			if (dgr == null || dgr.Mobs.size() > 0)
 			{
 				ChatUtil.sendMessage(invoker, NOT_ALL_MOBS_DEAD, dgr.Mobs.size());
+				// Trigger a check for corruption
+				Bukkit.getServer().getScheduler()
+				.scheduleSyncDelayedTask(HeavenRP.getInstance(),
+						new DungeonMobCacheCorruptionCheckTask());
 				return;
 			}
 		}
@@ -310,10 +313,11 @@ public class DungeonManager
 
 		// Prepare reset of the trigger block
 		Block resdstoneBlock = nextRoom.triggerBlock.getBlock();
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HeavenRP.getInstance(),
-				new RestoreBlockTask(resdstoneBlock.getWorld().getName(), resdstoneBlock.getX(),
-						resdstoneBlock.getY(), resdstoneBlock.getZ(), resdstoneBlock.getType()),
-				40 + teleportWarmup);
+		Bukkit.getServer().getScheduler()
+				.scheduleSyncDelayedTask(HeavenRP.getInstance(),
+						new RestoreBlockTask(resdstoneBlock.getWorld().getName(), resdstoneBlock.getX(),
+								resdstoneBlock.getY(), resdstoneBlock.getZ(), resdstoneBlock.getType()),
+						40 + teleportWarmup);
 
 		// Teleport players
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HeavenRP.getInstance(), new Runnable()
@@ -485,8 +489,7 @@ public class DungeonManager
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			throw new HeavenException(
-					"Erreur fatale lors de la suppression du donjon. Informez en un administrateur.");
+			throw new HeavenException("Erreur fatale lors de la suppression du donjon. Informez en un administrateur.");
 		}
 		ChatUtil.sendMessage(player, DUNGEON_DELETED, dg.getName());
 		return;
@@ -515,16 +518,15 @@ public class DungeonManager
 			ps.setInt(1, roomId);
 			ps.setInt(2, dg.getId());
 			ps.executeUpdate();
-			// Remove from cache
-			Dungeons.remove(dg.getId());
+			// Update first room
+			Dungeons.get(dg.getId()).firstRoomId = roomId;
 			ps.close();
 
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			throw new HeavenException(
-					"Erreur fatale lors de la mise a jour du donjon. Informez en un administrateur.");
+			throw new HeavenException("Erreur fatale lors de la mise a jour du donjon. Informez en un administrateur.");
 		}
 		ChatUtil.sendMessage(invoker, DUNGEON_FIRST_ROOM_SET, dg.getName());
 		return;
@@ -549,11 +551,12 @@ public class DungeonManager
 		if (dg == null)
 			throw new HeavenException("Ce donjon n'existe pas.");
 
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"INSERT INTO `dungeon_rooms`(`dungeon_id`, `world`, `spawnX`, `spawnY`, `spawnZ`, `spawnYaw`, `spawnPitch`, "
-						+ "`triggerX`, `triggerY`, `triggerZ`, `minX`, `minY`, `minZ`, `maxX`, `maxY`, `maxZ`) "
-						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-				Statement.RETURN_GENERATED_KEYS))
+		try (PreparedStatement ps = HeavenRP.getConnection()
+				.prepareStatement(
+						"INSERT INTO `dungeon_rooms`(`dungeon_id`, `world`, `spawnX`, `spawnY`, `spawnZ`, `spawnYaw`, `spawnPitch`, "
+								+ "`triggerX`, `triggerY`, `triggerZ`, `minX`, `minY`, `minZ`, `maxX`, `maxY`, `maxZ`) "
+								+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+						Statement.RETURN_GENERATED_KEYS))
 		{
 			// Dungeon
 			ps.setInt(1, dg.getId());
@@ -586,7 +589,7 @@ public class DungeonManager
 				final DungeonRoom dgr = new DungeonRoom(dg.getId(), roomUuniqueId, spawn, trigger, corner1, corner2);
 				Dungeons.get(dg.getId()).Rooms.put(roomUuniqueId, dgr);
 				ChatUtil.sendMessage(p, DUNGEON_ROOM_CREATED, roomUuniqueId);
-				if(dg.firstRoomId == 0)
+				if (dg.firstRoomId == 0)
 				{
 					DungeonManager.UpdateFirstRoom(p, dungeonName, roomUuniqueId);
 				}
@@ -643,7 +646,7 @@ public class DungeonManager
 	 * 
 	 * @param dg
 	 */
-	private static void EndDungeon(Dungeon dg, DungeonEndingCauses cause)
+	private static void EndDungeon(final Dungeon dg, DungeonEndingCauses cause)
 	{
 		final int teleportWarmup = 30;
 		// Update Dungeon State to Ending
@@ -651,6 +654,21 @@ public class DungeonManager
 		// List of all in dungeon players UUID
 		ArrayList<UUID> playersUUID = new ArrayList<UUID>();
 
+		// Clear all mobs from the dungeon
+		for (int rmId : dg.Rooms.keySet())
+		{
+			DungeonRoom dgr = dg.Rooms.get(rmId);
+			for (LivingEntity lety : dgr.getSpawn().getWorld().getLivingEntities())
+			{
+				if (dgr.Mobs.containsKey(lety.getUniqueId()))
+				{
+					lety.remove();
+				}
+			}
+			dgr.Mobs.clear();
+		}
+
+		// Teleport player out
 		for (Player p : getPlayersByDungeon(dg.getId()))
 		{
 			playersUUID.add(p.getUniqueId());
@@ -854,8 +872,8 @@ public class DungeonManager
 		for (DungeonManager.Dungeon dg : DungeonManager.Dungeons.values())
 		{
 			char linePrefix = (i >= DungeonManager.Dungeons.values().size()) ? '└' : '├';
-			ChatUtil.sendMessage(p, "%1$c ({%2$d}) %3$s | Joueurs: {%4$d}/{%5$d}", linePrefix, dg.getId(),
-					dg.getName(), dg.PlayerCount, dg.getRequiredPlayer());
+			ChatUtil.sendMessage(p, "%1$c ({%2$d}) %3$s | Joueurs: {%4$d}/{%5$d}", linePrefix, dg.getId(), dg.getName(),
+					dg.PlayerCount, dg.getRequiredPlayer());
 			++i;
 		}
 	}
@@ -892,13 +910,41 @@ public class DungeonManager
 				blockType = dgr.getTriggerBlock().getBlock().getState().getType().toString();
 
 			ChatUtil.sendMessage(p,
-					"%1$c {ID}: %2$d | {Spawn}: %3$.2f %4$.2f %5$.2f %6$.2f %7$.2f | {Trigger}: %8$d %9$d %10$d (%11$s)",
-					linePrefix, dgr.getRoomId(), dgr.getSpawn().getX(), dgr.getSpawn().getY(),
-					dgr.getSpawn().getZ(), dgr.getSpawn().getYaw(), dgr.getSpawn().getPitch(),
-					dgr.getTriggerBlock().getBlockX(), dgr.getTriggerBlock().getBlockY(),
-					dgr.getTriggerBlock().getBlockZ(), blockType);
+					"%1$c {ID}: %2$d | {Spawn}: %3$.2f %4$.2f %5$.2f %6$.2f %7$.2f | {Trigger}: %8$d %9$d %10$d (%11$s) "
+							+ "{Mobs}: %12$d",
+					linePrefix, dgr.getRoomId(), dgr.getSpawn().getX(), dgr.getSpawn().getY(), dgr.getSpawn().getZ(),
+					dgr.getSpawn().getYaw(), dgr.getSpawn().getPitch(), dgr.getTriggerBlock().getBlockX(),
+					dgr.getTriggerBlock().getBlockY(), dgr.getTriggerBlock().getBlockZ(), blockType, dgr.Mobs.size());
 		}
 
+	}
+
+	/**
+	 * Displays detailed information about a mobs in a Dungeon
+	 * 
+	 * @param p
+	 * @param dungeon
+	 * @throws HeavenException
+	 */
+	public static void PrintDungeonMobInfo(final Player p, final String dungeon) throws HeavenException
+	{
+		final Dungeon dg = DungeonManager.getDungeon(dungeon);
+		if (dg == null)
+			throw new HeavenException("Dojnon recherché inconnu.");
+		for (DungeonRoom dgr : dg.Rooms.values())
+		{
+			if (dgr.Mobs.size() <= 0)
+				continue;
+
+			for (LivingEntity lety : dgr.getSpawn().getWorld().getLivingEntities())
+			{
+				if (dgr.Mobs.containsKey(lety.getUniqueId()))
+				{
+					ChatUtil.sendMessage(p, "- %1$s %2$.2f %3$.2f %4$.2f", lety.getType().toString(),
+							lety.getLocation().getX(), lety.getLocation().getY(), lety.getLocation().getZ());
+				}
+			}
+		}
 	}
 
 	/* ~~ Object Classes ~~ */
@@ -1008,17 +1054,12 @@ public class DungeonManager
 
 	public enum DungeonStates
 	{
-		IDLE,
-		BOOTING,
-		RUNNING,
-		ENDING;
+		IDLE, BOOTING, RUNNING, ENDING;
 	}
 
 	public enum DungeonEndingCauses
 	{
-		FAIL,
-		VICTORY,
-		FLEED;
+		FAIL, VICTORY, FLEED;
 	}
 
 	static class RestoreBlockTask implements Runnable
@@ -1042,6 +1083,42 @@ public class DungeonManager
 		public void run()
 		{
 			Bukkit.getServer().getWorld(_world).getBlockAt(_x, _y, _z).setType(_type);
+		}
+	}
+
+	static class DungeonMobCacheCorruptionCheckTask implements Runnable
+	{
+
+		@Override
+		public void run()
+		{
+			for (Dungeon dg : Dungeons.values())
+			{
+				if (dg.DungeonState != DungeonManager.DungeonStates.RUNNING)
+					continue;
+
+				for (DungeonRoom dgr : dg.Rooms.values())
+				{
+					if (dgr.Mobs.size() <= 0)
+						continue;
+
+					for (UUID uid : dgr.Mobs.keySet())
+					{
+						boolean found = false;
+						for (LivingEntity lety : dgr.getSpawn().getWorld().getLivingEntities())
+						{
+							if(lety.getUniqueId() == uid)
+							{
+								found = true;
+								break;
+							}
+						}
+						// Mob not found, it is a bugged one.
+						if(!found)
+							dgr.Mobs.remove(uid);
+					}
+				}
+			}
 		}
 	}
 }
