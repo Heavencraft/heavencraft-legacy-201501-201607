@@ -4,10 +4,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import fr.heavencraft.deprecated.DeprecatedTabColorScoreboard;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.users.color.TabColor;
-import fr.heavencraft.heavencore.users.color.TabColorScoreboard;
 import fr.heavencraft.heavencrea.CreaPermissions;
 import fr.heavencraft.heavencrea.HeavenCrea;
 import fr.heavencraft.heavencrea.users.CreativeUser;
@@ -17,13 +17,13 @@ public class TabColorListener extends AbstractListener<HeavenCrea>
 	private static final TabColor ARCHITECT_COLOR = TabColor.DARK_PURPLE;
 	private static final TabColor TALENT_COLOR = TabColor.GREEN;
 
-	private final TabColorScoreboard<HeavenCrea, CreativeUser> scoreboard;
+	private final DeprecatedTabColorScoreboard<HeavenCrea, CreativeUser> scoreboard;
 
 	public TabColorListener(HeavenCrea plugin)
 	{
 		super(plugin);
 
-		scoreboard = new TabColorScoreboard<HeavenCrea, CreativeUser>(plugin);
+		scoreboard = new DeprecatedTabColorScoreboard<HeavenCrea, CreativeUser>(plugin);
 	}
 
 	@EventHandler

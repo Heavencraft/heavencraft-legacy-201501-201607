@@ -10,14 +10,14 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+import fr.heavencraft.deprecated.DeprecatedUser;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavencore.users.User;
 import fr.heavencraft.heavencore.users.color.TabColor;
 
-public class CreativeUser implements User
+public class CreativeUser implements DeprecatedUser
 {
 	// SQL Queries
 	private static final String UPDATE_LASTLOGIN = "UPDATE users SET last_login = ? WHERE uuid = ? LIMIT 1;";

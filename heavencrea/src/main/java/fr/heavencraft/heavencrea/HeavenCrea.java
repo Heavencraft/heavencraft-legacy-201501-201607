@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 
+import fr.heavencraft.deprecated.DeprecatedHasUserProvider;
+import fr.heavencraft.deprecated.DeprecatedUserProvider;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AccepterCommand;
 import fr.heavencraft.heavencore.bukkit.commands.RejoindreCommand;
@@ -23,8 +25,6 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.Database;
-import fr.heavencraft.heavencore.users.HasUserProvider;
-import fr.heavencraft.heavencore.users.UserProvider;
 import fr.heavencraft.heavencrea.generator.CreativeChunkGenerator;
 import fr.heavencraft.heavencrea.hps.HpsCommand;
 import fr.heavencraft.heavencrea.hps.HpsManager;
@@ -44,12 +44,12 @@ import fr.heavencraft.heavencrea.users.homes.SethomeCommand;
 import fr.heavencraft.heavencrea.users.homes.TphomeCommand;
 import fr.heavencraft.heavencrea.worlds.PortalListener;
 import fr.heavencraft.heavencrea.worlds.WorldsManager;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
-public class HeavenCrea extends HeavenPlugin implements HasUserProvider<CreativeUser>
+public class HeavenCrea extends HeavenPlugin implements DeprecatedHasUserProvider<CreativeUser>
 {
 
-	private UserProvider<CreativeUser> userProvider;
+	private DeprecatedUserProvider<CreativeUser> userProvider;
 	private HpsManager hpsManager;
 
 	@Override
@@ -78,7 +78,7 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 			new HpsCommand(this);
 
 			// Plots
-			final HeavenGuard hGuard = loadHeavenGuard();
+			final BukkitHeavenGuard hGuard = loadHeavenGuard();
 			new ParcelleCommand(this, hGuard);
 			new PlotCommand(this, hGuard);
 			new PlotSignListener(this, hGuard);
@@ -137,20 +137,20 @@ public class HeavenCrea extends HeavenPlugin implements HasUserProvider<Creative
 		new TabColorListener(this);
 	}
 
-	private static HeavenGuard loadHeavenGuard() throws HeavenException
+	private static BukkitHeavenGuard loadHeavenGuard() throws HeavenException
 	{
 		final Plugin plugin = Bukkit.getPluginManager().getPlugin("HeavenGuard");
 
-		if (plugin != null && plugin instanceof HeavenGuard)
+		if (plugin != null && plugin instanceof BukkitHeavenGuard)
 		{
-			return (HeavenGuard) plugin;
+			return (BukkitHeavenGuard) plugin;
 		}
 
 		throw new HeavenException("Impossible to load HeavenGuard");
 	}
 
 	@Override
-	public UserProvider<CreativeUser> getUserProvider()
+	public DeprecatedUserProvider<CreativeUser> getUserProvider()
 	{
 		return userProvider;
 	}

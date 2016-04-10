@@ -2,11 +2,10 @@ package fr.heavencraft.heavencore.users.color;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-
-import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 
 public class ScoreboardTeam
 {
@@ -23,10 +22,12 @@ public class ScoreboardTeam
 		this.colorCommand = String.format(COLOR_COMMAND_FORMAT, name, color.getName());
 	}
 
-	public void register(Scoreboard scoreboard, HeavenPlugin plugin)
+	public void register(Scoreboard scoreboard, JavaPlugin plugin)
 	{
 		team = scoreboard.registerNewTeam(name);
+		// TODO : change this after 1.9 update
 		team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+		// team.setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.ALWAYS);
 		Bukkit.getScheduler().runTask(plugin, new Runnable()
 		{
 
@@ -40,13 +41,13 @@ public class ScoreboardTeam
 
 	public void addPlayer(OfflinePlayer player)
 	{
-		if (!team.hasPlayer(player))
-			team.addPlayer(player);
+		if (!team.hasEntry(player.getName()))
+			team.addEntry(player.getName());
 	}
 
 	public void removePlayer(OfflinePlayer player)
 	{
-		if (team.hasPlayer(player))
-			team.removePlayer(player);
+		if (team.hasEntry(player.getName()))
+			team.removeEntry(player.getName());
 	}
 }

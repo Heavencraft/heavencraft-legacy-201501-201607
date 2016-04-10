@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.provinces;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -22,7 +23,8 @@ public class RemoveProvinceQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(QUERY))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(QUERY))
 		{
 			ps.setInt(1, user.getId());
 
