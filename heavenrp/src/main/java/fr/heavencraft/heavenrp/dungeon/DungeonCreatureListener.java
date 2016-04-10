@@ -51,7 +51,6 @@ public class DungeonCreatureListener extends AbstractListener<HeavenPlugin>
 
 		// Add mob
 		dgr.Mobs.put(mob.getUniqueId(), mob);
-		System.out.println("New mob spawn");
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
