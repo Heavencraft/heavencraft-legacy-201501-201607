@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
@@ -28,7 +27,7 @@ public class DungeonPlayerListener extends AbstractListener<HeavenPlugin>
 		Dungeon dg = DungeonManager.getDungeonByPlayer(e.getPlayer());
 		if (dg == null)
 			return;
-		DungeonManager.PlayerLeave(e.getPlayer());
+		DungeonManager.PlayerLeave(e.getPlayer(), true);
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
