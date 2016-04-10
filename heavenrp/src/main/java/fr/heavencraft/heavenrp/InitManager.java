@@ -53,6 +53,7 @@ import fr.heavencraft.heavenrp.general.RecipeManager;
 import fr.heavencraft.heavenrp.general.ServerListener;
 import fr.heavencraft.heavenrp.general.WatchListener;
 import fr.heavencraft.heavenrp.general.users.UserListener;
+import fr.heavencraft.heavenrp.helpcenter.HelpCenterListener;
 import fr.heavencraft.heavenrp.horses.HorsesListener;
 import fr.heavencraft.heavenrp.jobs.JobActionListener;
 import fr.heavencraft.heavenrp.jobs.JobsAdminCommand;
@@ -204,6 +205,9 @@ public class InitManager
 		new RecipeManager();
 		new ServerListener();
 		new WatchListener(plugin);
+		
+		// Helpcenter
+		new HelpCenterListener(plugin);
 
 		// Users
 		new UserListener(plugin);
