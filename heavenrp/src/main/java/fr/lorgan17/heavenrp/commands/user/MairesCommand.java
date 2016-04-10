@@ -1,5 +1,6 @@
 package fr.lorgan17.heavenrp.commands.user;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +31,9 @@ public class MairesCommand extends AbstractCommandExecutor
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"SELECT u.name, GROUP_CONCAT(DISTINCT m.region_name ORDER BY m.region_name DESC SEPARATOR ', ') AS villes FROM mayors m, users u WHERE u.id = m.user_id GROUP BY m.user_id"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"SELECT u.name, GROUP_CONCAT(DISTINCT m.region_name ORDER BY m.region_name DESC SEPARATOR ', ') AS villes FROM mayors m, users u WHERE u.id = m.user_id GROUP BY m.user_id"))
 		{
 			final ResultSet rs = ps.executeQuery();
 

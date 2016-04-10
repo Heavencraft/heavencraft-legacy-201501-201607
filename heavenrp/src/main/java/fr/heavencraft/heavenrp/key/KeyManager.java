@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.key;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,8 +39,7 @@ public class KeyManager
 		final int nbKeys = getNbKeysToday(uuid);
 
 		if (nbKeys >= MAX_KEYS_PER_DAY)
-			throw new HeavenException("Le joueur {%1$s} a déjà reçu {%2$s} clés aujourd'hui.", playerName,
-					nbKeys);
+			throw new HeavenException("Le joueur {%1$s} a déjà reçu {%2$s} clés aujourd'hui.", playerName, nbKeys);
 
 		giveBook(player, key);
 		incrementKeys(uuid);
@@ -60,8 +60,8 @@ public class KeyManager
 
 	private static int getNbKeysToday(String uuid) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("SELECT date, nb FROM dungeon_keys WHERE uuid = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT date, nb FROM dungeon_keys WHERE uuid = ?"))
 		{
 			ps.setString(1, uuid);
 			final ResultSet rs = ps.executeQuery();
@@ -88,8 +88,8 @@ public class KeyManager
 
 	private static void createKeys(String uuid) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("INSERT INTO dungeon_keys (uuid) VALUES (?);"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO dungeon_keys (uuid) VALUES (?);"))
 		{
 			ps.setString(1, uuid);
 			ps.executeUpdate();
@@ -103,8 +103,9 @@ public class KeyManager
 
 	private static void incrementKeys(String uuid) throws SQLErrorException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("UPDATE dungeon_keys SET nb = nb + 1 WHERE uuid = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("UPDATE dungeon_keys SET nb = nb + 1 WHERE uuid = ?"))
 		{
 			ps.setString(1, uuid);
 			ps.executeUpdate();

@@ -12,13 +12,13 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 
 public final class ParcelleCommand extends AbstractCommandExecutor
 {
-	private final HeavenGuard hGuard;
+	private final BukkitHeavenGuard hGuard;
 
-	public ParcelleCommand(HeavenPlugin plugin, HeavenGuard hGuard)
+	public ParcelleCommand(HeavenPlugin plugin, BukkitHeavenGuard hGuard)
 	{
 		super(plugin, "parcelle");
 

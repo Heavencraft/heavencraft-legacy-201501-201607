@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.hps;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,8 +14,9 @@ public class HpsManager
 
 	public static int getBalance(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getMainConnection().prepareStatement(
-				"SELECT balance FROM heavencraft_users WHERE username = ?"))
+		try (Connection connection = HeavenRP.getMainConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("SELECT balance FROM heavencraft_users WHERE username = ?"))
 		{
 			ps.setString(1, name);
 

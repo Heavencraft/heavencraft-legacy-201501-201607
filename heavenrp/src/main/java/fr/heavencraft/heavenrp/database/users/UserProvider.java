@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.users;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,8 @@ public class UserProvider
 			return user;
 
 		// Get user from database
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(SELECT_USER_BY_UUID))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_UUID))
 		{
 			ps.setString(1, uuid);
 
@@ -52,7 +54,8 @@ public class UserProvider
 			return user;
 
 		// Get user from database
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(SELECT_USER_BY_NAME))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_NAME))
 		{
 			ps.setString(1, name);
 
@@ -74,8 +77,8 @@ public class UserProvider
 
 	public static void createUser(String uuid, String name)
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("INSERT INTO users (uuid, name) VALUES (?, ?);"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO users (uuid, name) VALUES (?, ?);"))
 		{
 			ps.setString(1, uuid);
 			ps.setString(2, name);

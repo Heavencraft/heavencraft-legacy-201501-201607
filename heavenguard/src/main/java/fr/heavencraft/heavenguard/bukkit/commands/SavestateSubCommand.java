@@ -6,12 +6,12 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenguard.api.HeavenGuardPermissions;
 import fr.heavencraft.heavenguard.api.Region;
-import fr.heavencraft.heavenguard.bukkit.HeavenGuard;
+import fr.heavencraft.heavenguard.bukkit.BukkitHeavenGuard;
 import fr.heavencraft.heavenguard.bukkit.RegionUtil;
 
 public class SavestateSubCommand extends AbstractSubCommand
 {
-	public SavestateSubCommand(HeavenGuard plugin)
+	public SavestateSubCommand(BukkitHeavenGuard plugin)
 	{
 		super(plugin, HeavenGuardPermissions.SAVESTATE_COMMAND);
 	}
