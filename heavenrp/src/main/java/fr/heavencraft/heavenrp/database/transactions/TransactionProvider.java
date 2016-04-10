@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.database.transactions;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,21 +18,22 @@ public class TransactionProvider
 
 	public static Collection<Transaction> getLastTransactions(BankAccount account) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(LAST_TRANSACTIONS))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(LAST_TRANSACTIONS))
 		{
 			ps.setInt(1, account.getId());
 
-			ResultSet rs = ps.executeQuery();
+			final ResultSet rs = ps.executeQuery();
 
 			// Use a list to keep the order of transactions
-			Collection<Transaction> result = new ArrayList<Transaction>();
+			final Collection<Transaction> result = new ArrayList<Transaction>();
 			while (rs.next())
 			{
 				result.add(new Transaction(rs));
 			}
 			return result;
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			e.printStackTrace();
 			throw new SQLErrorException();
