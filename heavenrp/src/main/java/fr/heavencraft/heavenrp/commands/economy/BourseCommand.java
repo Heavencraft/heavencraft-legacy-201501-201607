@@ -34,9 +34,51 @@ public class BourseCommand extends AbstractCommandExecutor
 			public void run()
 			{
 				if (balance == 0)
+				{
 					ChatUtil.sendMessage(player, PURSE_EMPTY);
-				else if (HeavenRP.Random.nextInt(5) == 0)
-					ChatUtil.sendMessage(player, PURSE_FAIL);
+				}
+				else if (balance < 100)
+				{
+					if (HeavenRP.Random.nextInt(11) == 0)
+						ChatUtil.sendMessage(player, PURSE_FAIL);
+					else
+						ChatUtil.sendMessage(player, PURSE_SUCCESS, balance);
+				}
+				else if (balance < 200)
+				{
+					if (HeavenRP.Random.nextInt(9) == 0)
+						ChatUtil.sendMessage(player, PURSE_FAIL);
+					else
+						ChatUtil.sendMessage(player, PURSE_SUCCESS, balance);
+				}
+				else if (balance < 500)
+				{
+					if (HeavenRP.Random.nextInt(8) == 0)
+						ChatUtil.sendMessage(player, PURSE_FAIL);
+					else
+						ChatUtil.sendMessage(player, PURSE_SUCCESS, balance);
+				}
+				else if (balance < 700)
+				{
+					if (HeavenRP.Random.nextInt(7) == 0)
+						ChatUtil.sendMessage(player, PURSE_FAIL);
+					else
+						ChatUtil.sendMessage(player, PURSE_SUCCESS, balance);
+				}
+				else if (balance < 1000)
+				{
+					if (HeavenRP.Random.nextInt(5) == 0)
+						ChatUtil.sendMessage(player, PURSE_FAIL);
+					else
+						ChatUtil.sendMessage(player, PURSE_SUCCESS, balance);
+				}
+				else if (balance >= 1000)
+				{
+					if (HeavenRP.Random.nextInt(4) == 0)
+						ChatUtil.sendMessage(player, PURSE_FAIL);
+					else
+						ChatUtil.sendMessage(player, PURSE_SUCCESS, balance);
+				}
 				else
 					ChatUtil.sendMessage(player, PURSE_SUCCESS, balance);
 			}
