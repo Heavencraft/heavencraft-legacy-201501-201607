@@ -62,6 +62,8 @@ import fr.heavencraft.heavenrp.key.KeySignListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceSignListener;
+import fr.heavencraft.heavenrp.quests.QuestCommand;
+import fr.heavencraft.heavenrp.quests.QuestGeneralListener;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
 import fr.heavencraft.heavenrp.scrolls.ScrollCommand;
 import fr.heavencraft.heavenrp.scrolls.ScrollListener;
@@ -115,12 +117,15 @@ public class InitManager
 		/*
 		 * from HeavenRP
 		 */
-		
+
 		// Dungeon
 		new DungeonCommand(plugin);
-		
+
 		// Scroll
 		new ScrollCommand(plugin);
+
+		// Quests
+		new QuestCommand(plugin);
 
 		// Economy
 		new BourseCommand(plugin);
@@ -191,16 +196,19 @@ public class InitManager
 		/*
 		 * HeavenRP
 		 */
-		
+
 		// Dungeon
 		new DungeonCreatureListener(plugin);
 		new DungeonPlayerListener(plugin);
 		new DungeonSignListener(plugin);
 		new DungeonManager();
-		
+
 		// Scroll
 		new ScrollListener(plugin);
-		
+
+		// Quests
+		new QuestGeneralListener(plugin);
+
 		// Economy
 		new EconomyListener();
 		new GoldDropListener(plugin);
@@ -213,7 +221,7 @@ public class InitManager
 		new RecipeManager();
 		new ServerListener();
 		new WatchListener(plugin);
-		
+
 		// Helpcenter
 		new HelpCenterListener(plugin);
 
