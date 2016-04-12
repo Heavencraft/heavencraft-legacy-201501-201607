@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencrea.users;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,7 +69,8 @@ public class CreativeUser implements DeprecatedUser
 	@Override
 	public void updateName(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(UPDATE_NAME))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(UPDATE_NAME))
 		{
 			ps.setString(1, name);
 			ps.setString(2, uuid);
@@ -95,15 +97,15 @@ public class CreativeUser implements DeprecatedUser
 	public void updateBalance(int delta) throws HeavenException
 	{
 		if (balance < 0)
-			throw new HeavenException(
-					"Vous avez moins de 0 jetons sur vous. Merci de contacter un administrateur.");
+			throw new HeavenException("Vous avez moins de 0 jetons sur vous. Merci de contacter un administrateur.");
 
 		if (balance + delta < 0)
 			throw new HeavenException("Vous n'avez pas assez de jetons.");
 
 		balance += delta;
 
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(UPDATE_BALANCE))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(UPDATE_BALANCE))
 		{
 			ps.setInt(1, balance);
 			ps.setString(2, uuid);
@@ -127,10 +129,9 @@ public class CreativeUser implements DeprecatedUser
 
 	public void incrementHomeNumber() throws HeavenException
 	{
-		try
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(INCREMENT_HOME_NUMBER))
 		{
-			final PreparedStatement ps = connectionHandler.getConnection()
-					.prepareStatement(INCREMENT_HOME_NUMBER);
 			ps.setInt(1, id);
 			ps.executeUpdate();
 
@@ -148,9 +149,9 @@ public class CreativeUser implements DeprecatedUser
 		if (nb < 1 || nb > homeNumber)
 			throw new HeavenException("Vous n'avez pas acheté le {home %1$d}.", nb);
 
-		try
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(GET_HOME))
 		{
-			final PreparedStatement ps = connectionHandler.getConnection().prepareStatement(GET_HOME);
 			ps.setInt(1, id);
 			ps.setInt(2, nb);
 
@@ -174,9 +175,9 @@ public class CreativeUser implements DeprecatedUser
 		if (nb < 1 || nb > homeNumber)
 			throw new HeavenException("Vous n'avez pas acheté le {home %1$d}.", nb);
 
-		try
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(SET_HOME))
 		{
-			final PreparedStatement ps = connectionHandler.getConnection().prepareStatement(SET_HOME);
 			ps.setString(1, home.getWorld().getName());
 			ps.setDouble(2, home.getX());
 			ps.setDouble(3, home.getY());
@@ -211,7 +212,8 @@ public class CreativeUser implements DeprecatedUser
 	{
 		final Timestamp lastLogin = new Timestamp(date.getTime());
 
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(UPDATE_LASTLOGIN))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(UPDATE_LASTLOGIN))
 		{
 			ps.setTimestamp(1, lastLogin);
 			ps.setString(2, uuid);
@@ -234,7 +236,8 @@ public class CreativeUser implements DeprecatedUser
 
 	public void setTabColor(TabColor tabColor) throws HeavenException
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(UPDATE_TAB_COLOR))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(UPDATE_TAB_COLOR))
 		{
 			ps.setString(1, tabColor.getCode());
 			ps.setString(2, uuid);

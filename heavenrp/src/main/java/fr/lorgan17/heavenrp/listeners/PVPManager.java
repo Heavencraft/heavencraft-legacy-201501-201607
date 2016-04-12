@@ -259,7 +259,8 @@ public class PVPManager extends AbstractListener<HeavenPlugin>
 				p.getInventory().setChestplate(null);
 				p.getInventory().setHelmet(null);
 
-				p.getActivePotionEffects().clear();
+				for (PotionEffect effect : p.getActivePotionEffects())
+					p.removePotionEffect(effect.getType());
 
 				p.setHealth(20);
 				p.setFoodLevel(30);
