@@ -36,7 +36,7 @@ public class EventCommand extends AbstractCommandExecutor
 		{
 			if (_started)
 			{
-				RPGLocks.canTeleport(player);
+				RPGLocks.getInstance().canTeleport(player);
 				player.teleport(_spawn);
 				ChatUtil.sendMessage(player, "Vous avez été téléporté à l'event.");
 			}
