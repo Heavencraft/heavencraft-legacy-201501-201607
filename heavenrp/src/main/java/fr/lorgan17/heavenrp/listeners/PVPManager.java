@@ -164,6 +164,13 @@ public class PVPManager extends AbstractListener<HeavenPlugin>
 	{
 		Bukkit.broadcastMessage(ChatColor.AQUA + " * " + String.format(message, args));
 	}
+	
+	public static boolean isPlaying(Player p)
+	{
+		if(_team1.contains(p) || _team2.contains(p))
+			return true;
+		return false;
+	}
 
 	static class Team
 	{

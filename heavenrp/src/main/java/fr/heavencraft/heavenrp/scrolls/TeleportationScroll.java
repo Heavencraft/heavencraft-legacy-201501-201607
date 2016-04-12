@@ -28,7 +28,7 @@ public class TeleportationScroll extends Scroll
 	public void executeScroll(Player player) throws HeavenException
 	{
 		// Can we teleport?
-		RPGLocks.canTeleport(player);
+		RPGLocks.getInstance().canTeleport(player);
 		
 		// Alter player vision
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 255, 255));
