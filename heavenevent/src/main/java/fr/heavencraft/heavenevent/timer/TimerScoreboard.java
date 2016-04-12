@@ -57,7 +57,7 @@ public class TimerScoreboard
 	 */
 	static void getCurrentTime()
 	{
-		currentTime = ((System.currentTimeMillis() - TimerConfigurationEditor.time) / 1000);
+		currentTime = ((System.currentTimeMillis() - (long) TimerConfigurationEditor.time) / 1000);
 
 		currentSeconds = currentTime % 60;
 		currentTime /= 60;

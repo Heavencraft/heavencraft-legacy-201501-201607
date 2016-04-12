@@ -7,7 +7,7 @@ import fr.heavencraft.heavenevent.HeavenEvent;
 public class TimerConfigurationEditor
 {
 	static boolean start;
-	static long time;
+	static Object time;
 
 	/**
 	 * Test if Config is empty and in this case load the default config
@@ -47,7 +47,7 @@ public class TimerConfigurationEditor
 		HeavenEvent.getInstance().saveConfig();
 
 		start = (boolean) getConfig().get("start");
-		time = (long) getConfig().get("time");
+		time = getConfig().get("time");
 	}
 
 	private static MemorySection getConfig()
