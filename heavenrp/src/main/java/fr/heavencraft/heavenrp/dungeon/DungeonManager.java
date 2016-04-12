@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.dungeon;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,7 +88,8 @@ public class DungeonManager
 		DungeonManager.playerDungeon.clear();
 		DungeonManager.Dungeons.clear();
 
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement("SELECT * FROM dungeons"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT * FROM dungeons"))
 		{
 			final ResultSet dungeonResultSet = ps.executeQuery();
 
@@ -138,8 +140,8 @@ public class DungeonManager
 		if (!Dungeons.containsKey(dungeonId))
 			throw new HeavenException("Erreur lors d'une tentative de chargement de salles d'un donjon inexistant.");
 
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("SELECT * FROM dungeon_rooms WHERE dungeon_id = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT * FROM dungeon_rooms WHERE dungeon_id = ?"))
 		{
 			ps.setInt(1, dungeonId);
 			ResultSet rs = ps.executeQuery();
@@ -420,10 +422,11 @@ public class DungeonManager
 		if (getDungeon(dungeonName) != null)
 			throw new HeavenException("Ce donjon existe déjà.");
 
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"INSERT INTO dungeons (name, requiredPlayers, world, spawnX, spawnY, spawnZ, spawnYaw, spawnPitch, "
-						+ "outX, outY, outZ, outYaw, outPitch, firstRoom) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-				Statement.RETURN_GENERATED_KEYS))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"INSERT INTO dungeons (name, requiredPlayers, world, spawnX, spawnY, spawnZ, spawnYaw, spawnPitch, "
+								+ "outX, outY, outZ, outYaw, outPitch, firstRoom) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+						Statement.RETURN_GENERATED_KEYS))
 		{
 			// General
 			ps.setString(1, dungeonName);
@@ -479,8 +482,9 @@ public class DungeonManager
 		if (dg == null)
 			throw new HeavenException("Ce donjon n'existe pas.");
 
-		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(
-				"DELETE dungeons, dungeon_rooms FROM dungeons INNER JOIN dungeon_rooms WHERE dungeon_rooms.dungeon_id = dungeons.dungeon_id AND dungeons.dungeon_id = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"DELETE dungeons, dungeon_rooms FROM dungeons INNER JOIN dungeon_rooms WHERE dungeon_rooms.dungeon_id = dungeons.dungeon_id AND dungeons.dungeon_id = ?"))
 		{
 			ps.setInt(1, dg.getId());
 			ps.executeUpdate();
@@ -515,8 +519,9 @@ public class DungeonManager
 		if (!dg.Rooms.containsKey(roomId))
 			throw new HeavenException("ID de la salle inconnue.");
 
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("UPDATE dungeons SET firstRoom = ? WHERE dungeon_id = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("UPDATE dungeons SET firstRoom = ? WHERE dungeon_id = ?"))
 		{
 			ps.setInt(1, roomId);
 			ps.setInt(2, dg.getId());
@@ -554,8 +559,8 @@ public class DungeonManager
 		if (dg == null)
 			throw new HeavenException("Ce donjon n'existe pas.");
 
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement(
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection.prepareStatement(
 						"INSERT INTO `dungeon_rooms`(`dungeon_id`, `world`, `spawnX`, `spawnY`, `spawnZ`, `spawnYaw`, `spawnPitch`, "
 								+ "`triggerX`, `triggerY`, `triggerZ`, `minX`, `minY`, `minZ`, `maxX`, `maxY`, `maxZ`) "
 								+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
@@ -623,8 +628,9 @@ public class DungeonManager
 		if (!dg.Rooms.containsKey(roomId))
 			throw new HeavenException("Cette salle n'existe pas.");
 
-		try (PreparedStatement ps = HeavenRP.getConnection()
-				.prepareStatement("DELETE FROM dungeon_rooms WHERE dungeon_room_id = ?"))
+		try (Connection connection = HeavenRP.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("DELETE FROM dungeon_rooms WHERE dungeon_room_id = ?"))
 		{
 			ps.setInt(1, roomId);
 			ps.executeUpdate();
