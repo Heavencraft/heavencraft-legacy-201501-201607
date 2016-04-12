@@ -38,7 +38,7 @@ public class HomeCommand extends AbstractCommandExecutor
 
 		Location home = HomeProvider.getHome(UserProvider.getUserByName(player.getName()), nb);
 		
-		RPGLocks.canTeleport(player);
+		RPGLocks.getInstance().canTeleport(player);
 		PlayerUtil.teleportPlayer(player, home);
 	}
 

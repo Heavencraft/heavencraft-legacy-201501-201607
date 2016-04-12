@@ -42,7 +42,7 @@ public class TphomeCommand extends AbstractCommandExecutor
 		}
 
 		Location home = HomeProvider.getHome(user, nb);
-		if(DungeonManager.isPlayeing(player))
+		if(DungeonManager.isPlaying(player))
 			throw new HeavenException("Vous êtes actuellement dans un dojnon.");
 		PlayerUtil.teleportPlayer(player, home);
 	}
