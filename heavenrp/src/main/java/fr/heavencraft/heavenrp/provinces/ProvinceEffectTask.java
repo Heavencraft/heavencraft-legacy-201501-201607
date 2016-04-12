@@ -17,8 +17,8 @@ import fr.heavencraft.heavenrp.provinces.ProvincesManager.Province;
 
 public class ProvinceEffectTask extends BukkitRunnable
 {
-	private static final long PERIOD = 6100; // 5 min: 5 * 20 * 60 + 20 (+100 ticks to overlap effects by 1sec.
-
+	private static final long PERIOD = 1200 + 3; // 5 min: 5 * 20 * 60 + 20 (+3 ticks to delay effects by 1/2sec.
+	
 	public ProvinceEffectTask(HeavenPlugin plugin)
 	{
 		runTaskTimer(plugin, PERIOD, PERIOD);
