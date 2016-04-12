@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.potion.PotionEffect;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
@@ -96,6 +97,9 @@ public class PVP4Manager extends AbstractListener<HeavenPlugin>
 		p.getInventory().setChestplate(null);
 		p.getInventory().setHelmet(null);
 
+		for (PotionEffect effect : p.getActivePotionEffects())
+			p.removePotionEffect(effect.getType());
+
 		p.setHealth(20);
 		p.setFoodLevel(30);
 		p.setFireTicks(0);
@@ -119,8 +123,7 @@ public class PVP4Manager extends AbstractListener<HeavenPlugin>
 
 				if (fighters.size() == 1)
 				{
-					broadcastMessage("Le combat vient de se terminer, le gagnant est %1$s.",
-							fighters.get(0).getName());
+					broadcastMessage("Le combat vient de se terminer, le gagnant est %1$s.", fighters.get(0).getName());
 
 					fighters.clear();
 					isFighting = false;
