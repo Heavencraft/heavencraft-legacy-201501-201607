@@ -65,3 +65,4 @@ commands:
   donjon:
     aliases: [dj, djn]
   scrolls:
+  quetes:
