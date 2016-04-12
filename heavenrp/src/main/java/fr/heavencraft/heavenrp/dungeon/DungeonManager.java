@@ -862,7 +862,7 @@ public class DungeonManager
 	 * @param p
 	 * @return
 	 */
-	public static boolean isPlayeing(Player p)
+	public static boolean isPlaying(Player p)
 	{
 		return playerDungeon.containsKey(p.getUniqueId());
 	}

@@ -51,7 +51,7 @@ public class WarpCommand extends AbstractCommandExecutor
 				}
 				else if (args[0].equalsIgnoreCase("tp"))
 				{
-					RPGLocks.canTeleport(player);
+					RPGLocks.getInstance().canTeleport(player);
 					player.teleport(WarpsManager.getWarp(args[1]).getLocation());
 					ChatUtil.sendMessage(player, "Vous avez été téléporté à {%1$s}.", args[1]);
 				}
