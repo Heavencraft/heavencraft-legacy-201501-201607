@@ -1,4 +1,6 @@
-package fr.heavencraft.heavenrp.quests;
+package fr.heavencraft.heavenrp.questframework;
+
+import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
@@ -10,15 +12,30 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
  */
 public abstract class AbstractQuest
 {
-	private final int questId;
+	private final UUID questId;
 
-	private final String questName;
+	private String questName = "My Quest Name";
 
 	protected QuestContext questContext;
 
-	public AbstractQuest(int questId, String questName)
+	/**
+	 * This constructor should only be called when loading an already existing quest
+	 * @param questId
+	 * @param questName
+	 */
+	protected AbstractQuest(UUID questId, String questName)
 	{
 		this.questId = questId;
+		this.questName = questName;
+	}
+	
+	/**
+	 * Creates a new quest.
+	 * @param questName
+	 */
+	public AbstractQuest(String questName)
+	{
+		this.questId = UUID.randomUUID();
 		this.questName = questName;
 	}
 
@@ -27,7 +44,7 @@ public abstract class AbstractQuest
 	 * 
 	 * @return
 	 */
-	public int getQuestId()
+	public UUID getQuestId()
 	{
 		return questId;
 	}

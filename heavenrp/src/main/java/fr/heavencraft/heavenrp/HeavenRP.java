@@ -57,6 +57,8 @@ public class HeavenRP extends HeavenPlugin
 			new StoresListener(this);
 			_storesManager = new StoresManager(this);
 			_storesManager.init();
+			
+			QuestInitialisation.init();
 		}
 		catch (final Exception ex)
 		{

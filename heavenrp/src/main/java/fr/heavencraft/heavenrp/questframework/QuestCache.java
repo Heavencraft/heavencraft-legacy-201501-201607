@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenrp.quests;
+package fr.heavencraft.heavenrp.questframework;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,29 +16,29 @@ public class QuestCache
 	/**
 	 * Adds a quest to a player
 	 * 
-	 * @param p
+	 * @param p The players UUID
 	 * @param quest
 	 */
-	public static void RegisterQuest(Player p, AbstractQuest quest)
+	public static void RegisterQuest(UUID p, AbstractQuest quest)
 	{
-		List<AbstractQuest> exitingQuests = playerQuests.get(p.getUniqueId());
+		List<AbstractQuest> exitingQuests = playerQuests.get(p);
 		if (exitingQuests == null)
 		{
 			List<AbstractQuest> coll = new ArrayList<AbstractQuest>();
 			coll.add(quest);
-			playerQuests.put(p.getUniqueId(), coll);
+			playerQuests.put(p, coll);
 		}
 	}
 
 	/**
 	 * Returns a collection of a players active quests for a player
 	 * 
-	 * @param p
+	 * @param p UUID of the player
 	 * @return a collection of quests
 	 */
-	public static Collection<AbstractQuest> GetQuests(Player p)
+	public static Collection<AbstractQuest> GetQuests(UUID p)
 	{
-		Collection<AbstractQuest> existingQuests = playerQuests.get(p.getUniqueId());
+		Collection<AbstractQuest> existingQuests = playerQuests.get(p);
 		if (existingQuests == null)
 			existingQuests = new ArrayList<AbstractQuest>();
 		return existingQuests;

@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenrp.quests;
+package fr.heavencraft.heavenrp.questframework;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
