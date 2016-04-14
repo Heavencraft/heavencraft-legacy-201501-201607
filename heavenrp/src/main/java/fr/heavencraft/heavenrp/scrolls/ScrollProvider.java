@@ -78,8 +78,8 @@ public class ScrollProvider
 
 		// L'antre des Poissons
 		String[] loreFischs = { "&eTéléportation", "&eVers L'antre des Poissons" };
-		Scroll scrollFischs = new TeleportationScroll("Téléporation: L'antre des Poissons",
-				Arrays.asList(loreFischs), new Location(WorldsManager.getWorld(), 2263.0, 75.0, -1619.0, 66f, 0f));
+		Scroll scrollFischs = new TeleportationScroll("Téléporation: L'antre des Poissons", Arrays.asList(loreFischs),
+				new Location(WorldsManager.getWorld(), 4116, 92, -984, 0f, 0f));
 		scrolls.put(scrollFischs.getItem().getItemMeta().getDisplayName(), scrollFischs);
 
 	}
