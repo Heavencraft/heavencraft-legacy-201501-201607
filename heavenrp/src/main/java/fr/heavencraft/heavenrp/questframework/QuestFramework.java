@@ -1,17 +1,19 @@
-package fr.heavencraft.heavenrp.quests;
+package fr.heavencraft.heavenrp.questframework;
+
+import java.util.Collection;
 
 import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 
-public class QuestManager
+public class QuestFramework
 {
-	private static QuestManager questManager = null;
+	private static QuestFramework questManager = null;
 
-	public static QuestManager getInstance()
+	public static QuestFramework getInstance()
 	{
 		if (questManager == null)
-			questManager = new QuestManager();
+			questManager = new QuestFramework();
 		return questManager;
 	}
 
@@ -27,13 +29,13 @@ public class QuestManager
 		// Is the player able to start a quest?
 		if (!quest.PlayerMeetStartRequirements(p))
 			return;
-		QuestCache.RegisterQuest(p, quest);
+		QuestCache.RegisterQuest(p.getUniqueId(), quest);
 		quest.InitializeQuest(p, new QuestContext());
 	}
 
-	public void RequestQuestLog()
+	public Collection<AbstractQuest> GetPlayerQuests(Player p)
 	{
-
+		return QuestCache.GetQuests(p.getUniqueId());
 	}
 
 }
