@@ -62,7 +62,6 @@ import fr.heavencraft.heavenrp.key.KeySignListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceSignListener;
-import fr.heavencraft.heavenrp.questframework.QuestBookListener;
 import fr.heavencraft.heavenrp.questframework.QuestCommand;
 import fr.heavencraft.heavenrp.questframework.QuestGeneralListener;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
@@ -209,7 +208,6 @@ public class InitManager
 
 		// Quests
 		new QuestGeneralListener(plugin);
-		new QuestBookListener(plugin);
 
 		// Economy
 		new EconomyListener();

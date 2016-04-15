@@ -4,6 +4,11 @@ import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavenrp.HeavenRP;
 
+/**
+ * This listener handles loading and unloading quests for online players
+ * @author Manuel
+ *
+ */
 public class QuestGeneralListener extends AbstractListener<HeavenPlugin>
 {
 	public QuestGeneralListener(HeavenRP plugin)

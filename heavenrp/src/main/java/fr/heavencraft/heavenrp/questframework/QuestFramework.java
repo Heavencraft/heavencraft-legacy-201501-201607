@@ -6,6 +6,11 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 
+/**
+ * A simple management framework to handle questing
+ * @author Manuel
+ *
+ */
 public class QuestFramework
 {
 	private static QuestFramework questManager = null;

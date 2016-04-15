@@ -13,7 +13,7 @@ import fr.heavencraft.heavenrp.exceptions.UnknownQuestFlagException;
  * @author Manuel
  *
  */
-public class QuestContext
+public class PlayerContext
 {
 	private Map<String, Object> flagStore = new HashMap<String, Object>();
 

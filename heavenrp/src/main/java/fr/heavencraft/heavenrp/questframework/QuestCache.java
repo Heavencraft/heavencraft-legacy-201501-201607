@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.entity.Player;
-
 public class QuestCache
 {
 	private static Map<UUID, List<AbstractQuest>> playerQuests = new HashMap<UUID, List<AbstractQuest>>();
