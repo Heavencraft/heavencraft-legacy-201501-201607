@@ -1,7 +1,10 @@
 package fr.heavencraft.heavenrp.questframework;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import fr.heavencraft.heavenrp.exceptions.QuestFlagCollisionException;
 import fr.heavencraft.heavenrp.exceptions.QuestFlagTypeException;
@@ -16,6 +19,7 @@ import fr.heavencraft.heavenrp.exceptions.UnknownQuestFlagException;
 public class PlayerContext
 {
 	private Map<String, Object> flagStore = new HashMap<String, Object>();
+	private Map<UUID, List<AbstractQuest>> playerActiveQuests = new HashMap<UUID, List<AbstractQuest>>();
 
 	/**
 	 * Returns if the context contains this flag
@@ -127,5 +131,41 @@ public class PlayerContext
 	public Object getValue(QfFlag flag)
 	{
 		return this.flagStore.get(flag.getKey());
+	}
+	
+	
+	
+	//TODO UT
+	/**
+	 * Adds a quest to a player
+	 * 
+	 * @param p The player's UUID
+	 * @param quest
+	 */
+	public static void registerQuest(UUID p, AbstractQuest quest)
+	{
+//		List<AbstractQuest> exitingQuests = playerQuests.get(p);
+//		if (exitingQuests == null)
+//		{
+//			List<AbstractQuest> coll = new ArrayList<AbstractQuest>();
+//			coll.add(quest);
+//			//playerQuests.put(p, coll);
+//		}
+	}
+
+	//TODO UT
+	/**
+	 * Returns a collection of a players active quests for a player
+	 * 
+	 * @param p UUID of the player
+	 * @return a collection of quests
+	 */
+	public static Collection<AbstractQuest> getQuests(UUID p)
+	{
+//		Collection<AbstractQuest> existingQuests = playerQuests.get(p);
+//		if (existingQuests == null)
+//			existingQuests = new ArrayList<AbstractQuest>();
+//		return existingQuests;
+		return null;
 	}
 }
