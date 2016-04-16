@@ -15,8 +15,27 @@ import fr.heavencraft.heavenrp.exceptions.UnknownQuestFlagException;
  */
 public class QuestContext
 {
-	private Map<String, Object> flagStore = new HashMap<String, Object>();
+	/**
+	 * Creates a new Quest Context
+	 * @param questId the id of the quest, where this contexts belongs to.
+	 */
+	protected QuestContext(int questId)
+	{
+		this.questId = questId;
+	}
 
+	private Map<String, Object> flagStore = new HashMap<String, Object>();
+	private final int questId;
+	
+	/**
+	 * Returns the quest's id where this context belongs to.
+	 * @return
+	 */
+	public int getQuestId()
+	{
+		return questId;
+	}
+	
 	/**
 	 * Returns if the context contains this flag
 	 * @param questFlag

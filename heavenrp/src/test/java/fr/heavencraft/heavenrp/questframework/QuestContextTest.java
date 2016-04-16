@@ -9,7 +9,7 @@ public class QuestContextTest extends TestCase
 {
 	public void testQuestContextFlagStore()
 	{
-		QuestContext ctx = new QuestContext();
+		QuestContext ctx = new QuestContext(1);
 
 		// Add flags
 		QfFlag flag1 = new QfFlag("flag1");
@@ -53,7 +53,7 @@ public class QuestContextTest extends TestCase
 		}
 		catch (QuestFlagCollisionException e)
 		{
-			assertFalse("Quest context flag collision detected, but there should not be one.", e == null);
+			assertNotNull("Quest context flag collision detected, but there should not be one.", e);
 		}
 
 		// Has Flag
@@ -122,8 +122,17 @@ public class QuestContextTest extends TestCase
 		{
 			assertTrue("We should have got a Quest Flag Type Exception:", e instanceof QuestFlagTypeException);
 			assertFalse("Wrong Exception thrown on flag type change:", e instanceof UnknownQuestFlagException);
-			assertTrue("Quest Flag Exception has no message", e.getMessage() != null);
+			assertNotNull("Quest Flag Exception has no message", e.getMessage());
 		}
 
+	}
+	
+	public void testQuestContextQuestID()
+	{
+		QuestContext ctx1 = new QuestContext(1);
+		QuestContext ctx2 = new QuestContext(2);
+		
+		assertEquals("Shoud have the same quest id passed in the constructor", 1, ctx1.getQuestId());
+		assertEquals("Shoud have the same quest id passed in the constructor", 2, ctx2.getQuestId());
 	}
 }
