@@ -9,6 +9,11 @@ public class HeavenEvent extends HeavenPlugin
 {
 	public static HeavenEvent _instance;
 
+	public HeavenEvent()
+	{
+		_instance = this;
+	}
+
 	@Override
 	public void onEnable()
 	{
