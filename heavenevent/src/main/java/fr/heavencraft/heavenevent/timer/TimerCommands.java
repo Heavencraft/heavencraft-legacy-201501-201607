@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 public class TimerCommands extends AbstractCommandExecutor
 {
@@ -25,6 +26,11 @@ public class TimerCommands extends AbstractCommandExecutor
 	{
 		if (!player.isOp())
 			throw new HeavenException(ERRORPERMISSION);
+		if (args.length <= 0)
+		{
+			sendUsage(player);
+			return;
+		}
 
 		// Launch Timer
 		if (args[0].equalsIgnoreCase("start"))
@@ -73,6 +79,8 @@ public class TimerCommands extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
+		ChatUtil.sendMessage(sender, "/{timer} start");
+		ChatUtil.sendMessage(sender, "/{timer} stop");
 	}
 
 }
