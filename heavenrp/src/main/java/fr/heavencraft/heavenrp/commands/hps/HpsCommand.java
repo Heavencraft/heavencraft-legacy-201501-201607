@@ -1,26 +1,17 @@
 package fr.heavencraft.heavenrp.commands.hps;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import fr.heavencraft.async.queries.BatchQuery;
 import fr.heavencraft.async.queries.QueriesHandler;
-import fr.heavencraft.async.queries.Query;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.hps.UpdateHPSBalanceQuery;
-import fr.heavencraft.heavenrp.database.users.UpdateUserBalanceQuery;
-import fr.heavencraft.heavenrp.database.users.User;
-import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.hps.HpsManager;
 
 public class HpsCommand extends AbstractCommandExecutor
@@ -67,31 +58,31 @@ public class HpsCommand extends AbstractCommandExecutor
 				}
 			});
 		}
-		else
-		{
-			final int hps = DevUtil.toUint(args[0]);
-
-			User user = UserProvider.getUserByName(player.getName());
-
-			List<Query> queries = new ArrayList<Query>();
-			queries.add(new UpdateHPSBalanceQuery(player.getName(), -hps));
-			queries.add(new UpdateUserBalanceQuery(user, hps * 20));
-			QueriesHandler.addQuery(new BatchQuery(queries)
-			{
-				@Override
-				public void onSuccess()
-				{
-					ChatUtil.sendMessage(player, "{%1$d} HPs ont été retirés de votre compte", hps);
-					ChatUtil.sendMessage(player, "Vous avez reçu {%1$d} pièces d'or.", hps * 20);
-				}
-
-				@Override
-				public void onHeavenException(HeavenException ex)
-				{
-					ChatUtil.sendMessage(player, ex.getMessage());
-				}
-			});
-		}
+//		else
+//		{
+//			final int hps = DevUtil.toUint(args[0]);
+//
+//			User user = UserProvider.getUserByName(player.getName());
+//
+//			List<Query> queries = new ArrayList<Query>();
+//			queries.add(new UpdateHPSBalanceQuery(player.getName(), -hps));
+//			queries.add(new UpdateUserBalanceQuery(user, hps * 20));
+//			QueriesHandler.addQuery(new BatchQuery(queries)
+//			{
+//				@Override
+//				public void onSuccess()
+//				{
+//					ChatUtil.sendMessage(player, "{%1$d} HPs ont été retirés de votre compte", hps);
+//					ChatUtil.sendMessage(player, "Vous avez reçu {%1$d} pièces d'or.", hps * 20);
+//				}
+//
+//				@Override
+//				public void onHeavenException(HeavenException ex)
+//				{
+//					ChatUtil.sendMessage(player, ex.getMessage());
+//				}
+//			});
+//		}
 	}
 
 	@Override
@@ -104,9 +95,10 @@ public class HpsCommand extends AbstractCommandExecutor
 	@Override
 	protected void sendUsage(CommandSender sender)
 	{
-		ChatUtil.sendMessage(sender, "/{hps} <nombre de HPs a convertir>");
+//		ChatUtil.sendMessage(sender, "/{hps} <nombre de HPs a convertir>");
 		ChatUtil.sendMessage(sender, "/{hps} tete : acheter votre tête pour 5 HPs.");
-		ChatUtil.sendMessage(sender, "Le taux est de {20} pièces d'or par HP.");
+		ChatUtil.sendMessage(sender, "/{vip} : pour plus d'options.");
+//		ChatUtil.sendMessage(sender, "Le taux est de {20} pièces d'or par HP.");
 		try
 		{
 			ChatUtil.sendMessage(sender, "Vous avez {%1$d} HPs sur votre compte.",
@@ -114,7 +106,6 @@ public class HpsCommand extends AbstractCommandExecutor
 		}
 		catch (HeavenException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
