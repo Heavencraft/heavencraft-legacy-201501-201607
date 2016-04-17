@@ -34,6 +34,15 @@ public class TimerConfigurationEditor
 		saveConfig();
 	}
 
+	static void saveFinalTime()
+	{
+		getConfig().set("D", TimerScoreboard.currentDay);
+		getConfig().set("H", TimerScoreboard.currentHours);
+		getConfig().set("M", TimerScoreboard.currentMinutes);
+		getConfig().set("S", TimerScoreboard.currentSeconds);
+		saveConfig();
+	}
+
 	static void resetConfig()
 	{
 		getConfig().set("start", false);
