@@ -36,6 +36,7 @@ import fr.heavencraft.heavenrp.commands.hps.HpsCommand;
 import fr.heavencraft.heavenrp.commands.key.KeyCommand;
 import fr.heavencraft.heavenrp.commands.province.ProvinceCommand;
 import fr.heavencraft.heavenrp.commands.warps.WarpCommand;
+import fr.heavencraft.heavenrp.dungeon.DungeonCommand;
 import fr.heavencraft.heavenrp.dungeon.DungeonCreatureListener;
 import fr.heavencraft.heavenrp.dungeon.DungeonManager;
 import fr.heavencraft.heavenrp.dungeon.DungeonPlayerListener;
@@ -62,6 +63,7 @@ import fr.heavencraft.heavenrp.provinces.ProvinceEffectTask;
 import fr.heavencraft.heavenrp.provinces.ProvinceListener;
 import fr.heavencraft.heavenrp.provinces.ProvinceSignListener;
 import fr.heavencraft.heavenrp.scoreboards.ProvinceScoreboard;
+import fr.heavencraft.heavenrp.scrolls.ScrollCommand;
 import fr.heavencraft.heavenrp.scrolls.ScrollListener;
 import fr.heavencraft.heavenrp.structureblock.StructureBlockSmelteryInventoryListener;
 import fr.heavencraft.heavenrp.structureblock.StructureBlockSmelteryListener;
@@ -134,6 +136,12 @@ public class InitManager
 		new ProvinceCommand(plugin);
 		new ProvinceEffectTask(plugin);
 
+		// Scrolls
+		new DungeonCommand(plugin);
+
+		// Scrolls
+		new ScrollCommand(plugin);
+
 		// Horses
 		new ChevalCommand(plugin);
 
@@ -185,16 +193,16 @@ public class InitManager
 		/*
 		 * HeavenRP
 		 */
-		
+
 		// Dungeon
 		new DungeonCreatureListener(plugin);
 		new DungeonPlayerListener(plugin);
 		new DungeonSignListener(plugin);
 		new DungeonManager();
-		
+
 		// Scroll
 		new ScrollListener(plugin);
-		
+
 		// Economy
 		new EconomyListener();
 		new GoldDropListener(plugin);
@@ -207,7 +215,7 @@ public class InitManager
 		new RecipeManager();
 		new ServerListener();
 		new WatchListener(plugin);
-		
+
 		// Helpcenter
 		new HelpCenterListener(plugin);
 
