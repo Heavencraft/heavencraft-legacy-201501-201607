@@ -62,6 +62,7 @@ public class StructureBlockSmelteryListener extends AbstractListener<HeavenPlugi
 				relativeVector) == false)
 			return;
 
+		event.setCancelled(true);
 		final User user = UserProvider.getUserByName(player.getName());
 		final Job job = user.getJob();
 		if (job == null || !jobList.contains(job.getId()))
@@ -70,7 +71,6 @@ public class StructureBlockSmelteryListener extends AbstractListener<HeavenPlugi
 			return;
 		}
 
-		event.setCancelled(true);
 		player.openInventory(getInventory());
 	}
 
