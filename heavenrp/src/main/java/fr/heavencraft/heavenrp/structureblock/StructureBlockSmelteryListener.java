@@ -42,7 +42,7 @@ public class StructureBlockSmelteryListener extends AbstractListener<HeavenPlugi
 	{
 		super(plugin);
 		jobList.add(9);
-		jobList.add(11);
+		jobList.add(20);
 
 	}
 
