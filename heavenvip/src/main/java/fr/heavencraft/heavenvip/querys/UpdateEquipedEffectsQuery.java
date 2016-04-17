@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenvip.querys;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +18,10 @@ public class UpdateEquipedEffectsQuery extends AbstractQuery
 	private final char type;
 	private final String uuid;
 	private final int descriptor_id;
-	
+
 	/**
 	 * Query to update wich effect you use
+	 * 
 	 * @param type
 	 * @param uuid
 	 * @param descriptor_id
@@ -34,18 +36,20 @@ public class UpdateEquipedEffectsQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
-		try (PreparedStatement ps1 = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY1))
+		try (Connection connection = HeavenVIP.getProxyConnection().getConnection();
+				PreparedStatement ps1 = connection.prepareStatement(QUERY1))
 		{
 			ps1.setString(1, (String.valueOf(this.type)));
 			ps1.setString(2, this.uuid);
 			final ResultSet rs = ps1.executeQuery();
-			
+
 			while (rs.next())
 			{
 				// No entry found, insert new
-				if(rs.getInt("count") == 0)
+				if (rs.getInt("count") == 0)
 				{
-					try (PreparedStatement ps2 = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY_INSERT))
+					try (Connection connection2 = HeavenVIP.getProxyConnection().getConnection();
+							PreparedStatement ps2 = connection2.prepareStatement(QUERY_INSERT))
 					{
 						ps2.setString(1, (String.valueOf(this.type)));
 						ps2.setString(2, this.uuid);
@@ -60,7 +64,8 @@ public class UpdateEquipedEffectsQuery extends AbstractQuery
 				}
 				else
 				{
-					try (PreparedStatement ps2 = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY_UPDATE))
+					try (Connection connection2 = HeavenVIP.getProxyConnection().getConnection();
+							PreparedStatement ps2 = connection.prepareStatement(QUERY_UPDATE))
 					{
 						ps2.setInt(1, this.descriptor_id);
 						ps2.setString(2, (String.valueOf(this.type)));

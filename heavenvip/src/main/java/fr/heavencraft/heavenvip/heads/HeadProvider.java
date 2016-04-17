@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenvip.heads;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,21 +15,21 @@ public class HeadProvider
 
 	/**
 	 * Returns a collection of available heads
+	 * 
 	 * @return
 	 */
-	public static Collection<Head> getSoldHeads() {
+	public static Collection<Head> getSoldHeads()
+	{
 		Collection<Head> headCollection = new ArrayList<Head>();
 
-		try (PreparedStatement ps = HeavenVIP.getProxyConnection()
-				.getConnection().prepareStatement(SELECT_HEADS))
+		try (Connection connection = HeavenVIP.getProxyConnection().getConnection();
+				PreparedStatement ps = connection.prepareStatement(SELECT_HEADS))
 		{
 			final ResultSet rs = ps.executeQuery();
 			while (rs.next())
 			{
-				Head hd = new Head(rs.getInt("price"),
-						rs.getString("name"),
-						rs.getString("description"));
-				
+				Head hd = new Head(rs.getInt("price"), rs.getString("name"), rs.getString("description"));
+
 				headCollection.add(hd);
 			}
 		}

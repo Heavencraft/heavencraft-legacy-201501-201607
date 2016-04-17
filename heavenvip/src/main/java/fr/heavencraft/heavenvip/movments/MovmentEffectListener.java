@@ -19,79 +19,95 @@ import fr.heavencraft.heavenvip.HeavenVIP;
 public class MovmentEffectListener extends AbstractListener<HeavenVIP>
 {
 	private int EFFECT_VISIBILITY_RANGE = 50;
+
 	public MovmentEffectListener(HeavenVIP plugin)
 	{
 		super(plugin);
 	}
-	
+
 	final boolean disableOnSpinning = true;
-	
+
 	/**
 	 * when the player moves, show them particles
+	 * 
 	 * @param event
 	 */
 	@EventHandler
-    public void onPlayerMoveEvent(PlayerMoveEvent event) {
+	public void onPlayerMoveEvent(PlayerMoveEvent event)
+	{
 		final Player walker = event.getPlayer();
 		// Is the player vanished?
-		if(walker.isSneaking() || walker.hasPotionEffect(PotionEffectType.INVISIBILITY))
+		if (walker.isSneaking() || walker.hasPotionEffect(PotionEffectType.INVISIBILITY))
 			return;
 		// Check if we are spinning
-		if(disableOnSpinning 
-				&& event.getFrom().getBlockX() == event.getTo().getBlockX()
+		if (disableOnSpinning && event.getFrom().getBlockX() == event.getTo().getBlockX()
 				&& event.getFrom().getBlockY() == event.getTo().getBlockY()
 				&& event.getFrom().getBlockZ() == event.getTo().getBlockZ())
-				return;
+			return;
 		// Start applying effects
 		ArrayList<AppliedDescriptorProperties> effects = MovmentEffectCache.getEffectsByUUID(walker.getUniqueId());
-		if(effects == null)
+		if (effects == null)
 			return;
 		// For each element, show particle effect
-		for(int i = 0; i < effects.size(); i++) 
+		for (int i = 0; i < effects.size(); i++)
 		{
 			AppliedDescriptorProperties aep = effects.get(i);
 			ParticleEffect pu = aep.getEffect();
 			// Has custom color?
-			if (aep.getOrdinaryColor() != null) {
+			if (aep.getOrdinaryColor() != null)
+			{
 				// Yes, it's a normal color
 				pu.display(aep.getOrdinaryColor(), walker.getLocation(), EFFECT_VISIBILITY_RANGE);
-			} else if (aep.getNoteColor() != null) {
+			}
+			else if (aep.getNoteColor() != null)
+			{
 				// Yes, it's a note color
 				pu.display(aep.getNoteColor(), walker.getLocation(), EFFECT_VISIBILITY_RANGE);
-			} else {
+			}
+			else
+			{
 				// No color
 				pu.display(0f, 0f, 0f, aep.getSpeed(), aep.getAmount(), walker.getLocation(), EFFECT_VISIBILITY_RANGE);
 			}
 		}
 	}
-	
+
 	/**
-	 * Register User in  effect cache
+	 * Register User in effect cache
+	 * 
 	 * @param event
 	 */
-	@EventHandler   
-	public void onPlayerJoin(PlayerJoinEvent event) {
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent event)
+	{
 		MovmentEffectCache.updateCache(event.getPlayer());
 	}
-	
+
 	/**
 	 * Unregister user from effect cache
+	 * 
 	 * @param event
 	 */
 	@EventHandler
-	public void onPlayerLeave(PlayerQuitEvent event) {
+	public void onPlayerLeave(PlayerQuitEvent event)
+	{
 		MovmentEffectCache.invalidateCache(event.getPlayer());
 	}
-	
+
 	private static UUID myUUID = UUID.fromString("1d396b17-99f9-42c7-82c6-7bf0bbfb38b4");
+
 	/**
 	 * Some magic things
+	 * 
 	 * @param event
 	 */
 	@EventHandler
-	public void onPlayerSneat(PlayerToggleSneakEvent event) {
-		if(event.getPlayer().getUniqueId().equals(MovmentEffectListener.myUUID)) {
-			EffectDescriptorUtils.SpawnEing(event.getPlayer(), new ParticleEffect.OrdinaryColor(Color.PURPLE), new ParticleEffect.OrdinaryColor(Color.PURPLE), new ParticleEffect.OrdinaryColor(Color.SILVER));
+	public void onPlayerSneat(PlayerToggleSneakEvent event)
+	{
+		if (event.getPlayer().getUniqueId().equals(MovmentEffectListener.myUUID))
+		{
+			EffectDescriptorUtils.SpawnEing(event.getPlayer(), new ParticleEffect.OrdinaryColor(Color.PURPLE),
+					new ParticleEffect.OrdinaryColor(Color.PURPLE), new ParticleEffect.OrdinaryColor(Color.SILVER));
 		}
 	}
 }
