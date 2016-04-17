@@ -7,20 +7,6 @@ import org.bukkit.World;
 
 public class WorldsManager
 {
-	/*
-	 * Singleton pattern
-	 */
-
-	private static WorldsManager instance;
-
-	public static WorldsManager getInstance()
-	{
-		if (instance == null)
-			instance = new WorldsManager();
-
-		return instance;
-	}
-
 	private final World world;
 	private final World world_nether;
 	private final World world_the_end;
@@ -61,5 +47,19 @@ public class WorldsManager
 	{
 		for (final World world : Bukkit.getWorlds())
 			world.setDifficulty(difficulty);
+	}
+
+	/*
+	 * Singleton pattern
+	 */
+
+	private static WorldsManager instance;
+
+	public static WorldsManager get()
+	{
+		if (instance == null)
+			instance = new WorldsManager();
+
+		return instance;
 	}
 }

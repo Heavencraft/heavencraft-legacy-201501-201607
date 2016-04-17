@@ -13,9 +13,9 @@ import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavensurvival.bukkit.BukkitHeavenSurvival;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUser;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUserProvider;
 import fr.heavencraft.heavensurvival.common.users.UpdateUserNameQuery;
-import fr.heavencraft.heavensurvival.common.users.User;
-import fr.heavencraft.heavensurvival.common.users.UserProvider;
 
 // Listener used to update users table
 public class UsersListener extends AbstractListener<HeavenPlugin>
@@ -36,7 +36,7 @@ public class UsersListener extends AbstractListener<HeavenPlugin>
 
 		try
 		{
-			final User user = UserProvider.getInstance().getUserByUniqueId(uniqueId);
+			final SurvivalUser user = SurvivalUserProvider.get().getUserByUniqueId(uniqueId);
 
 			if (!name.equals(user.getName()))
 			{
@@ -45,7 +45,7 @@ public class UsersListener extends AbstractListener<HeavenPlugin>
 		}
 		catch (final UserNotFoundException ex)
 		{
-			UserProvider.getInstance().createUser(uniqueId, name);
+			SurvivalUserProvider.get().createUser(uniqueId, name);
 		}
 		catch (final HeavenException e)
 		{

@@ -3,10 +3,12 @@ package fr.heavencraft.heavensurvival.bukkit;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
+import fr.heavencraft.heavencore.sql.Database;
+import fr.heavencraft.heavencore.sql.HikariConnectionProvider;
+import fr.heavencraft.heavensurvival.bukkit.protection.ProtectionCommand;
+import fr.heavencraft.heavensurvival.bukkit.protection.SelectionManager;
 import fr.heavencraft.heavensurvival.bukkit.pvp.PVPCommand;
 import fr.heavencraft.heavensurvival.bukkit.pvp.PVPListener;
-import fr.heavencraft.heavensurvival.bukkit.teleport.ProtectionCommand;
-import fr.heavencraft.heavensurvival.bukkit.teleport.SelectionManager;
 import fr.heavencraft.heavensurvival.bukkit.users.LitCommand;
 import fr.heavencraft.heavensurvival.bukkit.users.UsersListener;
 import fr.heavencraft.heavensurvival.bukkit.worlds.DifficultyTask;
@@ -14,7 +16,6 @@ import fr.heavencraft.heavensurvival.bukkit.worlds.SetspawnCommand;
 import fr.heavencraft.heavensurvival.bukkit.worlds.SpawnCommand;
 import fr.heavencraft.heavensurvival.common.HeavenSurvival;
 import fr.heavencraft.heavensurvival.common.HeavenSurvivalInstance;
-import fr.heavencraft.heavensurvival.common.HikariConnectionProvider;
 
 public class BukkitHeavenSurvival extends HeavenPlugin implements HeavenSurvival
 {
@@ -24,9 +25,10 @@ public class BukkitHeavenSurvival extends HeavenPlugin implements HeavenSurvival
 	{
 		HeavenSurvivalInstance.set(this);
 
-		connectionProvider = new HikariConnectionProvider();
+		connectionProvider = new HikariConnectionProvider(Database.UAT_SURVIVAL);
 	}
 
+	@Override
 	public ConnectionProvider getConnectionProvider()
 	{
 		return connectionProvider;

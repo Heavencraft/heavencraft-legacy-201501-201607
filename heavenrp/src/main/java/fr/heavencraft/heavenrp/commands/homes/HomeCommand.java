@@ -10,6 +10,7 @@ import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
+import fr.heavencraft.heavenrp.RPGLocks;
 import fr.heavencraft.heavenrp.database.homes.HomeProvider;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 
@@ -36,7 +37,8 @@ public class HomeCommand extends AbstractCommandExecutor
 		}
 
 		Location home = HomeProvider.getHome(UserProvider.getUserByName(player.getName()), nb);
-
+		
+		RPGLocks.getInstance().canTeleport(player);
 		PlayerUtil.teleportPlayer(player, home);
 	}
 

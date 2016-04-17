@@ -14,10 +14,10 @@ public class UpdateUserNameQuery extends AbstractQuery
 	private static final String QUERY = "UPDATE users SET name = ? WHERE uuid = ? LIMIT 1;";
 
 	private final ConnectionProvider connectionProvider = HeavenSurvivalInstance.get().getConnectionProvider();
-	private final User user;
+	private final SurvivalUser user;
 	private final String name;
 
-	public UpdateUserNameQuery(User user, String name)
+	public UpdateUserNameQuery(SurvivalUser user, String name)
 	{
 		this.user = user;
 		this.name = name;
@@ -38,7 +38,7 @@ public class UpdateUserNameQuery extends AbstractQuery
 			System.out.println("Executing query " + ps);
 			ps.executeUpdate();
 
-			UserProvider.getInstance().invalidateCache(user);
+			SurvivalUserProvider.get().invalidateCache(user);
 		}
 	}
 }

@@ -8,8 +8,8 @@ import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavensurvival.common.pvp.PVPManager;
-import fr.heavencraft.heavensurvival.common.users.User;
-import fr.heavencraft.heavensurvival.common.users.UserProvider;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUser;
+import fr.heavencraft.heavensurvival.common.users.SurvivalUserProvider;
 
 public class PVPCommand extends AbstractCommandExecutor
 {
@@ -21,7 +21,7 @@ public class PVPCommand extends AbstractCommandExecutor
 	@Override
 	protected void onPlayerCommand(final Player player, String[] args) throws HeavenException
 	{
-		final User user = UserProvider.getInstance().getUserByUniqueId(player.getUniqueId());
+		final SurvivalUser user = SurvivalUserProvider.get().getUserByUniqueId(player.getUniqueId());
 
 		if (user.isPvp())
 		{

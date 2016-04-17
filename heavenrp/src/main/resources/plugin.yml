@@ -51,14 +51,12 @@ commands:
   maires:
   parcelle:
   web:
-  reloadPoste:
-  listPoste:
-  colis:
-  addPoste:
-  removePoste:
   noentities:
   hurt:
   provinces:
   jobs:
     aliases: [job, metier, metiers]
   jobsadmin:
+  donjon:
+    aliases: [dj, djn]
+  scrolls:

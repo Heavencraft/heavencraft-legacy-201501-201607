@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencrea.users;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,14 +11,14 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
+import fr.heavencraft.deprecated.DeprecatedUserProvider;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.exceptions.SQLErrorException;
 import fr.heavencraft.heavencore.exceptions.UserNotFoundException;
 import fr.heavencraft.heavencore.logs.HeavenLog;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavencore.users.UserProvider;
 
-public class CreativeUserProvider implements UserProvider<CreativeUser>
+public class CreativeUserProvider implements DeprecatedUserProvider<CreativeUser>
 {
 	// SQL Queries
 	private static final String PRELOAD_USERS = "SELECT * FROM users;";
@@ -44,7 +45,8 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 
 	private void loadUsers()
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(PRELOAD_USERS))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(PRELOAD_USERS))
 		{
 			try (ResultSet rs = ps.executeQuery())
 			{
@@ -68,7 +70,8 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 
 	private CreativeUser loadUser(UUID uuid) throws UserNotFoundException, SQLErrorException
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(LOAD_USER))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(LOAD_USER))
 		{
 			ps.setString(1, uuid.toString());
 
@@ -115,7 +118,8 @@ public class CreativeUserProvider implements UserProvider<CreativeUser>
 	@Override
 	public CreativeUser createUser(UUID uuid, String name) throws HeavenException
 	{
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(CREATE_USERS))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(CREATE_USERS))
 		{
 			ps.setString(1, uuid.toString());
 			ps.setString(2, name);

@@ -5,18 +5,18 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
-import fr.heavencraft.heavencore.users.HasUserProvider;
 import fr.heavencraft.heavencore.users.User;
+import fr.heavencraft.heavencore.users.UserProvider;
 
-public class TabColorScoreboard<P extends HeavenPlugin & HasUserProvider<U>, U extends User>
+public class TabColorScoreboard
 {
 	private final Map<TabColor, ScoreboardTeam> teams = new HashMap<TabColor, ScoreboardTeam>();
 
-	public TabColorScoreboard(P plugin)
+	public TabColorScoreboard(UserProvider<? extends User> userProvider, JavaPlugin plugin)
 	{
 		final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
@@ -39,7 +39,7 @@ public class TabColorScoreboard<P extends HeavenPlugin & HasUserProvider<U>, U e
 			teams.put(color, team);
 		}
 
-		for (final User user : plugin.getUserProvider().getAllUsers())
+		for (final User user : userProvider.getAllUsers())
 		{
 			setPlayerColor(Bukkit.getOfflinePlayer(user.getUniqueId()), user.getTabColor());
 		}

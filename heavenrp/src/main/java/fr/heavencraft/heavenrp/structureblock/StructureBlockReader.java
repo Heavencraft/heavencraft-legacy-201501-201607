@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.bukkit.Material;
 
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
 
 public class StructureBlockReader
@@ -21,7 +22,8 @@ public class StructureBlockReader
 	 */
 	static Material[][][] fillStructureList(String fileName, Material[][][] layers)
 	{
-
+		
+		ChatUtil.broadcastMessage("Plugin folder path: " + HeavenRP.getInstance().getDataFolder().getPath());
 		// fill 3D list by reading a configuration file
 		try (final BufferedReader reader = new BufferedReader(
 				new FileReader(HeavenRP.getInstance().getDataFolder().getPath() + fileName)))

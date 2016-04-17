@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 
 public class StructureBlockSmelteryInventoryListener implements Listener
 {
@@ -116,7 +117,7 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 	}
 
 	@EventHandler
-	private void onPlayerInteractWithInventory(InventoryClickEvent event) throws HeavenException
+	private void onPlayerInteractWithInventory(InventoryClickEvent event)
 	{
 		if (!event.getInventory().getName().equals(INVENTORYTITLE))
 			return;
@@ -138,14 +139,23 @@ public class StructureBlockSmelteryInventoryListener implements Listener
 			if (placeAction.contains(action))
 			{
 				event.setCancelled(true);
-				throw new HeavenException(INVALIDPLACEMESSAGE);
+				ChatUtil.sendMessage(event.getWhoClicked(), INVALIDPLACEMESSAGE);
+				return;
 			}
 			return;
 		}
 		if (event.getRawSlot() == 13)
 		{
 			event.setCancelled(true);
-			playerLaunchSmelt(event.getWhoClicked(), event.getInventory());
+			try
+			{
+				playerLaunchSmelt(event.getWhoClicked(), event.getInventory());
+			}
+			catch (HeavenException e)
+			{
+				ChatUtil.sendMessage(event.getWhoClicked(), e.getMessage());
+				return;
+			}
 		}
 		else
 		{

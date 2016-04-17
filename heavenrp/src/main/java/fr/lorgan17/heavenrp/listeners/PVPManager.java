@@ -164,6 +164,15 @@ public class PVPManager extends AbstractListener<HeavenPlugin>
 	{
 		Bukkit.broadcastMessage(ChatColor.AQUA + " * " + String.format(message, args));
 	}
+	
+	public static boolean isPlaying(Player p)
+	{
+		if(_team1 == null || _team2 == null)
+			return false;
+		if(_team1.contains(p) || _team2.contains(p))
+			return true;
+		return false;
+	}
 
 	static class Team
 	{
@@ -250,7 +259,8 @@ public class PVPManager extends AbstractListener<HeavenPlugin>
 				p.getInventory().setChestplate(null);
 				p.getInventory().setHelmet(null);
 
-				p.getActivePotionEffects().clear();
+				for (PotionEffect effect : p.getActivePotionEffects())
+					p.removePotionEffect(effect.getType());
 
 				p.setHealth(20);
 				p.setFoodLevel(30);

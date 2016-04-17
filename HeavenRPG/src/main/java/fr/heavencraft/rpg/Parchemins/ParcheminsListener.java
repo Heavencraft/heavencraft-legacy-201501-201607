@@ -9,14 +9,13 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.heavencraft.Utils.ChatUtil;
 import fr.heavencraft.rpg.HeavenRPG;
-import fr.heavencraft.rpg.donjon.DungeonManager;
 import fr.heavencraft.rpg.player.RPGPlayerManager;
 
 public class ParcheminsListener implements Listener {
 
 	public ParcheminsListener()
 	{
-		Bukkit.getPluginManager().registerEvents(this, HeavenRPG.getInstance());
+		//Bukkit.getPluginManager().registerEvents(this, HeavenRPG.getInstance());
 	}
 	private final static String REQUIREMENT_NOT_MET = "Vous n'avez pas les aptitudes a utiliser cet objet.";
 
@@ -30,8 +29,7 @@ public class ParcheminsListener implements Listener {
 		if(p == null)
 			return;
 		
-		if(DungeonManager.getRoomByLocation(event.getPlayer().getLocation()) != null)
-			return;
+		//TODO check if player is in dungeon
 
 		if(p.canDo(RPGPlayerManager.getRPGPlayer(event.getPlayer())))
 		{
