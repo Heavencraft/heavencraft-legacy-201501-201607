@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenvip.querys;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -25,7 +26,8 @@ public class UnequipEffectQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
-		try (PreparedStatement ps = HeavenVIP.getProxyConnection().getConnection().prepareStatement(QUERY))
+		try (Connection connection = HeavenVIP.getProxyConnection().getConnection();
+				PreparedStatement ps = connection.prepareStatement(QUERY))
 		{
 			ps.setString(1, (String.valueOf(this.type)));
 			ps.setString(2, this.uuid);

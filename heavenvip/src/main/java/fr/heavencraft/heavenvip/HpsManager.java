@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenvip;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +12,9 @@ public class HpsManager
 
 	public static int getBalance(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = HeavenVIP.getWebConnection().getConnection().prepareStatement(
-				"SELECT balance FROM heavencraft_users WHERE username = ?"))
+		try (Connection connection = HeavenVIP.getWebConnection().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("SELECT balance FROM heavencraft_users WHERE username = ?"))
 		{
 			ps.setString(1, name);
 

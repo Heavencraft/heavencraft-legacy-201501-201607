@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenvip.movments;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,8 +26,9 @@ public class EquipMenu extends VipMenu
 		super(new Menu("§7Equipement pour " + packName, 3));
 
 		// Get a list of effects in this pack
-		try (PreparedStatement ps = HeavenVIP.getProxyConnection().getConnection()
-				.prepareStatement("SELECT vip_movment_descriptors.*, CASE WHEN EXISTS(" +
+		try (Connection connection = HeavenVIP.getProxyConnection().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("SELECT vip_movment_descriptors.*, CASE WHEN EXISTS(" +
 						"SELECT 1 FROM vip_equiped WHERE vip_equiped.uuid = ? AND vip_equiped.descriptor_id = vip_movment_descriptors.vip_movment_descriptor_id LIMIT 1)" +
 						"THEN 1 " +
 						"ELSE 0 " +

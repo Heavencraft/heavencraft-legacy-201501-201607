@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenvip.querys;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -23,7 +24,9 @@ public class UpdateHPSBalanceQuery extends AbstractQuery
 	@Override
 	public void executeQuery() throws HeavenException, SQLException
 	{
-		try (PreparedStatement ps = HeavenVIP.getWebConnection().getConnection().prepareStatement(QUERY))
+		try (Connection connection = HeavenVIP.getWebConnection().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement(QUERY))
 		{
 			ps.setInt(1, delta);
 			ps.setString(2, name);
