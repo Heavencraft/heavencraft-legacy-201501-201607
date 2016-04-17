@@ -18,6 +18,7 @@ import org.bukkit.util.Vector;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.jobs.Job;
@@ -35,13 +36,14 @@ public class StructureBlockSmelteryListener extends AbstractListener<HeavenPlugi
 	final String FIRSTLORE = ChatColor.GRAY + "Cliquez pour faire fondre";
 	final String SECONDLORE = ChatColor.GRAY + "(Consomme un seau de lave)";
 	final String DISPLAYNAME = ChatColor.RED + "Faire Fondre";
+	final String NOVALIDJOB = "Vous devez être forgeron ou ferailleur pour utiliser cette machine.";
 
 	public StructureBlockSmelteryListener(HeavenPlugin plugin)
 	{
 		super(plugin);
 		jobList.add(9);
 		jobList.add(11);
-		
+
 	}
 
 	@EventHandler
@@ -62,8 +64,18 @@ public class StructureBlockSmelteryListener extends AbstractListener<HeavenPlugi
 
 		final User user = UserProvider.getUserByName(player.getName());
 		final Job job = user.getJob();
-		if (!jobList.contains(job.getId()))
+		try
+		{
+			if (!jobList.contains(job.getId()))
+			{
+				throw new HeavenException(NOVALIDJOB);
+			}
+		}
+		catch (final HeavenException e)
+		{
+			ChatUtil.sendMessage(player, e.getMessage());
 			return;
+		}
 
 		event.setCancelled(true);
 		player.openInventory(getInventory());
