@@ -64,7 +64,7 @@ public class StructureBlockSmelteryListener extends AbstractListener<HeavenPlugi
 
 		final User user = UserProvider.getUserByName(player.getName());
 		final Job job = user.getJob();
-		if (!jobList.contains(job.getId()))
+		if (job == null || !jobList.contains(job.getId()))
 		{
 			ChatUtil.sendMessage(player, NOVALIDJOB);
 			return;
