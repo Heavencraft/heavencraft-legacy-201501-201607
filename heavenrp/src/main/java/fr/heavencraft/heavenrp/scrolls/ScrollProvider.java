@@ -53,14 +53,14 @@ public class ScrollProvider
 
 		// Montage ne neige
 		String[] loreSnowMountain = { "&eTéléportation", "&eVers le donjon de la Montagne de Neige" };
-		Scroll scrollSnowMountain = new TeleportationScroll("Téléporation: la Montagne de Neige",
+		Scroll scrollSnowMountain = new TeleportationScroll("Téléporation: La Montagne de Neige",
 				Arrays.asList(loreSnowMountain),
 				new Location(WorldsManager.getWorld(), -1581.0, 110.0, -2307.0, 37f, 0f));
 		scrolls.put(scrollSnowMountain.getItem().getItemMeta().getDisplayName(), scrollSnowMountain);
 
 		// Temple des sables
 		String[] loreSandTemple = { "&eTéléportation", "&eVers le Temple des Sables" };
-		Scroll scrollSandTemple = new TeleportationScroll("Téléporation: le Temple des Sables",
+		Scroll scrollSandTemple = new TeleportationScroll("Téléporation: Le Temple des Sables",
 				Arrays.asList(loreSandTemple), new Location(WorldsManager.getWorld(), -1364.0, 64.0, -240.0, -90f, 0f));
 		scrolls.put(scrollSandTemple.getItem().getItemMeta().getDisplayName(), scrollSandTemple);
 
@@ -72,7 +72,7 @@ public class ScrollProvider
 
 		// Les mines de charbon
 		String[] loreCoalMines = { "&eTéléportation", "&eVers les Mines de charbon" };
-		Scroll scrollCoalMines = new TeleportationScroll("Téléporation: les Mines de charbon",
+		Scroll scrollCoalMines = new TeleportationScroll("Téléporation: Les Mines de charbon",
 				Arrays.asList(loreCoalMines), new Location(WorldsManager.getWorld(), 2263.0, 75.0, -1619.0, 66f, 0f));
 		scrolls.put(scrollCoalMines.getItem().getItemMeta().getDisplayName(), scrollCoalMines);
 
