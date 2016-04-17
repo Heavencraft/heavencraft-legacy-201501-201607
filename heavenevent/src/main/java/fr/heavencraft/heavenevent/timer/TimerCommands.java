@@ -14,7 +14,8 @@ public class TimerCommands extends AbstractCommandExecutor
 	private final String ERRORPERMISSION = "Vous ne pouvez pas faire ça.";
 	private final String STARTERROR = "Il y a déjà une partie en cours.";
 	private final String STOPERROR = "Il n'y a pas de partie en cours";
-	private final String SUCCESS = "Timer sauvegardé";
+	private final String STARTSUCCESS = "Timer sauvegardé";
+	private final String STOPSUCCESS = "Timer arrêté";
 
 	public TimerCommands(HeavenPlugin plugin)
 	{
@@ -40,7 +41,8 @@ public class TimerCommands extends AbstractCommandExecutor
 				throw new HeavenException(STARTERROR);
 
 			// Save Started Time of the event
-			player.sendMessage(SUCCESS);
+			TimerConfigurationEditor.saveCurrentTime();
+			player.sendMessage(STARTSUCCESS);
 
 			// launch Scoreboard
 			TimerScoreboard.initScoreboard();
@@ -56,6 +58,8 @@ public class TimerCommands extends AbstractCommandExecutor
 			// Reset Event Timer
 			TimerScoreboard.stopScoreboard();
 			TimerConfigurationEditor.resetConfig();
+
+			player.sendMessage(STOPSUCCESS);
 		}
 
 	}
@@ -63,6 +67,12 @@ public class TimerCommands extends AbstractCommandExecutor
 	@Override
 	protected void onConsoleCommand(CommandSender sender, String[] args) throws HeavenException
 	{
+		if (args.length <= 0)
+		{
+			sendUsage(sender);
+			return;
+		}
+
 		if (args[0].equalsIgnoreCase("stop"))
 		{
 			// if there is no Timer running
