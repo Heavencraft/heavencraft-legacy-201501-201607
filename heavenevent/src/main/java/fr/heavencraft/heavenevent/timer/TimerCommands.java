@@ -56,6 +56,7 @@ public class TimerCommands extends AbstractCommandExecutor
 				throw new HeavenException(STOPERROR);
 
 			// Reset Event Timer
+			TimerConfigurationEditor.saveFinalTime();
 			TimerScoreboard.stopScoreboard();
 			TimerConfigurationEditor.resetConfig();
 

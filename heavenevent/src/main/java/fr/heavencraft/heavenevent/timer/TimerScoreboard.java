@@ -23,10 +23,10 @@ public class TimerScoreboard
 	private static BukkitScheduler updateTimer = Bukkit.getServer().getScheduler();
 
 	private static long currentTime;
-	private static long currentDay;
-	private static long currentHours;
-	private static long currentMinutes;
-	private static long currentSeconds;
+	static long currentDay;
+	static long currentHours;
+	static long currentMinutes;
+	static long currentSeconds;
 
 	/**
 	 * initialize the Scoreboard timer
