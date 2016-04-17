@@ -384,15 +384,14 @@ public class DungeonManager
 	 */
 	public static void PlayerDies(Player p, final String dungeonName) throws HeavenException
 	{
-		if (getDungeon(dungeonName) == null)
-			throw new HeavenException("Vous n'êtes pas dans un dojon.");
 		// Store player inventory
 		DeadDungeonPlayerInventoryStore.StoreInventory(p);
 		p.setLevel(0);
 		p.setTotalExperience(0);
-		p.getActivePotionEffects().clear();
 		p.setHealth(p.getMaxHealth());
 		p.setFireTicks(0);
+		p.setNoDamageTicks(5);
+		
 		p.setFoodLevel(20);
 		Dungeon dg = getDungeon(dungeonName);
 		// Teleport to lobby
@@ -1101,7 +1100,6 @@ public class DungeonManager
 		@Override
 		public void run()
 		{
-			System.out.println("Running dungeon Mob cache desyncronisation check task...");
 			for (Dungeon dg : Dungeons.values())
 			{
 				if (dg.DungeonState != DungeonManager.DungeonStates.RUNNING)
@@ -1128,7 +1126,7 @@ public class DungeonManager
 						if (!found)
 						{
 							corruptedMobs.add(uid);
-							System.out.println("Found mob in cache, with no physical existance, removeing!");
+							System.out.println("Found mob in dungeon cache, with no physical existance, removeing!");
 						}
 					}
 					for (int i = 0; i < corruptedMobs.size(); i++)
