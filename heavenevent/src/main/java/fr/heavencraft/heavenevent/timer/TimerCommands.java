@@ -62,7 +62,9 @@ public class TimerCommands extends AbstractCommandExecutor
 			player.sendMessage(STOPSUCCESS);
 		}
 		else
+		{
 			sendUsage(player);
+		}
 	}
 
 	@Override

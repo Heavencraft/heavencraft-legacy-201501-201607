@@ -12,7 +12,7 @@ public class TimerConfigurationEditor
 	/**
 	 * Test if Config is empty and in this case load the default config
 	 */
-	static void loadDefaultConfig()
+	static void tryConfig()
 	{
 		if (!getConfig().contains("start"))
 			getConfig().set("start", false);

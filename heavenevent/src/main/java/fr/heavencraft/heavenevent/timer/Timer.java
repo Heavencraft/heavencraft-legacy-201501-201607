@@ -6,7 +6,7 @@ public class Timer
 	public static void loadTimer()
 	{
 
-		TimerConfigurationEditor.loadDefaultConfig();
+		TimerConfigurationEditor.tryConfig();
 
 		// during an event, start the Timer
 		if (TimerConfigurationEditor.start)
