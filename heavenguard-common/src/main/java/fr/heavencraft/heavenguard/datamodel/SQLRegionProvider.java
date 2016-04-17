@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenguard.datamodel;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,7 +56,8 @@ public class SQLRegionProvider implements RegionProvider
 
 	private void loadFromDatabase() throws StopServerException
 	{
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(PRELOAD_REGIONS))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(PRELOAD_REGIONS))
 		{
 			try (ResultSet rs = ps.executeQuery())
 			{
@@ -79,7 +81,8 @@ public class SQLRegionProvider implements RegionProvider
 
 	private Region loadRegion(String name) throws RegionNotFoundException, SQLErrorException
 	{
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(LOAD_REGION))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(LOAD_REGION))
 		{
 			ps.setString(1, name);
 
@@ -102,7 +105,8 @@ public class SQLRegionProvider implements RegionProvider
 
 	private void loadGlobalRegions() throws StopServerException
 	{
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(PRELOAD_GLOBAL_REGIONS))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(PRELOAD_GLOBAL_REGIONS))
 		{
 			try (ResultSet rs = ps.executeQuery())
 			{
@@ -173,7 +177,8 @@ public class SQLRegionProvider implements RegionProvider
 		if (regionsByName.get(name) != null)
 			throw new HeavenException("La protection {%1$s} existe déjà.", name);
 
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(CREATE_REGION))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(CREATE_REGION))
 		{
 			ps.setString(1, name);
 			ps.setString(2, world);
@@ -201,7 +206,8 @@ public class SQLRegionProvider implements RegionProvider
 	@Override
 	public void deleteRegion(String name) throws HeavenException
 	{
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(DELETE_REGION))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(DELETE_REGION))
 		{
 			ps.setString(1, name);
 

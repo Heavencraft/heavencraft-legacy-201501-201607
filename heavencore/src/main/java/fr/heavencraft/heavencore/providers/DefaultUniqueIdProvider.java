@@ -1,5 +1,6 @@
 package fr.heavencraft.heavencore.providers;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +37,8 @@ public class DefaultUniqueIdProvider implements UniqueIdProvider
 			return name;
 		}
 
-		try (PreparedStatement ps = connectionProvider.getConnection().prepareStatement(GET_NAME))
+		try (Connection connection = connectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(GET_NAME))
 		{
 			ps.setString(1, id.toString().replace("-", ""));
 

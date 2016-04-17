@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenguard.datamodel;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -55,8 +56,8 @@ public class SQLFlagHandler implements FlagHandler
 
 			if (metadata.getColumnType(column) != flag.getType().getSQLType())
 			{
-				log.warn("Type mismatch : column = %1$s, flag = %2$s", metadata.getColumnType(column), flag
-						.getType().getSQLType());
+				log.warn("Type mismatch : column = %1$s, flag = %2$s", metadata.getColumnType(column),
+						flag.getType().getSQLType());
 				continue;
 			}
 
@@ -114,7 +115,8 @@ public class SQLFlagHandler implements FlagHandler
 	{
 		final String query = String.format(SET_FLAG, FLAG_PREFIX + flag.getName());
 
-		try (PreparedStatement ps = connectionHandler.getConnection().prepareStatement(query))
+		try (Connection connection = connectionHandler.getConnection();
+				PreparedStatement ps = connection.prepareStatement(query))
 		{
 			if (value != null)
 				ps.setObject(1, value, flag.getType().getSQLType());

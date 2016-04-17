@@ -1,5 +1,7 @@
 package fr.heavencraft.heavenrp.provinces;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -24,12 +26,13 @@ public class ProvinceListener extends AbstractListener<HeavenPlugin>
 	private void onPlayerJoin(PlayerJoinEvent event) throws HeavenException
 	{
 		Player player = event.getPlayer();
-
+		OfflinePlayer oplayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+		
 		User user = UserProvider.getUserByName(player.getName());
 		Province province = ProvincesManager.getProvinceByUser(user);
 
 		// Apply province colors
-		ProvinceScoreboard.applyTeamColor(player, province);
+		ProvinceScoreboard.applyTeamColor(oplayer, province);
 
 		if (province == null)
 			ChatUtil.sendMessage(player, "Vous n'avez pas encore choisi de province.");
