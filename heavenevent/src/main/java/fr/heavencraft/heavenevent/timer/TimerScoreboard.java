@@ -111,7 +111,7 @@ public class TimerScoreboard
 				updateScoreboardTime();
 			}
 
-		}, 20L, 20L);
+		}, 0L, 20L);
 
 	}
 
