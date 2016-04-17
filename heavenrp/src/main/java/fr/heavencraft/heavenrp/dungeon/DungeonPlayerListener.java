@@ -43,7 +43,7 @@ public class DungeonPlayerListener extends AbstractListener<HeavenPlugin>
 		if (dg == null)
 			return;
 		// Would the player die?
-		if (p.getHealth() < e.getFinalDamage())
+		if (p.getHealth() <= e.getFinalDamage())
 		{
 			e.setDamage(0);
 			DungeonManager.PlayerDies(p, dg.getName());
@@ -67,7 +67,7 @@ public class DungeonPlayerListener extends AbstractListener<HeavenPlugin>
 //		if (e.getCause() == DamageCause.FALL)
 //			return;
 		// Would the player die?
-		if (p.getHealth() < e.getFinalDamage())
+		if (p.getHealth() <= e.getFinalDamage())
 		{
 			e.setDamage(0);
 			DungeonManager.PlayerDies(p, dg.getName());
