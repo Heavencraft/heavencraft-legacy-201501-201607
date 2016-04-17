@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -45,8 +46,8 @@ public class DungeonManager
 	private static String DUNGEON_ROOM_DELETED = "La salle {%1$d} a été supprimée avec succès.";
 	private static String LOADING_DUNGEON = "Je me prépare a enter dans le donjon!";
 	private static String NOT_ALL_MOBS_DEAD = "Il y a encore {%1$d} monstre(s)!";
-	private static String WON_DUNGEON = "{Victoire}!";
-	private static String LOST_DUNGEON = "{Défaite}!";
+	private static String WON_DUNGEON = ChatColor.GREEN + " Victoire " + ChatColor.GOLD + "!";
+	private static String LOST_DUNGEON = " {Défaite} !";
 	private static String YOU_LEFT_DUNGEON = "Vous avez pris la {fuite}!";
 	private static String SOMEONE_OF_YOUR_TEAM_FLEED = "Un de mes amis a pris la fuite!";
 
