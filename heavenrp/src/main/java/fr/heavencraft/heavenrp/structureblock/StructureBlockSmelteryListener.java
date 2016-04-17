@@ -8,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -16,16 +15,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.AbstractListener;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavenrp.HeavenRP;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
 import fr.heavencraft.heavenrp.jobs.Job;
 
-public class StructureBlockSmelteryListener implements Listener
+public class StructureBlockSmelteryListener extends AbstractListener<HeavenPlugin>
 {
-	final HeavenRP plugin;
-
 	// smeltery properties
 	final Vector relativeVector = new Vector(-4, 2, 2);
 	final ArrayList<Integer> jobList = new ArrayList<Integer>();
@@ -38,13 +36,12 @@ public class StructureBlockSmelteryListener implements Listener
 	final String SECONDLORE = ChatColor.GRAY + "(Consomme un seau de lave)";
 	final String DISPLAYNAME = ChatColor.RED + "Faire Fondre";
 
-	public StructureBlockSmelteryListener(HeavenRP plugin)
+	public StructureBlockSmelteryListener(HeavenPlugin plugin)
 	{
+		super(plugin);
 		jobList.add(9);
 		jobList.add(11);
-
-		this.plugin = plugin;
-		Bukkit.getPluginManager().registerEvents(this, plugin);
+		
 	}
 
 	@EventHandler
