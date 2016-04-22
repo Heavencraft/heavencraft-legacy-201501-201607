@@ -40,7 +40,7 @@ public class DungeonManager
 	// Messages
 	private static String DUNGEON_WAITING_FOR_PLAYERS = "Je dois attendre encore %1$d camarade(s).";
 	private static String DUNGEON_CREATED = "Le donjon %1$s a été crée avec succès.";
-	private static String DUNGEON_FIRST_ROOM_SET = "Vous avez changé la première salle du dojnon %1$s avec succès.";
+	private static String DUNGEON_FIRST_ROOM_SET = "Vous avez changé la première salle du donjon %1$s avec succès.";
 	private static String DUNGEON_DELETED = "Le donjon %1$s a été supprimé avec succes.";
 	private static String DUNGEON_ROOM_CREATED = "La salle {%1$d} a été ajouté avec succès.";
 	private static String DUNGEON_ROOM_DELETED = "La salle {%1$d} a été supprimée avec succès.";
