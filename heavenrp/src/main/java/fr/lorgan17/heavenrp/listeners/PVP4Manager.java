@@ -136,4 +136,11 @@ public class PVP4Manager extends AbstractListener<HeavenPlugin>
 	{
 		Bukkit.broadcastMessage(ChatColor.AQUA + " * " + String.format(message, args));
 	}
+
+	public static boolean isPlaying(Player p)
+	{
+		if(fighters.contains(p))
+			return true;
+		return false;
+	}
 }
