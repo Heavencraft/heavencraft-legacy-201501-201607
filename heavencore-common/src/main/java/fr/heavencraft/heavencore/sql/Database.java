@@ -9,20 +9,20 @@ public class Database
 {
 	private static Map<String, Database> databasesByName = new HashMap<String, Database>();
 
-	public static final Database WEB = new Database("mc-db");
-	public static final Database PROXY = new Database("proxy");
-	public static final Database SEMIRP = new Database("minecraft-semirp");
-	public static final Database CREATIVE = new Database("minecraft-creative");
+	public static final Database WEB = new Database("mc-db", 2);
+	public static final Database PROXY = new Database("proxy", 2);
+	public static final Database SEMIRP = new Database("minecraft-semirp", 5);
+	public static final Database CREATIVE = new Database("minecraft-creative", 5);
 
-	public static final Database UAT_CREATIVE = new Database("minecraft-creative-test");
-	public static final Database UAT_SEMIRP = new Database("minecraft-semirp-test");
-	public static final Database UAT_SURVIVAL = new Database("minecraft-survie-test");
-	public static final Database UAT_FUN = new Database("minecraft-fun-test");
+	public static final Database UAT_CREATIVE = new Database("minecraft-creative-test", 2);
+	public static final Database UAT_SEMIRP = new Database("minecraft-semirp-test", 2);
+	public static final Database UAT_SURVIVAL = new Database("minecraft-survie-test", 2);
+	public static final Database UAT_FUN = new Database("minecraft-fun-test", 2);
 
-	public static final Database TEST = new Database("test");
+	public static final Database TEST = new Database("test", 1);
 
 	public static final Database HELLCRAFT_WEB = new Database("91.121.170.189", "hellcraft", "CUynkyKVI3CHaCsSPis9",
-			"mc-db");
+			"mc-db", 1);
 
 	public static Database getUniqueInstanceByName(String name) throws HeavenException
 	{
@@ -40,18 +40,20 @@ public class Database
 	private final String user;
 	private final String password;
 	private final String databaseName;
+	private final int nbConnections;
 
-	private Database(String databaseName)
+	private Database(String databaseName, int nbConnections)
 	{
-		this("localhost", "mc-sql", "9e781e41f865901850d5c3060063c8ca", databaseName);
+		this("localhost", "mc-sql", "9e781e41f865901850d5c3060063c8ca", databaseName, nbConnections);
 	}
 
-	private Database(String host, String user, String password, String databaseName)
+	private Database(String host, String user, String password, String databaseName, int nbConnections)
 	{
 		this.host = host;
 		this.user = user;
 		this.password = password;
 		this.databaseName = databaseName;
+		this.nbConnections = nbConnections;
 
 		if ("localhost".equals(host))
 			databasesByName.put(databaseName, this);
@@ -80,6 +82,11 @@ public class Database
 	public String getJdbcUrl()
 	{
 		return String.format(DB_URL, host, databaseName, user, password);
+	}
+
+	public int getNbConnections()
+	{
+		return nbConnections;
 	}
 
 	@Override

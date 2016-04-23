@@ -16,6 +16,7 @@ public class HikariConnectionProvider implements ConnectionProvider
 		config.setJdbcUrl(database.getJdbcUrl());
 		config.setUsername(database.getUser());
 		config.setPassword(database.getPassword());
+		config.setMaximumPoolSize(database.getNbConnections());
 
 		dataSource = new HikariDataSource(config);
 	}
