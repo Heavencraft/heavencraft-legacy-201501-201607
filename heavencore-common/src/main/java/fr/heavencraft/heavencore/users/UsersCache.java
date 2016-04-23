@@ -26,7 +26,7 @@ class UsersCache<U extends User>
 		usersByName.put(user.getName(), user);
 	}
 
-	public void invalidateCache(U user)
+	public void invalidateCache(User user)
 	{
 		System.out.println("Invalidate cache: User [ " + user.getName() + "]");
 
