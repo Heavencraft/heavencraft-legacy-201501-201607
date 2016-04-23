@@ -106,7 +106,12 @@ public abstract class UserProvider<U extends User>
 		return null;
 	}
 
-	public void invalidateCache(U user)
+	public ConnectionProvider getConnectionProvider()
+	{
+		return connectionProvider;
+	}
+
+	public void invalidateCache(User user)
 	{
 		cache.invalidateCache(user);
 	}

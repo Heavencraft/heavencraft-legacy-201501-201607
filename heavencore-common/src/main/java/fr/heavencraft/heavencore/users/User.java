@@ -6,9 +6,11 @@ import fr.heavencraft.heavencore.users.color.TabColor;
 
 public interface User
 {
-	public UUID getUniqueId();
+	String getUniqueIdAsString();
 
-	public String getName();
+	UUID getUniqueId();
 
-	public TabColor getTabColor();
+	String getName();
+
+	TabColor getTabColor();
 }

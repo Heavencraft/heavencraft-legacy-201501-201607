@@ -1,0 +1,21 @@
+name: HeavenFun
+main: fr.heavencraft.heavenfun.HeavenFun
+version: 1.0
+commands:
+#
+# HeavenCore
+#
+  creacheat:
+  endercheat:
+  inventory:
+  roucoups:
+  tp:
+  tphere:
+    aliases: s
+  tppos:
+  tpworld:
+#
+# HeavenFun
+#
+  spawn:
+  event:
