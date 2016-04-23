@@ -14,6 +14,7 @@ import fr.heavencraft.heavenrp.RPPermissions;
 import fr.heavencraft.heavenrp.database.homes.HomeProvider;
 import fr.heavencraft.heavenrp.database.users.User;
 import fr.heavencraft.heavenrp.database.users.UserProvider;
+import fr.heavencraft.heavenrp.dungeon.DungeonManager;
 
 public class TphomeCommand extends AbstractCommandExecutor
 {
@@ -41,6 +42,8 @@ public class TphomeCommand extends AbstractCommandExecutor
 		}
 
 		Location home = HomeProvider.getHome(user, nb);
+		if(DungeonManager.isPlaying(player))
+			throw new HeavenException("Vous êtes actuellement dans un dojnon.");
 		PlayerUtil.teleportPlayer(player, home);
 	}
 
