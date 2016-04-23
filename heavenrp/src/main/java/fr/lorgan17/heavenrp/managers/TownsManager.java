@@ -13,8 +13,8 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldguard.bukkit.BukkitUtil;
-import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion.CircularInheritanceException;
@@ -116,7 +116,7 @@ public class TownsManager
 
 		final RegionManager rm = RPUtils.getWorldGuard().getRegionManager(world);
 
-		final ProtectedRegion town = rm.getRegionExact(townName);
+		final ProtectedRegion town = rm.getRegion(townName);
 
 		if (town == null)
 		{
@@ -146,7 +146,7 @@ public class TownsManager
 		{
 			rm.save();
 		}
-		catch (final ProtectionDatabaseException e)
+		catch (final StorageException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,7 +157,7 @@ public class TownsManager
 	{
 		final RegionManager rm = RPUtils.getWorldGuard().getRegionManager(WorldsManager.getWorld());
 
-		final ProtectedRegion region = rm.getRegionExact(regionName);
+		final ProtectedRegion region = rm.getRegion(regionName);
 
 		if (region == null)
 		{
@@ -179,7 +179,7 @@ public class TownsManager
 			name = townName + "_" + userName + "_" + i;
 			i++;
 		}
-		while (rm.getRegionExact(name) != null);
+		while (rm.getRegion(name) != null);
 
 		return name;
 	}
