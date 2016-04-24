@@ -8,7 +8,7 @@ package fr.heavencraft.heavenrp.questframework;
 public class QfFlag
 {
 
-	private final String flagId;
+	private final String flagKey;
 	
 	/**
 	 * Creates a new flag
@@ -16,7 +16,7 @@ public class QfFlag
 	 */
 	public QfFlag(String flagId)
 	{
-		this.flagId = flagId;
+		this.flagKey = flagId;
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class QfFlag
 	 */
 	public String getKey()
 	{
-		return flagId;
+		return flagKey;
 	}
 
 }

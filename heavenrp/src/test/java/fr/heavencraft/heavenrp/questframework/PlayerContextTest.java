@@ -1,6 +1,7 @@
 package fr.heavencraft.heavenrp.questframework;
 
 import fr.heavencraft.heavenrp.exceptions.QuestFlagCollisionException;
+import fr.heavencraft.heavenrp.exceptions.QuestFlagKeyTooLongException;
 import fr.heavencraft.heavenrp.exceptions.QuestFlagTypeException;
 import fr.heavencraft.heavenrp.exceptions.UnknownQuestFlagException;
 import junit.framework.TestCase;
@@ -22,6 +23,11 @@ public class PlayerContextTest extends TestCase
 		{
 			fail("Player context flag collision detected, but there should not be one.");
 		}
+		catch (QuestFlagKeyTooLongException e)
+		{
+			fail("Flag key had the right size.");
+		}
+
 		QfFlag flag2 = new QfFlag("flag2");
 		try
 		{
@@ -31,6 +37,10 @@ public class PlayerContextTest extends TestCase
 		catch (QuestFlagCollisionException e)
 		{
 			fail("Player context flag collision detected, but there should not be one.");
+		}
+		catch (QuestFlagKeyTooLongException e)
+		{
+			fail("Flag key had the right size.");
 		}
 
 		QfFlag flag3 = new QfFlag("flag3");
@@ -43,6 +53,10 @@ public class PlayerContextTest extends TestCase
 		{
 			fail("Player context flag collision detected, but there should not be one.");
 		}
+		catch (QuestFlagKeyTooLongException e)
+		{
+			fail("Flag key had the right size.");
+		}
 
 		// Flag Collision
 		QfFlag flag3Collision = new QfFlag("flag3");
@@ -54,6 +68,10 @@ public class PlayerContextTest extends TestCase
 		catch (QuestFlagCollisionException e)
 		{
 			assertFalse("Player context flag collision detected, but there should not be one.", e == null);
+		}
+		catch (QuestFlagKeyTooLongException e)
+		{
+			fail("Flag key had the right size.");
 		}
 
 		// Has Flag
@@ -123,5 +141,54 @@ public class PlayerContextTest extends TestCase
 			assertFalse("Wrong Exception thrown on flag type change:", e instanceof UnknownQuestFlagException);
 			assertTrue("Quest Flag Exception has no message", e.getMessage() != null);
 		}
+
+		// To long key
+		QfFlag flag6 = new QfFlag("0123456789012345678901234567890123456789");
+		try
+		{
+			ctx.addFlag(flag6, true);
+			fail("We should have had an error");
+		}
+		catch (QuestFlagCollisionException e)
+		{
+			fail("Player context flag collision detected, but there should not be one.");
+		}
+		catch (QuestFlagKeyTooLongException e)
+		{
+			assertNotNull("Quest flag is too long to be stored", e);
+		}
+
+		// Key with 33 length
+		QfFlag flag7 = new QfFlag("012345678901234567890123456789012");
+		try
+		{
+			ctx.addFlag(flag7, true);
+			fail("We should have had an error");
+		}
+		catch (QuestFlagCollisionException e)
+		{
+			fail("Player context flag collision detected, but there should not be one.");
+		}
+		catch (QuestFlagKeyTooLongException e)
+		{
+			assertNotNull("Quest flag is too long to be stored", e);
+		}
+
+		// Key with 32 length
+		QfFlag flag8 = new QfFlag("01234567890123456789012345678901");
+		try
+		{
+			ctx.addFlag(flag8, true);
+			assertTrue("We should have the flag now", ctx.hasFlag(flag8));
+		}
+		catch (QuestFlagCollisionException e)
+		{
+			fail("Player context flag collision detected, but there should not be one.");
+		}
+		catch (QuestFlagKeyTooLongException e)
+		{
+			fail("Flag key had the right size.");
+		}
+
 	}
 }

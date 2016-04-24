@@ -17,7 +17,7 @@ public class QuestFramework
 {
 	private static QuestFramework questManager = null;
 
-	public static QuestFramework getInstance()
+	public static QuestFramework get()
 	{
 		if (questManager == null)
 			questManager = new QuestFramework();
@@ -63,7 +63,7 @@ public class QuestFramework
 	 * @return <code>null</code> if none found
 	 */
 	public QuestContext getQuestContext(Player p, AbstractQuest q) {
-		List<QuestContext> contexts = QuestContextListCache.getInstance().getQuestContextList(p.getUniqueId());
+		List<QuestContext> contexts = QuestContextListCache.get().getQuestContextList(p.getUniqueId());
 		for(QuestContext qc : contexts)
 			if(qc.getQuestId() == q.getQuestId())
 				return qc;

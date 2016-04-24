@@ -13,7 +13,7 @@ public class QuestContextListCache
 	 * Returns the instance of the object
 	 * @return
 	 */
-	public static QuestContextListCache getInstance()
+	public static QuestContextListCache get()
 	{
 		if(QuestContextListCache.instance == null)
 			QuestContextListCache.instance = new QuestContextListCache();
