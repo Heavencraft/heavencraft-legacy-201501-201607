@@ -26,78 +26,78 @@ public class QuestContextListCacheTest extends TestCase
 		QuestContext c3c3 = new QuestContext(9);
 
 		assertNotNull("Context list should be empty, not null",
-				QuestContextListCache.getInstance().getQuestContextList(uid1));
+				QuestContextListCache.get().getQuestContextList(uid1));
 		assertEquals("Context list should be empty", 0,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).size());
-		QuestContextListCache.getInstance().addQuestContext(uid1, c1c1);
-		QuestContextListCache.getInstance().addQuestContext(uid1, c1c2);
-		QuestContextListCache.getInstance().addQuestContext(uid1, c1c3);
+				QuestContextListCache.get().getQuestContextList(uid1).size());
+		QuestContextListCache.get().addQuestContext(uid1, c1c1);
+		QuestContextListCache.get().addQuestContext(uid1, c1c2);
+		QuestContextListCache.get().addQuestContext(uid1, c1c3);
 
-		QuestContextListCache.getInstance().addQuestContext(uid2, c2c1);
-		QuestContextListCache.getInstance().addQuestContext(uid2, c2c2);
-		QuestContextListCache.getInstance().addQuestContext(uid2, c2c3);
+		QuestContextListCache.get().addQuestContext(uid2, c2c1);
+		QuestContextListCache.get().addQuestContext(uid2, c2c2);
+		QuestContextListCache.get().addQuestContext(uid2, c2c3);
 
-		QuestContextListCache.getInstance().addQuestContext(uid3, c3c1);
-		QuestContextListCache.getInstance().addQuestContext(uid3, c3c2);
-		QuestContextListCache.getInstance().addQuestContext(uid3, c3c3);
+		QuestContextListCache.get().addQuestContext(uid3, c3c1);
+		QuestContextListCache.get().addQuestContext(uid3, c3c2);
+		QuestContextListCache.get().addQuestContext(uid3, c3c3);
 
 		// Test if we can add new items
 		assertSame("Should return the same QuestContext", c1c1,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(0));
+				QuestContextListCache.get().getQuestContextList(uid1).get(0));
 		assertSame("Should return the same QuestContext", c1c2,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(1));
+				QuestContextListCache.get().getQuestContextList(uid1).get(1));
 		assertSame("Should return the same QuestContext", c1c3,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(2));
+				QuestContextListCache.get().getQuestContextList(uid1).get(2));
 
 		assertSame("Should return the same QuestContext", c2c1,
-				QuestContextListCache.getInstance().getQuestContextList(uid2).get(0));
+				QuestContextListCache.get().getQuestContextList(uid2).get(0));
 		assertSame("Should return the same QuestContext", c2c2,
-				QuestContextListCache.getInstance().getQuestContextList(uid2).get(1));
+				QuestContextListCache.get().getQuestContextList(uid2).get(1));
 		assertSame("Should return the same QuestContext", c2c3,
-				QuestContextListCache.getInstance().getQuestContextList(uid2).get(2));
+				QuestContextListCache.get().getQuestContextList(uid2).get(2));
 
 		assertSame("Should return the same QuestContext", c3c1,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(0));
+				QuestContextListCache.get().getQuestContextList(uid3).get(0));
 		assertSame("Should return the same QuestContext", c3c2,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(1));
+				QuestContextListCache.get().getQuestContextList(uid3).get(1));
 		assertSame("Should return the same QuestContext", c3c3,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(2));
+				QuestContextListCache.get().getQuestContextList(uid3).get(2));
 
 		// Test if we can remove a list of quest contexts
-		QuestContextListCache.getInstance().removeQuestContextList(uid2);
+		QuestContextListCache.get().removeQuestContextList(uid2);
 		assertSame("Should return the same QuestContext", c1c1,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(0));
+				QuestContextListCache.get().getQuestContextList(uid1).get(0));
 		assertSame("Should return the same QuestContext", c1c2,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(1));
+				QuestContextListCache.get().getQuestContextList(uid1).get(1));
 		assertSame("Should return the same QuestContext", c1c3,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(2));
+				QuestContextListCache.get().getQuestContextList(uid1).get(2));
 
 		assertEquals("This context should no longer be in cache", 0,
-				QuestContextListCache.getInstance().getQuestContextList(uid2).size());
+				QuestContextListCache.get().getQuestContextList(uid2).size());
 
 		assertSame("Should return the same QuestContext", c3c1,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(0));
+				QuestContextListCache.get().getQuestContextList(uid3).get(0));
 		assertSame("Should return the same QuestContext", c3c2,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(1));
+				QuestContextListCache.get().getQuestContextList(uid3).get(1));
 		assertSame("Should return the same QuestContext", c3c3,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(2));
+				QuestContextListCache.get().getQuestContextList(uid3).get(2));
 
 		// Test if we can remove a certain context from list
-		QuestContextListCache.getInstance().removeQuestContext(uid1, c1c2);
+		QuestContextListCache.get().removeQuestContext(uid1, c1c2);
 
 		assertEquals("The size of this list should have been reduced", 2,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).size());
+				QuestContextListCache.get().getQuestContextList(uid1).size());
 		assertSame("Should return the same QuestContext", c1c1,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(0));
+				QuestContextListCache.get().getQuestContextList(uid1).get(0));
 		assertSame("Should return the same QuestContext", c1c3,
-				QuestContextListCache.getInstance().getQuestContextList(uid1).get(1));
+				QuestContextListCache.get().getQuestContextList(uid1).get(1));
 
 		assertSame("Should return the same QuestContext", c3c1,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(0));
+				QuestContextListCache.get().getQuestContextList(uid3).get(0));
 		assertSame("Should return the same QuestContext", c3c2,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(1));
+				QuestContextListCache.get().getQuestContextList(uid3).get(1));
 		assertSame("Should return the same QuestContext", c3c3,
-				QuestContextListCache.getInstance().getQuestContextList(uid3).get(2));
+				QuestContextListCache.get().getQuestContextList(uid3).get(2));
 
 	}
 }
