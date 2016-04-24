@@ -1,0 +1,5 @@
+name: Afterburn
+version: 1.0
+main: fr.heavencraft.afterburn.Afterburn
+depend: [HeavenCore]
+commands:
