@@ -8,6 +8,7 @@
 
 	<modules>
 		<module>adventwool</module>
+		<module>afterburn</module>
 		<module>heavencore</module>
 		<module>heavencore-common</module>
 		<module>heavencrea</module>
