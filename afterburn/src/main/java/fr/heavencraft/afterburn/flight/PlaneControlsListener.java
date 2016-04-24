@@ -2,6 +2,8 @@ package fr.heavencraft.afterburn.flight;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
@@ -52,9 +54,11 @@ public class PlaneControlsListener extends AbstractListener<HeavenPlugin>
 
 			public void run()
 			{
+				if(!p.isGliding())
+					cancel();
 				p.setVelocity(p.getVelocity().multiply(1.2));
-				ActionBar ab = new ActionBar(String.format("Velocity: {%1$.2f} {%2$.2f} {%3$.2f}",
-						p.getVelocity().getX(), p.getVelocity().getY(), p.getVelocity().getZ()));
+				// norm of vector is very slow
+				ActionBar ab = new ActionBar(String.format("Vitesse: %1$.2fm/s", p.getVelocity().length()));
 				ab.send(p);
 				n++;
 				if (n >= 10)
@@ -62,6 +66,55 @@ public class PlaneControlsListener extends AbstractListener<HeavenPlugin>
 			}
 		}.runTaskTimer(Afterburn.get(), 5, 3);
 
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void minigunClickEvent(PlayerInteractEvent event) throws HeavenException
+	{
+		final Player p = event.getPlayer();
+
+		// He must be gliding
+		if (!p.isGliding())
+			return;
+		if (p.getInventory().getItemInMainHand().getType() != Material.STONE_BUTTON)
+			return;
+
+		// Remove 1 item
+		int amount = p.getInventory().getItemInMainHand().getAmount();
+		if (amount == 1)
+			p.getInventory().setItemInMainHand(null);
+		else
+			p.getInventory().getItemInMainHand().setAmount(amount - 1);
+		
+		Snowball sb = (Snowball) p.launchProjectile(Snowball.class);
+		sb.setVelocity(p.getVelocity().multiply(20));
+		
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void missileClickEvent(PlayerInteractEvent event) throws HeavenException
+	{
+		final Player p = event.getPlayer();
+
+		// He must be gliding
+		if (!p.isGliding())
+			return;
+		if (p.getInventory().getItemInMainHand().getType() != Material.FIREWORK_CHARGE)
+			return;
+
+		// Remove 1 item
+		int amount = p.getInventory().getItemInMainHand().getAmount();
+		if (amount == 1)
+			p.getInventory().setItemInMainHand(null);
+		else
+			p.getInventory().getItemInMainHand().setAmount(amount - 1);
+		
+		WitherSkull sb = (WitherSkull) p.launchProjectile(WitherSkull.class);
+		System.out.println("ISSILE");
+		sb.setVelocity(p.getVelocity().multiply(20));
+		
 		event.setCancelled(true);
 	}
 }
