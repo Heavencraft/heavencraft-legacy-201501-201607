@@ -23,22 +23,12 @@ public class ScrollListener extends AbstractListener<HeavenPlugin>
 	@EventHandler
 	public void onTeleportScrollUse(PlayerInteractEvent event) throws HeavenException
 	{
-		// TODO remove legacy support when passing on 1.9
 		Player p = event.getPlayer();
 		ItemStack itemInHand = null;
-		try
-		{
-			if (p.getInventory().getItemInMainHand().getType() != Material.PAPER)
-				return;
-			itemInHand = p.getInventory().getItemInMainHand();
-		}
-		catch (NoSuchMethodError err)
-		{
-			// Minecraft 1.8 mode
-			if (p.getInventory().getItemInHand().getType() != Material.PAPER)
-				return;
-			itemInHand = p.getInventory().getItemInHand();
-		}
+
+		if (p.getInventory().getItemInMainHand().getType() != Material.PAPER)
+			return;
+		itemInHand = p.getInventory().getItemInMainHand();
 
 		if (itemInHand == null || itemInHand.getType() == Material.AIR)
 			return;
@@ -58,14 +48,11 @@ public class ScrollListener extends AbstractListener<HeavenPlugin>
 		}
 
 		// Remove 1 scroll
-		try
-		{
-			p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
-		}
-		catch (NoSuchMethodError err)
-		{
-			p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount() - 1);
-		}
+		int amount = p.getInventory().getItemInMainHand().getAmount();
+		if(amount == 1)
+			p.getInventory().setItemInMainHand(null);
+		else
+			p.getInventory().getItemInMainHand().setAmount(amount - 1);
 		event.setCancelled(true);
 	}
 
