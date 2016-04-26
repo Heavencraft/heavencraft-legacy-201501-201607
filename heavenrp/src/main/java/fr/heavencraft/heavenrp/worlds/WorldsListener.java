@@ -81,7 +81,7 @@ public class WorldsListener extends AbstractListener<HeavenPlugin>
 		if (from.getBlock().getType() != Material.PORTAL && portalBlock.getType() == Material.PORTAL)
 		{
 			final Location destination;
-			switch (portalBlock.getRelative(BlockFace.DOWN).getType())
+			switch (portalBlock.getRelative(BlockFace.DOWN).getRelative(BlockFace.DOWN).getType())
 			{
 				case NETHERRACK:
 					destination = WorldsManager.getSpawnNether();
