@@ -57,14 +57,14 @@ public class StoresManager
 		_plugin = plugin;
 		_stocks = new HashSet<Stock>();
 		_stores = new HashSet<Store>();
-		_FACES = new BlockFace[]
-		{ BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST, BlockFace.EAST, BlockFace.UP, BlockFace.DOWN };
+		_FACES = new BlockFace[] { BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST, BlockFace.EAST, BlockFace.UP,
+				BlockFace.DOWN };
 	}
 
 	private static String buildTransactionLog(Player player, Store store)
 	{
-		return (store.isBuyer() ? "Achat" : "Vente") + " de " + store.getQuantity() + " " + store.getMaterial()
-				+ " à " + player.getName();
+		return (store.isBuyer() ? "Achat" : "Vente") + " de " + store.getQuantity() + " " + store.getMaterial() + " à "
+				+ player.getName();
 	}
 
 	public void init()
@@ -222,8 +222,7 @@ public class StoresManager
 
 		for (final Stock stock : _stocks)
 		{
-			if (stock.getOwnerName().equalsIgnoreCase(playerName)
-					&& stock.getStoreName().equalsIgnoreCase(chestName))
+			if (stock.getOwnerName().equalsIgnoreCase(playerName) && stock.getStoreName().equalsIgnoreCase(chestName))
 			{
 				event.setLine(2, ChatColor.DARK_RED + "Nom déjà");
 				event.setLine(3, ChatColor.DARK_RED + "utilisé");
@@ -272,7 +271,7 @@ public class StoresManager
 		if (item.getType() == null)
 			return null;
 
-		if (item.getTypeId() == 0)
+		if (item.getType() == Material.AIR)
 			return null;
 
 		return item;
@@ -354,8 +353,8 @@ public class StoresManager
 			return;
 		}
 
-		final Store newStore = new Store(player.getName(), chestName, sign, linkedStock, price, quantity,
-				material, materialData, buying);
+		final Store newStore = new Store(player.getName(), chestName, sign, linkedStock, price, quantity, material,
+				materialData, buying);
 		_stores.add(newStore);
 		saveStores();
 		event.setLine(0, ChatColor.GREEN + (buying ? "[Achat]" : "[Magasin]"));
@@ -476,8 +475,7 @@ public class StoresManager
 	}
 
 	@SuppressWarnings("deprecation")
-	private void useSellStore(final Player player, final Store store, Block block, Sign sign)
-			throws HeavenException
+	private void useSellStore(final Player player, final Store store, Block block, Sign sign) throws HeavenException
 	{
 		final User user = UserProvider.getUserByName(player.getName());
 
@@ -487,8 +485,7 @@ public class StoresManager
 			return;
 		}
 
-		if (store.getLinkedStock().getItemQuantity(store.getMaterial().getId(), store.getMaterialData()) < store
-				.getQuantity())
+		if (store.getLinkedStock().getItemQuantity(store.getMaterial(), store.getMaterialData()) < store.getQuantity())
 		{
 			sendMessage(player, "Ce magasin est en rupture de stock.");
 			return;
@@ -496,8 +493,7 @@ public class StoresManager
 
 		final Player ownerPlayer = _plugin.getServer().getPlayer(store.getOwnerName());
 		final User ownerUser = UserProvider.getUserByName(store.getOwnerName());
-		final BankAccount ownerBank = BankAccountsManager.getBankAccount(store.getOwnerName(),
-				BankAccountType.USER);
+		final BankAccount ownerBank = BankAccountsManager.getBankAccount(store.getOwnerName(), BankAccountType.USER);
 
 		if (!ownerUser.hasDealerLicense())
 		{
@@ -537,8 +533,8 @@ public class StoresManager
 		final int ownerUserMoney = ownerBank.getBalance() + store.getPrice();
 		final int userMoney = user.getBalance() - store.getPrice();
 
-		QueriesHandler.addQuery(
-				new MoneyTransfertQuery(user, ownerBank, store.getPrice(), buildTransactionLog(player, store))
+		QueriesHandler
+				.addQuery(new MoneyTransfertQuery(user, ownerBank, store.getPrice(), buildTransactionLog(player, store))
 				{
 					@Override
 					public void onSuccess()
@@ -550,8 +546,8 @@ public class StoresManager
 						{
 							ChatUtil.sendMessage(ownerPlayer, "{%1$s} vient d'acheter dans votre magasin {%2$s}.",
 									player.getName(), store.getStoreName());
-							ChatUtil.sendMessage(ownerPlayer,
-									"Vous avez maintenant {%1$s} pièces d'or en banque.", ownerUserMoney);
+							ChatUtil.sendMessage(ownerPlayer, "Vous avez maintenant {%1$s} pièces d'or en banque.",
+									ownerUserMoney);
 						}
 
 						ChatUtil.sendMessage(player, "Vous avez bien acheté {%1$s %2$s}.", store.getQuantity(),
@@ -562,13 +558,11 @@ public class StoresManager
 	}
 
 	@SuppressWarnings("deprecation")
-	private void useBuyStore(final Player player, final Store store, Block block, Sign sign)
-			throws HeavenException
+	private void useBuyStore(final Player player, final Store store, Block block, Sign sign) throws HeavenException
 	{
 		final User user = UserProvider.getUserByName(player.getName());
 		final User ownerUser = UserProvider.getUserByName(store.getOwnerName());
-		final BankAccount ownerBank = BankAccountsManager.getBankAccount(store.getOwnerName(),
-				BankAccountType.USER);
+		final BankAccount ownerBank = BankAccountsManager.getBankAccount(store.getOwnerName(), BankAccountType.USER);
 
 		if (!ownerUser.hasDealerLicense())
 		{
@@ -623,8 +617,8 @@ public class StoresManager
 		final int ownerUserMoney = ownerBank.getBalance() - store.getPrice();
 		final int userMoney = user.getBalance() + store.getPrice();
 
-		QueriesHandler.addQuery(
-				new MoneyTransfertQuery(ownerBank, user, store.getPrice(), buildTransactionLog(player, store))
+		QueriesHandler
+				.addQuery(new MoneyTransfertQuery(ownerBank, user, store.getPrice(), buildTransactionLog(player, store))
 				{
 					@Override
 					public void onSuccess()
@@ -634,8 +628,8 @@ public class StoresManager
 						final Player ownerPlayer = _plugin.getServer().getPlayer(store.getOwnerName());
 						if (ownerPlayer != null)
 						{
-							sendMessage(ownerPlayer, "{" + player.getName()
-									+ "} vient de vendre dans votre magasin {" + store.getStoreName() + "}.");
+							sendMessage(ownerPlayer, "{" + player.getName() + "} vient de vendre dans votre magasin {"
+									+ store.getStoreName() + "}.");
 							sendMessage(ownerPlayer,
 									"Vous avez maintenant {" + ownerUserMoney + "} pièces d'or en banque.");
 						}
