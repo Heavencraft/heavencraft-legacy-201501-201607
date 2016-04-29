@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -524,7 +525,8 @@ public class StoresManager
 		else
 			items = new ItemStack(store.getMaterial(), store.getQuantity());
 
-		if (!store.getLinkedStock().removeStack(items))
+		final List<ItemStack> removedItems = store.getLinkedStock().removeStack(items);
+		if (removedItems.isEmpty())
 		{
 			sendMessage(player, "Erreur lors de l'achat. Merci de contacter un administrateur.");
 			return;
@@ -539,7 +541,9 @@ public class StoresManager
 					@Override
 					public void onSuccess()
 					{
-						player.getInventory().addItem(items);
+						for (final ItemStack removedItem : removedItems)
+							player.getInventory().addItem(removedItem);
+
 						player.updateInventory();
 
 						if (ownerPlayer != null)
@@ -606,7 +610,8 @@ public class StoresManager
 		else
 			items = new ItemStack(store.getMaterial(), store.getQuantity());
 
-		if (!Stock.removeStack(player, items))
+		final List<ItemStack> removedItems = Stock.removeStack(player, items);
+		if (removedItems.isEmpty())
 		{
 			sendMessage(player, "Erreur lors de la vente. Merci de contacter un administrateur.");
 			return;
@@ -623,7 +628,8 @@ public class StoresManager
 					@Override
 					public void onSuccess()
 					{
-						store.getLinkedStock().getChest().getInventory().addItem(items);
+						for (final ItemStack removedItem : removedItems)
+							store.getLinkedStock().getChest().getInventory().addItem(removedItem);
 
 						final Player ownerPlayer = _plugin.getServer().getPlayer(store.getOwnerName());
 						if (ownerPlayer != null)
