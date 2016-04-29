@@ -2,9 +2,9 @@ package fr.heavencraft.heavensurvival.bukkit;
 
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
+import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.Database;
-import fr.heavencraft.heavencore.sql.HikariConnectionProvider;
 import fr.heavencraft.heavensurvival.bukkit.protection.ProtectionCommand;
 import fr.heavencraft.heavensurvival.bukkit.protection.SelectionManager;
 import fr.heavencraft.heavensurvival.bukkit.pvp.PVPCommand;
@@ -25,7 +25,7 @@ public class BukkitHeavenSurvival extends HeavenPlugin implements HeavenSurvival
 	{
 		HeavenSurvivalInstance.set(this);
 
-		connectionProvider = new HikariConnectionProvider(Database.UAT_SURVIVAL);
+		connectionProvider = ConnectionHandlerFactory.getConnectionHandler(Database.UAT_SURVIVAL);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public class HikariConnectionProvider implements ConnectionProvider
 {
 	private final HikariDataSource dataSource;
 
-	public HikariConnectionProvider(Database database)
+	HikariConnectionProvider(Database database)
 	{
 		final HikariConfig config = new HikariConfig();
 		config.setJdbcUrl(database.getJdbcUrl());
