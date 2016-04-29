@@ -1,5 +1,9 @@
 package fr.heavencraft.heavenrp.stores;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -113,10 +117,11 @@ public class Stock
 		return getItemQuantity(player.getInventory().getContents(), store.getMaterial(), store.getMaterialData());
 	}
 
-	private static boolean removeStack(Inventory inventory, ItemStack stack)
+	private static List<ItemStack> removeStack(Inventory inventory, ItemStack stack)
 	{
 		int left = stack.getAmount();
 		final ItemStack[] contents = inventory.getContents();
+		final List<ItemStack> removedItems = new ArrayList<ItemStack>();
 
 		for (int i = 0; (i < contents.length) && (left != 0); i++)
 		{
@@ -137,7 +142,12 @@ public class Stock
 			}
 
 			final int size = s.getAmount();
-			final int newSize = size - Math.min(size, left);
+			final int removedSize = Math.min(size, left);
+			final int newSize = size - removedSize;
+
+			final ItemStack removedItem = new ItemStack(s);
+			removedItem.setAmount(removedSize);
+			removedItems.add(removedItem);
 
 			if (newSize == 0)
 			{
@@ -152,15 +162,18 @@ public class Stock
 			left -= size - newSize;
 		}
 
-		return left == 0;
+		if (left == 0)
+			return removedItems;
+		else
+			return Collections.emptyList();
 	}
 
-	public boolean removeStack(ItemStack stack)
+	public List<ItemStack> removeStack(ItemStack stack)
 	{
 		return removeStack(getChest().getInventory(), stack);
 	}
 
-	public static boolean removeStack(Player player, ItemStack stack)
+	public static List<ItemStack> removeStack(Player player, ItemStack stack)
 	{
 		return removeStack(player.getInventory(), stack);
 	}
