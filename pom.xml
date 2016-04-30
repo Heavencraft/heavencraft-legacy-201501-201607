@@ -11,8 +11,8 @@
 		<module>heavencore</module>
 		<module>heavencore-common</module>
 		<module>heavencrea</module>
-<!-- 		<module>heavenfun-bukkit</module> -->
-<!-- 		<module>heavenfun-common</module> -->
+		<module>heavenfun-bukkit</module>
+		<module>heavenfun-common</module>
 		<module>heavenguard</module>
 		<module>heavenguard-common</module>
 		<module>heavenrp</module>

@@ -1,4 +1,4 @@
-package fr.heavencraft.heavensurvival.common.users;
+package fr.heavencraft.heavencore.users;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,21 +6,20 @@ import java.sql.SQLException;
 
 import fr.heavencraft.async.queries.AbstractQuery;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavensurvival.common.HeavenSurvivalInstance;
 
 public class UpdateUserNameQuery extends AbstractQuery
 {
 	private static final String QUERY = "UPDATE users SET name = ? WHERE uuid = ? LIMIT 1;";
 
-	private final ConnectionProvider connectionProvider = HeavenSurvivalInstance.get().getConnectionProvider();
-	private final SurvivalUser user;
+	private final User user;
 	private final String name;
+	private final UserProvider<? extends User> userProvider;
 
-	public UpdateUserNameQuery(SurvivalUser user, String name)
+	public UpdateUserNameQuery(User user, String name, UserProvider<? extends User> userProvider)
 	{
 		this.user = user;
 		this.name = name;
+		this.userProvider = userProvider;
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class UpdateUserNameQuery extends AbstractQuery
 		if (name.equals(user.getName()))
 			return; // Nothing to do
 
-		try (Connection connection = connectionProvider.getConnection();
+		try (Connection connection = userProvider.getConnectionProvider().getConnection();
 				PreparedStatement ps = connection.prepareStatement(QUERY))
 		{
 			ps.setString(1, name);
@@ -38,7 +37,7 @@ public class UpdateUserNameQuery extends AbstractQuery
 			System.out.println("Executing query " + ps);
 			ps.executeUpdate();
 
-			SurvivalUserProvider.get().invalidateCache(user);
+			userProvider.invalidateCache(user);
 		}
 	}
 }

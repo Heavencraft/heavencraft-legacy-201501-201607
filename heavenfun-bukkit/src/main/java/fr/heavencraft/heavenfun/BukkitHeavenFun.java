@@ -9,12 +9,14 @@ import fr.heavencraft.heavencore.bukkit.listeners.JumpListener;
 import fr.heavencraft.heavencore.bukkit.listeners.LinkSignListener;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
+import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.Database;
-import fr.heavencraft.heavencore.sql.HikariConnectionProvider;
+import fr.heavencraft.heavencore.users.UsersListener;
 import fr.heavencraft.heavenfun.commands.CommandsManager;
 import fr.heavencraft.heavenfun.common.HeavenFun;
 import fr.heavencraft.heavenfun.common.HeavenFunInstance;
+import fr.heavencraft.heavenfun.common.users.FunUserProvider;
 
 public class BukkitHeavenFun extends HeavenPlugin implements HeavenFun
 {
@@ -25,7 +27,7 @@ public class BukkitHeavenFun extends HeavenPlugin implements HeavenFun
 	public BukkitHeavenFun()
 	{
 		HeavenFunInstance.set(this);
-		connectionProvider = new HikariConnectionProvider(Database.UAT_FUN);
+		connectionProvider = ConnectionHandlerFactory.getConnectionHandler(Database.UAT_FUN);
 	}
 
 	@Override
@@ -33,13 +35,14 @@ public class BukkitHeavenFun extends HeavenPlugin implements HeavenFun
 	{
 		super.onEnable();
 
-		CommandsManager.init();
+		CommandsManager.init(this);
 
 		new ServerListener(this);
 
 		new JumpListener(this);
 		new NoChatListener(this);
 		new RedstoneLampListener(this);
+		new UsersListener(this, FunUserProvider.get());
 
 		new ColoredSignsListener(this);
 		new LinkSignListener(this);

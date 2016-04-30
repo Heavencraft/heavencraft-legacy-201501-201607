@@ -6,20 +6,21 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.heavencraft.commands.HeavenCommand;
-import fr.heavencraft.exceptions.HeavenException;
-import fr.heavencraft.utils.ChatUtil;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
+import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavenfun.BukkitHeavenFun;
 
-public class EventCommand extends HeavenCommand
+public class EventCommand extends AbstractCommandExecutor
 {
 	private Location _spawn = null;
 	private boolean _started = false;
 
-	public EventCommand()
+	public EventCommand(BukkitHeavenFun plugin)
 	{
-		super("event");
+		super(plugin, "event");
 	}
-	
+
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
@@ -64,8 +65,8 @@ public class EventCommand extends HeavenCommand
 				if (_started)
 				{
 					_started = false;
-					Bukkit.broadcastMessage(ChatColor.AQUA + "[EVENT]" + ChatColor.RESET
-							+ "L'event vient de se terminer !");
+					Bukkit.broadcastMessage(
+							ChatColor.AQUA + "[EVENT]" + ChatColor.RESET + "L'event vient de se terminer !");
 				}
 			}
 		}
