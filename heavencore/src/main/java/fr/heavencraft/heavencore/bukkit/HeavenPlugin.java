@@ -1,6 +1,7 @@
 package fr.heavencraft.heavencore.bukkit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.heavencraft.heavencore.logs.HeavenLog;
@@ -18,6 +19,14 @@ public abstract class HeavenPlugin extends JavaPlugin
 	public UniqueIdProvider getUniqueIdProvider()
 	{
 		return uniqueIdProvider;
+	}
+
+	public static Database loadDatabase(FileConfiguration config, String databaseProperty)
+	{
+		final String username = config.getString("mysql.username");
+		final String password = config.getString("mysql.password");
+		final String database = config.getString(databaseProperty);
+		return new Database(database, username, password, 2);
 	}
 
 	@Override

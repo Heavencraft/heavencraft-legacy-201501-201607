@@ -13,10 +13,16 @@ public class HikariConnectionProvider implements ConnectionProvider
 	HikariConnectionProvider(Database database)
 	{
 		final HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(database.getJdbcUrl());
-		config.setUsername(database.getUser());
+		config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+		config.addDataSourceProperty("serverName", "localhost");
+		config.addDataSourceProperty("port", "3306");
+		config.addDataSourceProperty("zeroDateTimeBehavior", "convertToNull");
+		config.addDataSourceProperty("autoReconnect", "true");
+
+		config.addDataSourceProperty("databaseName", database.getDatabaseName());
+		config.setUsername(database.getUsername());
 		config.setPassword(database.getPassword());
-		config.setMaximumPoolSize(database.getNbConnections());
+		config.setMaximumPoolSize(database.getMaximumPoolSize());
 
 		dataSource = new HikariDataSource(config);
 	}

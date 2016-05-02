@@ -1,10 +1,11 @@
 package fr.heavencraft.heavensurvival.bukkit;
 
+import org.bukkit.Bukkit;
+
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavencore.users.UsersListener;
 import fr.heavencraft.heavensurvival.bukkit.protection.ProtectionCommand;
 import fr.heavencraft.heavensurvival.bukkit.protection.SelectionManager;
@@ -20,13 +21,11 @@ import fr.heavencraft.heavensurvival.common.users.SurvivalUserProvider;
 
 public class BukkitHeavenSurvival extends HeavenPlugin implements HeavenSurvival
 {
-	private final ConnectionProvider connectionProvider;
+	private ConnectionProvider connectionProvider;
 
 	public BukkitHeavenSurvival()
 	{
 		HeavenSurvivalInstance.set(this);
-
-		connectionProvider = ConnectionHandlerFactory.getConnectionHandler(Database.UAT_SURVIVAL);
 	}
 
 	@Override
@@ -38,19 +37,28 @@ public class BukkitHeavenSurvival extends HeavenPlugin implements HeavenSurvival
 	@Override
 	public void onEnable()
 	{
+		try
+		{
+			connectionProvider = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "database"));
 
-		new ProtectionCommand(this);
-		new LitCommand(this);
-		new SpawnCommand(this);
-		new SetspawnCommand(this);
+			new ProtectionCommand(this);
+			new LitCommand(this);
+			new SpawnCommand(this);
+			new SetspawnCommand(this);
 
-		new NoChatListener(this);
-		new SelectionManager(this);
-		new DifficultyTask(this);
-		new UsersListener(this, SurvivalUserProvider.get());
+			new NoChatListener(this);
+			new SelectionManager(this);
+			new DifficultyTask(this);
+			new UsersListener(this, SurvivalUserProvider.get());
 
-		// PVP
-		new PVPCommand(this);
-		new PVPListener(this);
+			// PVP
+			new PVPCommand(this);
+			new PVPListener(this);
+		}
+		catch (final Throwable t)
+		{
+			t.printStackTrace();
+			Bukkit.shutdown();
+		}
 	}
 }

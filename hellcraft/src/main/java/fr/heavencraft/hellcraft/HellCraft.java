@@ -8,8 +8,8 @@ import fr.heavencraft.heavencore.bukkit.commands.RejoindreCommand;
 import fr.heavencraft.heavencore.bukkit.commands.SpawnCommand;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
-import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
+import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.hellcraft.back.BackListener;
 import fr.heavencraft.hellcraft.hps.HpsCommand;
@@ -28,8 +28,7 @@ public class HellCraft extends HeavenPlugin
 		{
 			super.onEnable();
 
-			final ConnectionProvider webConnection = ConnectionHandlerFactory
-					.getConnectionHandler(Database.HELLCRAFT_WEB);
+			final ConnectionProvider webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
 			hpsManager = new HpsManager(webConnection);
 
 			new NoChatListener(this); // Chat is handled by the proxy
