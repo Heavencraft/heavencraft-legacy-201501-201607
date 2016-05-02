@@ -52,7 +52,7 @@ public class BukkitHeavenGuard extends HeavenPlugin implements HeavenGuard
 			new ProtectionPlayerListener(this);
 			new ProtectionEnvironmentListener(this);
 
-			connectionHandler = ConnectionHandlerFactory.getConnectionHandler(getConfig().getString("database"));
+			connectionHandler = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "database"));
 
 			regionProvider = new SQLRegionProvider(connectionHandler);
 			regionManager = new RegionManager(regionProvider);

@@ -11,7 +11,6 @@ import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
-import fr.heavencraft.heavencore.sql.Database;
 import fr.heavencraft.heavencore.users.UsersListener;
 import fr.heavencraft.heavenfun.commands.CommandsManager;
 import fr.heavencraft.heavenfun.common.HeavenFun;
@@ -22,18 +21,18 @@ public class BukkitHeavenFun extends HeavenPlugin implements HeavenFun
 {
 	private static Location spawn;
 
-	private final ConnectionProvider connectionProvider;
+	private ConnectionProvider connectionProvider;
 
 	public BukkitHeavenFun()
 	{
 		HeavenFunInstance.set(this);
-		connectionProvider = ConnectionHandlerFactory.getConnectionHandler(Database.UAT_FUN);
 	}
 
 	@Override
 	public void onEnable()
 	{
 		super.onEnable();
+		connectionProvider = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "database"));
 
 		CommandsManager.init(this);
 
