@@ -26,7 +26,7 @@ public abstract class HeavenPlugin extends JavaPlugin
 		final String username = config.getString("mysql.username");
 		final String password = config.getString("mysql.password");
 		final String database = config.getString(databaseProperty);
-		return new Database(database, username, password, 2);
+		return new Database(database, username, password, 3);
 	}
 
 	@Override
