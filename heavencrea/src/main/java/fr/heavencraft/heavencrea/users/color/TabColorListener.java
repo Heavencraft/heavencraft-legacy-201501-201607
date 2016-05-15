@@ -16,6 +16,7 @@ public class TabColorListener extends AbstractListener<HeavenCrea>
 {
 	private static final TabColor ARCHITECT_COLOR = TabColor.DARK_PURPLE;
 	private static final TabColor TALENT_COLOR = TabColor.GREEN;
+	private static final TabColor ADMIN_COLOR = TabColor.DARK_GRAY;
 
 	private final DeprecatedTabColorScoreboard<HeavenCrea, CreativeUser> scoreboard;
 
@@ -38,6 +39,15 @@ public class TabColorListener extends AbstractListener<HeavenCrea>
 			{
 				user.setTabColor(TabColor.WHITE);
 				scoreboard.setPlayerColor(player, TabColor.WHITE);
+			}
+		}
+		
+		else if (player.hasPermission(CreaPermissions.ADMIN_TABCOLOR))
+		{
+			if (user.getTabColor() != ADMIN_COLOR)
+			{
+				user.setTabColor(ADMIN_COLOR);
+				scoreboard.setPlayerColor(player, ADMIN_COLOR);
 			}
 		}
 
