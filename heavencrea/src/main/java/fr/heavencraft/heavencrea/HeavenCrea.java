@@ -18,6 +18,7 @@ import fr.heavencraft.heavencore.bukkit.listeners.ClearWeatherListener;
 import fr.heavencraft.heavencore.bukkit.listeners.ColoredSignsListener;
 import fr.heavencraft.heavencore.bukkit.listeners.ForbiddenBlocksListener;
 import fr.heavencraft.heavencore.bukkit.listeners.JumpListener;
+import fr.heavencraft.heavencore.bukkit.listeners.LinkSignListener;
 import fr.heavencraft.heavencore.bukkit.listeners.NoChatListener;
 import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import fr.heavencraft.heavencore.bukkit.listeners.WorldAccessListener;
@@ -113,6 +114,7 @@ public class HeavenCrea extends HeavenPlugin implements DeprecatedHasUserProvide
 			new ColoredSignsListener(this);
 			new ForbiddenBlocksListener(this, Material.BARRIER);
 			new JumpListener(this);
+			new LinkSignListener(this);
 			new NoChatListener(this);
 			new RedstoneLampListener(this);
 
