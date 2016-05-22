@@ -1,4 +1,4 @@
-package fr.heavencraft.heavenrp.commands.horses;
+package fr.heavencraft.heavenrp.horses;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -10,7 +10,6 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavencore.utils.player.PlayerUtil;
 import fr.heavencraft.heavenrp.HeavenRP;
-import fr.heavencraft.heavenrp.horses.HorsesManager;
 
 public class ChevalCommand extends AbstractCommandExecutor
 {
