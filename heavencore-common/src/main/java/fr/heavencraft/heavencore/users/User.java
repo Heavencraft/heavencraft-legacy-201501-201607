@@ -1,8 +1,7 @@
 package fr.heavencraft.heavencore.users;
 
+import java.sql.Timestamp;
 import java.util.UUID;
-
-import fr.heavencraft.heavencore.users.color.TabColor;
 
 public interface User
 {
@@ -12,5 +11,5 @@ public interface User
 
 	String getName();
 
-	TabColor getTabColor();
+	Timestamp getLastLogin();
 }

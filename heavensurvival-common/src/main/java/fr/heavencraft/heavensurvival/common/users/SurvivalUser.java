@@ -2,13 +2,13 @@ package fr.heavencraft.heavensurvival.common.users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
-import fr.heavencraft.heavencore.users.User;
 import fr.heavencraft.heavencore.users.color.TabColor;
+import fr.heavencraft.heavencore.users.color.UserWithColor;
 
-public class SurvivalUser implements User
+public class SurvivalUser implements UserWithColor
 {
 	private final String uniqueIdAsString;
 
@@ -31,16 +31,19 @@ public class SurvivalUser implements User
 		return name;
 	}
 
+	@Override
 	public String getUniqueIdAsString()
 	{
 		return uniqueIdAsString;
 	}
 
+	@Override
 	public UUID getUniqueId()
 	{
 		return uniqueId;
 	}
 
+	@Override
 	public String getName()
 	{
 		return name;
@@ -51,12 +54,14 @@ public class SurvivalUser implements User
 		return pvp;
 	}
 
+	@Override
 	public TabColor getTabColor()
 	{
 		return isPvp() ? TabColor.RED : TabColor.WHITE;
 	}
 
-	public Date getLastLogin()
+	@Override
+	public Timestamp getLastLogin()
 	{
 		return null;
 	}

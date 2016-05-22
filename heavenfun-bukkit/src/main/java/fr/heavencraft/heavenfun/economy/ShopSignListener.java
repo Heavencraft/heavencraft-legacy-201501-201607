@@ -13,13 +13,12 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavencore.users.balance.UpdateUserBalanceQuery;
 import fr.heavencraft.heavencore.utils.DevUtil;
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
+import fr.heavencraft.heavenfun.common.HeavenFun;
 import fr.heavencraft.heavenfun.common.users.FunUser;
 import fr.heavencraft.heavenfun.common.users.FunUserProvider;
 
 public class ShopSignListener extends AbstractSignListener
 {
-	private static final String CURRENCY = " FP";
-
 	public ShopSignListener(HeavenPlugin plugin)
 	{
 		super(plugin, "Magasin", "");
@@ -35,7 +34,7 @@ public class ShopSignListener extends AbstractSignListener
 		final int price = DevUtil.toUint(event.getLine(2));
 
 		event.setLine(1, material.name());
-		event.setLine(2, price + CURRENCY);
+		event.setLine(2, price + " " + HeavenFun.CURRENCY);
 		return true;
 	}
 
@@ -43,7 +42,8 @@ public class ShopSignListener extends AbstractSignListener
 	protected void onSignClick(Player player, Sign sign) throws HeavenException
 	{
 		final Material material = Material.matchMaterial(sign.getLine(1));
-		final int price = DevUtil.toUint(sign.getLine(2).substring(0, sign.getLine(2).length() - 3));
+		final int price = DevUtil
+				.toUint(sign.getLine(2).substring(0, sign.getLine(2).length() - HeavenFun.CURRENCY.length() - 1));
 
 		final FunUser user = FunUserProvider.get().getUserByUniqueId(player.getUniqueId());
 		QueriesHandler.addQuery(new UpdateUserBalanceQuery(user, -price, FunUserProvider.get())
