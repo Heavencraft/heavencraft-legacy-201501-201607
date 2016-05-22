@@ -12,10 +12,13 @@ import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import fr.heavencraft.heavencore.sql.ConnectionHandlerFactory;
 import fr.heavencraft.heavencore.sql.ConnectionProvider;
 import fr.heavencraft.heavencore.users.UsersListener;
+import fr.heavencraft.heavencore.users.balance.MoneyOnFirstLoginListener;
+import fr.heavencraft.heavencore.users.balance.MoneyTask;
 import fr.heavencraft.heavenfun.commands.CommandsManager;
 import fr.heavencraft.heavenfun.common.HeavenFun;
 import fr.heavencraft.heavenfun.common.HeavenFunInstance;
 import fr.heavencraft.heavenfun.common.users.FunUserProvider;
+import fr.heavencraft.heavenfun.economy.ShopSignListener;
 
 public class BukkitHeavenFun extends HeavenPlugin implements HeavenFun
 {
@@ -37,6 +40,11 @@ public class BukkitHeavenFun extends HeavenPlugin implements HeavenFun
 		CommandsManager.init(this);
 
 		new ServerListener(this);
+
+		// Economy
+		new MoneyOnFirstLoginListener(this, FunUserProvider.get(), 5); // Connexion en Fun: 5 FP
+		new MoneyTask(this, FunUserProvider.get(), 7200); // 1h connecté = 10 FP
+		new ShopSignListener(this);
 
 		new JumpListener(this);
 		new NoChatListener(this);

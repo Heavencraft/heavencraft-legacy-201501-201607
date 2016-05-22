@@ -11,6 +11,8 @@ import fr.heavencraft.heavencore.bukkit.commands.TpposCommand;
 import fr.heavencraft.heavencore.bukkit.commands.TpworldCommand;
 import fr.heavencraft.heavenfun.BukkitHeavenFun;
 import fr.heavencraft.heavenfun.commands.events.EventCommand;
+import fr.heavencraft.heavenfun.economy.FunPointsAdminCommand;
+import fr.heavencraft.heavenfun.economy.FunPointsCommand;
 
 public class CommandsManager
 {
@@ -31,5 +33,7 @@ public class CommandsManager
 		// Commandes modérateurs
 		new EventCommand(plugin);
 
+		new FunPointsCommand(plugin);
+		new FunPointsAdminCommand(plugin);
 	}
 }
