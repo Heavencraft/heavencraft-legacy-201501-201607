@@ -20,7 +20,11 @@ public class HorsesManager
 		else if (isWild(horse))
 			return true;
 		else if (horse.getOwner() == null)
-			return false;
+		{
+			horse.setOwner(player);
+			ChatUtil.sendMessage(player, "Vous êtes désormais le propriétaire de ce cheval.");
+			return true;
+		}
 		else
 			return horse.getOwner().getUniqueId().equals(player.getUniqueId());
 	}
