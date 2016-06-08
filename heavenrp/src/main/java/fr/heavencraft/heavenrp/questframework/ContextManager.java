@@ -37,19 +37,36 @@ public class ContextManager
 
 	/**
 	 * Loads from database a player's context
+	 * 
 	 * @param p
 	 */
 	protected void loadPlayerContext(UUID p)
 	{
+		
+		// TODO use IFlagList to retrive a list of global flags and add them to cache
+		
+		// Does the player already have a context?
+		PlayerContext pCtx = this.getPlayerContext(p);
+		if (pCtx == null)
+			pCtx = new PlayerContext();
+
 		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(Q_FLAG_LOAD))
 		{
 			ps.setString(1, p.toString());
 			final ResultSet rs = ps.executeQuery();
-			while(rs.next())
+			while (rs.next())
 			{
-				//TODO load player context flags from DB
-				QfFlag flag = new QfFlag(rs.getString("key"));
-				
+				// load player context flags from DB
+				int dataType = rs.getInt("type");
+
+				try
+				{
+					QfFlag flag = new QfFlag();
+				}
+				catch (Exception ex)
+				{
+					ex.printStackTrace();
+				}
 			}
 		}
 		catch (SQLException e)

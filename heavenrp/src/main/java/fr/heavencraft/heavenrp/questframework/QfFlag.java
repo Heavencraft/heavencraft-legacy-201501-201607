@@ -1,5 +1,7 @@
 package fr.heavencraft.heavenrp.questframework;
 
+import fr.heavencraft.heavenrp.exceptions.QuestFlagTypeException;
+
 /**
  * This class allows to create flags, which can be added to a PlayerContext or QuestContext
  * @author Manuel
@@ -7,6 +9,41 @@ package fr.heavencraft.heavenrp.questframework;
  */
 public class QfFlag
 {
+	
+	/**
+	 * Returns the Data Type Index used to reference a type in database
+	 * @param object
+	 * @return
+	 * @throws QuestFlagTypeException 
+	 */
+	public static int getDataIndexFromObject(Object object) throws QuestFlagTypeException
+	{
+		if(object instanceof Integer)
+			return 0;
+		if(object instanceof Boolean)
+			return 1;
+		if(object instanceof String)
+			return 2;
+		throw new QuestFlagTypeException(object);
+	}
+	
+	/**
+	 * Takes an incoming Object, and parses it to the right type
+	 * @param object content
+	 * @param dataTypeIndex index of data type
+	 * @return
+	 * @throws QuestFlagTypeException 
+	 */
+	public static Object parseToTypeByIndex(String object, int dataTypeIndex) throws QuestFlagTypeException
+	{
+		if(dataTypeIndex == 0)
+			return Integer.parseInt(object);
+		if(dataTypeIndex == 1)
+			return Boolean.parseBoolean(object);
+		if(dataTypeIndex == 2)
+			return object;
+		throw new QuestFlagTypeException(dataTypeIndex);
+	}
 
 	@Override
 	public int hashCode()

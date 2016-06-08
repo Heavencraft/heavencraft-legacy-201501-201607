@@ -1,5 +1,6 @@
 package fr.heavencraft.heavenrp.quests;
 
+import fr.heavencraft.heavenrp.questframework.IFlagList;
 import fr.heavencraft.heavenrp.questframework.QfFlag;
 
 /**
@@ -7,7 +8,7 @@ import fr.heavencraft.heavenrp.questframework.QfFlag;
  * @author Manuel
  *
  */
-public enum PlayerFlags
+public enum PlayerFlags implements IFlagList
 {
 	// Flag to show usage.
 	FIRST_TEST_FLAG(new QfFlag("pFirstTestFlag")),

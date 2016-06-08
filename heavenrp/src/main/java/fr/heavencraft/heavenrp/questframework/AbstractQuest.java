@@ -14,16 +14,18 @@ public abstract class AbstractQuest
 	private final int questId;
 
 	private String questName = "My Quest Name";
+	private IFlagList questFlags = null;
 
 	/**
 	 * This constructor should only be called when loading an already existing quest
 	 * @param questId
 	 * @param questName
 	 */
-	protected AbstractQuest(int questId, String questName)
+	protected AbstractQuest(int questId, String questName, IFlagList flagList)
 	{
 		this.questId = questId;
 		this.questName = questName;
+		this.questFlags = flagList;
 	}
 	
 	/**
@@ -44,6 +46,15 @@ public abstract class AbstractQuest
 	public int getQuestId()
 	{
 		return questId;
+	}
+	
+	/**
+	 * Returns a list of flag associated with this quest
+	 * @return
+	 */
+	protected IFlagList getFlagList()
+	{
+		return this.questFlags;
 	}
 
 	/**
