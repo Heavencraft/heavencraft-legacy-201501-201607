@@ -8,15 +8,44 @@ package fr.heavencraft.heavenrp.questframework;
 public class QfFlag
 {
 
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((flagKey == null) ? 0 : flagKey.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QfFlag other = (QfFlag) obj;
+		if (flagKey == null)
+		{
+			if (other.flagKey != null)
+				return false;
+		}
+		else if (!flagKey.equals(other.flagKey))
+			return false;
+		return true;
+	}
+
 	private final String flagKey;
 	
 	/**
 	 * Creates a new flag
-	 * @param flagId Unique Identifier used to reference this flag in a context store.
+	 * @param flagIdentifier Unique Identifier used to reference this flag in a context store.
 	 */
-	public QfFlag(String flagId)
+	public QfFlag(String flagIdentifier)
 	{
-		this.flagKey = flagId;
+		this.flagKey = flagIdentifier;
 	}
 	
 	/**

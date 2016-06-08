@@ -17,7 +17,7 @@ public class ContextManager
 	 * 
 	 * @return
 	 */
-	public static ContextManager get()
+	protected static ContextManager get()
 	{
 		if (ContextManager.instance == null)
 			ContextManager.instance = new ContextManager();
@@ -30,7 +30,7 @@ public class ContextManager
 	 * @param p
 	 * @return
 	 */
-	public PlayerContext getPlayerContext(UUID p)
+	protected PlayerContext getPlayerContext(UUID p)
 	{
 		return PlayerContextCache.getPlayerContext(p);
 	}
@@ -39,7 +39,7 @@ public class ContextManager
 	 * Loads from database a player's context
 	 * @param p
 	 */
-	public void loadPlayerContext(UUID p)
+	protected void loadPlayerContext(UUID p)
 	{
 		try (PreparedStatement ps = HeavenRP.getConnection().prepareStatement(Q_FLAG_LOAD))
 		{

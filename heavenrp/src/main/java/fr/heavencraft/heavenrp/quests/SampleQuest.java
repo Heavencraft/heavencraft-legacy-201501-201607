@@ -4,10 +4,10 @@ import org.bukkit.entity.Player;
 
 import fr.heavencraft.heavencore.utils.chat.ChatUtil;
 import fr.heavencraft.heavenrp.questframework.AbstractQuest;
-import fr.heavencraft.heavenrp.questframework.Quest;
+import fr.heavencraft.heavenrp.questframework.QfFlag;
 import fr.heavencraft.heavenrp.questframework.QuestContext;
 
-public class SampleQuest extends AbstractQuest implements Quest
+public class SampleQuest extends AbstractQuest
 {
 	
 	public SampleQuest()
@@ -15,10 +15,13 @@ public class SampleQuest extends AbstractQuest implements Quest
 		super("My Sample Quest");
 	}
 
+	private QfFlag qflag1 = new QfFlag("MyFlag1");
+	
 	@Override
-	public boolean PlayerMeetStartRequirements(Player p)
+	protected boolean PlayerMeetStartRequirements(Player p)
 	{
-		if(p.getName().equalsIgnoreCase("Manu67100"))
+		if(p.getName().equalsIgnoreCase("Manu67100") ||
+				p.getName().equalsIgnoreCase("lorgan17"))
 			return true;
 		
 		ChatUtil.sendMessage(p, "Tu ne t'appelles pas Manu toi...");
@@ -26,24 +29,12 @@ public class SampleQuest extends AbstractQuest implements Quest
 	}
 
 	@Override
-	public void InitializeQuest(Player p, QuestContext context)
+	protected void InitializeQuest(Player p, QuestContext context)
 	{
-		// TODO Auto-generated method stub
-		
+		// Accessing Quest related flags
+		System.out.println(super.getQuestContext(p).hasFlag(qflag1));
+		System.out.println(super.getQuestContext(p).getValue(qflag1));
+		// Accessing Player related flags
+		System.out.println(super.getPlayerContext(p).hasFlag(PlayerFlags.FIRST_TEST_FLAG.getFlag()));
 	}
-
-	@Override
-	public void SaveProgression(Player p)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void RestoreProgression(Player p)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
 }

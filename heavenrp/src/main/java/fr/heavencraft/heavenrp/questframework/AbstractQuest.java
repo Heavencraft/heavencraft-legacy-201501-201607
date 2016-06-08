@@ -1,5 +1,8 @@
 package fr.heavencraft.heavenrp.questframework;
 
+import org.bukkit.entity.Player;
+
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 import fr.heavencraft.heavenrp.HeavenRP;
 
 /**
@@ -52,5 +55,44 @@ public abstract class AbstractQuest
 	{
 		return questName;
 	}
-
+	
+	/**
+	 * Returns the quest's context
+	 * @param p The player
+	 * @return
+	 */
+	protected QuestContext getQuestContext(Player p)
+	{
+		return QuestFramework.get().getQuestContext(p, this);
+	}
+	
+	/**
+	 * Returns the player's context
+	 * @param p The player
+	 * @return
+	 */
+	protected PlayerContext getPlayerContext(Player p)
+	{
+		return QuestFramework.get().getPlayerContext(p);
+	}
+	
+	/**
+	 * Returns if the player can start the quest
+	 * 
+	 * @param p
+	 * @return
+	 * @throws HeavenException
+	 */
+	abstract protected boolean PlayerMeetStartRequirements(Player p);
+	
+	/**
+	 * Called when the quest should start.
+	 * 
+	 * @param p
+	 *            The player
+	 * @param context
+	 *            The quest context
+	 */
+	abstract protected void InitializeQuest(Player p, QuestContext context);
+	
 }
