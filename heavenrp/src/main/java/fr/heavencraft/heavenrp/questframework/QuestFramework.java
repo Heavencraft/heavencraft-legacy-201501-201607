@@ -35,9 +35,7 @@ public class QuestFramework
 	public void RegisterQuest(AbstractQuest aQuest, Player p) throws HeavenException
 	{
 		// Do we have basic Quest functions?
-		if (!(aQuest instanceof Quest))
-			throw new HeavenException("The quest %1$s does not implement the necessary interface Quest",
-					aQuest.getQuestName());
+		
 		
 		
 		// TODO Reference instance of quest to ensure each quest is a singleton
@@ -52,7 +50,7 @@ public class QuestFramework
 	
 	
 	
-	public PlayerContext getPlayerContext(Player p) {
+	protected PlayerContext getPlayerContext(Player p) {
 		return PlayerContextCache.getPlayerContext(p.getUniqueId());
 	}
 	
@@ -62,7 +60,7 @@ public class QuestFramework
 	 * @param q Quest
 	 * @return <code>null</code> if none found
 	 */
-	public QuestContext getQuestContext(Player p, AbstractQuest q) {
+	protected QuestContext getQuestContext(Player p, AbstractQuest q) {
 		List<QuestContext> contexts = QuestContextListCache.get().getQuestContextList(p.getUniqueId());
 		for(QuestContext qc : contexts)
 			if(qc.getQuestId() == q.getQuestId())

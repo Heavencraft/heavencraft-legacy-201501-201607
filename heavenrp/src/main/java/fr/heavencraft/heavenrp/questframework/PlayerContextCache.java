@@ -17,7 +17,7 @@ public class PlayerContextCache
 	 * @param p
 	 * @param context
 	 */
-	public static void addPlayerContext(UUID p, PlayerContext context)
+	protected static void addPlayerContext(UUID p, PlayerContext context)
 	{
 		PlayerContextCache.playerContextStore.put(p, context);
 	}
@@ -27,7 +27,7 @@ public class PlayerContextCache
 	 * @param p
 	 * @return
 	 */
-	public static PlayerContext getPlayerContext(UUID p)
+	protected static PlayerContext getPlayerContext(UUID p)
 	{
 		return PlayerContextCache.playerContextStore.get(p);
 		
@@ -38,7 +38,7 @@ public class PlayerContextCache
 	 * @param p
 	 * @return
 	 */
-	public static void removePlayerContext(UUID p)
+	protected static void removePlayerContext(UUID p)
 	{
 		PlayerContextCache.playerContextStore.remove(p);
 	}

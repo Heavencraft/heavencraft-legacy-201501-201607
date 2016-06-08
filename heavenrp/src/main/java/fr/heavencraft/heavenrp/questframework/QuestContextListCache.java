@@ -27,7 +27,7 @@ public class QuestContextListCache
 	 * @param p
 	 * @param context
 	 */
-	public void addQuestContext(UUID p, QuestContext context)
+	protected void addQuestContext(UUID p, QuestContext context)
 	{
 		List<QuestContext> lst = getQuestContextList(p);
 		if(lst == null)
@@ -41,7 +41,7 @@ public class QuestContextListCache
 	 * @param p
 	 * @return a list of quest contexts
 	 */
-	public List<QuestContext> getQuestContextList(UUID p)
+	protected List<QuestContext> getQuestContextList(UUID p)
 	{
 		List<QuestContext> result = questContextListStore.get(p);
 		if(result == null)
@@ -54,7 +54,7 @@ public class QuestContextListCache
 	 * @param p
 	 * @return
 	 */
-	public void removeQuestContext(UUID p, QuestContext context)
+	protected void removeQuestContext(UUID p, QuestContext context)
 	{
 		List<QuestContext> lst = getQuestContextList(p);
 		if(lst == null)
@@ -68,7 +68,7 @@ public class QuestContextListCache
 	 * @param p
 	 * @return
 	 */
-	public void removeQuestContextList(UUID p)
+	protected void removeQuestContextList(UUID p)
 	{
 		questContextListStore.remove(p);
 	}
