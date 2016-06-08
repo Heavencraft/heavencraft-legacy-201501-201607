@@ -17,6 +17,8 @@ public class QuestFramework
 {
 	private static QuestFramework questManager = null;
 
+	
+	//TODO we shall inject in any way IFlagList for global Players when initializing.
 	public static QuestFramework get()
 	{
 		if (questManager == null)

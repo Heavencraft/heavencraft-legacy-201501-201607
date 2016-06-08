@@ -24,4 +24,22 @@ public class QuestFlagTypeException extends HeavenException
 		super("Erreur de mise a jour de flag: {%1$s} n'as pas le droit de changer de type.",
 				flag.getKey());
 	}
+	
+	/**
+	 * Unknown type was tried to be parsed
+	 * @param dataTypeIndex
+	 */
+	public QuestFlagTypeException(int dataTypeIndex)
+	{
+		super("Unable to parse type index: " + dataTypeIndex + " to a valid type.");
+	}
+
+	/**
+	 * Unsupported type has been used in a flag.
+	 * @param object
+	 */
+	public QuestFlagTypeException(Object object)
+	{
+		super("Unsuported type tried to be parsed: " + object.getClass().getName());
+	}
 }
