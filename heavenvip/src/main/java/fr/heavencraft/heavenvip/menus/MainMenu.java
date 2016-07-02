@@ -17,7 +17,7 @@ public class MainMenu extends VipMenu
 
 	public MainMenu()
 	{
-		super(new Menu("§6Avantages VIP -- HPS", 1));
+		super(new Menu("§5Avantages VIP -- HPS", 1));
 		super.m.addOption(3, 0, new Option(Material.NETHER_STAR, ChatColor.GOLD + "Particules")
 		{
 			@Override

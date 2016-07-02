@@ -25,9 +25,9 @@ import fr.heavencraft.heavenvip.vippacks.VipPackProvider;
 
 public class MovmentParticlePackMenu extends VipMenu
 {
-	private final static String ITEM_NOT_FOR_SALE = "Cet objet n'est pas a vendre en ce moment.";
+	private final static String ITEM_NOT_FOR_SALE = "Cet objet n'est pas à vendre en ce moment.";
 	private final static String NOT_ENOUGH_HPS = "Vous n'avez pas assez d'HPS, plus d'informations: www.heavencraft.fr";
-	private final static String ITEM_BOUGHT = "Merci pour votre achat! Vous pouvez désormez vous en équiper.";
+	private final static String ITEM_BOUGHT = "Merci pour votre achat! Vous pouvez désormais vous en équiper.";
 
 	public MovmentParticlePackMenu(Player p)
 	{
