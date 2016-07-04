@@ -29,19 +29,20 @@ public class QfFlag
 	
 	/**
 	 * Takes an incoming Object, and parses it to the right type
-	 * @param object content
+	 * @param <T>
 	 * @param dataTypeIndex index of data type
+	 * @return 
 	 * @return
 	 * @throws QuestFlagTypeException 
 	 */
-	public static Object parseToTypeByIndex(String object, int dataTypeIndex) throws QuestFlagTypeException
+	public static Class<?> parseToTypeByIndex(int dataTypeIndex) throws QuestFlagTypeException
 	{
 		if(dataTypeIndex == 0)
-			return Integer.parseInt(object);
+			return Integer.class;
 		if(dataTypeIndex == 1)
-			return Boolean.parseBoolean(object);
+			return Boolean.class;
 		if(dataTypeIndex == 2)
-			return object;
+			return Object.class;
 		throw new QuestFlagTypeException(dataTypeIndex);
 	}
 
