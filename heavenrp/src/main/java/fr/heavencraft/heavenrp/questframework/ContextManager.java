@@ -58,10 +58,10 @@ public class ContextManager
 			{
 				// load player context flags from DB
 				int dataType = rs.getInt("type");
-
+				String data = rs.getString("data");
 				try
 				{
-					QfFlag flag = new QfFlag();
+						QfFlag flag = new QfFlag(data);
 				}
 				catch (Exception ex)
 				{
