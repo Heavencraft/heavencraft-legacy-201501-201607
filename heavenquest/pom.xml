@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.heavencraft</groupId>
+	<artifactId>heavenquest</artifactId>
+	<version>0.1</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	<repositories>
+		<repository>
+			<id>citizen</id>
+			<url>http://repo.citizensnpcs.co</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>fr.heavencraft</groupId>
+			<artifactId>heavencore</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.citizensnpcs</groupId>
+			<artifactId>citizensapi</artifactId>
+			<version>2.0.19-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+</project>

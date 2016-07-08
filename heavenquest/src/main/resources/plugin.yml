@@ -1,0 +1,6 @@
+name: HeavenQuest
+main: fr.hc.quest.Heavenquest
+depend: [HeavenCore,Citizens]
+version: 0.1
+commands:
+  bobby: 
