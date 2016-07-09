@@ -1,9 +1,12 @@
 package fr.hc.quest;
 
+import java.util.Iterator;
+
 import fr.hc.scrolls.ScrollCommand;
 import fr.hc.scrolls.ScrollListener;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.TraitInfo;
 
 public class HeavenQuest extends HeavenPlugin
@@ -31,6 +34,10 @@ public class HeavenQuest extends HeavenPlugin
 		super.onEnable();
 
 		CitizensAPI.getNPCRegistry().deregisterAll();
+
+		final Iterator<NPC> it = CitizensAPI.getNPCRegistry().iterator();
+		while (it.hasNext())
+			it.next().destroy();
 
 		new CreateNPCommand(this);
 		new TestCommand(this);
