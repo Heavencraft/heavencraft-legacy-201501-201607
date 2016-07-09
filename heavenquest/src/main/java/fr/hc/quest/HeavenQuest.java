@@ -36,8 +36,13 @@ public class HeavenQuest extends HeavenPlugin
 		CitizensAPI.getNPCRegistry().deregisterAll();
 
 		final Iterator<NPC> it = CitizensAPI.getNPCRegistry().iterator();
+		int nbRemoved = 0;
 		while (it.hasNext())
+		{
 			it.next().destroy();
+			nbRemoved++;
+		}
+		log.info("%1$s NPC removed", nbRemoved);
 
 		new CreateNPCommand(this);
 		new TestCommand(this);
