@@ -4,3 +4,5 @@ depend: [HeavenCore,Citizens]
 version: 0.1
 commands:
   bobby: 
+  scrolls:
+    description: Permet la génération de parchemins
