@@ -28,7 +28,6 @@ public class ZoneManager {
 					Location l2 = DevUtils.deserializeLoc( RPGFiles.getZones().getString("Zones." + a + ".l2"));
 					z.set_cubo(new CuboidSelection(l1.getWorld(), l1, l2));
 					addZone(z);
-					Bukkit.broadcastMessage(z.getName() + " a ete chargee.");
 			}
 	}
 	
