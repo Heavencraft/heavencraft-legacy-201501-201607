@@ -1,12 +1,12 @@
 package fr.hc.quest;
 
-import java.util.Iterator;
-
+import fr.hc.quest.commands.CreateNPCommand;
+import fr.hc.quest.commands.RemoveNPCCommand;
+import fr.hc.quest.commands.TestCommand;
 import fr.hc.scrolls.ScrollCommand;
 import fr.hc.scrolls.ScrollListener;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.TraitInfo;
 
 public class HeavenQuest extends HeavenPlugin
@@ -33,19 +33,9 @@ public class HeavenQuest extends HeavenPlugin
 	{
 		super.onEnable();
 
-		CitizensAPI.getNPCRegistry().deregisterAll();
-
-		final Iterator<NPC> it = CitizensAPI.getNPCRegistry().iterator();
-		int nbRemoved = 0;
-		while (it.hasNext())
-		{
-			it.next().destroy();
-			nbRemoved++;
-		}
-		log.info("%1$s NPC removed", nbRemoved);
-
 		new CreateNPCommand(this);
 		new TestCommand(this);
+		new RemoveNPCCommand();
 		CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(NpcListener.class).withName("NpcListener"));
 
 		new ScrollCommand(this);

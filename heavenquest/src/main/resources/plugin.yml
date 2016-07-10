@@ -8,3 +8,4 @@ commands:
   scrolls:
     description: Permet la génération de parchemins
   test:
+  removenpc:
