@@ -1,9 +1,10 @@
-package fr.hc.quest;
+package fr.hc.quest.commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import fr.hc.quest.MyFirstGoal;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
