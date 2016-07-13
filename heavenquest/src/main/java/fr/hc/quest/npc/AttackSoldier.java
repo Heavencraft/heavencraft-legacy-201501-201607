@@ -6,6 +6,6 @@ public class AttackSoldier extends AbstractSoldier
 {
 	public AttackSoldier(Location spawnLocation)
 	{
-		super("AttackSoldier", spawnLocation);
+		super("AttackSoldier", spawnLocation, Team.FAGGOTS);
 	}
 }
