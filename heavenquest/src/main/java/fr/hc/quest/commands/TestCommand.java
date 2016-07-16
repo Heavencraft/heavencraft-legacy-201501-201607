@@ -19,11 +19,11 @@ import net.citizensnpcs.api.npc.NPC;
 
 public class TestCommand extends AbstractCommandExecutor
 {
-	private static final Location CITADEL_SPAWN = new Location(Bukkit.getWorld("world"), 1100, 3, 781);
-	private static final Location CITADEL_1 = new Location(Bukkit.getWorld("world"), 1095, 7, 782);
-	private static final Location CITADEL_2 = new Location(Bukkit.getWorld("world"), 1095, 7, 770);
-	private static final Location CITADEL_3 = new Location(Bukkit.getWorld("world"), 1107, 7, 770);
-	private static final Location CITADEL_4 = new Location(Bukkit.getWorld("world"), 1107, 7, 782);
+	private static final Location CITADEL_SPAWN = new Location(Bukkit.getWorld("world"), 1100, 4, 781);
+	private static final Location CITADEL_1 = new Location(Bukkit.getWorld("world"), 1095, 8, 782);
+	private static final Location CITADEL_2 = new Location(Bukkit.getWorld("world"), 1095, 8, 770);
+	private static final Location CITADEL_3 = new Location(Bukkit.getWorld("world"), 1107, 8, 770);
+	private static final Location CITADEL_4 = new Location(Bukkit.getWorld("world"), 1107, 8, 782);
 
 	public TestCommand(HeavenPlugin plugin)
 	{
@@ -66,10 +66,10 @@ public class TestCommand extends AbstractCommandExecutor
 						DevUtil.toInt(args[2]), DevUtil.toInt(args[3])));
 				break;
 			case "citadel":
-				new DefenseSoldier(CITADEL_SPAWN, CITADEL_1);
-				new DefenseSoldier(CITADEL_SPAWN, CITADEL_2);
-				new DefenseSoldier(CITADEL_SPAWN, CITADEL_3);
-				new DefenseSoldier(CITADEL_SPAWN, CITADEL_4);
+				new DefenseSoldier(CITADEL_1, CITADEL_1);
+				new DefenseSoldier(CITADEL_2, CITADEL_2);
+				new DefenseSoldier(CITADEL_3, CITADEL_3);
+				new DefenseSoldier(CITADEL_4, CITADEL_4);
 				break;
 			default:
 				sendUsage(player);

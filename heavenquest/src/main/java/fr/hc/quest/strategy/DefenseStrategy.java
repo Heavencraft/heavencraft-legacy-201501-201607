@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import fr.hc.quest.animation.ChangeItemInHandsNPCAction;
 import fr.hc.quest.animation.NPCActionTask;
 import fr.hc.quest.animation.ShootArrowNPCAction;
+import fr.hc.quest.npc.NPCUtil;
 import net.citizensnpcs.api.ai.AttackStrategy;
 
 public class DefenseStrategy implements AttackStrategy
@@ -30,6 +31,7 @@ public class DefenseStrategy implements AttackStrategy
 			// fireArrow(npc);
 			log.info("Shooting arrow");
 
+			NPCUtil.faceLocation(npc, target.getLocation());
 			npc.launchProjectile(Arrow.class);
 			return true;
 		}
