@@ -65,6 +65,8 @@
 							<include>fr.heavencraft:heavencore-common</include>
 							<include>com.zaxxer:HikariCP</include>
 							<include>org.slf4j:slf4j-api</include>
+							<include>org.slf4j:slf4j-simple</include>
+							<include>net.jafama:jafama</include>
 						</includes>
 					</artifactSet>
 				</configuration>
