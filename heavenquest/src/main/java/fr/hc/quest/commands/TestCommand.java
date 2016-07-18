@@ -6,9 +6,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import fr.hc.quest.goals.StraightToLocationGoal;
-import fr.hc.quest.goals.TurnArroundGoal;
-import fr.hc.quest.npc.DefenseSoldier;
+import fr.hc.quest.deprecated.DefenseSoldier;
+import fr.hc.quest.deprecated.StraightToLocationGoal;
+import fr.hc.quest.deprecated.TurnArroundGoal;
+import fr.hc.quest.npc.citadel.CitadelSoldier;
+import fr.hc.quest.npc.empire.EmpireSoldier;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
 import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
 import fr.heavencraft.heavencore.exceptions.HeavenException;
@@ -19,11 +21,12 @@ import net.citizensnpcs.api.npc.NPC;
 
 public class TestCommand extends AbstractCommandExecutor
 {
-	private static final Location CITADEL_SPAWN = new Location(Bukkit.getWorld("world"), 1100, 4, 781);
-	private static final Location CITADEL_1 = new Location(Bukkit.getWorld("world"), 1095, 8, 782);
-	private static final Location CITADEL_2 = new Location(Bukkit.getWorld("world"), 1095, 8, 770);
-	private static final Location CITADEL_3 = new Location(Bukkit.getWorld("world"), 1107, 8, 770);
-	private static final Location CITADEL_4 = new Location(Bukkit.getWorld("world"), 1107, 8, 782);
+	private static final Location EMPIRE_SPAWN = new Location(Bukkit.getWorld("world"), 1101.5, 4, 755.5);
+	private static final Location CITADEL_SPAWN = new Location(Bukkit.getWorld("world"), 1099.5, 4, 780.5);
+	private static final Location CITADEL_1 = new Location(Bukkit.getWorld("world"), 1095.5, 8, 782.5);
+	private static final Location CITADEL_2 = new Location(Bukkit.getWorld("world"), 1105.5, 8, 782.5);
+	private static final Location CITADEL_3 = new Location(Bukkit.getWorld("world"), 1105.5, 8, 772.5);
+	private static final Location CITADEL_4 = new Location(Bukkit.getWorld("world"), 1095.5, 8, 772.5);
 
 	public TestCommand(HeavenPlugin plugin)
 	{
@@ -66,10 +69,15 @@ public class TestCommand extends AbstractCommandExecutor
 						DevUtil.toInt(args[2]), DevUtil.toInt(args[3])));
 				break;
 			case "citadel":
-				new DefenseSoldier(CITADEL_1, CITADEL_1);
-				new DefenseSoldier(CITADEL_2, CITADEL_2);
-				new DefenseSoldier(CITADEL_3, CITADEL_3);
-				new DefenseSoldier(CITADEL_4, CITADEL_4);
+				new CitadelSoldier("Robert", CITADEL_1, CITADEL_SPAWN);
+				new CitadelSoldier("Georges", CITADEL_2, CITADEL_SPAWN);
+				new CitadelSoldier("Jacques", CITADEL_3, CITADEL_SPAWN);
+				new CitadelSoldier("Pierre", CITADEL_4, CITADEL_SPAWN);
+
+				new EmpireSoldier("1", CITADEL_SPAWN, EMPIRE_SPAWN);
+				new EmpireSoldier("2", CITADEL_SPAWN, EMPIRE_SPAWN);
+				new EmpireSoldier("3", CITADEL_SPAWN, EMPIRE_SPAWN);
+				new EmpireSoldier("4", CITADEL_SPAWN, EMPIRE_SPAWN);
 				break;
 			default:
 				sendUsage(player);

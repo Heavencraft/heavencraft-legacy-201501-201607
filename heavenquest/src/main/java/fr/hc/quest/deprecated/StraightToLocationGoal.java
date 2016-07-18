@@ -1,4 +1,4 @@
-package fr.hc.quest.goals;
+package fr.hc.quest.deprecated;
 
 import org.bukkit.Location;
 

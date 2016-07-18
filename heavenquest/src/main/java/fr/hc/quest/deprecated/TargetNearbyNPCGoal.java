@@ -1,18 +1,19 @@
-package fr.hc.quest;
+package fr.hc.quest.deprecated;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import fr.hc.quest.HeavenQuest;
 import fr.hc.quest.npc.NPCUtil;
 import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.ai.tree.Behavior;
-import net.citizensnpcs.api.ai.tree.BehaviorStatus;
+import net.citizensnpcs.api.ai.Goal;
+import net.citizensnpcs.api.ai.GoalSelector;
 import net.citizensnpcs.api.event.NPCDeathEvent;
 import net.citizensnpcs.api.npc.NPC;
 
-public class TargetNearbyNPCBehavior implements Behavior, Listener
+public class TargetNearbyNPCGoal implements Goal, Listener
 {
 	private static final int RADIUS = 16;
 
@@ -21,7 +22,7 @@ public class TargetNearbyNPCBehavior implements Behavior, Listener
 	private NPC targetNPC;
 	private boolean targetNPCDead = false;
 
-	public TargetNearbyNPCBehavior(NPC npc)
+	public TargetNearbyNPCGoal(NPC npc)
 	{
 		this.npc = npc;
 
@@ -43,18 +44,16 @@ public class TargetNearbyNPCBehavior implements Behavior, Listener
 	}
 
 	@Override
-	public BehaviorStatus run()
+	public void run(GoalSelector selector)
 	{
 		if (targetNPCDead)
-			return BehaviorStatus.SUCCESS;
+			selector.finish();
 		else if (npcDead)
-			return BehaviorStatus.FAILURE;
-		else
-			return BehaviorStatus.RUNNING;
+			selector.finish();
 	}
 
 	@Override
-	public boolean shouldExecute()
+	public boolean shouldExecute(GoalSelector selector)
 	{
 		if (!npc.isSpawned())
 			return false;
@@ -63,9 +62,10 @@ public class TargetNearbyNPCBehavior implements Behavior, Listener
 		if (target == null)
 			return false;
 
-		npc.getNavigator().setTarget(target.getEntity(), true);
+		targetNPC = target;
+		// npc.getNavigator().setTarget(target.getEntity(), true);
 
-		return false;
+		return true;
 	}
 
 	private NPC getTargetNPC()

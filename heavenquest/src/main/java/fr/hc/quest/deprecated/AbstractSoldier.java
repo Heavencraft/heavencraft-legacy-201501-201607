@@ -1,10 +1,11 @@
-package fr.hc.quest.npc;
+package fr.hc.quest.deprecated;
 
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.hc.quest.npc.Team;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 

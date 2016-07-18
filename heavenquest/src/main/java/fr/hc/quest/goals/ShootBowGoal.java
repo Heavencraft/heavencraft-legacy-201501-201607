@@ -6,16 +6,20 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockIterator;
 
+import fr.hc.quest.npc.HeavenNPC;
 import fr.hc.quest.npc.NPCUtil;
-import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.api.ai.GoalSelector;
+import net.citizensnpcs.util.PlayerAnimation;
 
-public class ShootBowGoal extends AttackGoal
+public class ShootBowGoal extends AbstractAttackGoal
 {
-	public ShootBowGoal(NPC npc)
+	public ShootBowGoal(HeavenNPC npc, int radius, TargetAcceptor targetAcceptor)
 	{
-		super(npc);
+		super(npc, radius, targetAcceptor);
 	}
 
 	@Override
@@ -30,7 +34,7 @@ public class ShootBowGoal extends AttackGoal
 		final Location targetLocation = target.getLocation(TARGET_LOCATION);
 
 		final BlockIterator it = new BlockIterator(npcLocation.getWorld(), npcLocation.toVector(),
-				NPCUtil.getDirectionToLookAt(npcEntity, targetLocation), npcEntity.getEyeHeight(), RADIUS);
+				NPCUtil.getDirectionToLookAt(npcEntity, targetLocation), npcEntity.getEyeHeight(), radius);
 
 		while (it.hasNext())
 			if (it.next().getType() != Material.AIR)
@@ -40,10 +44,33 @@ public class ShootBowGoal extends AttackGoal
 	}
 
 	@Override
-	protected void attack(Entity target)
+	public void reset()
 	{
-		final LivingEntity npcEntity = (LivingEntity) npc.getEntity();
-		NPCUtil.faceLocation(npcEntity, target.getLocation(TARGET_LOCATION));
-		npcEntity.launchProjectile(Arrow.class);
+		log.info("reset: frame=0");
+		super.reset();
+	}
+
+	@Override
+	protected void run(GoalSelector selector, int frame, Entity target)
+	{
+		final Player npcPlayer = (Player) npc.getEntity();
+		//
+		switch (frame)
+		{
+			case 0:
+				NPCUtil.faceLocation(npcPlayer, target.getLocation(TARGET_LOCATION));
+				npcPlayer.getInventory().setItemInMainHand(new ItemStack(Material.BOW));
+				npcPlayer.getInventory().setItemInOffHand(new ItemStack(Material.ARROW));
+				PlayerAnimation.START_USE_MAINHAND_ITEM.play(npcPlayer);
+				break;
+			//
+			case 10:
+				NPCUtil.faceLocation(npcPlayer, target.getLocation(TARGET_LOCATION));
+				// PlayerAnimation.STOP_USE_ITEM.play(npcPlayer);
+				final Arrow launchProjectile = npcPlayer.launchProjectile(Arrow.class);
+				log.info("Launched: {}", launchProjectile);
+				selector.finish();
+				break;
+		}
 	}
 }
