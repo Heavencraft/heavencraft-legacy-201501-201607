@@ -24,6 +24,7 @@ public class CorePlugin extends JavaPlugin
 
 		new ActionsHandler();
 		new BukkitQueriesHandlerTask();
+		new BukkitTickCounterTask(this);
 	}
 
 	public static CorePlugin getInstance()

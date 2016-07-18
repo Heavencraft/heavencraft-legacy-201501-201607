@@ -1,8 +1,8 @@
-package fr.hc.quest.npc;
+package fr.hc.quest.deprecated;
 
 import org.bukkit.Location;
 
-import fr.hc.quest.goals.ShootBowGoal;
+import fr.hc.quest.npc.Team;
 import fr.hc.quest.strategy.DefenseStrategy;
 
 /*
@@ -22,6 +22,6 @@ public class DefenseSoldier extends AbstractSoldier
 
 		// npc.getDefaultGoalController().addGoal(new ReturnAtLocationGoal(npc, defenseLocation), 1);
 		// npc.getDefaultGoalController().addGoal(new LookAtGoal(npc), 2);
-		npc.getDefaultGoalController().addGoal(new ShootBowGoal(npc), 2);
+		// npc.getDefaultGoalController().addGoal(new ShootBowGoal(npc), 2);
 	}
 }

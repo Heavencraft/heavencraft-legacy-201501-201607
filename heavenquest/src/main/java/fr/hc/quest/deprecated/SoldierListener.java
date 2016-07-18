@@ -1,4 +1,4 @@
-package fr.hc.quest.npc;
+package fr.hc.quest.deprecated;
 
 import java.util.HashMap;
 import java.util.Map;
