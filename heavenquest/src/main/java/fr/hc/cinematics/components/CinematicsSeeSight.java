@@ -17,11 +17,11 @@ public class CinematicsSeeSight
 	{
 		// Cinematic_Timer, text.
 		cinematicsEffect.put("0" + MAP_SPLIT + "0",
-				new PotionEffect(PotionEffectType.BLINDNESS, 40, 255, false, false, null));
-		cinematicsEffect.put("0" + MAP_SPLIT + "3",
+				new PotionEffect(PotionEffectType.BLINDNESS, 120, 255, false, false, null));
+		cinematicsEffect.put("0" + MAP_SPLIT + "1",
 				new PotionEffect(PotionEffectType.SLOW, 120, 255, false, false, null));
-		cinematicsEffect.put("0" + MAP_SPLIT + "4",
-				new PotionEffect(PotionEffectType.BLINDNESS, 10, 255, false, false, null));
+		cinematicsEffect.put("0" + MAP_SPLIT + "2",
+				new PotionEffect(PotionEffectType.BLINDNESS, 20, 255, false, false, null));
 		cinematicsEffect.put("0" + MAP_SPLIT + "5",
 				new PotionEffect(PotionEffectType.BLINDNESS, 10, 255, false, false, null));
 		cinematicsEffect.put("0" + MAP_SPLIT + "6",

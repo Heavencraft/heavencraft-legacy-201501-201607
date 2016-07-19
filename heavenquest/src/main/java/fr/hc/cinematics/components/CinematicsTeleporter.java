@@ -17,8 +17,8 @@ public class CinematicsTeleporter
 	public CinematicsTeleporter()
 	{
 		// Cinematic_Timer, Location.
-		World world = Bukkit.getServer().getWorld("world");
-		cinematicsCoordinates.put("0" + MAP_SPLIT + "1", new Location(world, -975.7, 75.5, -64.5, -90, 0));
+		World world = Bukkit.getServer().getWorld("final_map");
+		cinematicsCoordinates.put("0" + MAP_SPLIT + "3", new Location(world, 17.5, 196.5, -77.5, -180, 0));
 	}
 
 	public static void teleportWithoutBackUpPoint(Player player, Integer timer, Integer cinematic)

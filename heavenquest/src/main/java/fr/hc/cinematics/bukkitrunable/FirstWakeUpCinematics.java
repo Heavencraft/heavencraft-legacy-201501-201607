@@ -21,32 +21,32 @@ public class FirstWakeUpCinematics extends BukkitRunnable
 
 	private final Map<Integer, Method> cinematicsPartition = new HashMap<Integer, Method>();
 
-	public FirstWakeUpCinematics(Player player) throws NoSuchMethodException, SecurityException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException
+	public FirstWakeUpCinematics(Player player) throws NoSuchMethodException, SecurityException,
+			ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		this.player = player;
 
 		// write cinematics commander. 4u = 1s.
-		cinematicsPartition.put(0, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(1, CinematicsTeleporter.class.getMethod("teleportWithoutBackUpPoint",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(3, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(4, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(5, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(6, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(8, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(10, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(13, CinematicsSeeSight.class.getMethod("castSimpleEffect",
-				new Class[] { Player.class, Integer.class, Integer.class }));
-		cinematicsPartition.put(30, CinematicsHelper.class.getMethod("NPCSpeak",
-				new Class[] { Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(0, CinematicsSeeSight.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(1, CinematicsTeleporter.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(2, CinematicsSeeSight.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(3, CinematicsSeeSight.class.getMethod("teleportWithoutBackUpPoint", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(5, CinematicsSeeSight.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(6, CinematicsSeeSight.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(8, CinematicsSeeSight.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(10, CinematicsSeeSight.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(13, CinematicsSeeSight.class.getMethod("castSimpleEffect", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
+		cinematicsPartition.put(30, CinematicsHelper.class.getMethod("NPCSpeak", new Class[]
+		{ Player.class, Integer.class, Integer.class }));
 	}
 
 	@Override
@@ -57,7 +57,8 @@ public class FirstWakeUpCinematics extends BukkitRunnable
 		{
 			try
 			{
-				cinematicsPartition.get(timer).invoke(this, new Object[] { player, timer, index });
+				cinematicsPartition.get(timer).invoke(this, new Object[]
+				{ player, timer, index });
 			}
 			catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 			{
