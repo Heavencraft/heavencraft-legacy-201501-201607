@@ -9,3 +9,4 @@ commands:
     description: Permet la génération de parchemins
   test:
   removenpc:
+  cinematics:
