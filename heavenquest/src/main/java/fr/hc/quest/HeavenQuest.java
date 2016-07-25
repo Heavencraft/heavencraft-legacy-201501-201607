@@ -1,5 +1,6 @@
 package fr.hc.quest;
 
+import fr.hc.cinematics.Cinematics;
 import fr.hc.quest.commands.CreateNPCommand;
 import fr.hc.quest.commands.RemoveNPCCommand;
 import fr.hc.quest.commands.TestCommand;
@@ -40,6 +41,8 @@ public class HeavenQuest extends HeavenPlugin
 
 		new ScrollCommand(this);
 		new ScrollListener(this);
+
+		new Cinematics(this);
 	}
 
 	@Override
