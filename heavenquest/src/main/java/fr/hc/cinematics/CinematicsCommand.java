@@ -1,14 +1,15 @@
 package fr.hc.cinematics;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CinematicsCommand implements CommandExecutor
-{
+import fr.hc.quest.HeavenQuest;
+import fr.heavencraft.heavencore.bukkit.commands.AbstractCommandExecutor;
+import fr.heavencraft.heavencore.exceptions.HeavenException;
 
+public class CinematicsCommand extends AbstractCommandExecutor
+{
 	private final Cinematics cinematics;
 	private int cinematicsQuantity;
 
@@ -18,38 +19,32 @@ public class CinematicsCommand implements CommandExecutor
 	private final String LISTCINEMATICS = ChatColor.GOLD + "/" + ChatColor.RED + "Cinematics " + ChatColor.GOLD
 			+ "list Pour voir la liste des cin�matiques disponibles.";
 
-	public CinematicsCommand(Cinematics plugin, int cinematicsQuantity)
+	public CinematicsCommand(Cinematics cinematics, HeavenQuest heavenQuest, int cinematicsQuantity)
 	{
-		cinematics = plugin;
+		super(heavenQuest, "cinematics");
+		this.cinematics = cinematics;
 		this.cinematicsQuantity = cinematicsQuantity;
 	}
 
 	@Override
-	public boolean onCommand(CommandSender commandSender, Command command, String commandString, String[] args)
+	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
 		// Test if command format is good
 		if (args.length != 1)
-		{
-			sendUsages(commandSender);
-			return false;
-		}
+			sendUsage(player);
 
 		if (args[0].equals("list"))
-		{
-			sendCinematicsList(commandSender);
-			return false;
-		}
+			sendCinematicsList(player);
 
 		// Test if argument is an integer
-		Integer cinematicsIndex;
+		Integer cinematicsIndex = null;
 		try
 		{
 			cinematicsIndex = Integer.valueOf(args[0]);
 		}
 		catch (NumberFormatException e)
 		{
-			sendUsages(commandSender);
-			return false;
+			sendUsage(player);
 		}
 
 		// Test if the cinematic is available and launch it
@@ -57,7 +52,6 @@ public class CinematicsCommand implements CommandExecutor
 		{
 			try
 			{
-				Player player = (Player) commandSender;
 				CinematicsHandler.lauchCinematics(player, cinematicsIndex, cinematics);
 			}
 			catch (NoSuchMethodException | SecurityException | ClassNotFoundException | InstantiationException
@@ -65,28 +59,34 @@ public class CinematicsCommand implements CommandExecutor
 			{
 				e.printStackTrace();
 			}
-			return true;
 		}
 
-		commandSender.sendMessage(UNAVAILABLE);
-		return false;
+		player.sendMessage(UNAVAILABLE);
 	}
 
-	private void sendUsages(CommandSender commandSender)
+	@Override
+	protected void onConsoleCommand(CommandSender arg0, String[] arg1) throws HeavenException
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void sendUsage(CommandSender commandSender)
 	{
 		commandSender.sendMessage(LAUCHCINEMATICS);
 		commandSender.sendMessage(LISTCINEMATICS);
+
 	}
 
-	private void sendCinematicsList(CommandSender commandSender)
+	private void sendCinematicsList(Player player)
 	{
 		for (int index = 0; index < cinematicsQuantity; index++)
 		{
 			String description = cinematics.getCinematicsDescription(index);
-			commandSender.sendMessage(
-					ChatColor.GOLD + Integer.toString(index) + ChatColor.RED + " : " + ChatColor.GOLD + description);
+			player.sendMessage(ChatColor.GOLD + Integer.toString(index) + ChatColor.RED + " : " + ChatColor.GOLD
+					+ description);
 		}
 
 	}
-
 }
