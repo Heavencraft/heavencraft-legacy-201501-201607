@@ -3,14 +3,12 @@ package fr.hc.cinematics;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
 import fr.hc.cinematics.components.CinematicsHelper;
 import fr.hc.cinematics.components.CinematicsSeeSight;
 import fr.hc.cinematics.components.CinematicsTeleporter;
 import fr.hc.quest.HeavenQuest;
 
-public class Cinematics extends JavaPlugin
+public class Cinematics
 {
 
 	/*
