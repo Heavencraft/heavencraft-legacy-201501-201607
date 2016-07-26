@@ -1,6 +1,7 @@
 package fr.hc.quest;
 
 import fr.hc.cinematics.Cinematics;
+import fr.hc.cinematics.CinematicsCommand;
 import fr.hc.quest.commands.CreateNPCommand;
 import fr.hc.quest.commands.RemoveNPCCommand;
 import fr.hc.quest.commands.TestCommand;
@@ -12,6 +13,7 @@ import net.citizensnpcs.api.trait.TraitInfo;
 
 public class HeavenQuest extends HeavenPlugin
 {
+
 	private static HeavenQuest instance;
 
 	public HeavenQuest()
@@ -41,8 +43,11 @@ public class HeavenQuest extends HeavenPlugin
 
 		new ScrollCommand(this);
 		new ScrollListener(this);
+		
+		// Initialize cinematics Command.
+		new CinematicsCommand(Cinematics.get(), HeavenQuest.get());
 
-		new Cinematics(this);
+		
 	}
 
 	@Override

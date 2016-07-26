@@ -11,30 +11,32 @@ import fr.heavencraft.heavencore.exceptions.HeavenException;
 public class CinematicsCommand extends AbstractCommandExecutor
 {
 	private final Cinematics cinematics;
-	private int cinematicsQuantity;
 
 	private final String UNAVAILABLE = ChatColor.RED + "Cinematics is not available";
-	private final String LAUCHCINEMATICS = ChatColor.GOLD + "/" + ChatColor.RED + "Cinematics " + ChatColor.GOLD
-			+ "<number> Pour lancer une cin�matique.";
-	private final String LISTCINEMATICS = ChatColor.GOLD + "/" + ChatColor.RED + "Cinematics " + ChatColor.GOLD
-			+ "list Pour voir la liste des cin�matiques disponibles.";
+	private final String LAUCHCINEMATICS = ChatColor.GOLD + "/" + ChatColor.RED + "cinematics " + ChatColor.GOLD
+			+ "<number> Pour lancer une cinématique.";
+	private final String LISTCINEMATICS = ChatColor.GOLD + "/" + ChatColor.RED + "cinematics " + ChatColor.GOLD
+			+ "list Pour avoir la liste des cinématiques disponibles.";
 
-	public CinematicsCommand(Cinematics cinematics, HeavenQuest heavenQuest, int cinematicsQuantity)
+	public CinematicsCommand(Cinematics cinematics, HeavenQuest heavenQuest)
 	{
 		super(heavenQuest, "cinematics");
 		this.cinematics = cinematics;
-		this.cinematicsQuantity = cinematicsQuantity;
 	}
 
 	@Override
 	protected void onPlayerCommand(Player player, String[] args) throws HeavenException
 	{
 		// Test if command format is good
-		if (args.length != 1)
+		if (args.length != 1) {
 			sendUsage(player);
-
-		if (args[0].equals("list"))
+			return;
+		}
+			
+		if (args[0].equals("list")) {
 			sendCinematicsList(player);
+			return;
+		}
 
 		// Test if argument is an integer
 		Integer cinematicsIndex = null;
@@ -45,6 +47,7 @@ public class CinematicsCommand extends AbstractCommandExecutor
 		catch (NumberFormatException e)
 		{
 			sendUsage(player);
+			return;
 		}
 
 		// Test if the cinematic is available and launch it
@@ -81,11 +84,11 @@ public class CinematicsCommand extends AbstractCommandExecutor
 
 	private void sendCinematicsList(Player player)
 	{
-		for (int index = 0; index < cinematicsQuantity; index++)
+		for (int index = 0; index < cinematics.getSize(); index++)
 		{
 			String description = cinematics.getCinematicsDescription(index);
-			player.sendMessage(ChatColor.GOLD + Integer.toString(index) + ChatColor.RED + " : " + ChatColor.GOLD
-					+ description);
+			player.sendMessage(
+					ChatColor.GOLD + Integer.toString(index) + ChatColor.RED + " : " + ChatColor.GOLD + description);
 		}
 
 	}

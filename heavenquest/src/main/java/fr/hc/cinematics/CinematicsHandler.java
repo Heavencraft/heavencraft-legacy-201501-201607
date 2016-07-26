@@ -1,9 +1,11 @@
 package fr.hc.cinematics;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.hc.cinematics.bukkitrunable.FirstWakeUpCinematics;
+import fr.hc.quest.HeavenQuest;
 
 public class CinematicsHandler
 {
@@ -17,7 +19,8 @@ public class CinematicsHandler
 			case 0:
 				player.sendMessage("Lauch first Wake Up Cinematics.");
 				BukkitRunnable firstWakeUpCinematicsRunnable = new FirstWakeUpCinematics(player);
-				firstWakeUpCinematicsRunnable.runTaskTimer(cinematics, 0L, 5L);
+				//firstWakeUpCinematicsRunnable.runTaskTimer(cinematics, 0L, 5L);
+				Bukkit.getScheduler().runTaskTimer(HeavenQuest.get(), firstWakeUpCinematicsRunnable, 0L, 5L);
 
 			case 1:
 				player.sendMessage("Lauch tutorial Cinematics.");
