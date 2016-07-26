@@ -11,21 +11,23 @@ import fr.hc.quest.HeavenQuest;
 public class Cinematics
 {
 
+	private static Cinematics instance = null;
+	public static Cinematics get() {
+		if(Cinematics.instance == null)
+			Cinematics.instance = new Cinematics(HeavenQuest.get());
+		return Cinematics.instance;
+	}
+	
 	/*
 	 * Cinematics descriptions
 	 */
 
 	private final Map<Integer, String> cinematicsDescriptions = new HashMap<Integer, String>();
-	private final HeavenQuest heavenQuest;
 
 	public Cinematics(HeavenQuest plugin)
 	{
 		cinematicsDescriptions.put(0, "Introduction, vous vous reveillez pr�s des murailles.");
 		cinematicsDescriptions.put(1, "Combat, Initiation au combat.");
-		heavenQuest = plugin;
-
-		// Initialize cinematics Command.
-		new CinematicsCommand(this, heavenQuest, cinematicsDescriptions.size());
 
 		// Initialize cinematics components.
 		try
@@ -36,7 +38,6 @@ public class Cinematics
 		}
 		catch (InstantiationException | IllegalAccessException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -52,6 +53,11 @@ public class Cinematics
 	protected String getCinematicsDescription(Integer cinematicsIndex)
 	{
 		return cinematicsDescriptions.get(cinematicsIndex);
+	}
+
+	public int getSize()
+	{
+		return cinematicsDescriptions.size();
 	}
 
 }
