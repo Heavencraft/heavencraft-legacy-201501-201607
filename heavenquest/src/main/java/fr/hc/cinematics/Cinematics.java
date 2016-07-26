@@ -3,8 +3,8 @@ package fr.hc.cinematics;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.hc.cinematics.components.CinematicsHelper;
 import fr.hc.cinematics.components.CinematicsEffects;
+import fr.hc.cinematics.components.CinematicsHelper;
 import fr.hc.cinematics.components.CinematicsTeleporter;
 import fr.hc.quest.HeavenQuest;
 
@@ -12,12 +12,14 @@ public class Cinematics
 {
 
 	private static Cinematics instance = null;
-	public static Cinematics get() {
-		if(Cinematics.instance == null)
+
+	public static Cinematics get()
+	{
+		if (Cinematics.instance == null)
 			Cinematics.instance = new Cinematics(HeavenQuest.get());
 		return Cinematics.instance;
 	}
-	
+
 	/*
 	 * Cinematics descriptions
 	 */
