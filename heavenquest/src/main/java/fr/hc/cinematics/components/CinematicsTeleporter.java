@@ -29,6 +29,7 @@ public class CinematicsTeleporter
 
 	public static void teleportWithoutBackUpPoint(Player player, Integer timer, Integer cinematic)
 	{
+		player.sendMessage("" + cinematicsCoordinates.get("0_0"));
 		String index = cinematic.toString() + MAP_SPLIT + timer.toString();
 		Location location = cinematicsCoordinates.get(index);
 		player.teleport(location);
