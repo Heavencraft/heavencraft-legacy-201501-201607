@@ -17,8 +17,14 @@ public class CinematicsTeleporter
 	public CinematicsTeleporter()
 	{
 		// Cinematic_Timer, Location.
+		World end = Bukkit.getServer().getWorld("end_void");
+		cinematicsCoordinates.put("0" + MAP_SPLIT + "0", new Location(end, 750, 20, 0, 90, 0));
+		cinematicsCoordinates.put("0" + MAP_SPLIT + "10", new Location(end, 750, 0, 0));
+		cinematicsCoordinates.put("0" + MAP_SPLIT + "20", new Location(end, 750, 0, 0));
+		cinematicsCoordinates.put("0" + MAP_SPLIT + "30", new Location(end, 750, 0, 0));
+		cinematicsCoordinates.put("0" + MAP_SPLIT + "40", new Location(end, 750, 0, 0));
 		World world = Bukkit.getServer().getWorld("final_map");
-		cinematicsCoordinates.put("0" + MAP_SPLIT + "3", new Location(world, 17.5, 196.5, -77.5, -180, 0));
+		cinematicsCoordinates.put("0" + MAP_SPLIT + "50", new Location(world, 17.5, 196.5, -77.5, -180, 0));
 	}
 
 	public static void teleportWithoutBackUpPoint(Player player, Integer timer, Integer cinematic)
@@ -41,6 +47,14 @@ public class CinematicsTeleporter
 	public static void teleportToBackUpPoint(Player player, Integer timer, Integer cinematic)
 	{
 		player.teleport(backUpPoint);
+	}
+
+	public static void teleportWithRelativeCoordinate(Player player, Integer timer, Integer cinematic)
+	{
+		String index = cinematic.toString() + MAP_SPLIT + timer.toString();
+		Location location = player.getLocation();
+		location.add(cinematicsCoordinates.get(index));
+		player.teleport(location);
 	}
 
 }

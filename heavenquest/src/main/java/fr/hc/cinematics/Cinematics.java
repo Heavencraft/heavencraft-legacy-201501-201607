@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.hc.cinematics.components.CinematicsHelper;
-import fr.hc.cinematics.components.CinematicsSeeSight;
+import fr.hc.cinematics.components.CinematicsEffects;
 import fr.hc.cinematics.components.CinematicsTeleporter;
 import fr.hc.quest.HeavenQuest;
 
@@ -33,7 +33,7 @@ public class Cinematics
 		try
 		{
 			CinematicsHelper.class.newInstance();
-			CinematicsSeeSight.class.newInstance();
+			CinematicsEffects.class.newInstance();
 			CinematicsTeleporter.class.newInstance();
 		}
 		catch (InstantiationException | IllegalAccessException e)

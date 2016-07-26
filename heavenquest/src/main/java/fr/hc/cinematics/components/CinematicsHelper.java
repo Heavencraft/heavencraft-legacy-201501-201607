@@ -17,8 +17,9 @@ public class CinematicsHelper
 	public CinematicsHelper()
 	{
 		// Cinematic_Timer, text.
-		addFormatedEntry("0" + MAP_SPLIT + "30", "&cInfirmi�re",
-				"H� ! R�veillez vous, le g�n�ral vous attend au front !");
+		addFormatedEntry("0" + "0" + MAP_SPLIT + "51", "&cMythridor", "Bon je t'ai réanimé Connard !");
+		addFormatedEntry("0" + MAP_SPLIT + "55", "&cInfirmière",
+				"Hé ! Réveillez vous, le général vous attend au front !");
 	}
 
 	public static void NPCSpeak(Player player, Integer timer, Integer cinematic)
