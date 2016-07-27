@@ -18,6 +18,11 @@ public class HeavenNPCRegistry
 	{
 		return npcByCitizen.get(citizen);
 	}
+	
+	public HeavenNPC removeNPC(NPC citizen)
+	{
+		return npcByCitizen.remove(citizen);
+	}
 
 	/*
 	 * Singleton pattern

@@ -5,14 +5,20 @@ import fr.hc.cinematics.CinematicsCommand;
 import fr.hc.quest.commands.CreateNPCommand;
 import fr.hc.quest.commands.RemoveNPCCommand;
 import fr.hc.quest.commands.TestCommand;
+import fr.hc.quest.npc.HeavenNPCRegistry;
+import fr.hc.quest.npc.borderpatrol.BorderPatrolListener;
 import fr.hc.scrolls.ScrollCommand;
 import fr.hc.scrolls.ScrollListener;
 import fr.heavencraft.heavencore.bukkit.HeavenPlugin;
+import fr.heavencraft.heavencore.bukkit.listeners.RedstoneLampListener;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.TraitInfo;
 
 public class HeavenQuest extends HeavenPlugin
 {
+
+
 
 	private static HeavenQuest instance;
 
@@ -44,15 +50,27 @@ public class HeavenQuest extends HeavenPlugin
 		new ScrollCommand(this);
 		new ScrollListener(this);
 		
+		new RedstoneLampListener(this);
+		
 		// Initialize cinematics Command.
 		new CinematicsCommand(Cinematics.get(), HeavenQuest.get());
 
-		
+	}
+	
+	@Override
+	protected void afterEnable()
+	{
+		super.afterEnable();
+		new BorderPatrolListener();
 	}
 
 	@Override
 	public void onDisable()
 	{
 		super.onDisable();
+		for(int i = 0; i < BorderPatrolListener.getPatrolList().size(); i++)
+		{
+			BorderPatrolListener.getPatrolList().get(i).disposeNPC();
+		}
 	}
 }
