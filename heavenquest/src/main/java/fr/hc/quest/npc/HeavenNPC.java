@@ -62,4 +62,12 @@ public abstract class HeavenNPC
 	{
 		return npc.getEntity();
 	}
+	
+	/**
+	 * Deletes the NPC permanently
+	 */
+	public void remove() {
+		HeavenNPCRegistry.get().removeNPC(npc);
+		npc.destroy();
+	}
 }
