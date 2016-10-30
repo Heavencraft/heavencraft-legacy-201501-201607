@@ -4,7 +4,7 @@ public class Database
 {
 	// TODO: Remove from here
 	private static final String MYSQL_USERNAME = "mc-sql";
-	private static final String MYSQL_PASSWORD = "9e781e41f865901850d5c3060063c8ca";
+	private static final String MYSQL_PASSWORD = "0HJ1kmcYZRac985GJIY6Qfg1NoekinUM";
 	public static final Database WEB = new Database("mc-db", MYSQL_USERNAME, MYSQL_PASSWORD, 2);
 	public static final Database PROXY = new Database("proxy", MYSQL_USERNAME, MYSQL_PASSWORD, 2);
 	// to here, and load from config
