@@ -28,7 +28,7 @@ public class HellCraft extends HeavenPlugin
 		{
 			super.onEnable();
 
-			final ConnectionProvider webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
+			final ConnectionProvider webConnection = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "web.database"));
 			hpsManager = new HpsManager(webConnection);
 
 			new NoChatListener(this); // Chat is handled by the proxy
