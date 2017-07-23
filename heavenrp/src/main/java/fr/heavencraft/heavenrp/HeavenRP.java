@@ -51,7 +51,7 @@ public class HeavenRP extends HeavenPlugin
 			StructureBlock.loadStructure();
 
 			srpConnection = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "database"));
-			mainConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
+			mainConnection = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "web.database"));
 
 			InitManager.init(this);
 

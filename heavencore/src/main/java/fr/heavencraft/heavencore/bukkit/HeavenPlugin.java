@@ -14,7 +14,7 @@ public abstract class HeavenPlugin extends JavaPlugin
 {
 	protected final HeavenLog log = HeavenLog.getLogger(getClass());
 	protected final UniqueIdProvider uniqueIdProvider = new BukkitUniqueIdProvider(
-			ConnectionHandlerFactory.getConnectionHandler(Database.PROXY));
+			ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "proxy.database")));
 
 	public UniqueIdProvider getUniqueIdProvider()
 	{

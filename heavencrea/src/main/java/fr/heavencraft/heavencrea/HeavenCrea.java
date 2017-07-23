@@ -63,7 +63,7 @@ public class HeavenCrea extends HeavenPlugin implements DeprecatedHasUserProvide
 
 			final ConnectionProvider creaConnection = ConnectionHandlerFactory
 					.getConnectionHandler(loadDatabase(getConfig(), "database"));
-			final ConnectionProvider webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
+			final ConnectionProvider webConnection = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "web.database"));
 
 			userProvider = new CreativeUserProvider(creaConnection);
 			hpsManager = new HpsManager(webConnection);

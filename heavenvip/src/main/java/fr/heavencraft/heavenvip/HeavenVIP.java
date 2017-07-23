@@ -22,8 +22,8 @@ public class HeavenVIP extends HeavenPlugin
 		{
 			super.onEnable();
 			_instance = this;
-			proxyConnection = ConnectionHandlerFactory.getConnectionHandler(Database.PROXY);
-			webConnection = ConnectionHandlerFactory.getConnectionHandler(Database.WEB);
+			proxyConnection = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "proxy.database"));
+			webConnection = ConnectionHandlerFactory.getConnectionHandler(loadDatabase(getConfig(), "web.database"));
 
 		}
 		catch (final Exception ex)
